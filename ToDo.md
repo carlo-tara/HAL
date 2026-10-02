@@ -12,9 +12,7 @@ _(nessuna)_
 
 ## P2
 
-- Verificare la copertura dei contenuti dopo la razionalizzazione degli agenti `#agents` · P2
-  - Perché utile: la mappa in `agents/MIGRATION.md` documenta le destinazioni strutturali, ma non certifica che tutte le istruzioni, i riferimenti e gli script utili siano rappresentati nei bundle HAL.
-  - Acceptance: verificare nell'albero canonico HAL ogni dominio/skill consolidato, registrare eventuali lacune con destinazione e test; non usare AgentFactory come fonte operativa o di deploy.
+_(nessuna)_
 
 ## Già fatto
 

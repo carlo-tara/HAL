@@ -4,6 +4,11 @@ Tutte le modifiche e le evoluzioni rilevanti del progetto HAL sono documentate i
 
 Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/) e [Semantic Versioning](https://semver.org/lang/it/).
 
+## [Unreleased]
+
+### Added
+- Verificata la copertura dei contenuti post-razionalizzazione degli agenti (`#agents` · P2) nell'albero canonico HAL [sync:safe]
+
 ## [1.7.0] - 2026-10-02
 
 ### Added
