@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from functools import lru_cache
 from typing import Any
 
 import requests
@@ -11,14 +12,13 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 LAYA_BASE_URL = os.getenv("LAYA_BASE_URL", "http://laya.local:8091/v1")
 LAYA_TIMEOUT = float(os.getenv("LAYA_TIMEOUT", "5.0"))
 
+# Persistent session with connection pooling for performance
+_session = requests.Session()
+
 class LayaSystemOneService:
     """
     Servizio unificato e dedicato esclusivamente a Laya come modello System One (jev-compatibile)
-    tramite http://laya.local:8091 per i task System 1:
-    a) scelta multipla (choice)
-    b) routing
-    c) score
-    d) noul
+    tramite http://laya.local:8091 per i task System 1 con session pooling e caching.
     """
 
     @staticmethod
@@ -41,7 +41,7 @@ class LayaSystemOneService:
     def _call(cls, payload: dict[str, Any]) -> dict[str, Any]:
         url = f"{LAYA_BASE_URL}/predict"
         try:
-            response = requests.post(url, json=payload, timeout=LAYA_TIMEOUT, verify=False)
+            response = _session.post(url, json=payload, timeout=LAYA_TIMEOUT, verify=False)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
