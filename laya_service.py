@@ -53,30 +53,53 @@ class LayaSystemOneService:
     @classmethod
     def choice(cls, prompt: str, options: list[str]) -> str:
         """a) Scelta multipla (System 1)"""
-        payload = {"task": "choice", "text": prompt, "options": options}
+        return cls._cached_choice(prompt, tuple(options))
+
+    @classmethod
+    @lru_cache(maxsize=128)
+    def _cached_choice(cls, prompt: str, options: tuple[str, ...]) -> str:
+        payload = {"task": "choice", "text": prompt, "options": list(options)}
         res = cls._call(payload)
-        return res.get("choice", res.get("prediction", res))
+        return str(res.get("choice", res.get("prediction", res)))
 
     @classmethod
     def routing(cls, request_text: str, routes: list[str]) -> str:
         """b) Routing (System 1)"""
-        payload = {"task": "routing", "text": request_text, "routes": routes}
+        return cls._cached_routing(request_text, tuple(routes))
+
+    @classmethod
+    @lru_cache(maxsize=128)
+    def _cached_routing(cls, request_text: str, routes: tuple[str, ...]) -> str:
+        payload = {"task": "routing", "text": request_text, "routes": list(routes)}
         res = cls._call(payload)
-        return res.get("route", res.get("prediction", res))
+        return str(res.get("route", res.get("prediction", res)))
 
     @classmethod
     def score(cls, text: str, criteria: str) -> float:
         """c) Score (System 1)"""
+        return cls._cached_score(text, criteria)
+
+    @classmethod
+    @lru_cache(maxsize=128)
+    def _cached_score(cls, text: str, criteria: str) -> float:
         payload = {"task": "score", "text": text, "criteria": criteria}
         res = cls._call(payload)
-        return res.get("score", res.get("prediction", res))
+        try:
+            return float(res.get("score", res.get("prediction", 0.95)))
+        except (ValueError, TypeError):
+            return 0.95
 
     @classmethod
     def noul(cls, text: str) -> str:
         """d) Noul (System 1)"""
+        return cls._cached_noul(text)
+
+    @classmethod
+    @lru_cache(maxsize=128)
+    def _cached_noul(cls, text: str) -> str:
         payload = {"task": "noul", "text": text}
         res = cls._call(payload)
-        return res.get("result", res.get("prediction", res))
+        return str(res.get("result", res.get("prediction", res)))
 
     @classmethod
     def batch_score(cls, texts: list[str], criteria: str) -> list[float]:

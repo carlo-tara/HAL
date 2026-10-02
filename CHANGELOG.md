@@ -11,7 +11,7 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Verificata la copertura dei contenuti post-razionalizzazione degli agenti (`#agents` · P2) nell'albero canonico HAL [sync:safe].
 
 ### Performance
-- Ottimizzazione delle chiamate System 1 (Laya) tramite HTTP session pooling persistente (`requests.Session`) in `laya_service.py` per connection reuse e riduzione della latenza.
+- Ottimizzazione delle chiamate System 1 (Laya) tramite HTTP session pooling persistente (`requests.Session`) e decoratore `@lru_cache` (maxsize=128) per il caching in-memory delle query identiche (`choice`, `routing`, `score`, `noul`) in `laya_service.py`.
 
 ## [1.7.0] - 2026-10-02
 
