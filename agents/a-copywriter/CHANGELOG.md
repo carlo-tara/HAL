@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-02
+
+### Added
+- System 1 (Laya) Gating in Copywriting: routing rapido dei formati di copy (`router.py routing`), scoring anti-AI per il rilevamento di cliché (`router.py score`) e selezione del registro prima di attivare i loop di humanization System 2 [sync:safe]
+
 ## [1.5.7] - 2026-09-18
 
 ### Changed

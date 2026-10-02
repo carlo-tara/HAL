@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-02
+
+### Added
+- System 1 (Laya) Gating in Product Discovery: pre-filtro di intake (`router.py routing`), scoring euristico di backlog (`router.py score`) e categorizzazione rapida JTBD/ODI prima di attivare le analisi approfondite System 2 [sync:safe]
+
 ## [1.2.2] - 2026-09-18
 
 ### Changed

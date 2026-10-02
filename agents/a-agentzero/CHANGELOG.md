@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-10-02
+
+### Added
+- Layer cognitivo System 1 (Laya) in `a-agentzero`: definizione formale del protocollo di routing globale (`router.py routing` / `triage`), pre-filtro (`noul`) e scoring euristico (`score`) obbligatori prima di invocare il ragionamento System 2 [sync:safe]
+
 ## [1.7.0] - 2026-10-02
 
 ### Added

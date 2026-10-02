@@ -1,7 +1,7 @@
 ---
 name: a-seozoom
 extends: a-agentzero
-version: 1.8.12
+version: 1.9.0
 model: orcarouter/deepseek/deepseek-v4-flash-free
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -53,6 +53,15 @@ All'avvio: `a-agentzero` → **questo skill** → skill L2 se presente → per o
 | `hreflang-i18n` | [competencies/hreflang-i18n/](competencies/hreflang-i18n/SKILL.md) | Multi-locale, parity, MT QA |
 | `topic-cluster` | [competencies/topic-cluster/](competencies/topic-cluster/SKILL.md) | SERP-overlap + CSV SeoZoom → owner URL |
 | `google-ads` | [competencies/google-ads/](competencies/google-ads/SKILL.md) | Search / PMax / Shopping: struttura, tracking, budget, feed |
+
+---
+
+## System 1 (Laya) Integration in SEO & GEO
+
+Prima di impegnare System 2 in analisi semantiche complesse o audit estesi, l'agente `a-seozoom` utilizza **Laya (System 1)** per:
+1. **Classificazione Intent Keyword (`router.py batch_routing`)**: Classifica in batch l'intento di ricerca delle keyword SeoZoom (`Transactional`, `Informational`, `Navigational`, `Commercial`) con latenza quasi nulla.
+2. **Scoring del potenziale e Audit (`router.py batch_score`)**: Calcola in batch punteggi di priorità Effort×Impact per centinaia di URL o pagine con potenziale (`seo-audit`, `metriche-analisi`).
+3. **Routing campagne Google Ads (`router.py routing`)**: Instrada rapidamente le metriche di inserzioni Search, PMax o Shopping verso le rispettive linee guida di ottimizzazione.
 
 ---
 

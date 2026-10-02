@@ -7,6 +7,16 @@ Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
 ## [Unreleased]
 
+## [1.7.2] - 2026-10-02
+
+### Added
+- System 1 (Laya) potenziato per `a-harness`: integrazione specifica per le fasi **Red** (classificazione firma errore test), **Refactor** (batch scoring di pulizia e coerenza glossary), e **Approccio DDD** (routing architetturale per aggregate root, bounded context, ACL e functional core) [sync:safe]
+
+## [1.7.1] - 2026-10-02
+
+### Added
+- System 1 (Laya) Gating in Harness: pre-filtro rapido per il routing dei test falliti (`router.py routing`) e scoring del rischio di blocco (`router.py score`) prima di attivare il ragionamento profondo System 2 [sync:safe]
+
 ### Changed
 - Appreso da sessione: when-stuck 1.0.1 — anti-pattern `pkill -f` self-match su shell Cursor
 

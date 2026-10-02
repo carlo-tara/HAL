@@ -1,7 +1,7 @@
 ---
 name: a-b2b
 extends: a-agentzero
-version: 2.1.4
+version: 2.2.0
 model: orcarouter/z-ai/glm-5.3-flash
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -46,6 +46,14 @@ Solo enrichment → invoca la skill **`enrichment`** (`/enrich`, `/gate`, `/doma
 Product multi-step non-B2B → prefer **`a-product`**.
 
 Detail: [references/delegation-playbook.md](references/delegation-playbook.md)
+
+---
+
+## System 1 (Laya) Integration in B2B Pilots
+
+Prima di impegnare System 2 in analisi di account o pipeline di enrichment complesse, l'agente `a-b2b` utilizza **Laya (System 1)** per:
+1. **Scoring ICP e Pilot Fit in batch (`router.py batch_score`)**: Valuta l'aderenza all'Ideal Customer Profile di account e contatti in millisecondi, filtrando i lead fuori target prima della cascata CRM.
+2. **Routing GTM (`router.py routing`)**: Instrada rapidamente le richieste tra enrichment, pilot fit check e triage commerciale.
 
 ---
 

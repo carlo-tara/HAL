@@ -1,7 +1,7 @@
 ---
 name: a-harness
 extends: a-agentzero
-version: 1.7.0
+version: 1.7.2
 model: orcarouter/deepseek/deepseek-v4.1-flash
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -40,6 +40,7 @@ Orchestratore L1: implementazione **test-first** su medium slices, gate Make, DD
 All'avvio: `a-agentzero` → **questo skill** → L2 `harness-*` → competenze.
 
 **Sempre attive:** `context-budget`, `sustainable-pace`, `platform-api`, `session-progress`, `when-stuck`.  
+**System 1 Gating (Laya):** Pre-filtro rapido (routing test failure, score rischio blocco) prima di invocare il ragionamento profondo System 2.  
 **On-demand:** `todo` (Mappa residui / edit `./ToDo.md`), `graph` (Loop / Work Graph → `work-graph.md`), `tdd-*`, `steward`, `functional-core`, 4 DDD.
 
 **HFDP UL (anti-bloat):** **Adapter** = ACL (`anti-corruption-layer`); **Facade** = Make / Platform API e Facade L1 — **no** `competencies/{adapter,facade,strategy}/`.  
@@ -109,6 +110,26 @@ Contratto: `.feature` (da `a-gherkin`) **oppure** US/AC (`a-po`) **oppure** task
 | L2 | `.cursor/skills/harness-*/SKILL.md` | [extension-template.md](extension-template.md) |
 
 Invariants: Plan→Act · TDD exit Make · `ready-for-review` prima di review umana · stuck@3 · ≤4 file · Makefile = verità.
+
+---
+
+## System 1 (Laya) Integration in Harness
+
+Prima di impegnare System 2 (ragionamento profondo su codice, refactor o fix iterativi), l'agente `a-harness` utilizza **Laya (System 1)** per ottimizzare le fasi critiche:
+
+1. **Fase Red (`/red`)**:
+   - **Routing della firma di errore (`router.py routing`)**: Classifica istantaneamente l'output del test (`syntax_error`, `assertion_failure`, `missing_method`, `import_error`) per indirizzare l'agente a scrivere la minima asserzione necessaria senza over-engineering.
+   - **Scoring del perimetro (`router.py score`)**: Valuta l'aderenza del test alla capability richiesta prima di eseguire `make test-unit`.
+
+2. **Fase Refactor (`/refactor`)**:
+   - **Scoring di complessità e pulizia (`router.py batch_score`)**: Valuta in millisecondi la duplicazione e la coerenza dei nomi nello slice (≤4 file) rispetto al glossario (`docs/glossary.md`).
+   - **Pre-filtro Noul (`router.py noul`)**: Filtra il codice ripulito da rumore o commenti superflui prima dei gate di Make.
+
+3. **Approccio DDD (Domain-Driven Design)**:
+   - **Routing Architetturale (`router.py routing`)**: Instrada istantaneamente ogni nuovo componente o modifica verso il bounded context e il pattern tattico corretto (`aggregate-root`, `bounded-context`, `anti-corruption-layer`, `functional-core`), prevenendo la contaminazione dei confini di dominio prima di avviare il ragionamento strutturale System 2.
+
+4. **Stuck Prevention (`when-stuck`)**:
+   - **Scoring del rischio blocco (`router.py score`)**: Valuta l'indice di successo di un fix prima di raggiungere la soglia di 3 tentativi.
 
 ---
 

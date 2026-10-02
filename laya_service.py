@@ -77,3 +77,13 @@ class LayaSystemOneService:
         payload = {"task": "noul", "text": text}
         res = cls._call(payload)
         return res.get("result", res.get("prediction", res))
+
+    @classmethod
+    def batch_score(cls, texts: list[str], criteria: str) -> list[float]:
+        """e) Batch Score (System 1)"""
+        return [cls.score(t, criteria) for t in texts]
+
+    @classmethod
+    def batch_routing(cls, texts: list[str], routes: list[str]) -> list[str]:
+        """f) Batch Routing (System 1)"""
+        return [cls.routing(t, routes) for t in texts]

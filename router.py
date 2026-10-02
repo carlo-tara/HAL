@@ -60,13 +60,13 @@ def handle_routing(request_text: str, routes: list[str]) -> str:
     """Interfaccia obbligatoria per il routing (System 1 - Laya)."""
     return GlobalLayaHandler.evaluate("routing", request_text, routes)
 
-def handle_score(text: str, criteria: str) -> float:
-    """Interfaccia obbligatoria per lo score (System 1 - Laya)."""
-    return GlobalLayaHandler.evaluate("score", text, criteria)
+def handle_batch_score(texts: list[str], criteria: str) -> list[float]:
+    """Valuta in batch una lista di testi rispetto a un criterio (System 1 - Laya)."""
+    return [handle_score(t, criteria) for t in texts]
 
-def handle_noul(text: str) -> str:
-    """Interfaccia obbligatoria per noul (System 1 - Laya)."""
-    return GlobalLayaHandler.evaluate("noul", text)
+def handle_batch_routing(texts: list[str], routes: list[str]) -> list[str]:
+    """Instrada in batch una lista di testi verso le rotte candidate (System 1 - Laya)."""
+    return [handle_routing(t, routes) for t in texts]
 
 def route_task(task_type: str, *args: Any, **kwargs: Any) -> Any:
     """

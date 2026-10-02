@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-02
+
+### Added
+- System 1 (Laya) Gating in B2B Pilots: batch scoring ICP e Pilot Fit (`router.py batch_score`) e routing GTM prima di attivare le cascate di enrichment System 2 [sync:safe]
+
 ## [2.1.4] - 2026-09-18
 
 ### Changed

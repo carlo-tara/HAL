@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-10-02
+
+### Added
+- System 1 (Laya) Gating in WordPress: routing rapido dei componenti WordPress e dei pattern di plugin (`router.py routing`) e classificazione degli errori di installazione prima di attivare le analisi approfondite System 2 [sync:safe]
+
 ## [1.2.11] - 2026-09-18
 
 ### Changed

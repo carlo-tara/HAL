@@ -1,7 +1,7 @@
 ---
 name: a-copywriter
 extends: a-agentzero
-version: 1.5.7
+version: 1.6.0
 model: orcarouter/openai/gpt-4o-mini
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -36,6 +36,15 @@ All'avvio: carica `a-agentzero` → **questo skill** → skill figlia L2 se pres
 | `tono-di-voce` | [competencies/tono-di-voce/](competencies/tono-di-voce/SKILL.md) | Brand file, calibrazione, inclusività |
 | `humanizer` | [competencies/humanizer/](competencies/humanizer/SKILL.md) | Anti-AI, leak, voce, loop, editing |
 | `italiano-locale` | [competencies/italiano-locale/](competencies/italiano-locale/SKILL.md) | Purismo, grammatica LLM, tempi/clitici |
+
+---
+
+## System 1 (Laya) Integration in Copywriting
+
+Prima di impegnare System 2 in stesure estese o editing complesso, l'agente `a-copywriter` utilizza **Laya (System 1)** per:
+1. **Classificazione e Routing del Copy (`router.py routing`)**: Identifica istantaneamente il formato del copy richiesto (Landing, Meta Tag, Scheda Prodotto, FAQ, Blog) per applicare i vincoli strutturali corretti.
+2. **Scoring anti-AI rapido (`router.py score`)**: Valuta in millisecondi la presenza di cliché o pattern di IA stereotipati in un testo grezzo prima di avviare il loop di humanization.
+3. **Selezione del registro (`router.py choice`)**: Sceglie il registro e il canale linguistico adeguato al brand brief.
 
 ---
 

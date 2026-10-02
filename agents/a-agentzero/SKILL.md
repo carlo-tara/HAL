@@ -1,6 +1,6 @@
 ---
 name: a-agentzero
-version: 1.7.0
+version: 1.7.1
 model: orcarouter/deepseek/deepseek-v4-flash-free
 model-fallback: cursor-default
 description: >-
@@ -45,6 +45,17 @@ Oltre a `extends:` (un solo padre), gli agenti possono dichiarare id in `compete
 | [humanizer](competencies/humanizer/SKILL.md) | Umanizzare testi anti-AI |
 | [italiano-locale](competencies/italiano-locale/SKILL.md) | Modalità locali dell'italiano |
 | [po-interviewer](competencies/po-interviewer/SKILL.md) | Intervista PO, anti-invention, cascade discovery |
+
+---
+
+## System 1 (Laya) Cognitive Layer in a-agentzero
+
+Come agente radice (L0), `a-agentzero` stabilisce l'architettura cognitiva a due livelli per tutto l'ecosistema HAL:
+1. **System 1 (Laya)**: Usato obbligatoriamente per ogni compito preliminare, euristico o a basso costo cognitivo tramite `router.py`:
+   - **Triage e Routing (`router.py routing` / `triage`)**: Smistamento immediato di ogni richiesta utente verso l'agente L1 corretto (`a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`) o competenza prima di qualsiasi ragionamento System 2.
+   - **Pre-filtro rapido (`router.py noul`)**: Elaborazione e pulizia preliminare di input testuali e comandi L0.
+   - **Scoring euristico (`router.py score`)**: Valutazione rapida del rischio, aderenza ai vincoli e priorità di task.
+2. **System 2 (Reasoning)**: Riservato esclusivamente a pianificazione complessa, generazione/modifica codice, refactoring e decisioni architetturali vincolanti.
 
 ---
 

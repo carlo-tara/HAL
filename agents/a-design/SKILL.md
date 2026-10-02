@@ -1,7 +1,7 @@
 ---
 name: a-design
 extends: a-agentzero
-version: 1.0.0
+version: 1.1.0
 model: orcarouter/qwen/qwen3.8-flash
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -38,6 +38,15 @@ Fornire un'esperienza visiva coerente, accessibile ed efficace unendo:
 | Layout, shell, CSS, a11y | `uiux` | Layout editoriale, CSS vars, accessibilità WCAG |
 | Grafici, serie, funnel, KPI | `charts` | Visualizzazione dati, scelta grafico, rendering SVG/D3 |
 | Hero, icone, illustrazioni | `illustrator` | Pipeline prompt immagini, anteprime e QA asset |
+
+---
+
+## System 1 (Laya) Integration in Visual Experience
+
+Prima di impegnare System 2 in layout complessi o rendering grafici, l'agente `a-design` utilizza **Laya (System 1)** per:
+1. **Routing delle richieste visive (`router.py routing`)**: Instrada istantaneamente il task verso la competenza corretta (`uiux`, `charts`, `illustrator`).
+2. **Selezione del tipo di grafico (`router.py choice`)**: Sceglie rapidamente il chart type ideale (serie temporali, funnel, barre) in base ai dati in ingresso.
+3. **Scoring di conformità WCAG e accessibilità (`router.py score`)**: Valuta in millisecondi i parametri di contrasto e leggibilità prima della stesura del codice CSS/SVG.
 
 ---
 

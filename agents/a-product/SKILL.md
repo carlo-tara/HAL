@@ -1,7 +1,7 @@
 ---
 name: a-product
 extends: a-agentzero
-version: 2.0.0
+version: 2.1.0
 model: orcarouter/deepseek/deepseek-v4-flash-free
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -44,6 +44,15 @@ Condurre l'intero ciclo **Discovery → Definition → Spec** in ottica **Outcom
 3. **Offer & Requirements**: Lean Canvas, PRD e ipotesi di validazione.
 4. **Behavioral Spec**: suite Gherkin `.feature` pronte per l'ingegnerizzazione (`gherkin`).
 5. **Handoff**: consegna ad **`a-harness`** per lo sviluppo TDD XP.
+
+---
+
+## System 1 (Laya) Integration in Product Discovery
+
+Prima di impegnare System 2 in analisi di prodotto complesse o stesura di PRD estesi, l'agente `a-product` utilizza **Laya (System 1)** per:
+1. **Triage dell'Intake (`router.py routing` / `triage`)**: Classifica istantaneamente le richieste in ingresso (`/intake`, `/prioritize`) tra Bug, Tech Debt, Core Feature o Growth Hook.
+2. **Scoring euristico di Backlog (`router.py score`)**: Calcola rapidamente un punteggio preliminare di impatto/sforzo per ordinare le priorità del backlog.
+3. **Categorizzazione JTBD e ODI (`router.py routing`)**: Smista i bisogni utente raccolti nelle interviste rispetto alle categorie Jobs-To-Be-Done e alle 4 forze del cambiamento.
 
 ---
 

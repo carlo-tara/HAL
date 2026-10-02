@@ -1,7 +1,7 @@
 ---
 name: a-wordpress
 extends: a-agentzero
-version: 1.2.11
+version: 1.3.0
 model: orcarouter/z-ai/glm-5.3-flash
 model-fallback: cursor-default
 extends-version: 1.6.15
@@ -51,6 +51,14 @@ Naming migrate: `{prefix}migrate-{slug}`. Dettaglio in [references/plugin-migrat
 | 3 | Documenti progetto | Standard codice, RGR/BDD se obbligatori |
 | 4 | **a-wordpress** (questo skill) | Workflow generico, checklist, template |
 | 5 | **a-agentzero** | Protocollo, sicurezza, checklist comuni |
+
+---
+
+## System 1 (Laya) Integration in WordPress
+
+Prima di impegnare System 2 nello sviluppo di plugin o fix complessi, l'agente `a-wordpress` utilizza **Laya (System 1)** per:
+1. **Routing dei componenti WP (`router.py routing`)**: Instrada istantaneamente il task verso il pattern corretto (`plugin-stabile`, `plugin-migrate`, `REST API`, `WP-CLI`, `Shortcode`).
+2. **Classificazione rapida degli errori (`router.py routing` / `score`)**: Identifica in millisecondi la tipologia di errore o conflitto nei log di installazione (es. `hook_conflict`, `database_error`, `plugin_fatal`).
 
 ---
 

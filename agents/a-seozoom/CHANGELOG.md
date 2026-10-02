@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-10-02
+
+### Added
+- System 1 (Laya) Gating in SEO/GEO: batch routing per classificazione intent keyword (`router.py batch_routing`), batch scoring Effort×Impact per audit SEO (`router.py batch_score`) e routing campagne Google Ads prima delle analisi approfondite System 2 [sync:safe]
+
 ## [1.8.12] - 2026-09-18
 
 ### Changed
