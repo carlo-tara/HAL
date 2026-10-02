@@ -1,0 +1,13 @@
+{
+  "assistant": {
+    "enabled": true,
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet"
+    }
+  },
+  "toolbar": {
+    "git_status": true
+  },
+  "auto_update": false
+}

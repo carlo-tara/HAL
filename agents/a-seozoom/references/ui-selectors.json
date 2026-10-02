@@ -1,0 +1,28 @@
+{
+  "base_url": "https://sznew.seozoom.it",
+  "login": {
+    "url": "/login/",
+    "email": "input[placeholder=\"Email o Username\"], input[type=\"email\"]",
+    "password": "input[placeholder=\"Password\"], input[type=\"password\"]",
+    "submit": "button:has-text(\"ACCEDI\"), button:has-text(\"LOGIN\")"
+  },
+  "cookies": {
+    "accept": "#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll, button:has-text('Accetta tutti')"
+  },
+  "project": {
+    "selector_combobox": "[role=\"combobox\"]:has-text(\"Seleziona\")",
+    "option_template": "[role=\"option\"]:has-text(\"{project_name}\")",
+    "link_template": "a[href*=\"/project/view/\"]:has-text(\"{project_name}\")"
+  },
+  "export": {
+    "trigger": "#exportStandardTable, .export-standard-table, .fas.fa-file-export",
+    "modal": "#exportModal",
+    "csv_button": "#exportCsv",
+    "xlsx_button": "#exportXlsx",
+    "excel_bulk": "button:has-text(\"Esporta tutti i dati in Excel\")"
+  },
+  "api": {
+    "nonce_source": "window.csrf || $.ajaxSettings.data.nonce",
+    "project_vars": ["pid", "DomainID", "projectUrl", "mainDomain", "competitor"]
+  }
+}

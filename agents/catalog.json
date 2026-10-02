@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "canonical_root": "agents",
+  "shared_skill_root": ".agents/skills",
+  "cursor_subagent_root": ".cursor/agents",
+  "cursor_command_root": ".cursor/commands",
+  "execution_model": "SystemTwoEngine.ACTIVE_MODEL_NAME",
+  "migration_source_commit": "d1b7e7909b9962ed4cb14ef5107c2fe1845e04c1",
+  "feature_flags": {
+    "LLM_EXTERNAL_MODE": 0,
+    "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1"
+  },
+  "agents": [
+    {
+      "name": "a-agentzero",
+      "level": "L0",
+      "path": "a-agentzero/SKILL.md",
+      "version": "1.6.15",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/deepseek/deepseek-v4-flash-free"
+      }
+    },
+    {
+      "name": "a-b2b",
+      "level": "L1",
+      "path": "a-b2b/SKILL.md",
+      "version": "2.1.4",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/z-ai/glm-5.3-flash"
+      }
+    },
+    {
+      "name": "a-copywriter",
+      "level": "L1",
+      "path": "a-copywriter/SKILL.md",
+      "version": "1.5.7",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/openai/gpt-4o-mini"
+      }
+    },
+    {
+      "name": "a-design",
+      "level": "L1",
+      "path": "a-design/SKILL.md",
+      "version": "1.0.0",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/qwen/qwen3.8-flash"
+      }
+    },
+    {
+      "name": "a-harness",
+      "level": "L1",
+      "path": "a-harness/SKILL.md",
+      "version": "1.7.0",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/deepseek/deepseek-v4.1-flash"
+      }
+    },
+    {
+      "name": "a-product",
+      "level": "L1",
+      "path": "a-product/SKILL.md",
+      "version": "2.0.0",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/deepseek/deepseek-v4-flash-free"
+      }
+    },
+    {
+      "name": "a-seozoom",
+      "level": "L1",
+      "path": "a-seozoom/SKILL.md",
+      "version": "1.8.12",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/deepseek/deepseek-v4-flash-free"
+      }
+    },
+    {
+      "name": "a-wordpress",
+      "level": "L1",
+      "path": "a-wordpress/SKILL.md",
+      "version": "1.2.11",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/z-ai/glm-5.3-flash"
+      }
+    }
+  ],
+  "project_skills": [
+    {
+      "name": "harness-agentfactory",
+      "level": "L2",
+      "path": "project-skills/harness-agentfactory/SKILL.md",
+      "version": "1.1.24",
+      "extends": "a-harness",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/deepseek/deepseek-v4.1-flash"
+      }
+    },
+    {
+      "name": "laya",
+      "level": "L2",
+      "path": "project-skills/laya/SKILL.md",
+      "version": "1.0.0"
+    }
+  ]
+}

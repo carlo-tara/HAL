@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "page": "/project/view/{pid}",
+  "updated": "2026-07-15",
+  "notes": "Mapped via probe_dashboard_capture.py against sznew project dashboard. Prefer AJAX; previsione traffico uses JS globals after page warm.",
+  "widgets": [
+    {
+      "id": "backlink",
+      "label": "Backlink",
+      "endpoint": "/api/ajax/links/counters",
+      "method": "POST",
+      "fields": {"domainUrl": "{mainDomain}"},
+      "outputs": ["{domain}_backlink.csv", "{domain}_backlink_summary.json"]
+    },
+    {
+      "id": "andamento_dominio",
+      "label": "Andamento dominio",
+      "endpoint": "/api/ajax/domain/get-chart-site-trend-data",
+      "method": "POST",
+      "fields": {"domainID": "{domainId}"},
+      "outputs": ["{domain}_andamento_dominio.json", "{domain}_andamento_dominio_flat.csv"]
+    },
+    {
+      "id": "distribuzione_keyword_storica",
+      "label": "Distribuzione storica keyword",
+      "endpoint": "/api/ajax/domain/get-chart-site-trend-data",
+      "method": "POST",
+      "fields": {"domainID": "{domainId}"},
+      "outputs": ["{domain}_distribuzione_keyword_storica.json", "{domain}_distribuzione_keyword_storica_flat.csv"],
+      "notes": "Same payload as andamento_dominio; extract position buckets p1-p5, 1a3, 4a6, 7a10, totk"
+    },
+    {
+      "id": "metriche",
+      "label": "Metriche",
+      "endpoint": "/api/ajax/project/domainstats",
+      "method": "POST",
+      "fields": {"ProjectID": "{projectId}", "DomainID": "{domainId}"},
+      "outputs": ["{domain}_metriche.json"],
+      "field_map": {
+        "ZA": "zoomauthority",
+        "ZT": "za_trust",
+        "ZS": "za_stability",
+        "ZO": "za_opportunity",
+        "traffico": "trafficodominio",
+        "var_traffico": "variazionetrafficodominio",
+        "keyword": "totk"
+      }
+    },
+    {
+      "id": "andamento_annuale",
+      "label": "Andamento annuale",
+      "endpoint": "/api/ajax/domain/get-chart-site-trend-data",
+      "method": "POST",
+      "fields": {"domainID": "{domainId}"},
+      "outputs": ["{domain}_andamento_annuale.csv"],
+      "notes": "Annual aggregates derived from weekly trend rows (year, avg/last svol, totk, za, zo, zs, zt)"
+    },
+    {
+      "id": "ottimizzazione_seo",
+      "label": "Ottimizzazione SEO",
+      "endpoint": null,
+      "page": "/project/view/seo/{pid}",
+      "outputs": ["{domain_u}_OnPageSEO.csv"],
+      "notes": "Already exported by onpage_seo() scrape; dashboard also exposes workflowstats"
+    },
+    {
+      "id": "pagine_competitor",
+      "label": "Pagine dei Competitor",
+      "endpoint": "/api/ajax/copilot/suggestions",
+      "method": "POST",
+      "fields": {"ProjectID": "{projectId}"},
+      "filter": {"category": "COMPETITOR-PAGES"},
+      "outputs": ["{domain}_pagine_competitor.csv"],
+      "related": {
+        "endpoint": "/api/ajax/project/competitorstats",
+        "fields": {"ProjectID": "{projectId}"},
+        "outputs": ["{domain}_competitor_trends.csv"]
+      }
+    },
+    {
+      "id": "previsione_traffico",
+      "label": "Previsione traffico",
+      "endpoint": null,
+      "source": "js_globals",
+      "globals": [
+        "seriesPrevisionData",
+        "seriesActualTrafficData",
+        "totalTraffic",
+        "totalTrafficPrevision",
+        "trafficDifference"
+      ],
+      "dom": "#trafficPrevisionStatistics",
+      "outputs": ["{domain}_previsione_traffico.json", "{domain}_previsione_traffico_flat.csv"],
+      "notes": "No dedicated AJAX route; populated after scrolling/warming /project/view/{pid}"
+    },
+    {
+      "id": "posizionamento_monitorate",
+      "label": "Posizionamento keyword monitorate",
+      "endpoint": "/api/ajax/project/keywordsmetrics",
+      "method": "POST",
+      "fields": {"ProjectID": "{projectId}", "url": "{projectUrl}"},
+      "outputs": ["{domain}_posizionamento_monitorate.json", "{domain}_posizionamento_monitorate_flat.csv"]
+    },
+    {
+      "id": "andamento_keyword_progetto",
+      "label": "Andamento keyword di progetto",
+      "endpoint": "/api/ajax/project/keywordstrend",
+      "method": "POST",
+      "fields": {"ProjectID": "{projectId}"},
+      "outputs": ["{domain}_andamento_keyword_progetto.json", "{domain}_andamento_keyword_progetto_flat.csv"]
+    },
+    {
+      "id": "idee_articoli",
+      "label": "Idee per nuovi articoli",
+      "endpoint": "/api/ajax/domain/suggest-articles",
+      "method": "POST",
+      "fields": {"domainID": "{domainId}"},
+      "outputs": ["{domain}_idee_articoli.csv"]
+    }
+  ],
+  "supporting_endpoints": [
+    {"endpoint": "/api/ajax/project/keywordsstats", "fields": {"ProjectID": "{projectId}"}},
+    {"endpoint": "/api/ajax/project/trafficstats", "fields": {"ProjectID": "{projectId}"}},
+    {"endpoint": "/api/ajax/project/pianotrimestrale", "fields": {"ProjectID": "{projectId}", "DomainID": "{domainId}"}},
+    {"endpoint": "/api/ajax/project/dashboardkeyup", "fields": {"projectId": "{projectId}"}},
+    {"endpoint": "/api/ajax/project/dashboardkeydown", "fields": {"projectId": "{projectId}"}},
+    {"endpoint": "/api/ajax/project/workflowstats", "fields": {"ProjectID": "{projectId}"}}
+  ]
+}

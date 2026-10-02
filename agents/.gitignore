@@ -1,0 +1,44 @@
+# Credenziali e segreti
+.env
+.env.*
+!.env.example
+*.pem
+*-credentials*.json
+*analytics*.json
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# SeoZoom sessioni locali (consumer)
+.seozoom/
+
+# Editor / OS
+.DS_Store
+*.swp
+*~
+
+# Export pack Claude
+dist/
+.export-discovery-claude-*/
+
+a-copywriter/GuideStile/PremioStrega/
+
+# Upstream corpora (clone locale; non committare)
+vendor/marketingskills/
+vendor/claude-seo/
+vendor/seo-geo-aeo-skill/
+vendor/agent-skills-google-ads/
+vendor/imagencn/
+vendor/qwen-image/
+.tools/
+
+.vscode/
+
+# Runtime lean handoff (prompt-builder)
+.cursor/product/handoff-*.json
+
+docs/*.pdf

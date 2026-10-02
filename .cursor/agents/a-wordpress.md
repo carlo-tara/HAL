@@ -1,0 +1,1 @@
+../../agents/a-wordpress/agents/a-wordpress.md
