@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-10-02
+
+### Added
+- Ottimizzazioni avanzate di System 1 (Laya): caching in-memory `@lru_cache` (maxsize=128) e HTTP session pooling persistente (`requests.Session`) in `laya_service.py` [sync:safe]
+
 ## [1.7.1] - 2026-10-02
 
 ### Added

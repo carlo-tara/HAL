@@ -1,6 +1,6 @@
 ---
 name: a-agentzero
-version: 1.7.1
+version: 1.8.0
 model: orcarouter/deepseek/deepseek-v4-flash-free
 model-fallback: cursor-default
 description: >-
