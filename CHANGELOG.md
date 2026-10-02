@@ -2,12 +2,16 @@
 
 Tutte le modifiche e le evoluzioni rilevanti del progetto HAL sono documentate in questo file.
 
-Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/) e [Semantic Versioning](https://semver.org/lang/it/).
+Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/),
+e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
 ### Added
-- Verificata la copertura dei contenuti post-razionalizzazione degli agenti (`#agents` · P2) nell'albero canonico HAL [sync:safe]
+- Verificata la copertura dei contenuti post-razionalizzazione degli agenti (`#agents` · P2) nell'albero canonico HAL [sync:safe].
+
+### Performance
+- Ottimizzazione delle chiamate System 1 (Laya) tramite HTTP session pooling persistente (`requests.Session`) in `laya_service.py` per connection reuse e riduzione della latenza.
 
 ## [1.7.0] - 2026-10-02
 
