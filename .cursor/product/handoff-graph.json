@@ -1,0 +1,9 @@
+{
+  "command": "graph",
+  "mode": "auto-accept",
+  "source": "ToDo.md",
+  "status": "completed",
+  "nodes_total": 1,
+  "nodes_completed": 1,
+  "next": null
+}
