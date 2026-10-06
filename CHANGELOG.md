@@ -5,7 +5,13 @@ Tutte le modifiche e le evoluzioni rilevanti del progetto HAL sono documentate i
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/),
 e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
-## [Unreleased]
+## [1.9.0] - 2026-10-06
+
+### Added
+- **Cache L1 (`07`)**: Normalizzazione prompt, hashing SHA-256 canonico, chiavi Redis composte, TTL e invalidazione contesto `#techdebt` · P0
+- **Retention & Redaction (`05`)**: Denylist regex avanzata, redaction in scrittura, scansione PII tramite preset Laya `#infra` · P0
+- **Circuit Breaker & Session (`19`)**: Derivazione deterministica del `session_id` e State Machine del circuit breaker per i provider `#feature` · P1
+- **Flush automatico ToDo**: Automazione del comando `/todo` per eseguire il flush della sezione «Già fatto» direttamente in `CHANGELOG.md` ad ogni invocazione `#infra`
 
 ## [1.8.0] - 2026-10-02
 

@@ -10,6 +10,10 @@
 - **Architettura Cognitiva a Due Livelli**:
   - **System 1 (Laya)**: Svolge compiti preliminari ad alta velocità (routing, scelta discreta, scoring euristico, pre-filtro `noul`) con HTTP session pooling e cache in-memory `@lru_cache`.
   - **System 2 (Reasoning)**: Riservato al ragionamento profondo, pianificazione, generazione di codice e refactoring.
+- **Gateway Core Avanzato (v1.9.0)**:
+  - **Cache L1 Esatta (`07`)**: Chiave composita Redis con normalizzazione prompt (hash SHA-256), TTL per classe e invalidazione mirata dei file di contesto.
+  - **Retention & Redaction (`05`)**: Oscuramento preventivo di segreti, API key e token nei log con placeholder tipizzati (`{{secret:...}}`) e scansione PII tramite preset Laya.
+  - **Circuit Breaker & Session (`19`)**: Derivazione deterministica del `session_id` per conversazioni parallele e State Machine del circuit breaker per i provider.
 - **Ecosistema Agenti L1**: 8 agenti primari che ereditano dall'agente radice `a-agentzero`.
 
 ---
@@ -37,6 +41,12 @@ Per testare il router System 1 (Laya):
 ```bash
 python3 router.py triage "analizza metriche seo"
 python3 router.py routing "ottimizza query db" --routes a-harness a-wordpress a-b2b
+```
+
+Per eseguire i test unitari del Gateway Core (Cache L1, Redaction e Circuit Breaker):
+
+```bash
+python3 test_gateway_core.py
 ```
 
 ---

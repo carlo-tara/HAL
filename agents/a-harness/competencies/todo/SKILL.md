@@ -22,7 +22,7 @@ Custode operativo di **`./ToDo.md`** (root repo). Backlog **rinfrescabile** — 
 
 Carica questa competenza e fai un pass di igiene quando:
 
-1. L’utente invoca **`/todo`**
+1. L’utente invoca **`/todo`** (esegue automaticamente il flush di tutte le voci presenti in «Già fatto» verso `./CHANGELOG.md`)
 2. **`./ToDo.md`** viene creato o modificato (edit umano o agente) — tranne se l’edit è già l’output di questo pass
 3. Richiesta esplicita di residual backlog / «cosa resta» / triage Attività
 

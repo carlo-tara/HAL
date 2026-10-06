@@ -8,7 +8,7 @@ description: Command todo for HAL workspace.
 
 ## Objective
 
-Eseguire l'igiene di **`./ToDo.md`** (root del repo attivo): inventario, prune, chiarisci, priorità, tag, flush «Già fatto» → `./CHANGELOG.md`. Non avviare `/slice` né Act su Attività.
+Eseguire l'igiene di **`./ToDo.md`** (root del repo attivo): inventario, prune, chiarisci, priorità, tag, flush obbligatorio di tutte le voci presenti nella sezione «Già fatto» verso `./CHANGELOG.md` ad ogni invocazione. Non avviare `/slice` né Act su Attività.
 
 ## Process
 

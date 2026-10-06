@@ -1,9 +1,7 @@
 {
-  "command": "graph",
-  "mode": "auto-accept",
-  "source": "ToDo.md",
-  "status": "completed",
-  "nodes_total": 1,
-  "nodes_completed": 1,
-  "next": null
+  "graph": "ToDo.md-multicycle",
+  "node_id": "node-07-1",
+  "next": "node-07-2",
+  "y": true,
+  "brief": "Esecuzione multi-cycle avviata per i task P0 (07, 05) e P1 (19) definiti in ToDo.md."
 }
