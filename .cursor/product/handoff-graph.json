@@ -1,7 +1,8 @@
 {
   "graph": "ToDo.md-multicycle",
-  "node_id": "node-07-1",
-  "next": "node-07-2",
+  "node_id": "node-version-chains",
+  "next": "node-ci",
   "y": true,
-  "brief": "Esecuzione multi-cycle avviata per i task P0 (07, 05) e P1 (19) definiti in ToDo.md."
+  "status": "blocked",
+  "brief": "Il gate make -C agents test-unit fallisce prima dei test gateway: 7 L1 e L2 harness-agentfactory hanno extends-version STALE. Riallineare con sync selettivo prima di riprendere node-ci."
 }

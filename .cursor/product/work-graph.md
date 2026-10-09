@@ -1,50 +1,63 @@
-# Work Graph — Multi-Cycle Backlog (`ToDo.md`)
+# Work Graph — Multi-Cycle ToDo
 
 - **Source:** file (`ToDo.md`)
-- **Goal:** Esecuzione strutturata dei task P0 (Cache L1 e Retention/Redaction) e P1 (Circuit Breaker & Session)
+- **Goal:** completare in cicli sequenziali i 18 residui attuali, mantenendo gate e acceptance per ogni nodo
 - **Auto-accept:** true
 - **Multi-cycle:** true
+- **Mode:** graph
+- **Why mode:** backlog multi-contesto con dipendenze tra provider, decisioni Laya/System 2, eventi e gate CI; esecuzione sequenziale per non sovrapporre i gate.
+- **Next:** `node-version-chains` — **BLOCKED**, riallineare le versioni via sync selettivo prima del gate CI
 
 ## Nodi
 
-1. **node-07-1**: 07 — Cache L1 (Parte 1): Normalizzazione prompt e hashing canonico (SHA-256) per chiavi Redis composte.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-07-2`
+| id | type | owner | input → output | stop / acceptance | next |
+|---|---|---|---|---|---|
+| `node-version-chains` | act | steward + `/sync` selettivo | version report → catene L1/L2 allineate | nessun `STALE`; `make -C agents test-unit` passa | `node-ci` |
+| `node-ci` | act | `/cycle` + steward | ToDo P0 → Make gate + workflow root | test gateway eseguiti; push/PR avviano CI; test rosso fallisce | `node-laya-fallback` |
+| `node-laya-fallback` | act | `/cycle` | primitive Laya → esito typed | outage/invalid = fallback/abstain; mai falsa confidence o cache valida | `node-event-redaction` |
+| `node-event-redaction` | act | `/cycle` | `gateway_core.py` → event write protetta | secret/PII sintetici non persistiti in chiaro; errore scan incerto | `node-retention` |
+| `node-retention` | act | steward + `/cycle` | eventi → lifecycle retention | purge, cifratura e accesso verificati | `node-system2-provider` |
+| `node-system2-provider` | act | `/cycle` | `SystemTwoEngine` → backend invocato | risposta reale/mock e modello servito verificabili | `node-model-resolution` |
+| `node-model-resolution` | act | `/cycle` | provider → resolver per use-case | capability/profile; default globale; nessuna selezione per agente | `node-s1-s2-policy` |
+| `node-s1-s2-policy` | act | `/cycle` | intake + esito Laya → livelli S1/S2 | matrice S1-only / S2 ridotto / S2 completo testata | `node-evals` |
+| `node-evals` | act | `/cycle` | routing/modelli → replay + shadow | quality, cost, latency e rollback documentati; gate passa | `node-cache` |
+| `node-cache` | act | `/cycle` | cache key → Redis L1 | TTL, hash contenuti, invalidazione e tool boundary testati | `node-breaker` |
+| `node-breaker` | act | `/cycle` | provider → breaker integrato | open skip, un solo half-open probe, fallback e recupero testati | `node-secrets` |
+| `node-secrets` | act | steward + `/cycle` | CI → secret scanning | fixture segreta rilevata senza leak | `node-deps` |
+| `node-deps` | act | steward + `/cycle` | runtime manifest → dependency audit | manifest e advisory test verificati nel gate | `node-sast` |
+| `node-sast` | act | steward + `/cycle` | Python gateway → SAST | baseline/waiver espliciti, gate CI verde | `node-score` |
+| `node-score` | act | `/cycle` | CLI Laya → score funzionante | test CLI numerico passa | `node-docs` |
+| `node-docs` | act | `/cycle` | README/changelog/indice → stato verificabile | claim supportati; indice coerente | `node-hooks` |
+| `node-hooks` | act | steward + `/cycle` | riferimenti hook → file verificati | nessun hook richiesto saltato silenziosamente | `node-performance` |
+| `node-performance` | act | `/cycle` | batch Laya + gateway hot paths → benchmark | round-trip, tempo e memoria misurati; ottimizzazioni solo se giustificate | `—` |
 
-2. **node-07-2**: 07 — Cache L1 (Parte 2): Integrazione TTL per classe di use-case (`use-cases/*.yaml`) e invalidazione basata su hash dei file di contesto.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-07-3`
+## Sequenza e gate
 
-3. **node-07-3**: 07 — Cache L1 (Parte 3): Re-streaming SSE delle risposte cachate e test di hit rate / assenza di risposte stale.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-05-1`
-
-4. **node-05-1**: 05 — Retention & Redaction (Parte 1): Denylist regex in `event_writer` per API key, Bearer token, blocchi PEM e password con placeholder tipizzati.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-05-2`
-
-5. **node-05-2**: 05 — Retention & Redaction (Parte 2): Integrazione preset Laya `pii_scan` per flag di PII e gestione differenziata/cifrata dei body.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-05-3`
-
-6. **node-05-3**: 05 — Retention & Redaction (Parte 3): Rotazione giornaliera JSONL, job di purge (body > 30gg, metadata 12m) e cifratura volumi/backup.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-19-1`
-
-7. **node-19-1**: 19 — Circuit Breaker & Session (Parte 1): Derivazione deterministica del `session_id` (`hash(api_key, workspace_path, conversation)`) con test di non collisione per chat parallele.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `node-19-2`
-
-8. **node-19-2**: 19 — Circuit Breaker & Session (Parte 2): Implementazione State Machine del circuit breaker per provider in Redis (`providers.yaml`) con soglie d'errore e finestre di recupero.
-   - **Slash**: `/slice` -> `/red` -> `/green` -> `/refactor`
-   - **Next**: `—`
+Ogni nodo è un ciclo indipendente (≤4 file per slice), con RED → GREEN → REFACTOR → READY. Nessun parallelismo. Dopo ogni gate verde, avanzare al nodo `next`; blocchi di credenziali, decisioni infrastrutturali irreversibili o gate non recuperabili fermano il multi-cycle.
 
 ```mermaid
-graph TD
-    n1[07-1: Normalizzazione e Hashing] --> n2[07-2: TTL e Invalidazione Contesto]
-    n2 --> n3[07-3: Re-streaming SSE & Test]
-    n3 --> n4[05-1: Denylist Regex Redaction]
-    n4 --> n5[05-2: Laya PII Scan & Cifratura]
-    n5 --> n6[05-3: Rotazione, Purge e Backup]
-    n6 --> n7[19-1: Session ID Deterministico]
-    n7 --> n8[19-2: Circuit Breaker Redis]
+flowchart TD
+    versions[Allineamento catene versioni] --> ci[CI e test gateway]
+    ci --> fallback[Fallback Laya]
+    fallback --> redact[Redaction e PII]
+    redact --> retention[Retention e accesso]
+    retention --> provider[Provider System 2]
+    provider --> resolver[Resolver per profilo]
+    resolver --> policy[Policy System 1/System 2]
+    policy --> evals[Replay e shadow]
+    evals --> cache[Cache L1 Redis]
+    cache --> breaker[Circuit breaker]
+    breaker --> secrets[Secret scan]
+    secrets --> deps[Dependency audit]
+    deps --> sast[SAST]
+    sast --> score[Laya score CLI]
+    score --> docs[Documentazione]
+    docs --> hooks[Hook Cursor]
+    hooks --> perf[Benchmark performance]
+```
+
+## Progress
+
+- Avvio `-y`: grafo accettato automaticamente.
+- `node-version-chains`: **BLOCKED**; prerequisite osservato da `node-ci`: `make -C agents test-unit` fallisce in `version-chains` per L1 (`a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`) e L2 `harness-agentfactory` STALE.
+- Nessun nodo completato; non bypassare il gate né aggiornare in massa le versioni senza sync selettivo.
