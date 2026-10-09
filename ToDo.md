@@ -8,7 +8,7 @@ Backlog rinfrescabile (≠ Progress append-only). Igiene: `/todo`.
   - Perché utile: `make -C agents test-unit` si ferma prima dei test gateway perché sette L1 e L2 `harness-agentfactory` risultano STALE.
   - Acceptance: il report `make -C agents version-chains` non contiene `STALE` e `make -C agents test-unit` termina con codice 0; riallineamenti e changelog seguono il flusso sync selettivo.
 - [ ] Rendere obbligatori in CI i test del gateway `#infra` · P0
-  - Perché utile: oggi il gate Make non esegue i test Python del gateway e la workflow non risulta attiva dal path/branch corrente; manca una verifica automatica affidabile prima del merge.
+  - Perché utile: il workflow esistente è in `agents/.github/workflows/ready-for-review.yml`, ascolta `main` ed esegue il gate degli agenti; non copre i test Python del gateway nel repository root.
   - Acceptance: `ready-for-review` esegue `test_gateway_core.py` e `test_agent_llm_config.py`; la workflow è in `.github/workflows/` alla root e attiva su push e pull request del branch predefinito; un test fallito rende CI non verde.
 
 ## P1

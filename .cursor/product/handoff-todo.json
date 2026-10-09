@@ -1,7 +1,13 @@
 {
-  "command": "todo",
-  "status": "completed",
-  "summary": "ToDo.md igiene eseguita: task P2 completato e spostato in Già fatto.",
-  "open_count": 0,
-  "flushed_count": 1
+  "kind": "todo",
+  "cmd": "/todo",
+  "ts": "2026-10-09T18:05:03Z",
+  "flags": {"y": false},
+  "acceptance": "",
+  "files": "",
+  "node_id": "",
+  "next": "",
+  "summary": "18 attività aperte: 2 P0, 14 P1, 2 P2; nessuna voce completata da flushare",
+  "brief": "Igiene ToDo: mantenute attività non obsolete, nessuna ridondanza eliminabile; precisato che il workflow agents non copre il gateway root. Gate version-chains ancora STALE.",
+  "token_budget": 200
 }
