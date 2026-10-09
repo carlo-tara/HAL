@@ -10,7 +10,7 @@
 - **Architettura Cognitiva a Due Livelli**:
   - **System 1 (Laya)**: Svolge compiti preliminari ad alta velocità (routing, scelta discreta, scoring euristico, pre-filtro `noul`) con HTTP session pooling e cache in-memory `@lru_cache`.
   - **System 2 (Reasoning)**: Riservato al ragionamento profondo, pianificazione, generazione di codice e refactoring.
-- **Gateway Core Avanzato (v2.2.0) — [Verificato & Integrato in CI]**:
+- **Gateway Core Avanzato (v2.3.0) — [Verificato & Integrato in CI]**:
   - **Cache L1 Esatta (`07`)**: Chiave composita Redis con hashing SHA-256 dei contenuti reali dei file di contesto, TTL configurato per profilo d'uso e validazione dei tool boundary (**Verificato**).
   - **Retention & Redaction (`05`)**: Oscuramento preventivo di segreti, API key e token nei log con placeholder tipizzati (`{{secret:...}}`) e scansione PII protetta in scrittura JSONL (**Verificato**).
   - **Circuit Breaker & Session (`19`)**: Derivazione deterministica del `session_id`, State Machine del circuit breaker con controllo probe half-open concorrenti (`probe_in_flight`) e risoluzione con fallback automatico (**Verificato**).
@@ -24,6 +24,7 @@
 
 - `agents/`: Sorgenti canoniche di tutti gli agenti, skill, competenze e script.
 - `scripts/`: Script di utilità e gate CI (secret scanning, dependency audit, SAST audit, benchmark).
+- `tests/`: Suite completa dei test unitari e di integrazione.
 - `.agents/skills/`: Symlink condivisi per tutte le skill L0/L1/L2.
 - `.zed/prompts/`: Prompt e comandi convertiti ed esposti come slash-command in Zed.
 - `router.py` / `laya_service.py`: Interfaccia di System 1 (Laya) con supporto per routing e batch scoring.
@@ -45,10 +46,10 @@ python3 router.py triage "analizza metriche seo"
 python3 router.py routing "ottimizza query db" --routes a-harness a-wordpress a-b2b
 ```
 
-Per eseguire i test unitari del Gateway Core (Cache L1, Redaction e Circuit Breaker):
+Per eseguire i test unitari del Gateway Core:
 
 ```bash
-python3 test_gateway_core.py
+python3 -m unittest discover -s tests
 ```
 
 ---

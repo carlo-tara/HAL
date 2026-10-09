@@ -1,8 +1,8 @@
 ---
 name: laya
-version: 1.0.0
+version: 1.1.0
 description: >-
-  Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete e scoring euristico, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, noul. Invocabile via CLI python3 router.py o modulo Python router.
+  Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py o modulo Python router.
 ---
 
 # Laya — System 1 Service
@@ -30,6 +30,8 @@ L'agente deve consultare Laya ogni volta che si presenta un compito preliminare 
 - **Triage e Routing**: assegnare un file, una richiesta o un problema a una categoria/rotta (`python3 router.py routing "..." --routes ...`).
 - **Scelta discreta**: scegliere tra un set definito di opzioni o strategie operative (`python3 router.py choice "..." --options ...`).
 - **Valutazione di rischio o aderenza**: ottenere uno score 0-1 rispetto a un criterio specifico (`python3 router.py score "..." --criteria ...`).
+- **Valutazione di confidenza**: stimare la confidenza (0-100%) di una risposta a un quesito o dato (`python3 router.py confidence "..."`).
+- **Valutazione del contesto**: stimare la chiarezza e completezza (0-100%) del contesto fornito (`python3 router.py context "..."`).
 - **Pre-filtro**: ridurre opzioni prima di una pianificazione approfondita di System 2.
 
 ## Quando NON usare Laya (riservato a System 2)
@@ -59,7 +61,15 @@ python3 router.py choice "<prompt>" --options "<opzione1>, <opzione2>" --json
 python3 router.py score "<testo da valutare>" --criteria "<criterio>"
 python3 router.py score "<testo>" --criteria "<criterio>" --json
 
-# 4. Noul
+# 4. Confidenza (0-100%)
+python3 router.py confidence "<testo o domanda>"
+python3 router.py confidence "<testo o domanda>" --json
+
+# 5. Contesto (0-100%)
+python3 router.py context "<testo o contesto>"
+python3 router.py context "<testo o contesto>" --json
+
+# 6. Noul
 python3 router.py noul "<testo>"
 ```
 
@@ -68,9 +78,11 @@ python3 router.py noul "<testo>"
 Se eseguito all'interno di script o runtime Python in HAL:
 
 ```python
-from router import handle_choice, handle_routing, handle_score, handle_noul
+from router import handle_choice, handle_routing, handle_score, handle_confidence, handle_context, handle_noul
 
 scelta = handle_choice("strategia", ["opt1", "opt2"])
 rotta = handle_routing("richiesta", ["docs", "agents", "infra"])
 punteggio = handle_score("snippet", "rischio_regressione")
+conf = handle_confidence("quanti abitanti ha Milano?")
+ctx = handle_context("richiesta utente con dettagli...")
 ```

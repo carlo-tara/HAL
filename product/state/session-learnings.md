@@ -24,3 +24,13 @@
 
 ### HAL
 - **Catene `extends-version` stale bloccano il gate canonico**: `make -C agents test-unit` si arresta prima dei test gateway per sette L1 e L2 `harness-agentfactory` → `ToDo.md` · P0 · `#infra`
+
+## [2026-10-09] learn-2026-10-09-cursor-decoupling-scripts-tests — /learn !
+
+### Progetto
+- **Sostituzione eccezioni alias con `OSError`** → `check_secrets.py`, `gateway_core.py`, `check_sast.py` § Exception handling
+- **Organizzazione workspace (scripts/ e tests/)** → `scripts/`, `tests/` § Project structure
+- **Decoupling totale da Cursor** → Rimozione definitiva delle cartelle `.cursor/` e `.agents/.cursor/` § Architecture
+
+### HAL
+- (nessuno)

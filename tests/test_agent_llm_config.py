@@ -21,7 +21,7 @@ class TestAgentLLMConfig(unittest.TestCase):
                 del os.environ[key]
 
     def test_all_agents_have_external_mode_off_by_default(self) -> None:
-        catalog_path = Path(__file__).parent / "agents" / "catalog.json"
+        catalog_path = Path(__file__).parent.parent / "agents" / "catalog.json"
         catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
 
         for item in catalog["agents"]:
