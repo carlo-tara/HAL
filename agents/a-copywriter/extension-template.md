@@ -32,13 +32,13 @@ Competenze: risolvi L0 → L1 → eventuali override sotto `competencies/{id}/`.
 
 | File | Path |
 |------|------|
-| Brand file | `.cursor/brands/{nome-sito}.md` |
+| Brand file | `brands/{nome-sito}.md` |
 
 ### Quando serve una skill voice dedicata
 
 Vedi L0 `tono-di-voce` § Brand file vs skill voice. Se il corpus vocale è pesante (registri per tipo, writing-rules, struttura post):
 
-- Crea `.cursor/skills/{slug}-voice/SKILL.md` o `{slug}-tone-of-voice` con `extends: a-copywriter`
+- Crea `.agents/skills/{slug}-voice/SKILL.md` o `{slug}-tone-of-voice` con `extends: a-copywriter`
 - Brand resta fonte di lessico/inclusività/PS; voice skill = registri e regole di scrittura
 - Non duplicare tabelle Usa/Evita tra brand e voice
 
@@ -73,7 +73,7 @@ Per override strutturato della competenza, vedi sezione **Competenze L2** sotto.
 Crea solo i file di override necessari. Path:
 
 ```
-.cursor/skills/copywriter-{progetto}/competencies/
+`.agents/skills/copywriter-{progetto}/competencies/`
   tono-di-voce/SKILL.md      # delta voce / inclusività
   humanizer/SKILL.md         # delta anti-AI / ritmo
   italiano-locale/SKILL.md   # delta lessico / regionale / idiomi
@@ -93,7 +93,7 @@ description: >-
 ```
 
 Body: **solo delta**. Non copiare il corpus L1.  
-Check: `bash agents/a-agentzero/scripts/agent-version.sh competency-chain .cursor/skills/copywriter-{progetto}/competencies/{id}/SKILL.md`
+Check: `bash agents/a-agentzero/scripts/agent-version.sh competency-chain .agents/skills/copywriter-{progetto}/competencies/{id}/SKILL.md`
 
 ---
 
@@ -118,7 +118,7 @@ Check: `bash agents/a-agentzero/scripts/agent-version.sh competency-chain .curso
 |-------|--------|
 | `version` | Versione delta L2 |
 | `extends-version` | Versione `a-copywriter` integrata |
-| CHANGELOG | `.cursor/skills/copywriter-{progetto}/CHANGELOG.md` |
+| CHANGELOG | `.agents/skills/copywriter-{progetto}/CHANGELOG.md` |
 
 Alla creazione: `extends-version` = `version` corrente di `a-copywriter` (1.1.0+).  
-Sync: [agent-versioning.md](../../a-agentzero/references/agent-versioning.md) — `agent-version.sh pending .cursor/skills/copywriter-{progetto}/SKILL.md`
+Sync: [agent-versioning.md](../../a-agentzero/references/agent-versioning.md) — `agent-version.sh pending .agents/skills/copywriter-{progetto}/SKILL.md`

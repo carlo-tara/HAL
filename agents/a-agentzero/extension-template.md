@@ -46,9 +46,9 @@ All'avvio: carica catena `a-agentzero` → `a-{dominio}` → **questo file**.
 
 | File | Path | Note |
 |------|------|------|
-| {es. Brand} | `.cursor/brands/{nome}.md` | {creato / da creare} |
-| {es. Profilo WP} | `.cursor/wordpress/{nome}.md` | {se applicabile} |
-| {es. Stile illustrazione} | `.cursor/illustration-styles/{nome}.md` | {se applicabile} |
+| {es. Brand} | `brands/{nome}.md` | {creato / da creare} |
+| {es. Profilo WP} | `wordpress/{nome}.md` | {se applicabile} |
+| {es. Stile illustrazione} | `illustration-styles/{nome}.md` | {se applicabile} |
 
 ---
 
@@ -100,7 +100,7 @@ Regole ferree o preferenze specifiche del progetto (non duplicare L0/L1):
 
 | Campo | Valore |
 |-------|--------|
-| Path | `.cursor/agents/{nome}.md` |
+| Path | `agents/{nome}.md` |
 | Sync | Allineare `extends-version` e path competenze a ogni sync L2←L1 |
 
 ---
@@ -111,12 +111,12 @@ Regole ferree o preferenze specifiche del progetto (non duplicare L0/L1):
 |-------|--------|
 | `version` | Versione del delta L2 (semver) |
 | `extends-version` | Versione L1 integrata — aggiorna al sync selettivo |
-| CHANGELOG | `.cursor/skills/{dominio}-{progetto}/CHANGELOG.md` |
+| CHANGELOG | `.agents/skills/{dominio}-{progetto}/CHANGELOG.md` |
 
 Alla creazione: imposta `extends-version` alla `version` corrente del padre L1 (`a-{dominio}`).
 
 Sync selettivo: vedi `~/.agents/skills/a-agentzero/references/agent-versioning.md`  
-Report: `bash agents/a-agentzero/scripts/agent-version.sh pending .cursor/skills/{dominio}-{progetto}/SKILL.md`
+Report: `bash agents/a-agentzero/scripts/agent-version.sh pending .agents/skills/{dominio}-{progetto}/SKILL.md`
 
 ---
 

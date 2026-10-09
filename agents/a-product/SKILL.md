@@ -1,10 +1,9 @@
 ---
 name: a-product
 extends: a-agentzero
-version: 2.1.0
+version: 2.1.1
 model: orcarouter/deepseek/deepseek-v4-flash-free
-model-fallback: cursor-default
-extends-version: 1.6.15
+extends-version: 1.8.1
 competencies:
   - problem-framing
   - lean-canvas

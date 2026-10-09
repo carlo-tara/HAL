@@ -5,6 +5,11 @@ Tutte le modifiche e le evoluzioni rilevanti del progetto HAL sono documentate i
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/),
 e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
+## [2.1.0] - 2026-10-09
+
+### Removed
+- Rimozione definitiva di ogni cartella e riferimento a Cursor (`.cursor/`, `.agents/.cursor/` e relativi file di adapter e reference), rendendo il workspace focalizzato ed esclusivo per Zed.
+
 ## [2.0.0] - 2026-10-09
 
 ### Added

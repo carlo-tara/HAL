@@ -1,8 +1,7 @@
 ---
 name: a-agentzero
-version: 1.8.0
+version: 1.8.1
 model: orcarouter/deepseek/deepseek-v4-flash-free
-model-fallback: cursor-default
 description: >-
   Reason why: senza L0 comune ogni dominio reinventa protocollo, sync e sicurezza.
   Agente radice HAL: ereditarietà a 3 livelli, competenze modulari,
@@ -14,13 +13,13 @@ description: >-
 
 Radice dell'ecosistema agenti HAL. Fornisce funzionalità generiche condivise; gli agenti di dominio (L1) e le skill figlie di progetto (L2) ereditano via `extends:`.
 
-**Sorgente canonica:** `agents/a-agentzero/` in HAL; l'entrypoint condiviso per Zed e Cursor è `.agents/skills/a-agentzero`.  
+**Sorgente canonica:** `agents/a-agentzero/` in HAL; l'entrypoint condiviso è `.agents/skills/a-agentzero`.  
 **Protocollo formale:** [AGENT-PROTOCOL.md](AGENT-PROTOCOL.md).  
 **Scaffold figli:** [references/extension-scaffold.md](references/extension-scaffold.md) + [extension-template.md](extension-template.md).  
 **Nuovi L1 da proto / corpus esterni:** [references/l1-from-proto.md](references/l1-from-proto.md) (critica ed estensione, non copia; vendor+pin se aggiornabile).  
 **Apprendimento sessione:** [learn/SKILL.md](learn/SKILL.md) (`/learn ?` riflessione, `/learn !` consolidamento).  
 **Sync agenti:** [sync/SKILL.md](sync/SKILL.md) (`/sync ?` report, `/sync !` deploy + report + comandi L0, `/sync <` generalizzazione L2→L1/L0).
-**Comandi L0:** [commands/](commands/) (adapter slash command in `.cursor/commands/`; le skill condivise sono in `.agents/skills/`).  
+**Comandi L0:** [commands/](commands/) (adapter slash command in `commands/`; le skill condivise sono in `.agents/skills/`).  
 **Competenze L0:** [competencies/](competencies/) (`tono-di-voce`, `humanizer`, `italiano-locale`, `po-interviewer`).
 
 ---
@@ -31,7 +30,7 @@ Radice dell'ecosistema agenti HAL. Fornisce funzionalità generiche condivise; g
 |---------|--------|-------|
 | **L0** | `a-agentzero` | Protocollo, workflow comuni, scaffold, competenze baseline |
 | **L1** | `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress` | Competenza di dominio + moduli dominio |
-| **L2** | `.agents/skills/{dominio}-{progetto}/` (compatibilità Cursor: `.cursor/skills/`) | Delta progetto |
+| **L2** | `.agents/skills/{dominio}-{progetto}/` | Delta progetto |
 
 **Ordine di caricamento:** L0 → L1 → L2. In conflitto vince il livello più alto. Le regole di sicurezza L0 non sono mai sovrascrivibili.
 
@@ -66,7 +65,7 @@ Prima di qualsiasi task:
 1. **Carica catena `extends:`** — da L0 fino alla skill attiva (L1 globale o L2 di progetto)
 2. **Verifica versioni** — se L1/L2 ha `extends-version` < versione padre, segnala sync disponibile (vedi [references/agent-versioning.md](references/agent-versioning.md)); report rapido: `bash a-agentzero/scripts/agent-version.sh chain <SKILL.md>`; sync globale: [sync/SKILL.md](sync/SKILL.md) / `scripts/sync-agents.sh`
 3. **Carica competenze** — per ogni id in `competencies:` della skill attiva, risolvi L0 → L1 → L2 (vedi AGENT-PROTOCOL.md); verifica `extends-version` per competenza con `agent-version.sh competency-chain`
-4. **Discovery skill figlia L2** — cerca prima in `{repo}/.agents/skills/*/SKILL.md`, poi in `{repo}/.cursor/skills/*/SKILL.md` per compatibilità Cursor legacy; match `extends: a-{dominio}`; fallback legacy; se **2+ figli** applica multi-figlio (`role:` / `primary:` / task match) — vedi [AGENT-PROTOCOL.md](AGENT-PROTOCOL.md)
+4. **Discovery skill figlia L2** — cerca in `{repo}/.agents/skills/*/SKILL.md`; match `extends: a-{dominio}`; se **2+ figli** applica multi-figlio (`role:` / `primary:` / task match) — vedi [AGENT-PROTOCOL.md](AGENT-PROTOCOL.md)
 5. **Discovery file dati** — cerca i brief del dominio nel repo (tabella sotto)
 6. **Reference on-demand** — leggi solo i file pertinenti al task (priorità: reference della competenza al livello più alto)
 
@@ -75,14 +74,14 @@ Prima di qualsiasi task:
 | Agente L1 | Path dati | Se 0 file | Se 2+ file |
 |-----------|-----------|-----------|------------|
 | a-b2b | L2 `b2b-*` + path enrichment in L2 | Proponi da `a-b2b/extension-template.md` | Chiedi quale progetto |
-| a-copywriter | `.cursor/brands/*.md` | Proponi da `a-copywriter/brand-brief-template.md` | Chiedi quale brand |
-| a-design | `.cursor/chart-styles/*.md`, `.cursor/illustration-styles/*.md`, L2 `design-*` | Proponi template stile/UI | Chiedi quale stile/asset |
+| a-copywriter | `brands/*.md` | Proponi da `a-copywriter/brand-brief-template.md` | Chiedi quale brand |
+| a-design | `chart-styles/*.md`, `illustration-styles/*.md`, L2 `design-*` | Proponi template stile/UI | Chiedi quale stile/asset |
 | a-harness | `docs/glossary.md`, `Makefile`, L2 `harness-*` | Proponi `/bootstrap` da `a-harness/references/harness-scaffold.md` | Chiedi quale progetto |
-| a-product | `.cursor/product/` (`prd.md`, `personas.md`, `jtbd.md`, `features/`) | Proponi scaffold product + `/intake` | Chiedi quale progetto/path |
+| a-product | `product/` (`prd.md`, `personas.md`, `jtbd.md`, `features/`) | Proponi scaffold product + `/intake` | Chiedi quale progetto/path |
 | a-seozoom | brief in skill L2 o `project-brief-template.md` | Proponi scaffold figlio + brief | Chiedi quale sito |
-| a-wordpress | `.cursor/wordpress/*.md` | Proponi da `a-wordpress/site-brief-template.md` | Chiedi quale installazione |
+| a-wordpress | `wordpress/*.md` | Proponi da `a-wordpress/site-brief-template.md` | Chiedi quale installazione |
 
-**Discovery product portabile (ordine):** `.cursor/product/` → `.claude/product/` → `product/`.
+**Discovery product portabile (ordine):** `product/` → `.claude/product/`.
 
 Pattern comune: **1 file → usalo** | **0 file → ferma e proponi template** | **2+ file → chiedi o inferisci da dominio/path/chat**.
 
@@ -112,7 +111,7 @@ Per creare un agente figlio che eredita da un agente madre L1:
 
 1. Leggi [references/extension-scaffold.md](references/extension-scaffold.md)
 2. Usa [extension-template.md](extension-template.md) (o template locale dell'agente L1 se presente)
-3. Salva in `{progetto}/.agents/skills/{dominio}-{nome}/SKILL.md` con `extends: a-{dominio}`. Per progetti Cursor legacy è supportato `.cursor/skills/`.
+3. Salva in `{progetto}/.agents/skills/{dominio}-{nome}/SKILL.md` con `extends: a-{dominio}`.
 
 Ogni agente L1 rimanda qui per lo scaffold — non duplicare il workflow nel dominio.
 
@@ -136,10 +135,10 @@ Non sovrascrive sicurezza L0. Non consolidare credenziali. Task one-off chiusi �
 Vedi [sync/SKILL.md](sync/SKILL.md). Sintesi:
 
 - **`/sync ?`** — report catene L1←L0 (e L2 se indichi progetti) + stato comandi L0; zero deploy
-- **`/sync !`** — `deploy-all.sh` (skill, agents, `~/.cursor/commands/`) + report; sync selettivo `extends-version` resta guidato
+- **`/sync !`** — `deploy-all.sh` (skill, agents, `commands/`) + report; sync selettivo `extends-version` resta guidato
 - **`/sync <`** — analizza skill L2; propone DUP / promozione L1 o L0; zero scrittura ([l2-generalization.md](sync/references/l2-generalization.md))
 
-Comandi L0: [commands/](commands/) → `~/.cursor/commands/`. Override progetto: `{repo}/.cursor/commands/` vince.
+Comandi L0: [commands/](commands/) → `commands/`. Override progetto: `{repo}/commands/` vince.
 
 ```bash
 bash a-agentzero/scripts/sync-agents.sh              # deploy + report L1 + comandi
@@ -175,7 +174,7 @@ Su richiesta di **mappare attività rimaste** / residual backlog (dopo una wave,
 
 1. Scrivi o aggiorna **`./ToDo.md`** nella root del repo consumer (path fisso)
 2. Struttura minima: priorità **P0/P1/P2**, acceptance per voce, track paralleli se multi-agente, sezione «già fatto»
-3. **Non** è uno `/slice` accettato né sostituto di `.cursor/product/agent-progress.md` (progress = Capture append-only; ToDo = backlog rinfrescabile)
+3. **Non** è uno `/slice` accettato né sostituto di `product/agent-progress.md` (progress = Capture append-only; ToDo = backlog rinfrescabile)
 
 Dettaglio operativo harness → L1 `a-harness` / competenza `session-progress`.
 
@@ -232,7 +231,7 @@ mkdir -p .agents/skills
 # Compila extends: e sezioni delta — vedi extension-scaffold.md
 ```
 
-Opzionale in Cursor: rule `.cursor/rules/a-{dominio}.mdc` con `globs` sui path del dominio. Le istruzioni comuni ai due editor vanno in `AGENTS.md`.
+Le istruzioni comuni vanno in `AGENTS.md`.
 
 ---
 

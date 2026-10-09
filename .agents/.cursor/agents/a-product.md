@@ -1,1 +1,0 @@
-../../agents/a-product/agents/a-product.md

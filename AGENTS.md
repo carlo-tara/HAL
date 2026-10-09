@@ -1,9 +1,8 @@
-# HAL — istruzioni per Zed e Cursor
+# HAL — istruzioni per Zed
 
 La fonte canonica di agenti e skill è `agents/`. Il repository AgentFactory è deprecato e non va consultato per l'uso o l'aggiornamento degli agenti.
 
-- Le skill condivise Zed/Cursor sono esposte in `.agents/skills/` e puntano ai bundle canonici in `agents/`.
-- I subagent e i comandi in `.cursor/` sono adapter Cursor; non duplicare lì le istruzioni canoniche.
+- Le skill condivise sono esposte in `.agents/skills/` e puntano ai bundle canonici in `agents/`.
 - Il modello predefinito di esecuzione è System 2 (`SystemTwoEngine.ACTIVE_MODEL_NAME` in `global_config.py`). Non creare un runtime alternativo e non assegnare modelli diversi ai subagent.
 - Preservare contenuti, gerarchia L0/L1/L2 e competenze. Gli 8 agenti primari portano il prefisso `a-` (`a-agentzero`, `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`), mentre le skill integrate e i comandi operativi non usano il prefisso (`personas`, `jtbd`, `gherkin`, `enrichment`, `uiux`, `charts`, `illustrator`, `laya`, `learn`, `sync`, `harness-agentfactory`).
 - Non eseguire script dei bundle solo perché una skill è stata caricata.
@@ -28,8 +27,8 @@ L'utilizzo di OrcaRouter per ciascun agente è condizionato tramite tre parametr
 
 **Stato attuale**: `LLM_EXTERNAL_MODE = 0` per ogni agente. L'esecuzione di tutti gli agenti ricade sul default System 2 (`SystemTwoEngine.ACTIVE_MODEL_NAME`).
 
-## Sincronizzazione Multi-Editor (Cursor ⇄ Zed)
+## Integrazione Zed Editor
 
-La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzati Cursor (`.cursor/commands`, `.cursor/agents`) e Zed (`.zed/prompts`, `.agents/skills`) in modo automatico:
+La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzato Zed (`.zed/prompts`, `.agents/skills`):
 - Eseguire sempre `bash agents/scripts/link-workspace-skills.sh` dopo aver aggiunto o modificato comandi o skill.
-- Lo script crea link simbolici speculari sia verso `.cursor/commands/` che verso `.zed/prompts/`.
+- Lo script crea i link simbolici verso `.zed/prompts/`.

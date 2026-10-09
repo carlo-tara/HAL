@@ -1,6 +1,5 @@
 ---
 model: orcarouter/deepseek/deepseek-v4-flash-free
-model-fallback: cursor-default
 ---
 
 # Mappa residui (L0)

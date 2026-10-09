@@ -10,7 +10,7 @@ Specifica formale per agenti HAL e skill figlie di progetto.
 |---------|------|-------------|-------|
 | **L0** | `HAL/agents/a-agentzero/` → `.agents/skills/a-agentzero` | `version` (radice) | Protocollo, workflow generici, scaffold figli |
 | **L1** | `HAL/agents/a-{dominio}/` → `.agents/skills/a-{dominio}` | `extends: a-agentzero`, `version`, `extends-version` | Competenza di dominio |
-| **L2** | `{progetto}/.agents/skills/{dominio}-{nome}/` (Cursor legacy: `.cursor/skills/`) | `extends: a-{dominio}`, `version`, `extends-version` | Delta progetto |
+| **L2** | `{progetto}/.agents/skills/{dominio}-{nome}/` | `extends: a-{dominio}`, `version`, `extends-version` | Delta progetto |
 
 Agenti L1 disponibili: `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`.
 
@@ -54,13 +54,13 @@ Percorsi risoluzione skill:
 |---------|-------------------|----------|
 | L0 | `{repo}/.agents/skills/a-agentzero/SKILL.md` o `~/.agents/skills/a-agentzero/SKILL.md` | `HAL/agents/a-agentzero/SKILL.md` |
 | L1 | `{repo}/.agents/skills/a-{dominio}/SKILL.md` o `~/.agents/skills/a-{dominio}/SKILL.md` | `HAL/agents/a-{dominio}/SKILL.md` |
-| L2 | `{repo}/.agents/skills/*/SKILL.md` con `extends: a-{dominio}` | Cursor legacy `{repo}/.cursor/skills/`; poi naming legacy (sotto) |
+| L2 | `{repo}/.agents/skills/*/SKILL.md` con `extends: a-{dominio}` | Naming legacy (sotto) |
 
 ---
 
 ## Discovery skill figlia L2
 
-Cerca prima in `{repo}/.agents/skills/`, poi in `{repo}/.cursor/skills/` per i consumer Cursor legacy:
+Cerca in `{repo}/.agents/skills/`:
 
 1. **Primario:** qualsiasi `SKILL.md` con frontmatter `extends: a-{dominio}` (dominio = agente L1 attivo)
 2. **Fallback legacy** (compatibilità progetti esistenti):
@@ -113,7 +113,7 @@ La skill figlia **può**:
 - Aggiungere sezioni (capacità, path, workflow locali)
 - Sovrascrivere workflow e checklist del padre
 - Definire deleghe verso altre skill di progetto
-- Specificare file dati obbligatori (`.cursor/brands/`, `.cursor/wordpress/`, …)
+- Specificare file dati obbligatori (`brands/`, `wordpress/`, …)
 
 La skill figlia **non può**:
 
@@ -145,8 +145,8 @@ Il campo `name` nel frontmatter deve essere unico nel repo.
 
 | Priorità | Fonte | Cosa governa |
 |----------|-------|--------------|
-| 1 | Skill figlia L2 (`.agents/skills/{dominio}-*/`; Cursor legacy: `.cursor/skills/`) | Override progetto, path, workflow locali |
-| 2 | File dati progetto (`.cursor/brands/`, `.cursor/wordpress/`, `.cursor/illustration-styles/`, `.cursor/product/`, brief SEO, …) | Identità, path, stack, artefatti discovery |
+| 1 | Skill figlia L2 (`.agents/skills/{dominio}-*/`) | Override progetto, path, workflow locali |
+| 2 | File dati progetto (`brands/`, `wordpress/`, `illustration-styles/`, `product/`, brief SEO, …) | Identità, path, stack, artefatti discovery |
 | 3 | Skill L1 (`a-{dominio}`) | Competenza di dominio, reference, script |
 | 4 | Skill L0 (`a-agentzero`) | Protocollo, sicurezza, scaffold, checklist comuni |
 
@@ -258,7 +258,7 @@ competencies:
 |---------|------|
 | **L0** | `a-agentzero/competencies/{id}/SKILL.md` (+ `CHANGELOG.md`) |
 | **L1** | `a-{dominio}/competencies/{id}/SKILL.md` (+ `CHANGELOG.md`, `references/…`) |
-| **L2** | `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo override; Cursor legacy: `.cursor/skills/`) |
+| **L2** | `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo override) |
 
 Id esempio (dominio copy): `tono-di-voce`, `humanizer`, `italiano-locale`.
 
@@ -286,7 +286,7 @@ Per ogni id in `competencies:` dell'agente attivo:
 
 1. Carica L0 `a-agentzero/competencies/{id}/SKILL.md` se esiste
 2. Carica L1 `a-{dominio}/competencies/{id}/SKILL.md` se esiste
-3. Carica L2 `{repo}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` se esiste; fallback `.cursor/skills/` per consumer Cursor legacy
+3. Carica L2 `{repo}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` se esiste
 
 In conflitto: **L2 > L1 > L0**. Reference on-demand dalla competenza al **livello più alto** che le espone.
 
@@ -303,9 +303,9 @@ Dichiarare `competencies:` e mantenere `a-{dominio}/competencies/{id}/` è **opt
 
 ### File dati ≠ competenze
 
-I **file dati di progetto** (`.cursor/brands/`, `.cursor/illustration-styles/`, `.cursor/wordpress/`, `.cursor/product/` / `.claude/product/` / `product/`, brief SEO, …) restano **dati**, non moduli `kind: competency`. La competenza governa *come* usarli (discovery, onboarding, coerenza); non spostare né duplicare i file dati sotto `competencies/{id}/`. Override L2 della competenza = regole/delta, non una seconda copia del brand/style brief.
+I **file dati di progetto** (`brands/`, `illustration-styles/`, `wordpress/`, `product/` / `.claude/product/`, brief SEO, …) restano **dati**, non moduli `kind: competency`. La competenza governa *come* usarli (discovery, onboarding, coerenza); non spostare né duplicare i file dati sotto `competencies/{id}/`. Override L2 della competenza = regole/delta, non una seconda copia del brand/style brief.
 
-**Discovery product (personas / JTBD / Gherkin):** ordine di lookup `.cursor/product/` → `.claude/product/` → `product/`. Artefatti tipici: `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/`. Guida: [`docs/discovery-pipeline.md`](../docs/discovery-pipeline.md). Competenza condivisa: `po-interviewer` (L0).
+**Discovery product (personas / JTBD / Gherkin):** ordine di lookup `product/` → `.claude/product/`. Artefatti tipici: `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/`. Guida: [`docs/discovery-pipeline.md`](../docs/discovery-pipeline.md). Competenza condivisa: `po-interviewer` (L0).
 
 ### Asset operativi fuori dalle competenze
 
@@ -361,16 +361,15 @@ Non sostituisce il workflow in [`references/agent-versioning.md`](references/age
 
 ---
 
-## Comandi Cursor L0
+## Comandi L0
 
 Baseline slash command ereditabili da ogni progetto. Canone: [`commands/`](commands/). Canale ufficiale: **`/sync !`**.
 
 | Livello | Path | Ruolo |
 |---------|------|-------|
 | **L0** | `a-agentzero/commands/{nome}.md` | Baseline generica |
-| **User** | `~/.cursor/commands/{nome}.md` | Symlink da L0 (deploy via `a-agentzero/deploy.sh`) |
-| **Progetto** | `{repo}/.cursor/commands/{nome}.md` | Override: se presente, vince sul comando user |
+| **Progetto** | `{repo}/commands/{nome}.md` | Override: se presente, vince |
 
 Nomi L0: `version`, `document`, `review`, `improve`, `commit`.  
-`/sync ?` e `/sync !` riportano `OK` / `MISSING` / `DRIFT` sui symlink; con `--projects` anche `override` vs `inherit` per repo.  
+`/sync ?` e `/sync !` riportano `OK` / `MISSING` / `DRIFT`; con `--projects` anche `override` vs `inherit` per repo.  
 Non copiare i file L0 in ogni consumer: creare override solo se serve un workflow specifico.

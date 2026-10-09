@@ -48,7 +48,6 @@ Ogni comando L0 dichiara in frontmatter:
 
 ```yaml
 model: orcarouter/…
-model-fallback: cursor-default
 ```
 
 Se il modello OrcaRouter non è raggiungibile/configurato in Cursor, usare il **modello di default** dell'IDE. Contratto: `.cursor/product/contracts/check-orcarouter-command-models.sh`.

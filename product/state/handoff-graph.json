@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "command": "graph",
+  "active_node": "node-performance",
+  "next_node": "—",
+  "completed_nodes": [
+    "node-version-chains",
+    "node-ci",
+    "node-laya-fallback",
+    "node-event-redaction",
+    "node-system2-provider",
+    "node-model-resolution",
+    "node-s1-s2-policy",
+    "node-evals",
+    "node-cache",
+    "node-breaker",
+    "node-secrets",
+    "node-deps",
+    "node-sast",
+    "node-score",
+    "node-docs",
+    "node-retention",
+    "node-hooks",
+    "node-performance"
+  ],
+  "summary": "All P1 and P2 work graph nodes completed successfully."
+}

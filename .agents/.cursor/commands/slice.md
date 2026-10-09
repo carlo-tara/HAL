@@ -1,1 +1,0 @@
-../../agents/a-agentzero/commands/slice.md

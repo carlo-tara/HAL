@@ -3,7 +3,6 @@ name: learn
 parent: a-agentzero
 version: 1.2.1
 model: orcarouter/openai/gpt-4o-mini
-model-fallback: cursor-default
 description: >-
   Slash /learn con doppia modalità: /learn ? illustra gli apprendimenti dalla
   conversazione o sessione corrente; /learn ! consolida nelle skill attive del

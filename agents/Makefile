@@ -29,9 +29,6 @@ SHELL_SCRIPTS := \
 	$(ROOT)/scripts/check-ready-proof.sh \
 	$(ROOT)/scripts/install-git-hooks.sh \
 	$(ROOT)/scripts/sync-consumer-stale.sh \
-	$(ROOT)/.cursor/hooks/agent-skill-edit-rgr.sh \
-	$(ROOT)/.cursor/hooks/agent-skill-stop-gate.sh \
-	$(ROOT)/.cursor/hooks/agent-skill-pretool-rgr.sh \
 	$(ROOT)/a-design/deploy.sh
 
 L2_HARNESS := $(ROOT)/project-skills/harness-agentfactory/SKILL.md

@@ -7,7 +7,7 @@ register: tu
 
 # Brand brief — [nome-sito]
 
-Copia questo file in `.cursor/brands/{nome-sito}.md` nel progetto e compila ogni sezione. L'agente `a-copywriter` lo legge all'avvio (skill in `a-copywriter/SKILL.md`, deploy via `a-copywriter/deploy.sh`).
+Copia questo file in `brands/{nome-sito}.md` nel progetto e compila ogni sezione. L'agente `a-copywriter` lo legge all'avvio.
 
 ---
 

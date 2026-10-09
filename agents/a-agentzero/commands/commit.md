@@ -1,6 +1,5 @@
 ---
 model: orcarouter/openai/gpt-4o-mini
-model-fallback: cursor-default
 ---
 
 # Pre-commit (L0)

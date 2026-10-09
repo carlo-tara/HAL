@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Allineato a a-agentzero 1.8.0; body L1 invariato [sync:safe]
+
 ## [1.9.0] - 2026-10-02
 
 ### Added

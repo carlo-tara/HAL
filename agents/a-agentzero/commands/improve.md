@@ -1,6 +1,5 @@
 ---
 model: orcarouter/deepseek/deepseek-v4-flash
-model-fallback: cursor-default
 ---
 
 # Miglioramenti (L0)

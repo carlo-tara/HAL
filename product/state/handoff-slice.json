@@ -1,0 +1,13 @@
+{
+  "status": "plan",
+  "command": "slice",
+  "node_id": "node-deps",
+  "acceptance": "Manifest requirements.txt dichiara le dipendenze runtime, script check_deps.py esegue l'audit e fa fallire il controllo con advisory di test, integrato in CI.",
+  "files": [
+    "requirements.txt",
+    "check_deps.py",
+    "test_deps_audit.py",
+    ".github/workflows/ready-for-review.yml"
+  ],
+  "brief": "Declare runtime dependencies in requirements.txt, implement dependency audit script check_deps.py with advisory test support, and integrate into CI gate."
+}

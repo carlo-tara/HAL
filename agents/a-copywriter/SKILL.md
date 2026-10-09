@@ -1,10 +1,9 @@
 ---
 name: a-copywriter
 extends: a-agentzero
-version: 1.6.0
+version: 1.6.1
 model: orcarouter/openai/gpt-4o-mini
-model-fallback: cursor-default
-extends-version: 1.6.15
+extends-version: 1.8.1
 competencies:
   - tono-di-voce
   - humanizer
@@ -13,7 +12,7 @@ description: >-
   Reason why: senza voce e humanize condivisi il copy web diverge per sito e suona artificiale.
   Scrive e revisiona copy web generico (prodotti, categorie, blog, landing, meta, FAQ)
   orchestrando tono-di-voce, humanizer e italiano-locale; landing/annunci su Pain→Promise→Proof
-  (5 Copy Blocks). Brand da .cursor/brands/. Usare per copy, riscrittura, humanize, audit,
+  (5 Copy Blocks). Brand da `brands/`. Usare per copy, riscrittura, humanize, audit,
   meta, editing, tono, landing breve, brief proof.
 ---
 
@@ -50,10 +49,10 @@ Prima di impegnare System 2 in stesure estese o editing complesso, l'agente `a-c
 
 ## Avvio dominio
 
-1. **Brand file** — `.cursor/brands/*.md` (discovery: a-agentzero); dettaglio voce: competenza `tono-di-voce`
-2. **Skill figlia L2** — `.cursor/skills/*/SKILL.md` con `extends: a-copywriter`; fallback legacy: `copywriter-*`, `*-tone-of-voice`
+1. **Brand file** — `brands/*.md` (discovery: a-agentzero); dettaglio voce: competenza `tono-di-voce`
+2. **Skill figlia L2** — `.agents/skills/*/SKILL.md` con `extends: a-copywriter`; fallback legacy: `copywriter-*`, `*-tone-of-voice`
 3. **Competenze** — carica L0→L1→L2 per i tre id; override in `{figlio}/competencies/{id}/` se presenti
-4. **Skill SEO di progetto** — se esiste `.cursor/skills/seo-*`, delega keyword, canonicali e limiti Yoast; non inventare metriche
+4. **Skill SEO di progetto** — se esiste `.agents/skills/seo-*`, delega keyword, canonicali e limiti Yoast; non inventare metriche
 5. **Reference on-demand** — tabella sotto (path nelle competenze)
 
 ### Gerarchia in conflitto (copy)
@@ -61,7 +60,7 @@ Prima di impegnare System 2 in stesure estese o editing complesso, l'agente `a-c
 | Priorità | Fonte | Cosa governa |
 |----------|-------|--------------|
 | 1 | Override competenza L2 / skill figlia | Voce, lessico, path, workflow locali |
-| 2 | `.cursor/brands/{sito}.md` | Identità, tono, esempi, anti-pattern |
+| 2 | `brands/{sito}.md` | Identità, tono, esempi, anti-pattern |
 | 3 | Competenze L1 + **questo orchestratore** | Workflow, tipi pubblicazione, SEO light |
 | 4 | Skill SEO di progetto | Keyword, title/meta, link interni tecnici |
 | 5 | **a-agentzero** + competenze L0 | Protocollo, sicurezza, principi |

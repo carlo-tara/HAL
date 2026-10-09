@@ -1,1 +1,0 @@
-../../agents/project-skills/laya/commands/laya.md

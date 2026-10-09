@@ -1,1 +1,0 @@
-../../agents/a-design/agents/a-design.md

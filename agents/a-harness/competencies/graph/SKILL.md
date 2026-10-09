@@ -3,7 +3,6 @@ name: graph
 kind: competency
 version: 1.3.0
 model: orcarouter/deepseek/deepseek-v4-flash
-model-fallback: cursor-default
 description: >-
   Genera Loop o Work Graph (Markdown + Mermaid) da contesto, file (es. /graph
   ToDo.md) o richiesta esplicita. Flag -y = auto-accept + multi-cycle sequenziale

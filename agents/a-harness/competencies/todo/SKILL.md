@@ -3,7 +3,6 @@ name: todo
 kind: competency
 version: 1.2.0
 model: orcarouter/deepseek/deepseek-v4-flash-free
-model-fallback: cursor-default
 description: >-
   Gestisce la Mappa residui ./ToDo.md: scrivere Attività chiare, ordinare priorità,
   riconoscere ed eliminare completate, chiarire con ubiquitous-language e

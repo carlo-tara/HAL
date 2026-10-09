@@ -1,1 +1,0 @@
-../../agents/a-harness/agents/a-harness.md

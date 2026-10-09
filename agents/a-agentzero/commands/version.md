@@ -1,6 +1,5 @@
 ---
 model: orcarouter/deepseek/deepseek-v4-flash-free
-model-fallback: cursor-default
 ---
 
 # /version <tipo> — Incremento versione file e documenti modificati (L0)

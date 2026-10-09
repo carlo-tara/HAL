@@ -1,6 +1,9 @@
 # Changelog — harness-agentfactory (L2)
 
 ## [Unreleased]
+
+### Changed
+- Allineato a a-harness 1.7.3; body L2 invariato [sync:safe]
 ## [1.1.24] - 2026-09-18
 
 ### Changed

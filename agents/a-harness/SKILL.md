@@ -1,10 +1,9 @@
 ---
 name: a-harness
 extends: a-agentzero
-version: 1.7.2
+version: 1.7.3
 model: orcarouter/deepseek/deepseek-v4.1-flash
-model-fallback: cursor-default
-extends-version: 1.6.15
+extends-version: 1.8.1
 competencies:
   - context-budget
   - sustainable-pace
@@ -25,7 +24,7 @@ competencies:
 description: >-
   Reason why: senza test, gate Make e ritmi sostenibili, lo sviluppo non ha uscita verificabile né qualità stabile.
   Meta-Harness: TDD XP, Steward, DDD, Makefile gates, session progress,
-  when-stuck, Plan→Act, L3. Skill-layer sopra Cursor/Claude.
+  when-stuck, Plan→Act, L3. Skill-layer sopra Zed/Claude.
   Not for product discovery or BDD authoring.
 ---
 
@@ -52,7 +51,7 @@ Non-goals: dsh/Cordis, harness.lol CLI, Harness.io SaaS, MCP-first, parallelismo
 
 ## Coding model ladder
 
-Per **coding Act** (implement/edit/debug/refactor codice): scegli e scala lungo questi rung OrcaRouter (costo → capacità). `model:` di sessione = rung (3); `model-fallback: cursor-default`. Cursor ha un solo modello per chat: in escalazione **chiedere all'utente** di passare al rung successivo prima di continuare Act — non inventare switch mid-chat. Allinea a `when-stuck`: niente 3° retry cieco sullo stesso modello.
+Per **coding Act** (implement/edit/debug/refactor codice): scegli e scala lungo questi rung OrcaRouter (costo → capacità). `model:` di sessione = rung (3). In escalazione **chiedere all'utente** di passare al rung successivo prima di continuare Act — non inventare switch mid-chat. Allinea a `when-stuck`: niente 3° retry cieco sullo stesso modello.
 
 1. `orcarouter/deepseek/deepseek-v4-flash-free`
 2. `orcarouter/z-ai/glm-5.3-flash`

@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "command": "todo",
+  "summary": "Final ToDo hygiene pass complete: all P1 and P2 items completed, pruned, and flushed to CHANGELOG.md. Backlog is fully clear.",
+  "flushed_count": 0,
+  "open_p0": 0,
+  "open_p1": 0,
+  "open_p2": 0
+}

@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Rimozione totale dei riferimenti a Cursor e disaccoppiamento delle cartelle `.cursor` (spostate in `product/` e `commands/`) [sync:safe]
+
 ## [1.8.0] - 2026-10-02
 
 ### Added

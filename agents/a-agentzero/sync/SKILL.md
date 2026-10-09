@@ -2,7 +2,6 @@
 name: sync
 version: 1.1.3
 model: orcarouter/deepseek/deepseek-v4-flash
-model-fallback: cursor-default
 description: >-
   Sincronizza agenti HAL L0/L1 (deploy in ~/.cursor) e comandi Cursor L0
   ereditabili; verifica allineamento versioni; analizza L2 per generalizzazione

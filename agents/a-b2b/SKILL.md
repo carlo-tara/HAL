@@ -1,10 +1,9 @@
 ---
 name: a-b2b
 extends: a-agentzero
-version: 2.2.0
+version: 2.2.1
 model: orcarouter/z-ai/glm-5.3-flash
-model-fallback: cursor-default
-extends-version: 1.6.15
+extends-version: 1.8.1
 description: >-
   Reason why: senza un ingresso B2B stabile, discovery e go-to-market si disallineano. Agente L1 per piloti B2B e contact/account research: orchestra il profilo B2B e include la skill enrichment per ricerca ICP, CRM cascade e lead validation. Invocabile per GTM B2B, pilot fit ed enrichment contatti.
 ---
@@ -79,7 +78,7 @@ Incomplete intake: [references/project-brief-template.md](references/project-bri
 
 | Path | Uso |
 |------|-----|
-| `.cursor/skills/b2b-*/` | L2 delta progetto (guardrail, path enrichment, ICP) |
+| `.agents/skills/b2b-*/` | L2 delta progetto (guardrail, path enrichment, ICP) |
 | L2 enrichment paths | passed through to `a-enrichment` |
 | L2 ICP / outreach templates | gate input + `a-copywriter` drafting |
 | `a-product/SKILL.md` § Profilo B2B | canone orchestra |
