@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
 """Test unitario per la risoluzione e il feature flag di OrcaRouter per ogni agente di HAL."""
-from __future__ import annotations
+from __future__ import annotations  # noqa
 
 import json
 import os
-import unittest
 from pathlib import Path
+import unittest
 
 from global_config import (
     AGENT_EXTERNAL_MODELS,

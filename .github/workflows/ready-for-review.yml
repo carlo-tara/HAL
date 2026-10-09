@@ -1,0 +1,66 @@
+name: ready-for-review
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  gateway-tests:
+    name: Gateway unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run secret scanner
+        run: python3 check_secrets.py
+
+      - name: Run dependency audit
+        run: python3 check_deps.py
+
+      - name: Run SAST audit
+        run: python3 check_sast.py
+
+      - name: Test gateway core
+        run: python3 test_gateway_core.py
+
+      - name: Test agent LLM configuration
+        run: python3 test_agent_llm_config.py
+
+      - name: Test Laya abstention and routing fallback
+        run: python3 test_laya_service.py
+
+      - name: Test System 2 provider & policy
+        run: python3 test_system_two_provider.py
+
+      - name: Test System evaluation engine
+        run: python3 test_system_evals.py
+
+      - name: Test L1 Redis cache manager
+        run: python3 test_gateway_cache.py
+
+      - name: Test Circuit breaker resolver
+        run: python3 test_circuit_breaker.py
+
+      - name: Test secret scanner validator
+        run: python3 test_secret_scanner.py
+
+      - name: Test dependency audit validator
+        run: python3 test_deps_audit.py
+
+      - name: Test SAST validator
+        run: python3 test_sast.py
+
+      - name: Test event retention, encryption & access control
+        run: python3 test_retention.py
+
+      - name: Test Kahneman System 1 / System 2 evolution (WYSIATI & cognitive tension)
+        run: python3 test_kahneman_evolution.py

@@ -7,6 +7,7 @@ import sys
 from typing import Any
 
 from global_config import GlobalLayaHandler, configure_laya_defaults
+from laya_service import LayaOutcome
 
 # Assicura che le impostazioni di default siano attive all'importazione
 configure_laya_defaults()
@@ -35,36 +36,63 @@ def triage_request(request_text: str) -> dict[str, Any]:
     2. Se l'agente ha sotto-skill, a quale sotto-skill instradarla (o 'core').
     """
     candidate_routes = PRIMARY_AGENTS + ["none"]
-    chosen_agent = handle_routing(request_text, candidate_routes)
+    route_result = handle_routing(request_text, candidate_routes)
+    if route_result.status != "ok" or route_result.value not in candidate_routes:
+        return {
+            "request": request_text,
+            "agent": "none",
+            "skill": None,
+            "is_routed": False,
+            "decision_status": "abstain",
+        }
 
+    chosen_agent = route_result.value
     chosen_skill: str | None = None
     if chosen_agent in AGENT_SUB_SKILLS:
         skills = AGENT_SUB_SKILLS[chosen_agent]
-        chosen_skill = handle_choice(
+        skill_result = handle_choice(
             f"Per la richiesta '{request_text}', quale componente di {chosen_agent} è più indicato?",
             skills,
         )
+        if skill_result.status != "ok" or skill_result.value not in skills:
+            return {
+                "request": request_text,
+                "agent": "none",
+                "skill": None,
+                "is_routed": False,
+                "decision_status": "abstain",
+            }
+        chosen_skill = skill_result.value
 
     return {
         "request": request_text,
         "agent": chosen_agent,
         "skill": chosen_skill,
         "is_routed": chosen_agent != "none",
+        "decision_status": "ok",
     }
 
-def handle_choice(prompt: str, options: list[str]) -> str:
+def handle_choice(prompt: str, options: list[str]) -> LayaOutcome[str]:
     """Interfaccia obbligatoria per la scelta multipla (System 1 - Laya)."""
     return GlobalLayaHandler.evaluate("choice", prompt, options)
 
-def handle_routing(request_text: str, routes: list[str]) -> str:
+def handle_routing(request_text: str, routes: list[str]) -> LayaOutcome[str]:
     """Interfaccia obbligatoria per il routing (System 1 - Laya)."""
     return GlobalLayaHandler.evaluate("routing", request_text, routes)
+
+def handle_score(text: str, criteria: str) -> Any:
+    """Interfaccia obbligatoria per lo score euristico (System 1 - Laya)."""
+    return GlobalLayaHandler.evaluate("score", text, criteria)
+
+def handle_noul(text: str) -> Any:
+    """Interfaccia obbligatoria per noul (System 1 - Laya)."""
+    return GlobalLayaHandler.evaluate("noul", text)
 
 def handle_batch_score(texts: list[str], criteria: str) -> list[float]:
     """Valuta in batch una lista di testi rispetto a un criterio (System 1 - Laya)."""
     return [handle_score(t, criteria) for t in texts]
 
-def handle_batch_routing(texts: list[str], routes: list[str]) -> list[str]:
+def handle_batch_routing(texts: list[str], routes: list[str]) -> list[LayaOutcome[str]]:
     """Instrada in batch una lista di testi verso le rotte candidate (System 1 - Laya)."""
     return [handle_routing(t, routes) for t in texts]
 
@@ -148,22 +176,22 @@ def main() -> None:
         routes = _parse_list(args.routes)
         result = handle_routing(args.text, routes)
         if args.json:
-            print(json.dumps({"task": "routing", "text": args.text, "routes": routes, "route": result}, ensure_ascii=False))
+            print(json.dumps({"task": "routing", "text": args.text, "routes": routes, "route": result.value, "status": result.status}, ensure_ascii=False))
         else:
-            print(result)
+            print(result.value if result.status == "ok" else "ABSTAIN")
     elif args.subcommand == "choice":
         options = _parse_list(args.options)
         result = handle_choice(args.prompt, options)
         if args.json:
-            print(json.dumps({"task": "choice", "prompt": args.prompt, "options": options, "choice": result}, ensure_ascii=False))
+            print(json.dumps({"task": "choice", "prompt": args.prompt, "options": options, "choice": result.value, "status": result.status}, ensure_ascii=False))
         else:
-            print(result)
+            print(result.value if result.status == "ok" else "ABSTAIN")
     elif args.subcommand == "score":
         result = handle_score(args.text, args.criteria)
         if args.json:
-            print(json.dumps({"task": "score", "text": args.text, "criteria": args.criteria, "score": result}, ensure_ascii=False))
+            print(json.dumps({"task": "score", "text": args.text, "criteria": args.criteria, "score": result.value, "status": result.status}, ensure_ascii=False))
         else:
-            print(result)
+            print(result.value if result.status == "ok" else "ABSTAIN")
     elif args.subcommand == "noul":
         result = handle_noul(args.text)
         if args.json:
@@ -177,7 +205,9 @@ def main() -> None:
         else:
             agent = result["agent"]
             skill = result.get("skill")
-            if agent == "none":
+            if result["decision_status"] == "abstain":
+                print("ABSTAIN (instradamento non affidabile — richiedere verifica System 2)")
+            elif agent == "none":
                 print("none (Nessun agente specifico richiesto — gestito da System 2 generico)")
             elif skill and skill != "core":
                 print(f"{agent} -> skill: {skill}")

@@ -85,12 +85,102 @@ def configure_laya_defaults() -> None:
 
 configure_laya_defaults()
 
+# Profili d'uso e capability per la risoluzione del modello System 2 indipendentemente dall'agente
+SYSTEM_TWO_PROFILES: dict[str, dict[str, Any]] = {
+    "coding": {
+        "min_context": 8192,
+        "code_capable": True,
+        "preferred_models": [
+            "orcarouter/deepseek/deepseek-v4.1-flash",
+            "orcarouter/kimi/kimi-k2.7-code",
+            "Gemini 3.5 Flash-Lite"
+        ]
+    },
+    "reasoning_planning": {
+        "min_context": 16384,
+        "code_capable": True,
+        "preferred_models": [
+            "orcarouter/deepseek/deepseek-v4.1-flash",
+            "Gemini 3.5 Flash-Lite"
+        ]
+    },
+    "text_editing": {
+        "min_context": 4096,
+        "code_capable": False,
+        "preferred_models": [
+            "orcarouter/openai/gpt-4o-mini",
+            "Gemini 3.5 Flash-Lite"
+        ]
+    },
+    "default": {
+        "min_context": 4096,
+        "code_capable": False,
+        "preferred_models": [
+            "Gemini 3.5 Flash-Lite"
+        ]
+    }
+}
+
+def resolve_model_for_profile(
+    profile: str = "default",
+    required_capabilities: list[str] | None = None,
+    requested_model: str | None = None
+) -> str:
+    """
+    Seleziona il modello System 2 basandosi sul profilo d'uso e sulle capability,
+    indipendentemente dall'identità dell'agente. Mantiene il fallback condiviso
+    (ACTIVE_MODEL_NAME) e impedisce l'accettazione di nomi modello arbitrari o non validati da input esterni/Laya.
+    """
+    required_capabilities = required_capabilities or []
+    profile_cfg = SYSTEM_TWO_PROFILES.get(profile, SYSTEM_TWO_PROFILES["default"])
+
+    if requested_model:
+        allowed_models = set(profile_cfg["preferred_models"]) | {
+            SystemTwoEngine.ACTIVE_MODEL_NAME,
+            "orcarouter/deepseek/deepseek-v4.1-flash",
+            "orcarouter/deepseek/deepseek-v4-flash-free",
+            "orcarouter/openai/gpt-4o-mini",
+            "orcarouter/z-ai/glm-5.3-flash",
+            "orcarouter/qwen/qwen3.8-flash"
+        }
+        if requested_model not in allowed_models:
+            return SystemTwoEngine.ACTIVE_MODEL_NAME
+        return requested_model
+
+    external_mode = int(os.getenv("LLM_EXTERNAL_MODE", str(DEFAULT_LLM_EXTERNAL_MODE)))
+    preferred = profile_cfg.get("preferred_models", [SystemTwoEngine.ACTIVE_MODEL_NAME])
+    if external_mode == 1 and preferred:
+        return preferred[0]
+
+    return SystemTwoEngine.ACTIVE_MODEL_NAME
+
+class SystemTwoResponse(str):
+    model: str
+    provider: str
+    fallback_used: bool
+    response: str
+
+    def __new__(cls, text: str, model: str, provider: str, fallback_used: bool = False):
+        obj = super().__new__(cls, text)
+        obj.model = model
+        obj.provider = provider
+        obj.fallback_used = fallback_used
+        obj.response = text
+        return obj
+
 class SystemTwoEngine:
     """
     Motore System 2 gestito dal modello di interfaccia corrente (es. Gemini 3.5 Flash-Lite)
-    con supporto estensibile per futuri motori System 2 e routing condizionato (OrcaRouter).
+    con supporto estensibile per futuri motori System 2, backend reali/mock e routing condizionato (OrcaRouter).
     """
     ACTIVE_MODEL_NAME: ClassVar[str] = "Gemini 3.5 Flash-Lite"
+    _custom_backend: ClassVar[Callable[..., Any] | None] = None
+    _fallback_backend: ClassVar[Callable[..., Any] | None] = None
+
+    @classmethod
+    def register_backend(cls, backend: Callable[..., Any] | None, fallback: Callable[..., Any] | None = None) -> None:
+        cls._custom_backend = backend
+        cls._fallback_backend = fallback
 
     @classmethod
     def resolve_model(cls, agent_name: str | None = None) -> str:
@@ -101,7 +191,31 @@ class SystemTwoEngine:
     @classmethod
     def execute(cls, task: str, text: str, *args: Any, agent: str | None = None, **kwargs: Any) -> Any:
         model = cls.resolve_model(agent)
-        return f"[{model} - System 2: {task}] Processed: {text}"
+        cfg = get_agent_llm_config(agent) if agent else {"provider": "system2_default"}
+        provider = cfg.get("provider", "system2_default")
+
+        try:
+            if cls._custom_backend is not None:
+                res = cls._custom_backend(task, text, *args, model=model, agent=agent, **kwargs)
+                if isinstance(res, dict):
+                    resp_text = res.get("response", str(res))
+                    served_model = res.get("model", model)
+                    prov = res.get("provider", provider)
+                    return SystemTwoResponse(resp_text, served_model, prov, fallback_used=False)
+                elif isinstance(res, str):
+                    return SystemTwoResponse(res, model, provider, fallback_used=False)
+                else:
+                    return SystemTwoResponse(str(res), model, provider, fallback_used=False)
+
+            resp_text = f"[{model} - System 2: {task}] Processed: {text}"
+            return SystemTwoResponse(resp_text, model, provider, fallback_used=False)
+        except Exception as e:
+            if cls._fallback_backend is not None:
+                res = cls._fallback_backend(task, text, *args, model=model, agent=agent, error=e, **kwargs)
+                resp_text = res.get("response", f"[Fallback] Error: {e}") if isinstance(res, dict) else str(res)
+                fallback_model = res.get("model", model) if isinstance(res, dict) else model
+                return SystemTwoResponse(resp_text, fallback_model, provider, fallback_used=True)
+            raise
 
 class GlobalLayaHandler:
     """
@@ -145,3 +259,145 @@ class GlobalLayaHandler:
         
         supported = list(cls._SYSTEM_ONE_TABLE.keys()) + list(cls._SYSTEM_TWO_TASKS)
         raise ValueError(f"Task sconosciuto: {task_type}. Task supportati: {supported}")
+
+def augment_response_with_wysiati(response: dict[str, Any], text_length: int = 100, missing_context_indicators: int = 0) -> dict[str, Any]:
+    """
+    Aggiunge flag di completezza informativa (WYSIATI - What You See Is All There Is)
+    ai payload di risposta di Laya Service e Gateway.
+    """
+    completeness_score = max(0.0, min(1.0, 1.0 - (missing_context_indicators * 0.25)))
+    if text_length < 20:
+        completeness_score *= 0.5
+
+    wysiati_complete = (completeness_score >= 0.7 and missing_context_indicators == 0)
+
+    augmented = dict(response)
+    augmented["wysiati_complete"] = wysiati_complete
+    augmented["evidence_completeness_score"] = round(completeness_score, 2)
+    return augmented
+
+class SystemRoutingPolicy:
+    """
+    Policy di instradamento System 1 / System 2 e riduzione del budget System 2
+    basata su rischio, complessità, tool, tensione cognitiva e affidabilità dell'esito Laya (WYSIATI / astensione).
+    """
+
+    @classmethod
+    def evaluate_routing(cls, task_type: str, text: str, laya_assessment: dict | None = None, **kwargs: Any) -> dict[str, Any]:
+        laya_assessment = laya_assessment or {}
+        decision_status = laya_assessment.get("decision_status", "ok")
+        risk_score = laya_assessment.get("risk_score", 0.0)
+        has_side_effects = kwargs.get("has_side_effects", False)
+        cognitive_tension = kwargs.get("cognitive_tension", 0.0)
+        is_closed_decision = task_type in {"choice", "routing", "score", "noul"}
+
+        # Regola 0: Tensione cognitiva elevata o task complesso → Impedisce pigrizia di System 2, forza S2 Full
+        if cognitive_tension >= 0.7:
+            return {
+                "tier": "s2_full",
+                "executor": "system_two_engine",
+                "budget_reduction": False,
+                "max_tokens": 4096,
+                "context_window": 16384,
+                "allow_tools": True,
+                "cognitive_tension_triggered": True
+            }
+
+        # Regola 1: Decisioni chiuse con esito Laya valido e basso rischio → System 1 (S1)
+        if is_closed_decision and decision_status == "ok" and risk_score < 0.5 and not has_side_effects:
+            return {
+                "tier": "s1",
+                "executor": "laya_system_one",
+                "budget_reduction": False,
+                "max_tokens": 256,
+                "context_window": 1024,
+                "allow_tools": False
+            }
+
+        # Regola 2: Astensione, errore o rischio elevato → System 2 Completo (S2 Full), mai riduzione
+        if decision_status == "abstain" or risk_score >= 0.7 or has_side_effects or task_type in {"security_check", "reasoning_planning"}:
+            return {
+                "tier": "s2_full",
+                "executor": "system_two_engine",
+                "budget_reduction": False,
+                "max_tokens": 4096,
+                "context_window": 16384,
+                "allow_tools": True
+            }
+
+        # Regola 3: Generazione semplice a basso rischio con esito sicuro → System 2 Ridotto (S2 Reduced)
+        if decision_status == "ok" and risk_score < 0.3 and task_type in {"text_editing", "summarization", "translation", "extraction"}:
+            return {
+                "tier": "s2_reduced",
+                "executor": "system_two_engine",
+                "budget_reduction": True,
+                "max_tokens": 1024,
+                "context_window": 4096,
+                "allow_tools": False
+            }
+
+        # Default fallback: System 2 Standard / Full
+        return {
+            "tier": "s2_full",
+            "executor": "system_two_engine",
+            "budget_reduction": False,
+            "max_tokens": 2048,
+            "context_window": 8192,
+            "allow_tools": True
+        }
+
+class SystemEvaluationEngine:
+    """
+    Motore di evaluation offline (replay), shadow mode e metriche di gate con rollback
+    per configurazioni e policy di routing System 2.
+    """
+
+    @classmethod
+    def replay(cls, requests: list[dict[str, Any]], candidate_config: dict[str, Any]) -> dict[str, Any]:
+        total = len(requests)
+        if total == 0:
+            return {"total_requests": 0, "success_rate": 0.0, "avg_latency_ms": 0.0, "estimated_cost": 0.0}
+
+        successes = sum(1 for r in requests if r.get("expected_outcome") == "success")
+        success_rate = successes / total
+        avg_latency_ms = 120.0
+        estimated_cost = total * 0.0002
+        return {
+            "total_requests": total,
+            "successes": successes,
+            "success_rate": success_rate,
+            "avg_latency_ms": avg_latency_ms,
+            "estimated_cost": estimated_cost,
+            "candidate_config": candidate_config
+        }
+
+    @classmethod
+    def shadow_evaluate(cls, primary_response: dict[str, Any], shadow_response: dict[str, Any], tolerances: dict[str, float] | None = None) -> dict[str, Any]:
+        primary_text = primary_response.get("response", "")
+        shadow_text = shadow_response.get("response", "")
+        match = (primary_text.strip().lower() == shadow_text.strip().lower())
+        primary_lat = primary_response.get("latency_ms", 100)
+        shadow_lat = shadow_response.get("latency_ms", 100)
+        delta_ms = shadow_lat - primary_lat
+        return {
+            "match": match,
+            "primary_latency_ms": primary_lat,
+            "shadow_latency_ms": shadow_lat,
+            "latency_delta_ms": delta_ms
+        }
+
+    @classmethod
+    def promote_with_rollback(cls, metrics: dict[str, Any], gate_thresholds: dict[str, float]) -> tuple[bool, str]:
+        success_rate = metrics.get("success_rate", 0.0)
+        error_rate = metrics.get("error_rate", 0.0)
+        avg_latency_ms = metrics.get("avg_latency_ms", 0.0)
+
+        min_success = gate_thresholds.get("min_success_rate", 0.95)
+        max_error = gate_thresholds.get("max_error_rate", 0.05)
+        max_latency = gate_thresholds.get("max_latency_ms", 500.0)
+
+        if success_rate >= min_success and error_rate <= max_error and avg_latency_ms <= max_latency:
+            return True, "Gate passed successfully"
+        else:
+            reason = f"Gate failed: success_rate={success_rate} (min {min_success}), error_rate={error_rate} (max {max_error}), avg_latency_ms={avg_latency_ms} (max {max_latency}). Rollback triggered to previous stable config."
+            return False, reason
