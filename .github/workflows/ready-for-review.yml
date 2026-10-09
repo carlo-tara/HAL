@@ -21,13 +21,13 @@ jobs:
           python-version: "3.12"
 
       - name: Run secret scanner
-        run: python3 check_secrets.py
+        run: python3 scripts/check_secrets.py
 
       - name: Run dependency audit
-        run: python3 check_deps.py
+        run: python3 scripts/check_deps.py
 
       - name: Run SAST audit
-        run: python3 check_sast.py
+        run: python3 scripts/check_sast.py
 
       - name: Test gateway core
         run: python3 test_gateway_core.py

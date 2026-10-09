@@ -1,7 +1,7 @@
 import unittest  # noqa: I001
 import os
 import tempfile
-from check_sast import scan_file
+from scripts.check_sast import scan_file
 
 class TestSASTScanner(unittest.TestCase):
     def test_sast_detects_eval(self) -> None:

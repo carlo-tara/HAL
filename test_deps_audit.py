@@ -1,7 +1,7 @@
 import os  # noqa: I001
 import unittest
 
-from check_deps import audit_dependencies
+from scripts.check_deps import audit_dependencies
 
 class TestDependencyAudit(unittest.TestCase):
     def test_audit_passes_clean_requirements(self) -> None:

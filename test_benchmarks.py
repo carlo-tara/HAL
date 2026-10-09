@@ -1,5 +1,5 @@
 import unittest  # noqa: I001
-from bench_hot_paths import run_benchmarks
+from scripts.bench_hot_paths import run_benchmarks
 
 class TestHotPathBenchmarks(unittest.TestCase):
     def test_benchmark_execution(self) -> None:

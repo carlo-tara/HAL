@@ -9,8 +9,7 @@ class TestSecretScanner(unittest.TestCase):
             tmp_path = tmp.name
 
         try:
-            # Run check_secrets or test the scan logic
-            from check_secrets import scan_file
+            from scripts.check_secrets import scan_file
             findings = scan_file(tmp_path)
             self.assertTrue(len(findings) > 0)
             self.assertEqual(findings[0][1], "OpenAI API Key")
@@ -24,7 +23,7 @@ class TestSecretScanner(unittest.TestCase):
             tmp_path = tmp.name
 
         try:
-            from check_secrets import scan_file
+            from scripts.check_secrets import scan_file
             findings = scan_file(tmp_path)
             self.assertEqual(len(findings), 0)
         finally:

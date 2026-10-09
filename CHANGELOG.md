@@ -5,6 +5,11 @@ Tutte le modifiche e le evoluzioni rilevanti del progetto HAL sono documentate i
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/),
 e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
+## [2.2.0] - 2026-10-09
+
+### Added
+- Creazione della cartella `scripts/` e centralizzazione di tutti gli script di utilità e test eseguibili al suo interno (`check_secrets.py`, `check_deps.py`, `check_sast.py`, `bench_hot_paths.py`, `test_laya.py`), con aggiornamento dei riferimenti in CI e nei test suite.
+
 ## [2.1.0] - 2026-10-09
 
 ### Removed
