@@ -1,11 +1,10 @@
 ---
 name: sustainable-pace
 kind: competency
-version: 1.1.2
+version: 1.2.0
 description: >-
-  Anti review-fatigue: niente PR/review/done finché make ready-for-review ≠ 0.
-  Slice medium discrete, PR budget, anti-lazy-delete, PR-as-proof (intent umano).
-  Gate proof: exit fresco, no Gate OK stale, no `| tail` che maschera Make.
+  Anti review-fatigue e anti context-bloat: niente PR/review/done finché make ready-for-review ≠ 0.
+  Slice medium discrete, quiet test default, rate limiting orario E2E; PR-as-proof.
 ---
 
 # Competenza L1 — sustainable-pace
@@ -32,8 +31,8 @@ Post-gate: l'umano valida **intent** («è quello che volevamo?»), non esecuzio
 
 ## Slice medium discrete
 
-| Troppo largo | Troppo stretto | Sweet spot |
-|--------------|----------------|------------|
+| Troppo largo           | Troppo stretto    | Sweet spot                                          |
+| ---------------------- | ----------------- | --------------------------------------------------- |
 | «refactor auth module» | «rename variable» | «add rate limit su /api/X usando pattern in /api/Y» |
 
 `/slice` deve includere: acceptance criteria, pattern di riferimento, file ≤4, effort (fast|thorough).
@@ -63,6 +62,13 @@ tests red-first on duplicate line IDs per glossary term InvoiceLine.
 3. Checklist [pr-proof-checklist.md](../../references/pr-proof-checklist.md)
 4. Se exit = 0 → riepilogo audit + handoff **intent** (Reasoning alto)
 5. **Converge** (Spec Kit): se il contratto/slice ha gap ancora aperti rispetto al codice, proponi un **nuovo** `/slice` — non dichiarare “done” sul residuo né allargare lo slice chiuso
+
+## Quiet test execution & E2E rate limiting
+
+Protezione del focus cognitivo e prevenzione del context exhaustion:
+
+- **Test compatti nel gate:** le verifiche meccaniche (`make test-unit`, `make test-quiet`) non devono inquinare la chat con cascate di test verdi; l'agente osserva solo `full GREEN` o i dettagli del fallimento `RED`.
+- **E2E Throttling sostenibile:** i test browser end-to-end non devono essere rieseguiti compulsivamente a ogni micro-step; la Platform API differisce esecuzioni ripetute entro l'ora per evitare saturazione di risorse e collisioni concorrenti.
 
 ## Anti-pattern
 

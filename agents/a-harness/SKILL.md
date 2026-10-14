@@ -1,7 +1,7 @@
 ---
 name: a-harness
 extends: a-agentzero
-version: 1.7.3
+version: 1.7.4
 model: orcarouter/deepseek/deepseek-v4.1-flash
 extends-version: 1.8.1
 competencies:
@@ -61,18 +61,18 @@ Per **coding Act** (implement/edit/debug/refactor codice): scegli e scala lungo 
 
 **Tier start**
 
-| Task | Rung |
-|------|------|
-| Igiene / flush / edit banale | (1) |
-| Routine GREEN/REFACTOR ≤4 file | (2) o (3) |
-| Hard (debug profondo, multi-ipotesi, architettura) | partire da (4) |
-| Long-horizon / surgery repo ampia | (5); se Kimi non disponibile → (4) |
+| Task                                               | Rung                               |
+| -------------------------------------------------- | ---------------------------------- |
+| Igiene / flush / edit banale                       | (1)                                |
+| Routine GREEN/REFACTOR ≤4 file                     | (2) o (3)                          |
+| Hard (debug profondo, multi-ipotesi, architettura) | partire da (4)                     |
+| Long-horizon / surgery repo ampia                  | (5); se Kimi non disponibile → (4) |
 
 **Escalazione** al rung successivo se: modello non raggiungibile / **rate-limit** / free bloccato; oppure stesso approccio sbagliato **2×** (prima di stuck@3); oppure gate ancora rosso senza progresso dopo minimo GREEN.
 
 **De-escalazione** se il lavoro torna banale.
 
-Contratto: `.cursor/product/contracts/check-harness-coding-model-ladder.sh`.
+Contratto: `docs/product/contracts/check-harness-coding-model-ladder.sh`.
 
 ---
 
@@ -80,7 +80,7 @@ Contratto: `.cursor/product/contracts/check-harness-coding-model-ladder.sh`.
 
 Contratto: `.feature` (da `a-gherkin`) **oppure** US/AC (`a-po`) **oppure** task con perimetro file + bounded context. Se manca → delega; **non inventare** behavior.
 
-**Spec-Driven (Spec Kit):** constitution/specify vivono fuori Act (L2 + contratto); in Plan fai *clarify* + *analyze* (cross-artefatto) prima di `/red`; *converge* = `/ready` + nuovo `/slice` sui residui — pin [github-spec-kit-source.md](references/github-spec-kit-source.md).
+**Spec-Driven (Spec Kit):** constitution/specify vivono fuori Act (L2 + contratto); in Plan fai _clarify_ + _analyze_ (cross-artefatto) prima di `/red`; _converge_ = `/ready` + nuovo `/slice` sui residui — pin [github-spec-kit-source.md](references/github-spec-kit-source.md).
 
 **Semantic layer (Plan):** glossario + mappa BC = backbone vivo (`ubiquitous-language`, `bounded-context`). Non confondere con `context-budget` (window/file). In `/slice`, prima di Act:
 
@@ -98,17 +98,17 @@ Contratto: `.feature` (da `a-gherkin`) **oppure** US/AC (`a-po`) **oppure** task
 
 **Find-and-fix (validated):** finding → evidence → `/red` → `/green`; scope **PR/diff** / ≤4 file; dynamic solo **authorized** fuori harness.
 
-| Artefatto | Path | Se 0 |
-|-----------|------|------|
-| Glossario | `docs/glossary.md` | [glossary-template.md](references/glossary-template.md) |
-| Platform API | `Makefile` | `/bootstrap` o `/steward` |
-| Bounded contexts | `docs/bounded-contexts.md` | [bounded-context-map-template.md](references/bounded-context-map-template.md) |
-| Progress | `.cursor/product/agent-progress.md` | [agent-progress-template.md](references/agent-progress-template.md) |
-| Residui (Mappa residui) | `./ToDo.md` (root repo) | competenza `todo` (`/todo`); pointer in `session-progress` |
-| Work Graph | `.cursor/product/work-graph.md` | competenza `graph` (`/graph`); Plan-only Loop/Graph |
-| L2 | `.cursor/skills/harness-*/SKILL.md` | [extension-template.md](extension-template.md) |
+| Artefatto               | Path                                | Se 0                                                                          |
+| ----------------------- | ----------------------------------- | ----------------------------------------------------------------------------- |
+| Glossario               | `docs/glossary.md`                  | [glossary-template.md](references/glossary-template.md)                       |
+| Platform API            | `Makefile`                          | `/bootstrap` o `/steward`                                                     |
+| Bounded contexts        | `docs/bounded-contexts.md`          | [bounded-context-map-template.md](references/bounded-context-map-template.md) |
+| Progress                | `docs/product/agent-progress.md`    | [agent-progress-template.md](references/agent-progress-template.md)           |
+| Residui (Mappa residui) | `./ToDo.md` (root repo)             | competenza `todo` (`/todo`); pointer in `session-progress`                    |
+| Work Graph              | `docs/product/work-graph.md`        | competenza `graph` (`/graph`); Plan-only Loop/Graph                           |
+| L2                      | `.agents/skills/harness-*/SKILL.md` | [extension-template.md](extension-template.md)                                |
 
-Invariants: Plan→Act · TDD exit Make · `ready-for-review` prima di review umana · stuck@3 · ≤4 file · Makefile = verità.
+Invariants: Plan→Act · TDD exit Make · `ready-for-review` prima di review umana · stuck@3 · ≤4 file · Makefile = verità · quiet test default.
 
 ---
 
@@ -134,19 +134,19 @@ Prima di impegnare System 2 (ragionamento profondo su codice, refactor o fix ite
 
 ## Slash
 
-| Invocazione | Competenza | Obiettivo |
-|-------------|------------|-----------|
-| `/slice` | orchestratore + Plan | Medium slice; ≤4 file; acceptance |
-| `/red` | tdd-red | Pre-ottimizzazioni → solo test → `make test-unit` ≠ 0 |
-| `/green` | tdd-green + when-stuck | Pre-ottimizzazioni ereditate + minimo YAGNI; stuck@3 |
-| `/refactor` | tdd-refactor | Pulizia sotto verdi |
-| `/cycle` | sequenza | slice→R→G→Rf→ready + progress (pre-opt in `/red` e `/green`) |
-| `/ready` | sustainable-pace | Gate + [pr-proof-checklist.md](references/pr-proof-checklist.md) |
-| `/progress` | session-progress | Stato append-only |
-| `/todo` | todo | Igiene Mappa residui `./ToDo.md` (priorità, prune, tag, UL/BC); flush «Già fatto» → `./CHANGELOG.md` |
-| `/graph` | graph | Loop o Work Graph → `work-graph.md`; `-y` = auto-accept + **multi-cycle** fino a fine backlog |
-| `/steward` | steward | Audit infra ([steward-audit-checklist.md](references/steward-audit-checklist.md)) |
-| `/bootstrap` | platform-api + steward | Profiles minimal\|standard |
+| Invocazione  | Competenza             | Obiettivo                                                                                            |
+| ------------ | ---------------------- | ---------------------------------------------------------------------------------------------------- |
+| `/slice`     | orchestratore + Plan   | Medium slice; ≤4 file; acceptance                                                                    |
+| `/red`       | tdd-red                | Pre-ottimizzazioni → solo test → `make test-unit` ≠ 0                                                |
+| `/green`     | tdd-green + when-stuck | Pre-ottimizzazioni ereditate + minimo YAGNI; stuck@3                                                 |
+| `/refactor`  | tdd-refactor           | Pulizia sotto verdi                                                                                  |
+| `/cycle`     | sequenza               | slice→R→G→Rf→ready + progress (pre-opt in `/red` e `/green`)                                         |
+| `/ready`     | sustainable-pace       | Gate + [pr-proof-checklist.md](references/pr-proof-checklist.md)                                     |
+| `/progress`  | session-progress       | Stato append-only                                                                                    |
+| `/todo`      | todo                   | Igiene Mappa residui `./ToDo.md` (priorità, prune, tag, UL/BC); flush «Già fatto» → `./CHANGELOG.md` |
+| `/graph`     | graph                  | Loop o Work Graph → `work-graph.md`; `-y` = auto-accept + **multi-cycle** fino a fine backlog        |
+| `/steward`   | steward                | Audit infra ([steward-audit-checklist.md](references/steward-audit-checklist.md))                    |
+| `/bootstrap` | platform-api + steward | Profiles minimal\|standard                                                                           |
 
 Default ambiguo → chiedi fase. Eredita `/learn`, `/sync` (L0).  
 Documentare «tutti» i comandi → chiarisci perimetro (harness+L0+Make vs discovery); sync slash → aggiorna man §13.
@@ -156,24 +156,36 @@ Documentare «tutti» i comandi → chiarisci perimetro (harness+L0+Make vs disc
 Orchestrazione **deterministica** + anti context-bloat (cmd lean):
 
 1. **Prompt lean** — `scripts/harness-prompt-builder.sh render --max-tokens 200` prima di clarify/Act; niente dump transcript/ToDo/work-graph interi.
-2. **Handoff JSON** — `.cursor/product/handoff-graph.json`, `handoff-slice.json`, `handoff-cycle.json`, `handoff-todo.json` via `handoff-write` / `handoff-read` (stato minimo: acceptance, files, node_id, next, summary, brief).
+2. **Handoff JSON** — `docs/product/handoff-graph.json`, `handoff-slice.json`, `handoff-cycle.json`, `handoff-todo.json` via `handoff-write` / `handoff-read` (stato minimo: acceptance, files, node_id, next, summary, brief).
 3. **Progressive disclosure** — competenze di fase on-demand (`context-budget`); non caricare tutto L1.
 4. Flag espliciti only (`/graph -y`); nessun auto-Act senza accept o `-y`.
 
+### Quiet test execution & anti context-bloat (Platform API default)
+
+Per tutti i progetti gestiti da `a-harness`, l'esecuzione dei test (`make test-unit`, `make test-quiet`, `npm test`, test runner) **adotta la modalità quiet come standard** per preservare il context window:
+
+1. **Output compatto (full GREEN / selective RED)**:
+   - **Verde (`full GREEN`)**: emissione di una singola riga riassuntiva (es. `full GREEN (N passed, S suites in Ts)`), sopprimendo l'elenco dei singoli test superati. Abbattimento token: >99% (da ~15.000-25.000 token a ~15 token per run completa).
+   - **Rosso (`RED`)**: visualizzazione selettiva di **soli ed esclusivamente** i test falliti (nome, file:riga, failure trace/assertion), sopprimendo i test verdi.
+   - **Log esteso settimanale**: la traccia dettagliata completa (`spec`/verbosa) è sempre preservata scrivendo su `logs/test-YYYY-WW.log` a rotazione settimanale ISO (in `.gitignore`).
+
+2. **Throttling e Mutex per test E2E / BDD**:
+   - **Rate limit orario**: i test browser pesanti (Playwright, Gherkin E2E) sono differiti se rieseguiti entro 60 minuti da un esito verde (`DEFERRED: ran X mins ago (< 1h)`). Forzabile solo con `FORCE=1` o `--force`.
+   - **Concurrency guard (Mutex)**: lockfile esclusivo basato su PID (`logs/.test-e2e.lock`) per impedire a pipeline o sotto-agenti paralleli di collidere eseguendo test E2E simultaneamente (`SKIP / CONCURRENT`).
+
 ### `/cycle`
 
-**Template Method / Hollywood Principle:** `/cycle` è lo **skeleton** fisso (slice → red → green → refactor → ready → flush); Make, hooks e permission-modes “chiamano” l’agente nei punti di estensione — non il contrario (Hollywood: *don’t call us, we’ll call you*). Le fasi TDD e le competenze on-demand sono i **hook** del template; non inventare un secondo loop fuori da questo skeleton.
+**Template Method / Hollywood Principle:** `/cycle` è lo **skeleton** fisso (slice → red → green → refactor → ready → flush); Make, hooks e permission-modes “chiamano” l’agente nei punti di estensione — non il contrario (Hollywood: _don’t call us, we’ll call you_). Le fasi TDD e le competenze on-demand sono i **hook** del template; non inventare un secondo loop fuori da questo skeleton.
 
-1. `/slice` (Plan) → acceptance + progress; in Plan: **evidence-first**, **capability-first**, **70/20/10**, **clarify** + **analyze** (Spec Kit + semantic + workflow context)  
-2. Handoff **Act** solo dopo slice accettato  
-3. `/red` (pre-ottimizzazioni → contratto) → `/green` (pre-opt ereditate → minimo) → `/refactor`  
-4. `/ready` (umano = intent); se restano gap rispetto al contratto → nuovo `/slice` (**converge**), non allargare lo slice in corso  
-5. Flush progress  
+1. `/slice` (Plan) → acceptance + progress; in Plan: **evidence-first**, **capability-first**, **70/20/10**, **clarify** + **analyze** (Spec Kit + semantic + workflow context)
+2. Handoff **Act** solo dopo slice accettato
+3. `/red` (pre-ottimizzazioni → contratto) → `/green` (pre-opt ereditate → minimo) → `/refactor`
+4. `/ready` (umano = intent); se restano gap rispetto al contratto → nuovo `/slice` (**converge**), non allargare lo slice in corso
+5. Flush progress
 
-**Accept senza risposte clarify:** se `/accept` (o accept esplicito 1–N) e il Plan ha già **default consigliati** per ogni clarify, lockare quei default e procedere Act — non ri-chiedere. Se un clarify non ha default nel Plan, chiedere prima di `/red`. Dettaglio: [permission-modes.md](references/permission-modes.md).  
+**Accept senza risposte clarify:** se `/accept` (o accept esplicito 1–N) e il Plan ha già **default consigliati** per ogni clarify, lockare quei default e procedere Act — non ri-chiedere. Se un clarify non ha default nel Plan, chiedere prima di `/red`. Dettaglio: [permission-modes.md](references/permission-modes.md).
 
 **`/cycle` con Plan già aperto:** non equivale ad accept. Ripeti le scelte (`accept N` / `accept A+B`); **non** avviare `/red`. Un nuovo `/cycle` senza accept = reminder Plan, non Act.
-
 
 **Pre-ottimizzazioni** (obbligatorie in `/red`, riaffermate in `/green`): prompt lean · anti context-bloat (`context-budget`) · delega per competenza — vedi `tdd-red` / `tdd-green`.
 
@@ -186,12 +198,12 @@ DDD tipici: RED → aggregate/ubiquitous/bounded/FCIS · GREEN → ACL + when-st
 
 Prima di Act locale in `/red` (e in `/green` se emerge lavoro fuori perimetro): mappa sotto-task → agente; handoff con brief lean. Non assorbire lavoro fuori harness.
 
-| Agente | Quando |
-|--------|--------|
-| `a-gherkin` | Manca `.feature` / BDD |
-| `a-po` | Manca slice/US/PRD / discovery |
-| `a-agentzero` | `/sync`, `/learn`, scaffold L2 |
-| Steward (`/steward`) | Makefile, hooks, CI, freeze |
+| Agente               | Quando                         |
+| -------------------- | ------------------------------ |
+| `a-gherkin`          | Manca `.feature` / BDD         |
+| `a-po`               | Manca slice/US/PRD / discovery |
+| `a-agentzero`        | `/sync`, `/learn`, scaffold L2 |
+| Steward (`/steward`) | Makefile, hooks, CI, freeze    |
 
 Scaffold: [harness-scaffold.md](references/harness-scaffold.md) · Handoff: [handoff-from-gherkin.md](references/handoff-from-gherkin.md)
 

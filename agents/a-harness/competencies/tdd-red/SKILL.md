@@ -30,7 +30,7 @@ Definisce il **contratto eseguibile** scrivendo test che falliscono per la giust
 Checklist pre-Act. Non saltare. Esito: brief lean + mappa deleghe + budget file (in progress o chat breve).
 
 1. **Prompt lean** — riduci token/costi; prompt chiaro, scoped allo slice; non ripetere policy già in skill/hook/Make; niente wall-of-text.
-2. **Anti context-bloat** — allinea a `context-budget`: ≤4 file, no directory intere, progressive disclosure competenze, offload output grandi. In RED non caricare produzione oltre il minimo per scrivere il contratto.
+2. **Anti context-bloat** — allinea a `context-budget`: ≤4 file, no directory intere, progressive disclosure competenze, offload output grandi. L'esecuzione di verifica del test fallito (`make test-unit`, `make test-quiet`) adotta il quiet mode (output selettivo `RED` con la sola failure assertion), senza inquinare il contesto con i test verdi. In RED non caricare produzione oltre il minimo per scrivere il contratto.
 3. **Delega per competenza** — prima di Act locale, mappa sotto-task → agente L1/competenza corretta (`a-gherkin`, `a-po`, `a-agentzero`, Steward, altre L1). Non fare lavoro fuori perimetro harness. Handoff espliciti con brief lean.
 
 ---

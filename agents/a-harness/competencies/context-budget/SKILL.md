@@ -1,11 +1,11 @@
 ---
 name: context-budget
 kind: competency
-version: 1.2.0
+version: 1.3.0
 description: >-
   Carico cognitivo = context window: max 4 file attivi, no directory intere,
-  offload output grandi su FS, progressive disclosure competenze; brief slash
-  ≤200 token via prompt-builder + handoff-*.json.
+  offload output grandi su FS, quiet test default (full GREEN / selective RED),
+  progressive disclosure competenze; brief slash ≤200 token via prompt-builder + handoff-*.json.
 ---
 
 # Competenza L1 — context-budget
@@ -19,7 +19,10 @@ L'equazione **carico cognitivo team = context window agente**. Contesto troppo a
 3. **Cambio dominio/bounded context** → chiudi contesto precedente; riapri solo file essenziali
 4. **Allineamento** a `bounded-context`: letture limitate al modulo assegnato
 5. **`/slice`** deve elencare esplicitamente i file nel budget prima di RED/GREEN
-6. **Offload** output tool/log grandi su file (progress / artifact); non gonfiare la chat
+6. **Offload output tool/log grandi su file (progress / artifact):** non gonfiare la chat con output di test. I test (`make test-unit`, `npm test`) devono eseguire in **quiet mode default**:
+   - Successo: `full GREEN` sintetico a riga singola (soppressione dell'elenco dei singoli test superati).
+   - Fallimento: `RED` selettivo con **soli** i test falliti (nome, file:linea, assertion stack trace).
+   - Traccia estesa completa: offloadata su `logs/test-YYYY-WW.log` a rotazione settimanale ISO (inclusa in `.gitignore`).
 7. **Progressive disclosure** — carica competenze on-demand per fase, non tutto L1 in un colpo
 8. Onboarding `/slice`: glossary + makefile + modulo — non embedding product esterno
 9. **Brief slash ≤200 token** — per `/graph` `/slice` `/cycle` `/todo` usa `scripts/harness-prompt-builder.sh` (`render --max-tokens 200`); niente wall-of-text

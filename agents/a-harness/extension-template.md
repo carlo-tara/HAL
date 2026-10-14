@@ -31,11 +31,11 @@ Skill figlia (L2). Eredita da `a-harness`. All'avvio: L0 → L1 → **questo fil
 | Platform API | `Makefile` (root) |
 | Glossario | `docs/glossary.md` |
 | Bounded contexts | `docs/bounded-contexts.md` |
-| Progress | `.cursor/product/agent-progress.md` |
-| Learnings (opz.) | `.cursor/product/session-learnings.md` |
-| Freeze (opz.) | `.cursor/product/harness-freeze.md` |
-| Features | `.cursor/product/features/` |
-| Hooks (opz.) | `.cursor/hooks.json` |
+| Progress | `docs/product/agent-progress.md` |
+| Learnings (opz.) | `docs/product/session-learnings.md` |
+| Freeze (opz.) | `docs/product/harness-freeze.md` |
+| Features | `docs/product/features/` |
+| Hooks (opz.) | `docs/config/hooks.json` |
 
 ## Target Makefile
 

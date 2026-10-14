@@ -29,7 +29,7 @@ Implementa il **minimo indispensabile** per ottenere luce verde, senza ottimizza
 Porta avanti le scelte RED. Vietato gonfiare context “per implementare”.
 
 1. **Prompt lean** — stesso brief scoped; non re-espandere prompt/policy; niente wall-of-text aggiuntivo.
-2. **Anti context-bloat** — rispetta `context-budget` e i file dello slice; non aprire produzione oltre il perimetro accettato.
+2. **Anti context-bloat** — rispetta `context-budget` e i file dello slice; non aprire produzione oltre il perimetro accettato. L'esecuzione di verifica (`make test-unit`, `make test-quiet`) adotta il quiet mode emettendo solo `full GREEN` (o i soli test falliti se RED), preservando il context window.
 3. **Delega per competenza** — rispetta la mappa deleghe da RED; handoff lean se emerge lavoro fuori perimetro; non assorbire discovery/BDD/infra in GREEN.
 
 ---
