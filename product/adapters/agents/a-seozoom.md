@@ -1,1 +1,1 @@
-../../agents/a-seozoom/agents/a-seozoom.md
+../../../agents/a-seozoom/agents/a-seozoom.md

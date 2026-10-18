@@ -27,4 +27,4 @@ Usare in `/ready` prima di handoff umano. Human review = **intent**, non «funzi
 - [ ] Screenshot / note computer-use se progetto UI
 - [ ] Video demo — solo se pipeline progetto lo supporta (non richiesto da a-harness)
 
-Pin: [cursor-cloud-harness-source.md](cursor-cloud-harness-source.md)
+Pin: `cursor-cloud-harness-source.md` (not bundled)

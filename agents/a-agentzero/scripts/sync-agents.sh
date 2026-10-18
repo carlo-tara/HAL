@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verifica le catene L0/L1/L2 e gli entrypoint HAL per Zed e Cursor.
+# Verifica le catene L0/L1/L2 e gli entrypoint HAL per Zed.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -23,13 +23,13 @@ AGENTS=(
 usage() {
   cat <<'EOF'
 Usage:
-  sync-agents.sh [--dry-run] [--projects DIR ...]
+  sync-agents.sh [--dry-run] [--only-stale] [--projects DIR ...]
 
   --dry-run     Solo report versioni e link locali; non modifica file.
-  --projects    Root di repository consumer: controlla L2 in .agents/skills/
-                e .cursor/skills/ (compatibilità Cursor legacy).
+  --only-stale  Mostra esclusivamente gli agenti/L2 che sono STALE.
+  --projects    Root di repository consumer: controlla L2 in .agents/skills/.
 
-Senza --dry-run ricrea gli entrypoint Zed/Cursor del workspace HAL, poi verifica le catene.
+Senza --dry-run ricrea gli entrypoint Zed del workspace HAL, poi verifica le catene.
 EOF
 }
 
@@ -43,7 +43,7 @@ resolve_link() {
 }
 
 report_workspace_links() {
-  echo ">>> Skill condivise Zed/Cursor (.agents/skills)"
+  echo ">>> Skill condivise Zed (.agents/skills)"
   local agent destination expected actual status
   local missing=0 drift=0
   for agent in "${AGENTS[@]}" learn sync harness-agentfactory laya enrichment personas jtbd gherkin charts illustrator uiux; do
@@ -69,9 +69,9 @@ report_workspace_links() {
     echo "  ${agent}: ${status}"
   done
   echo
-  echo ">>> Adapter Cursor commands (.cursor/commands)"
+  echo ">>> Comandi L0 (.agents/commands)"
   for agent in "${L0_COMMANDS[@]}"; do
-    destination="${WORKSPACE_ROOT}/.cursor/commands/${agent}.md"
+    destination="${WORKSPACE_ROOT}/.agents/commands/${agent}.md"
     expected="${AGENTZERO_DIR}/commands/${agent}.md"
     if [[ ! -e "${destination}" ]]; then
       echo "  ${agent}: MISSING"
@@ -92,10 +92,10 @@ report_workspace_links() {
 
 report_project_command_overrides() {
   local root="$1" cmd
-  echo "--- Comandi Cursor L0 (override vs assenza) ---"
+  echo "--- Comandi L0 (override vs assenza) ---"
   for cmd in "${L0_COMMANDS[@]}"; do
-    if [[ -e "${root}/.cursor/commands/${cmd}.md" ]]; then
-      echo "  ${cmd}: override (${root}/.cursor/commands/${cmd}.md)"
+    if [[ -e "${root}/.agents/commands/${cmd}.md" ]]; then
+      echo "  ${cmd}: override (${root}/.agents/commands/${cmd}.md)"
     else
       echo "  ${cmd}: nessun override"
     fi
@@ -104,9 +104,11 @@ report_project_command_overrides() {
 
 DRY_RUN=0
 PROJECTS=()
+ONLY_STALE=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run) DRY_RUN=1; shift ;;
+    --only-stale) ONLY_STALE=1; shift ;;
     --projects)
       shift
       while [[ $# -gt 0 && "$1" != --* ]]; do PROJECTS+=("$1"); shift; done
@@ -137,14 +139,18 @@ echo ">>> Catene L1 ← L0"
 stale_count=0
 for agent in "${AGENTS[@]:1}"; do
   skill="${HAL_AGENTS_ROOT}/${agent}/SKILL.md"
-  echo
-  echo "--- ${agent} ---"
   output="$("${VERSION_SH}" chain "${skill}" 2>&1)" || true
-  echo "${output}"
   if grep -q 'STALE' <<<"${output}"; then
     stale_count=$((stale_count + 1))
+    echo
+    echo "--- ${agent} ---"
+    echo "${output}"
     echo "Pending CHANGELOG:"
     "${VERSION_SH}" pending "${skill}" 2>&1 || true
+  elif [[ "${ONLY_STALE}" -eq 0 ]]; then
+    echo
+    echo "--- ${agent} ---"
+    echo "${output}"
   fi
 done
 
@@ -154,17 +160,21 @@ for root in "${PROJECTS[@]}"; do
   echo "=== Progetto: ${root} ==="
   report_project_command_overrides "${root}"
   skills=()
-  for skills_root in "${root}/.agents/skills" "${root}/.cursor/skills"; do
-    if [[ -d "${skills_root}" ]]; then
-      while IFS= read -r -d '' skill; do skills+=("${skill}"); done < <(find "${skills_root}" -mindepth 2 -maxdepth 2 -name SKILL.md -print0)
-    fi
-  done
+  skills_root="${root}/.agents/skills"
+  if [[ -d "${skills_root}" ]]; then
+    while IFS= read -r -d '' skill; do skills+=("${skill}"); done < <(find "${skills_root}" -mindepth 2 -maxdepth 2 -name SKILL.md -print0)
+  fi
   if [[ ${#skills[@]} -eq 0 ]]; then echo "(nessuna skill L2 trovata)"; continue; fi
   for skill in "${skills[@]}"; do
-    echo "--- L2 $(basename "$(dirname "${skill}")") ---"
     output="$("${VERSION_SH}" chain "${skill}" 2>&1)" || true
-    echo "${output}"
-    if grep -q 'STALE' <<<"${output}"; then stale_count=$((stale_count + 1)); fi
+    if grep -q 'STALE' <<<"${output}"; then
+      stale_count=$((stale_count + 1))
+      echo "--- L2 $(basename "$(dirname "${skill}")") ---"
+      echo "${output}"
+    elif [[ "${ONLY_STALE}" -eq 0 ]]; then
+      echo "--- L2 $(basename "$(dirname "${skill}")") ---"
+      echo "${output}"
+    fi
   done
 done
 

@@ -6,7 +6,16 @@ I CHANGELOG degli agenti (`a-*/CHANGELOG.md`) restano ownership di `/version`.
 
 ## [Unreleased]
 
+### Changed
+
+- Appreso da sessione: Estrazione di istruzioni prolisse nel sub-folder `references/` e caricamento _on-demand_ per ottimizzazione token. [sync:safe]
+- Appreso da sessione: Pre-filtraggio a zero token con Laya (System 1) per `routing`, `choice` e `score` imposto rigidamente. [sync:safe]
+- Appreso da sessione: Contratti di Output stringenti per tutte le skill, per troncare chiacchiere o riepiloghi "Reason why". [sync:safe]
+- Appreso da sessione: Diff-tiering e file troncati nei tools (`commit`, `review`, `improve`, test in `cycle`). [sync:safe]
+- Appreso da sessione: Logica deterministica scaricata su script bash/python CLI per `todo`, `version`, `sync`. [sync:safe]
+
 ### Added
+
 - Promozione pattern sibling `role: data` + `role: editorial` in `a-seozoom` § Estensioni L2 — `a-seozoom` 1.8.11 (`35ebe87`)
 - Valutazione Substack in `a-seozoom` → **resta L2 NEED-N** (solo GiocoStrategico; nessun 2° sito) — `/graph -y` n4
 - `/sync <` su cwd AgentFactory: inventario L2 in-repo + consumer noti `/var/www` (`sync` 1.1.2)
@@ -15,6 +24,7 @@ I CHANGELOG degli agenti (`a-*/CHANGELOG.md`) restano ownership di `/version`.
 - `/todo` flush «Già fatto» → questo file (`todo` 1.1.0)
 
 ### Changed
+
 - DUP L2 consumer tagliati (`/graph -y` n1–n3): rimossa `liberating-tone-of-voice` da GiocoStrategico; split `seozoom-piratesstraps` + editorial thin; stub `seo-geo-specialist` liberating.it
 - Playbook DUP: nota repo target senza git/Make (gate N/A, check greppabili); L2 `harness-agentfactory` 1.1.20 ambito `ready-proof`
 - Facade `a-b2b` 2.1.2: Outcome/Success signal (anti–Build Trap) allineata a a-product
@@ -23,6 +33,7 @@ I CHANGELOG degli agenti (`a-*/CHANGELOG.md`) restano ownership di `/version`.
 - Verifica pin L2 `b2b-*`: 2× `extends: a-b2b`; 0× `a-product` accidentale
 
 ### Already shipped (riferimento)
+
 - Fold Profilo B2B + facade a-b2b + `/learn` ToDo/docs (`e24c41b`)
 - Escaping the Build Trap → a-product 1.2.0 (`7a74469`)
 - `/sync !` deploy post Build Trap/Kata

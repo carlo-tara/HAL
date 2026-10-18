@@ -1,6 +1,6 @@
 # Brief progetto SEO — template
 
-Compila questo file nel progetto target (es. `.cursor/seo/{nome-sito}.md`) o incorporalo nella skill figlia L2 (`extends: a-seozoom`).
+Compila questo file nel progetto target (es. `docs/seo/{nome-sito}.md`) o incorporalo nella skill figlia L2 (`extends: a-seozoom`).
 
 ---
 
@@ -56,7 +56,7 @@ Compila questo file nel progetto target (es. `.cursor/seo/{nome-sito}.md`) o inc
 
 | Skill | Path | Ruolo |
 |-------|------|-------|
-| | `.cursor/skills/` | |
+| | `.agents/skills/` | |
 | | | |
 
 ---

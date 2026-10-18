@@ -26,7 +26,7 @@ check_skill() {
 echo ">>> Frontmatter: all SKILL.md (L0/L1/L2 + competencies)"
 while IFS= read -r -d '' f; do
   check_skill "$f" || fail=1
-done < <(find "$ROOT" \( -path "$ROOT/a-*" -o -path "$ROOT/project-skills/*" -o -path "$ROOT/.agents/skills/*" -o -path "$ROOT/.cursor/skills/*" \) \
+done < <(find "$ROOT" \( -path "$ROOT/a-*" -o -path "$ROOT/project-skills/*" -o -path "$ROOT/.agents/skills/*" \) \
   -name SKILL.md -print0 2>/dev/null | sort -zu)
 
 if [[ "$fail" -ne 0 ]]; then

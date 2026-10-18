@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/slice.md
+../../../agents/a-agentzero/commands/slice.md

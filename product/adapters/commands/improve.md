@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/improve.md
+../../../agents/a-agentzero/commands/improve.md

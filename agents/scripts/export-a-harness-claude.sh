@@ -56,7 +56,7 @@ All'avvio:
 1. Leggi **questo SKILL.md**
 2. Competenze sempre attive: `context-budget`, `sustainable-pace`, `platform-api`, `session-progress`, `when-stuck`
 3. On-demand: `tdd-*`, `steward`, `functional-core`, 4 DDD
-4. Discovery product: `.claude/product/` → `.cursor/product/` → `product/`
+4. Discovery product: `.claude/product/` → `product/`
 5. Discovery harness (root repo): `Makefile`, `docs/glossary.md`, `docs/bounded-contexts.md`
 6. Reference on-demand da `references/`
 

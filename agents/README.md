@@ -2,16 +2,16 @@
 
 HAL è la fonte canonica per agenti, skill, competenze e asset eseguibili. Questo albero contiene la migrazione dei contenuti AgentFactory; AgentFactory è deprecato e non è una dipendenza di esecuzione o deploy.
 
-## Compatibilità Zed e Cursor
+## Integrazione Zed
 
 Le skill di dominio usano il formato standard `SKILL.md`:
 
-- `.agents/skills/` espone con symlink relativi gli agenti principali L0/L1, le skill integrate e operative (`charts`, `enrichment`, `gherkin`, `illustrator`, `jtbd`, `learn`, `laya`, `personas`, `sync`, `uiux`) e la skill L2 `harness-agentfactory`. Zed e Cursor leggono entrambi questo percorso.
-- `.cursor/agents/` espone a Cursor i manifesti subagent conservati nei bundle. In Zed gli stessi domini si invocano come skill.
-- `.cursor/commands/` espone a Cursor i comandi L0 originali; i comandi non sono agenti né skill.
+- `.agents/skills/` espone con symlink relativi gli agenti principali L0/L1, le skill integrate e operative (`charts`, `enrichment`, `gherkin`, `illustrator`, `jtbd`, `learn`, `laya`, `personas`, `sync`, `uiux`) e la skill L2 `harness-agentfactory`.
+- `product/adapters/agents/` espone i manifesti degli agenti conservati nei bundle. In Zed gli stessi domini si invocano come skill.
+- `.agents/commands/` e `product/adapters/commands/` espongono i comandi L0; `.zed/prompts/` espone i comandi corrispondenti come prompt per Zed.
 - Le competenze restano nei bundle sotto `competencies/`, come risorse modulari caricate dall'agente di dominio. Non sono appiattite né rinominate.
 
-Zed cataloga le skill poste direttamente in `.agents/skills/`; il caricamento delle competenze annidate resta affidato al workflow L0/L1 che ne legge i file. Cursor può rilevare anche le `SKILL.md` annidate secondo la propria scansione. I contenuti canonici non sono duplicati negli adapter.
+Zed cataloga le skill poste direttamente in `.agents/skills/`; il caricamento delle competenze annidate resta affidato al workflow L0/L1 che ne legge i file. I contenuti canonici non sono duplicati negli adapter.
 
 Per ricreare gli entrypoint del workspace:
 
@@ -23,7 +23,7 @@ I link sono relativi e non dipendono dal percorso assoluto della macchina.
 
 ## Modello di esecuzione
 
-L'esecuzione usa il modello System 2 predefinito: `SystemTwoEngine.ACTIVE_MODEL_NAME` in `global_config.py`. Non viene introdotto un executor LLM alternativo. I subagent Cursor ereditano il modello attivo; le skill Zed vengono eseguite dal modello attivo dell'Agent Panel.
+L'esecuzione usa il modello System 2 predefinito: `SystemTwoEngine.ACTIVE_MODEL_NAME` in `global_config.py`. Non viene introdotto un executor LLM alternativo. Le skill Zed vengono eseguite dal modello attivo dell'Agent Panel.
 
 ## Inventario
 

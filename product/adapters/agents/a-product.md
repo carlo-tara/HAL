@@ -1,1 +1,1 @@
-../../agents/a-product/agents/a-product.md
+../../../agents/a-product/agents/a-product.md

@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 1.1.0
+version: 1.2.1
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py o modulo Python router.
 ---
@@ -27,6 +27,7 @@ HAL adotta una separazione rigorosa a due livelli:
 ## Quando consultare Laya (System 1)
 
 L'agente deve consultare Laya ogni volta che si presenta un compito preliminare di:
+
 - **Triage e Routing**: assegnare un file, una richiesta o un problema a una categoria/rotta (`python3 router.py routing "..." --routes ...`).
 - **Scelta discreta**: scegliere tra un set definito di opzioni o strategie operative (`python3 router.py choice "..." --options ...`).
 - **Valutazione di rischio o aderenza**: ottenere uno score 0-1 rispetto a un criterio specifico (`python3 router.py score "..." --criteria ...`).
@@ -73,7 +74,24 @@ python3 router.py context "<testo o contesto>" --json
 python3 router.py noul "<testo>"
 ```
 
-## Integrazione Python
+## Best Practices per Agenti (Ottimizzazione L1)
+
+Per massimizzare la confidenza e l'efficacia di Laya, la skill `smart_choice` implementa automaticamente le seguenti strategie:
+
+1.  **Multi-question Anchoring (Strategy A)**: Le decisioni complesse vengono ancorate a una domanda di categorizzazione preliminare nello stesso payload.
+2.  **Semantic Pacing (Strategy B)**: Evitare più di 5 opzioni e usare descrizioni di criteri con alta distanza semantica.
+3.  **Confidence-Based Routing (Strategy C)**:
+    - `Confidence > 0.8`: Esecuzione veloce.
+    - `Confidence 0.3-0.8`: Retry automatico con istruzioni di sfida.
+    - `Confidence < 0.3`: Escalation automatica a System 2 (LLM).
+4.  **Attachment Filtering (Strategy D)**: Liste lunghe di allegati o file vengono riassunte (es. "15x .JPG") per ridurre il rumore testuale.
+
+### Middleware di sistema
+
+Laya include middleware che:
+
+- **Validano il payload** segnalando pattern a bassa confidenza (troppe opzioni).
+- **Migliorano il prompt** chiamando System 2 se l'input è ambiguo, troppo corto o "caricato".
 
 Se eseguito all'interno di script o runtime Python in HAL:
 

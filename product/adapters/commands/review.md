@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/review.md
+../../../agents/a-agentzero/commands/review.md

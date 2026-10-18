@@ -1,0 +1,82 @@
+# Changelog — wtp-ux-ui
+
+## [Unreleased]
+
+### Changed
+- 1.3.64 → **1.3.65** — Appreso da sessione: URL tab Company/Customer da mappa condivisa, restore dopo render, query/history e lazy-load deduplicati; puntatori ai contratti e README `[sync:safe]`
+- 1.3.63 → **1.3.64** — Skill base a-uiux HAL Gateway collegata; `extends-version` 1.0.5→1.0.7 `[sync:safe]`
+- 1.3.62 → **1.3.63** — Appreso da sessione: Company tab Azienda|Dettaglio|Clienti MS|Rischi (Persone→Dettaglio dedupe); importi ` €`; PDF continuo = carta light intenzionale `[sync:safe]`
+- 1.3.61 → **1.3.62** — Appreso da sessione: File→Esporta PDF schede = continuo (no A4); Company multi-tab reveal-all; classic-script → vendor globals `[sync:safe]`
+- 1.3.60 → **1.3.61** — Sync selettivo padre `a-uiux` 1.0.2→**1.0.5** (L0 pin 1.6.11–1.6.13) `[sync:safe]`
+- 1.3.59 → **1.3.60** — Appreso da sessione: `design-system.md` / migration stato Fine E45 canone-only (no shim `:root`) `[sync:safe]`
+- 1.3.58 → **1.3.59** — Fine wave **E45**: delete `:root` short shims; canone-only `--surferdark-*`; contract AppBar updated `[sync:safe]`
+- 1.3.57 → **1.3.58** — Fine wave **E44** opt-in: picker / score3 / company-page / customer residual → `--surferdark-*`; 0 consumer shim tracked; `:root` alias delete = E45 `[sync:safe]`
+- 1.3.56 → **1.3.57** — Appreso da sessione: Customer sheet back-link contestuale; Integrazioni=card CTA; Profilo nested formatters `[sync:safe]`
+- 1.3.55 → **1.3.56** — Fine wave `:root` alias **deferred** (N12): 91 consumer shim hit / 5 file; no alias delete; next Lists C24 `[sync:safe]`
+- 1.3.54 → **1.3.55** — Wave3 E43: token opt-in executive summary (`.executive-summary*` / segment table) → `--surferdark-*`; drop dual-alias shim `[sync:safe]`
+- 1.3.53 → **1.3.54** — Wave3 E42: token opt-in artifacts / favorites / app loading (`.artifacts-search` / `.artifact-link` / `.favorites-list` / `main#app .loading|.error` / `.chip` / `.slider-marks`) → `--surferdark-*` `[sync:safe]`
+- 1.3.52 → **1.3.53** — Wave3 E41: token opt-in summary / gauge / chart residual (`.summary-*` / `.gauge-*` / `.chart-help` residual / `.heatmap-cell:hover`) → `--surferdark-*` `[sync:safe]`
+- 1.3.51 → **1.3.52** — Wave3 E40: token opt-in list editorial / suggestions (`.list-editorial*` / `.list-suggestion*` / `.suggestion-*`) → `--surferdark-*` `[sync:safe]`
+- 1.3.50 → **1.3.51** — Wave3 E39: token opt-in output metrics (`.output-meta` / `.output-metric-*`) → `--surferdark-*` `[sync:safe]`
+- 1.3.49 → **1.3.50** — Wave3 E38: token opt-in c360/co-chat chrome (`.c360-chat-*` / `.co-chat-*`) → `--surferdark-*` `[sync:safe]`
+- 1.3.48 → **1.3.49** — Wave3 E37: token opt-in Company 360 sheet (`.company-meta` / chip / kv / risk / empty) → `--surferdark-*` `[sync:safe]`
+- 1.3.47 → **1.3.48** — Wave3 E36: token opt-in Customer 360 sheet (`.customer-meta` / chip / kv / b2b / section) → `--surferdark-*` `[sync:safe]`
+- 1.3.46 → **1.3.47** — Wave3 E35: token opt-in product misc (`.signed-as` / `.back-link` / `.field` range+error / `.hint`) → `--surferdark-*` `[sync:safe]`
+- 1.3.45 → **1.3.46** — Wave3 E34: token opt-in Risk `.result*` (level/meta/dt) → `--surferdark-*` `[sync:safe]`
+- 1.3.44 → **1.3.45** — Sync padre `a-uiux` **1.0.2**; dual-alias → L1 `static-stack`; checklist #12 = shim SurferDark `[sync:safe]`
+- 1.3.43 → **1.3.44** — soft DUP: LOCK #5 menubar → ordine WTP + puntatore L1/checklist #6 `[sync:safe]`
+- 1.3.42 → **1.3.43** — `/sync <` DUP#3: checklist #4/#6/#8 → delta SurferDark + puntatore L1 `a-uiux` `[sync:safe]`
+- 1.3.41 → **1.3.42** — Sync selettivo padre `a-uiux` 1.0.0→**1.0.1** (Reason why + regole subagent) `[sync:safe]`
+- 1.3.40 → **1.3.41** — Wave3 E33: token opt-in product chrome (`.product-content` h1/lede/panel/field) → `--surferdark-*` `[sync:safe]`
+- 1.3.39 → **1.3.40** — Appreso da sessione: token opt-in GREEN → soft dual-alias `--(?:shim|surferdark-*)` nello stesso slice `[sync:safe]`
+- 1.3.38 → **1.3.39** — Wave3 E32: token opt-in `.advanced-panel` / `.output-subtab` → `--surferdark-*` `[sync:safe]`
+- 1.3.37 → **1.3.38** — Wave3 E31: token opt-in chrome profile/lang (`.chrome-profile-link` / `.chrome-lang-*`) → `--surferdark-*` `[sync:safe]`
+- 1.3.36 → **1.3.37** — Wave3 E30: token opt-in Liste owner-menu (`.owner-trigger` / `.owner-panel` / `.owner-option`) → `--surferdark-*` `[sync:safe]`
+- 1.3.35 → **1.3.36** — Wave3 E29: token opt-in auth chrome (`.auth-card` / `.auth-field` / `.alert` / `.spinner`) → `--surferdark-*` `[sync:safe]`
+- 1.3.34 → **1.3.35** — Wave3 E28: token opt-in `.table-wrap` / `.pagination` / `.table-hint` / `.footer-note` / `.page-dataset-meta` → `--surferdark-*` `[sync:safe]`
+- 1.3.33 → **1.3.34** — Wave3 E27: token opt-in `.detail-*` / `.tag` / strategy-guide / `.filters` input → `--surferdark-*` `[sync:safe]`
+- 1.3.32 → **1.3.33** — Wave3 E26: token opt-in `.strategy-chip` / `.card` / `.chart-help` / `.filter-chip` → `--surferdark-*` `[sync:safe]`
+- 1.3.31 → **1.3.32** — Wave3 E25: token opt-in `.table`/`.user-table` + `.kpi-card` + `.secondary-tab` → `--surferdark-*` `[sync:safe]`
+- 1.3.30 → **1.3.31** — Wave3 E24: token opt-in `.panel` + progress dialog + `.empty-state`/`.error-message` → `--surferdark-*` `[sync:safe]`
+- 1.3.29 → **1.3.30** — Appreso da sessione: suite-wide soft `<style>`; `ruleBody` no discendenti; print SoT scoped; token opt-in batch; wave emotion chiusa `[sync:safe]`
+- 1.3.28 → **1.3.29** — Wave3 E23: token opt-in `.field` + tabs (`.main-tab` / `.tab`) → `--surferdark-*` `[sync:safe]`
+- 1.3.27 → **1.3.28** — Wave3 E22: token opt-in menubar chrome (`.menu-trigger` / `.menu-panel` / `.menu-item`) → `--surferdark-*` `[sync:safe]`
+- 1.3.26 → **1.3.27** — Wave3 E21: token opt-in `.btn-*` (primary/secondary/outline/danger/sm) → `--surferdark-*` `[sync:safe]`
+- 1.3.25 → **1.3.26** — Wave3 E20: token opt-in appbar chrome (title/brand/version/menubar/end) → `--surferdark-*` `[sync:safe]`
+- 1.3.24 → **1.3.25** — Wave3 E19: token opt-in shell chrome (`body` / `a` / `.appbar`) → `--surferdark-*`; shim `:root` resta `[sync:safe]`
+- 1.3.23 → **1.3.24** — Wave3 E18: artifacts densità in SoT; strip legacy Liste `customer.html` style; product HTML densità wave chiusa `[sync:safe]`
+- 1.3.22 → **1.3.23** — Wave3 E17: Liste index densità (owner-menu / output charts / list-editorial) in SoT; index zero `<style>` `[sync:safe]`
+- 1.3.21 → **1.3.22** — Wave3 E16: Company 360 sheet densità in SoT; sheet zero `<style>`; soft assert C0/P0 tollerano assenza style `[sync:safe]`
+- 1.3.20 → **1.3.21** — Wave3 E15: Customer 360 sheet densità in SoT; sheet zero `<style>`; print scoped `body:has(#customer-main-content)` `[sync:safe]`
+- 1.3.19 → **1.3.20** — Wave3 E14: Risk densità (`.result*` / form `> .btn-primary`) in SoT; risk home zero `<style>` `[sync:safe]`
+- 1.3.18 → **1.3.19** — Wave3 E13: Profile densità (`.btn-row` / `.signed-as` / `.alert-ok` / product-content panel) in SoT; profile home zero `<style>`; `ruleBody` no false-match discendenti `[sync:safe]`
+- 1.3.17 → **1.3.18** — Wave3 E11: delete dead `profileDialogLayout` emotion SX (+ paired test); inventory/checklist no residuo emotion layout `[sync:safe]`
+- 1.3.16 → **1.3.17** — Appreso da sessione: Explorer score3 zero `<style>`; assert CSS tollerano assenza style; no reintro emotion SX su moduli prunati `[sync:safe]`
+- 1.3.15 → **1.3.16** — Wire `extends: a-uiux` @ 1.0.0 (`/sync <` NEED-N); a11y/stack → L1; SurferDark resta L2 `[sync:safe]`
+- 1.3.14 → **1.3.15** — Wave2: drop shim `enrico.css`; soft `#c8c8c0`→`var(--muted)`; Company ids `co-*`; product picker SurferDark `[sync:safe]`
+- 1.3.13 → **1.3.14** — Appreso da sessione: `.product-layout` SoT; `applyDomI18n` DRY; anti-pattern blanket rename CSS path su assert `[sync:safe]`
+- 1.3.12 → **1.3.13** — Migration step 6 Done: SoT `surferdark.css`; shim `enrico.css`; contract `surferdarkAppbarCss.test.js` + HTML link suite `[sync:safe]`
+- 1.3.11 → **1.3.12** — Esempio semver AppBar allineato a prodotto **1.20.0** `[sync:safe]`
+- 1.3.10 → **1.3.11** — Esempio semver AppBar allineato a prodotto **1.18.0** `[sync:safe]`
+- 1.3.9 → **1.3.10** — Esempio semver AppBar allineato a prodotto **1.17.0** `[sync:safe]`
+- 1.3.8 → **1.3.9** — Appreso da sessione: supersede SoT Liste `customer.html`; Checklist 17 = Customer 360 + redirect legacy OK `[sync:safe]`
+- 1.3.7 → **1.3.8** — Esempio semver AppBar allineato a prodotto **1.16.0** `[sync:safe]`
+- 1.3.6 → **1.3.7** — Esempio semver AppBar allineato a prodotto **1.15.0** `[sync:safe]`
+- 1.3.5 → **1.3.6** — Docs: scheda SoT = Customer 360; legacy `wtp/.../customer.html` non stub-redirect senza mandato `[sync:safe]`
+- 1.3.4 → **1.3.5** — Appreso da sessione: gate contract CSS; inline page-local post step 4; SoT scheda `src/wtp/frontend/customer.html` (≠ redirect `/customer/`); inventory post-primitives `[sync:safe]`
+- 1.3.3 → **1.3.4** — Slice B: primitives Liste (field/tab/panel/progress/table/chip/shell) in `enrico.css`; strip hex catalogati da index/customer/artifacts; contract `surferdarkPrimitivesCss.test.js` `[sync:safe]`
+- 1.3.2 → **1.3.3** — Slice A migrazione CSS: `--surferdark-color-*` + shim legacy; radius sm/md su `.btn` / `.auth-field` / `.auth-card`; contract test foundation; migration-css stato 1–3 Done `[sync:safe]`
+- 1.3.1 → **1.3.2** — Appreso da sessione: AppBar brand LOCK = Sales Coach + version su tutta la suite; shell unica (no `.app-chrome`); meta pagina fuori header `[sync:safe]`
+- 1.3.0 → **1.3.1** — Appreso da sessione: i18n no-msgid su tutta UI Liste (`uiT`); Output Sintesi/lista/customer; progress job = lightbox bloccante (z ≥ AppBar); cookie preview host-bound `[sync:safe]`
+- 1.2.1 → **1.3.0** — Integra **Material Design 3** come mapping ruoli/pattern (`material3.md`): color roles, state layers, shape 6–8, type roles, elevation surface-tint; LOCK anti-MUI / no Material Web; link in SKILL / design-system / foundation / tokens / componenti / patterns / migration `[sync:safe]`
+- 1.2.0 → **1.2.1** — Appreso da sessione: chrome i18n no-msgid / IT/EN; checkbox `.field-row`; Liste Input SoT vanilla + anti falso-positivo MuiAppBar; preview `127.0.0.1` `[sync:safe]`
+- AppBar SurferDark: brand/version hierarchy (`.appbar-brand` / `.appbar-version`); menubar + chrome util ≥44px; radius 6/8; utilities quiet (no MUI) `[sync:safe]`
+- 1.1.0 → **1.2.0** — P1: `componenti.md` (primitives + naming: promuovere classi esistenti) + `migration-css.md` (step 1–6 TDD-aware); link in SKILL / design-system / inventory `[sync:safe]`
+- Menubar desktop: titolo + File/Preferiti/Prodotti in `appbar-start`; trigger con caret, underline oro aperto, pannello elevated + Escape `[sync:safe]`
+- 1.0.14 → **1.1.0** — Da skin checklist a **Design System SurferDark** (ex Enrico): aggiunti `design-system.md`, `foundation.md`, `inventory-classi.md`; riscritti `tokens-dark.md` / `patterns.md` (no MUI); SKILL slim + decisioni LOCK (scope suite, radius 6–8, `--surferdark-*`, light solo print/PDF, menubar ≥44px). Runtime CSS resta `enrico.css` (rename = turno successivo) `[sync:safe]`
+- 1.0.13 → 1.0.14 — Path FE: dominio in `lib/`, runtime in `js/` (niente più `frontend/src/wtp/`) `[sync:safe]`
+- 1.0.11 → 1.0.12 — Menubar AppBar stile app desktop (flat titles, hover-switch, pannelli densi) `[sync:safe]`
+- 1.0.10 → 1.0.11 — Appreso da sessione: AppBar File→Preferiti→Prodotti; Preferiti locali; URL unici Output/scheda `[sync:safe]`
+- 1.0.9 → 1.0.10 — Appreso da sessione: dialog densi (Profilo) = stesso linguaggio shell/overline/chip delle schermate dense `[sync:safe]`
+- 1.0.8 → 1.0.9 — Appreso da sessione: schermate dense a tab secondarie; File→Salva contestuale; print/ZIP vs pannelli nascosti; preview Docker = rebuild UI `[sync:safe]`
+- 1.0.7 → 1.0.8 — Appreso da sessione: chrome Enrico (#0e0e0e / #ffd400 / system UI) come palette runtime Sales Coach; Tara resta solo riferimento marketing `[sync:safe]`

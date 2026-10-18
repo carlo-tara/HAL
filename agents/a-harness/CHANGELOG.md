@@ -14,6 +14,7 @@ Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 ### Changed
 
 - Allineato a a-agentzero 1.8.0; body L1 invariato [sync:safe]
+- Allineato a a-agentzero 1.8.5; body L1 invariato [sync:safe]
 
 ## [1.7.2] - 2026-10-02
 

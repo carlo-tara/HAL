@@ -1,27 +1,13 @@
 {
-  "status": "completed",
-  "command": "graph",
-  "active_node": "node-performance",
-  "next_node": "—",
-  "completed_nodes": [
-    "node-version-chains",
-    "node-ci",
-    "node-laya-fallback",
-    "node-event-redaction",
-    "node-system2-provider",
-    "node-model-resolution",
-    "node-s1-s2-policy",
-    "node-evals",
-    "node-cache",
-    "node-breaker",
-    "node-secrets",
-    "node-deps",
-    "node-sast",
-    "node-score",
-    "node-docs",
-    "node-retention",
-    "node-hooks",
-    "node-performance"
-  ],
-  "summary": "All P1 and P2 work graph nodes completed successfully."
+  "kind": "graph",
+  "cmd": "/graph",
+  "ts": "2026-10-18T08:08:43Z",
+  "flags": {"y": true},
+  "acceptance": "Test preflight/coherence/budget/telemetry and benchmark per model-task; separate technical status, heuristic rubric and independent semantic validation; require comparable serving latency, report load-inclusive duration separately, and block truncations or missing evidence.",
+  "files": "global_config.py; new preflight module; focused tests",
+  "node_id": "cycle-baseline",
+  "next": "cycle-preflight",
+  "summary": "Baseline complete: 11 tests pass; no runtime policy consumer or SQLite metrics. Latest benchmark 32/35 ok, 3 truncated; rubric .621, math .096; no semantic/serving-latency samples; logical rubric false-positive. Laya classifications abstained.",
+  "brief": "Continue P1 system1-gating sequentially. Baseline complete; next cycle-preflight is local-only. Promotion evidence must include independent semantic quality and serving latency; end-to-end seconds include model load and are not serving latency.",
+  "token_budget": 200
 }

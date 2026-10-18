@@ -26,18 +26,20 @@ Il comando `/version` (es. `/version patch`, `/version minor`, `/version major`)
 1. **Rilevamento file modificati:**
    Esegue un controllo sui file modificati nel working tree (tramite `git status` o confrontando con l'ultimo tag/commit stabile), focalizzandosi su:
    - Skill e manifest di agenti (`SKILL.md` con campo `version: X.Y.Z`).
-   - Documentazione e registri (`CHANGELOG.md`, `ToDo.md`, file sotto `docs/` o `.cursor/product/`).
+   - Documentazione e registri (`CHANGELOG.md`, `ToDo.md`, file sotto `docs/` o `product/state/`).
    - Configurazione di progetto o manifesti (`catalog.json`, `package.json`, ecc.).
 
-2. **Calcolo del bump:**
-   - **Patch (`x.y.Z+1`):** correzioni, aggiornamenti testuali, fix minori, allineamenti documentali.
-   - **Minor (`x.Y+1.0`):** aggiunta di nuove sezioni operative, nuove competenze o comandi senza rompere i contratti esistenti.
-   - **Major (`X+1.0.0`):** modifiche strutturali ai protocolli, ai contratti di interazione o ai bounded context.
+2. **Calcolo del bump (System 1):**
+   Se il livello (patch/minor/major) non è fornito, usa la CLI System 1 per deciderlo senza token generativi:
+   `python3 router.py choice "In base a queste modifiche [sintesi], quale bump applicare?" --options patch minor major`
+   - **Patch:** correzioni, aggiornamenti testuali, fix minori.
+   - **Minor:** aggiunte senza rompere contratti.
+   - **Major:** modifiche strutturali o breaking changes.
 
-3. **Applicazione:**
-   - Aggiorna il campo `version:` nel frontmatter YAML dei file `SKILL.md` toccati.
-   - Aggiunge una voce sotto `## [Unreleased]` o nella sezione attiva del `CHANGELOG.md` del file o del modulo.
-   - Preserva la gerarchia e non tocca file non modificati o non tracciati.
+3. **Applicazione (Deterministica):**
+   Usa lo script CLI senza modificare a mano frontmatter e changelog:
+   `bash agents/a-agentzero/scripts/agent-version.sh bump <patch|minor|major> <file>`
+   Questo calcola e applica l'incremento preservando la gerarchia YAML e appendendo al CHANGELOG.
 
 4. **Verifica post-bump:**
    - Per gli agenti HAL, verifica la catena di versione e lo stato con gli script di supporto:

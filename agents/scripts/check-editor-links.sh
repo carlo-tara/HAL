@@ -25,7 +25,7 @@ check_link() {
 for agent in "${AGENT_IDS[@]}"; do
   check_link "${WORKSPACE_ROOT}/.agents/skills/${agent}" "${AGENTS_ROOT}/${agent}"
   [[ -f "${WORKSPACE_ROOT}/.agents/skills/${agent}/SKILL.md" ]]
-  check_link "${WORKSPACE_ROOT}/.cursor/agents/${agent}.md" "${AGENTS_ROOT}/${agent}/agents/${agent}.md"
+  check_link "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md" "${AGENTS_ROOT}/${agent}/agents/${agent}.md"
 done
 
 for skill in learn sync; do
@@ -47,10 +47,14 @@ check_link "${WORKSPACE_ROOT}/.agents/skills/laya" \
   "${AGENTS_ROOT}/project-skills/laya"
 
 for command in "${L0_COMMANDS[@]}"; do
-  check_link "${WORKSPACE_ROOT}/.cursor/commands/${command}.md" \
+  check_link "${WORKSPACE_ROOT}/product/adapters/commands/${command}.md" \
+    "${AGENTS_ROOT}/a-agentzero/commands/${command}.md"
+  check_link "${WORKSPACE_ROOT}/.agents/commands/${command}.md" \
     "${AGENTS_ROOT}/a-agentzero/commands/${command}.md"
 done
-check_link "${WORKSPACE_ROOT}/.cursor/commands/laya.md" \
+check_link "${WORKSPACE_ROOT}/product/adapters/commands/laya.md" \
+  "${AGENTS_ROOT}/project-skills/laya/commands/laya.md"
+check_link "${WORKSPACE_ROOT}/.agents/commands/laya.md" \
   "${AGENTS_ROOT}/project-skills/laya/commands/laya.md"
 
 python3 - "${WORKSPACE_ROOT}" "${AGENTS_ROOT}" <<'PY'
@@ -109,5 +113,5 @@ for name in entrypoints:
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name) or len(name) > 64:
         raise SystemExit(f"FAIL: non-portable Agent Skills name: {name}")
 
-print("editor-links OK (Zed/Cursor skills, Cursor subagents/commands, catalog)")
+print("editor-links OK (Zed skills, product adapters, catalog)")
 PY

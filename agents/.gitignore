@@ -39,6 +39,6 @@ vendor/qwen-image/
 .vscode/
 
 # Runtime lean handoff (prompt-builder)
-.cursor/product/handoff-*.json
+product/state/handoff-*.json
 
 docs/*.pdf

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ready-proof — mechanical RGR checks for HAL skill edits (local + CI optional)
-# - If any a-*/ or .cursor/skills/** SKILL.md is dirty/staged with version bump → CHANGELOG must change
+# - If any a-*/ or .agents/skills/** SKILL.md is dirty/staged with version bump → CHANGELOG must change
 # - Fail if >4 skill paths dirty without waiver:
 #     env WAIVER_FILES_GT4=1  → allow
 #     env WAIVER_FILES_GT4=0  → deny (CI)
@@ -9,7 +9,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-PROGRESS="$ROOT/.cursor/product/agent-progress.md"
+PROGRESS="$ROOT/../product/state/agent-progress.md"
 fail=0
 
 if ! command -v git >/dev/null 2>&1; then
@@ -17,7 +17,7 @@ if ! command -v git >/dev/null 2>&1; then
   exit 0
 fi
 
-mapfile -t dirty < <(git status --porcelain 2>/dev/null | awk '{print $NF}' | grep -E '^(a-[^/]+/|\.cursor/skills/)' || true)
+mapfile -t dirty < <(git status --porcelain 2>/dev/null | awk '{print $NF}' | grep -E '^(a-[^/]+/|\.agents/skills/|project-skills/)' || true)
 
 echo ">>> ready-proof (${#dirty[@]} dirty agent/skill paths)"
 
@@ -77,7 +77,7 @@ for line in out.splitlines():
     parts = line.split()
     if len(parts) >= 2:
         p = parts[-1]
-        if p.startswith("a-") or p.startswith(".cursor/skills/"):
+        if p.startswith("a-") or p.startswith(".agents/skills/") or p.startswith("project-skills/"):
             paths.append(p)
 
 skill_files = [p for p in paths if p.endswith("SKILL.md")]

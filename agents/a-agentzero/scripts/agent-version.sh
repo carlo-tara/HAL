@@ -13,6 +13,7 @@ Usage:
   agent-version.sh chain <SKILL.md>         Catena agente L2→L1→L0 con flag STALE
   agent-version.sh competency-chain <path>  Catena competenza L0/L1/L2 (stessa id)
   agent-version.sh pending <SKILL.md>       Voci CHANGELOG padre > extends-version
+  agent-version.sh bump <level> <file>      Applica incremento semver (patch|minor|major) al frontmatter
 
 Path: SKILL.md o directory (contiene SKILL.md).
 EOF
@@ -74,7 +75,6 @@ resolve_parent_skill() {
 
   local candidates=(
     "${HOME}/.agents/skills/${parent}/SKILL.md"
-    "${HOME}/.cursor/skills/${parent}/SKILL.md"
     "${HAL_AGENTS_ROOT}/${parent}/SKILL.md"
   )
   local c
@@ -250,16 +250,15 @@ resolve_competency_levels() {
     out+=("${l0}")
   fi
 
-  # L2: .../.cursor/skills/{figlio}/competencies/{id}/
-  if [[ "${dir}" == *"/.agents/skills/"*"/competencies/${id}" || "${dir}" == *"/.cursor/skills/"*"/competencies/${id}" ]]; then
+  # L2: .../.agents/skills/{figlio}/competencies/{id}/
+  if [[ "${dir}" == *"/.agents/skills/"*"/competencies/${id}" ]]; then
     local figlio_dir l1="" parent_agent
     figlio_dir="$(cd "${dir}/../.." && pwd)"
     if [[ -f "${figlio_dir}/SKILL.md" ]]; then
       parent_agent="$(get_field "${figlio_dir}/SKILL.md" "extends")"
       for cand in \
         "${HAL_AGENTS_ROOT}/${parent_agent}/competencies/${id}/SKILL.md" \
-        "${HOME}/.agents/skills/${parent_agent}/competencies/${id}/SKILL.md" \
-        "${HOME}/.cursor/skills/${parent_agent}/competencies/${id}/SKILL.md"; do
+        "${HOME}/.agents/skills/${parent_agent}/competencies/${id}/SKILL.md"; do
         if [[ -f "${cand}" ]]; then
           l1="${cand}"
           break
@@ -284,7 +283,7 @@ resolve_competency_levels() {
   if [[ "${dir}" == *"/competencies/${id}" ]]; then
     # Preferisci il bundle canonico HAL se abs arriva da un link editor
     local l1="${abs}"
-    if [[ "${abs}" == "${HOME}/.cursor/skills/"* || "${abs}" == "${HOME}/.agents/skills/"* ]]; then
+    if [[ "${abs}" == "${HOME}/.agents/skills/"* ]]; then
       local agent_name
       agent_name="$(basename "$(cd "${dir}/../.." && pwd)")"
       if [[ -f "${HAL_AGENTS_ROOT}/${agent_name}/competencies/${id}/SKILL.md" ]]; then
@@ -354,6 +353,37 @@ cmd_competency_chain() {
   done
 }
 
+cmd_bump() {
+  local level="$1"
+  local file="$2"
+
+  if [[ ! -f "$file" ]]; then
+    echo "File not found: $file" >&2
+    return 1
+  fi
+
+  local current_version
+  current_version=$(grep -m1 '^version:' "$file" | awk '{print $2}' || true)
+  if [[ -z "$current_version" ]]; then
+    echo "No version found in $file" >&2
+    return 1
+  fi
+
+  local major minor patch
+  IFS='.' read -r major minor patch <<< "$current_version"
+
+  case "$level" in
+    patch) patch=$((patch + 1)) ;;
+    minor) minor=$((minor + 1)); patch=0 ;;
+    major) major=$((major + 1)); minor=0; patch=0 ;;
+    *) echo "Invalid bump level: $level" >&2; return 1 ;;
+  esac
+
+  local new_version="$major.$minor.$patch"
+  sed -i "s/^version: $current_version/version: $new_version/" "$file"
+  echo "Bumped $file: $current_version -> $new_version"
+}
+
 main() {
   local cmd="${1:-}"
   shift || true
@@ -362,6 +392,7 @@ main() {
     chain)  [[ $# -eq 1 ]] || { usage; exit 1; }; cmd_chain "$1" ;;
     competency-chain) [[ $# -eq 1 ]] || { usage; exit 1; }; cmd_competency_chain "$1" ;;
     pending) [[ $# -eq 1 ]] || { usage; exit 1; }; cmd_pending "$1" ;;
+    bump)   [[ $# -eq 2 ]] || { echo "Usage: bump <patch|minor|major> <file>"; exit 1; }; cmd_bump "$1" "$2" ;;
     -h|--help|help|"") usage ;;
     *) echo "Comando sconosciuto: ${cmd}" >&2; usage; exit 1 ;;
   esac

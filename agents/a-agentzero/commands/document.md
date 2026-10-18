@@ -12,27 +12,28 @@ Aggiornare la documentazione operativa del **repository corrente** dopo cambiame
 
 Cerca in ordine ciò che esiste nel repo:
 
-| Cosa | Dove tipico |
-|------|-------------|
-| Panoramica | `README.md` |
-| Doc operativa | `docs/` |
-| Changelog | `CHANGELOG.md` (root o per pacchetto) |
-| Skill agenti L2 | `.cursor/skills/*/SKILL.md` |
-| Brand / tono | `.cursor/brands/*.md` |
-| Protocollo HAL (se AF) | `a-agentzero/AGENT-PROTOCOL.md` |
+| Cosa                   | Dove tipico                           |
+| ---------------------- | ------------------------------------- |
+| Panoramica             | `README.md`                           |
+| Doc operativa          | `docs/`                               |
+| Changelog              | `CHANGELOG.md` (root o per pacchetto) |
+| Skill agenti L2        | `.agents/skills/*/SKILL.md`           |
+| Brand / tono           | `docs/brands/*.md`                    |
+| Protocollo HAL (se AF) | `a-agentzero/AGENT-PROTOCOL.md`       |
 
 Adatta l'elenco al progetto: non inventare file assenti.
 
 ## Process
 
-1. Leggere `git log` recente e diff se il task riguarda una release o un cambiamento specifico.
-2. Allineare `README.md` e doc in `docs/` a:
+1. **Routing Documentale (System 1):** Usa `python3 router.py routing "[argomento] o diff" --routes README docs CHANGELOG skill` per determinare quale sezione documentale aggiornare a costo zero.
+2. Leggere `git log` recente e diff (usando la pre-selezione System 1) se il task riguarda una release.
+3. Allineare i file scelti dal triage a:
    - quick start reale
    - comandi build/test/deploy verificati
    - link alle fonti di dettaglio (niente duplicazione enciclopedica)
-3. Aggiornare tracker/changelog di progetto solo se già in uso.
-4. Non documentare segreti (API key, token, path con credenziali).
-5. Se toccate skill agenti: verificare coerenza con `/version` e CHANGELOG della skill.
+4. Aggiornare tracker/changelog di progetto solo se già in uso.
+5. Non documentare segreti (API key, token, path con credenziali).
+6. Se toccate skill agenti: verificare coerenza con `/version` e CHANGELOG della skill.
 
 ## Checklist
 
@@ -43,9 +44,9 @@ Adatta l'elenco al progetto: non inventare file assenti.
 
 ## Expected output
 
-- Elenco file documentazione toccati
-- Breve riepilogo in chat di cosa è stato documentato
-- Suggerimento commit `docs:` se l'utente chiede commit
+- **Nessun preambolo narrativo né saluti.**
+- Elenco puntato sintetico dei file aggiornati.
+- Comando `git commit -m "docs: ..."` (solo se richiesto dall'utente).
 
 ## Usage
 
@@ -58,5 +59,5 @@ Adatta l'elenco al progetto: non inventare file assenti.
 ## Notes
 
 - Baseline L0: `a-agentzero/commands/document.md` (pubblicata da `/sync !`).
-- Override progetto: `{repo}/.cursor/commands/document.md` se presente.
+- Override progetto: `{repo}/.agents/commands/document.md` se presente.
 - Per versioning formale usare `/version`; per deploy agenti `/sync`.

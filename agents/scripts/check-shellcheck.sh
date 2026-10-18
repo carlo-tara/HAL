@@ -18,7 +18,6 @@ mapfile -t uniq < <(
     printf '%s\n' "$ROOT"/scripts/*.sh
     printf '%s\n' "$ROOT"/a-agentzero/scripts/*.sh
     printf '%s\n' "$ROOT"/a-*/deploy.sh
-    printf '%s\n' "$ROOT"/.cursor/hooks/*.sh
   } | sort -u
 )
 

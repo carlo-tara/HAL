@@ -31,30 +31,28 @@ L0 may already cover empty-index + authoritative path list; this section is the 
 
 ## Coverage & dead-code audits (optional, often outside `ready-for-review`)
 
-| Target (name local) | Role |
-|---------------------|------|
-| `test-coverage` | Run coverage on the **full** unit suite (not a subset smoke) |
-| `check-dead-code` | Heuristic unreferenced-module / orphan-test report; not a proof |
+| Target (name local) | Role                                                            |
+| ------------------- | --------------------------------------------------------------- |
+| `test-coverage`     | Run coverage on the **full** unit suite (not a subset smoke)    |
+| `check-dead-code`   | Heuristic unreferenced-module / orphan-test report; not a proof |
 
 Wire real stack commands in L2. Do not gate `ready-for-review` on coverage thresholds until the team agrees a number.
 
 ## DevSecOps baseline (optional, CI-first)
 
-Principio (findarepo/security *How to choose*): **secret scanning + dependency auditing in CI first**; prefer **low-noise** defaults; offensive tooling non è canone harness.
+Principio (findarepo/security _How to choose_): **secret scanning + dependency auditing in CI first**; prefer **low-noise** defaults; offensive tooling non è canone harness.
 
-| Target (name local) | Role |
-|---------------------|------|
-| `check-secrets` | Fail su secret in tree / history scoped (gitleaks-class); mai secret in progress/skill |
-| `check-deps` / SBOM | Audit dipendenze / misconfig (trivy-class) sul stack consumer |
-| `check-sast` | Source-code analysis / SAST low-noise (PMD/cppcheck/Infer-class); preferisci FP bassi |
+| Target (name local)        | Role                                                                                          |
+| -------------------------- | --------------------------------------------------------------------------------------------- |
+| `check-secrets`            | Fail su secret in tree / history scoped (gitleaks-class); mai secret in progress/skill        |
+| `check-deps` / SBOM        | Audit dipendenze / misconfig (trivy-class) sul stack consumer                                 |
+| `check-sast`               | Source-code analysis / SAST low-noise (PMD/cppcheck/Infer-class); preferisci FP bassi         |
 | (avoid) offensive scanners | Nuclei/AI pentest / Strix runtime — fuori Platform API a-harness; solo **authorized** esterno |
 
 **Validated findings (find-and-fix):** uno finding entra in Act solo con evidence (fail riproducibile o gate). Preferisci **PR/diff scope** (file toccati), non full-repo scan come default di `/slice`.
 
 Wire in L2. Non aggiungere target che il team silenzierà (low-noise). HAL meta-repo: secrets in progress = fail di processo; deps/SBOM/SAST N/A se non c’è app stack.
 
-## Cursor hooks (optional)
+## Editor hooks (optional)
 
-Prefer Make as the guarantee. If using `.cursor/hooks.json`, keep hooks **light** (e.g. `stop` → whitelist check) — avoid full `make pre-commit` on every file edit.
-
-See [cursor-hooks-recipe.md](cursor-hooks-recipe.md).
+Prefer Make as the guarantee. If using editor hooks, keep them **light** (e.g. a stop-time whitelist check) — avoid full `make pre-commit` on every file edit.

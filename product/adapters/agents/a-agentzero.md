@@ -1,1 +1,1 @@
-../../agents/a-agentzero/agents/a-agentzero.md
+../../../agents/a-agentzero/agents/a-agentzero.md

@@ -1,1 +1,1 @@
-../../agents/a-wordpress/agents/a-wordpress.md
+../../../agents/a-wordpress/agents/a-wordpress.md

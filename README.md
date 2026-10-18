@@ -15,6 +15,7 @@
   - **Retention & Redaction (`05`)**: Oscuramento preventivo di segreti, API key e token nei log con placeholder tipizzati (`{{secret:...}}`) e scansione PII protetta in scrittura JSONL (**Verificato**).
   - **Circuit Breaker & Session (`19`)**: Derivazione deterministica del `session_id`, State Machine del circuit breaker con controllo probe half-open concorrenti (`probe_in_flight`) e risoluzione con fallback automatico (**Verificato**).
   - **System 2 Provider & Routing Policy (`SystemTwoEngine`, `SystemRoutingPolicy`, `SystemEvaluationEngine`)**: Provider reali/mock configurabili, risoluzione per profilo e capability, policy di instradamento S1/S2 e motore di evaluation con replay, shadow mode e gate di rollback automatico (**Verificato**).
+    - Il gate richiede rubriche con copertura sufficiente, qualità semantica indipendente e campioni di latenza serving; rifiuta output troncati o evidenza mancante. La durata end-to-end (`seconds`), che può includere il caricamento del modello, resta separata dalla latenza serving (`latency_ms`).
   - **Security Gates CI (`check_secrets.py`, `check_deps.py`, `check_sast.py`)**: Controlli automatici low-noise per secret scanning, audit delle dipendenze runtime con supporto advisory e SAST Python integrati nel gate GitHub Actions (**Verificato**).
 - **Ecosistema Agenti L1**: 8 agenti primari che ereditano dall'agente radice `a-agentzero`.
 

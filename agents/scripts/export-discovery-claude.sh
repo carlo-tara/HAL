@@ -78,7 +78,7 @@ All'avvio:
 1. Leggi **questo SKILL.md**
 2. Competenze sempre attive: `context-budget`, `sustainable-pace`, `platform-api`
 3. Competenze on-demand per fase: `tdd-red`, `tdd-green`, `tdd-refactor`, `steward`, DDD
-4. Discovery product: `.claude/product/` → `.cursor/product/` → `product/`
+4. Discovery product: `.claude/product/` → `product/`
 5. Discovery harness (root repo): `Makefile`, `docs/glossary.md`, `docs/bounded-contexts.md`
 6. Reference on-demand da `references/`
 
@@ -95,7 +95,7 @@ All'avvio:
 2. Carica `competencies/po-interviewer/SKILL.md` (+ reference on-demand)
 3. (Solo a-gherkin) carica anche `competencies/bdd-security-performance/`
 4. (Solo a-harness) competenze in `competencies/` — sempre attive: context-budget, sustainable-pace, platform-api; on-demand per fase TDD/DDD
-5. Discovery product: `.claude/product/` → `.cursor/product/` → `product/`
+5. Discovery product: `.claude/product/` → `product/`
 6. (Solo a-harness) discovery harness: `Makefile`, `docs/glossary.md`, `docs/bounded-contexts.md` (root repo)
 7. Reference on-demand da `references/`
 
@@ -193,12 +193,12 @@ Le regole PO restano in `competencies/po-interviewer/`.
 
     # Discovery: preferisci .claude/product nel pack Claude
     text = text.replace(
-        "Ordine: `.cursor/product/` → `.claude/product/` → `product/`",
-        "Ordine: `.claude/product/` → `.cursor/product/` → `product/`",
+        "Ordine: `product/` → `.claude/product/`",
+        "Ordine: `.claude/product/` → `product/`",
     )
     text = text.replace(
-        "`.cursor/product/` → `.claude/product/` → `product/`",
-        "`.claude/product/` → `.cursor/product/` → `product/`",
+        "`product/` → `.claude/product/`",
+        "`.claude/product/` → `product/`",
     )
 
     # Link extension L2 HAL: de-emphasize
@@ -236,7 +236,7 @@ def rewrite_agent(text: str, name: str) -> str:
 
 1. Leggi `.claude/skills/{name}/SKILL.md`
 2. Carica `.claude/skills/{name}/competencies/po-interviewer/SKILL.md` (+ reference)
-3. Discovery product: `.claude/product/` → `.cursor/product/` → `product/`
+3. Discovery product: `.claude/product/` → `product/`
 4. Reference on-demand da `.claude/skills/{name}/references/`
 5. Nessuna dipendenza da HAL o a-agentzero
 
@@ -341,8 +341,7 @@ cat > "${STAGE}/.claude/product/README.md" <<'EOF'
 Path usato dagli agenti stand-alone (ordine):
 
 1. `.claude/product/` (questa cartella)
-2. `.cursor/product/`
-3. `product/`
+2. `product/`
 
 | File | Ruolo |
 |------|--------|

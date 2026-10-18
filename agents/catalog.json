@@ -2,8 +2,8 @@
   "schema_version": 1,
   "canonical_root": "agents",
   "shared_skill_root": ".agents/skills",
-  "cursor_subagent_root": ".cursor/agents",
-  "cursor_command_root": ".cursor/commands",
+  "adapters_root": "product/adapters",
+  "commands_root": ".agents/commands",
   "execution_model": "SystemTwoEngine.ACTIVE_MODEL_NAME",
   "migration_source_commit": "d1b7e7909b9962ed4cb14ef5107c2fe1845e04c1",
   "feature_flags": {

@@ -33,7 +33,7 @@ link_path() {
 
 for agent in "${AGENT_IDS[@]}"; do
   link_path "${AGENTS_ROOT}/${agent}" "../../agents/${agent}" "${WORKSPACE_ROOT}/.agents/skills/${agent}"
-  link_path "${AGENTS_ROOT}/${agent}/agents/${agent}.md" "../../agents/${agent}/agents/${agent}.md" "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md"
+  link_path "${AGENTS_ROOT}/${agent}/agents/${agent}.md" "../../../agents/${agent}/agents/${agent}.md" "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md"
 done
 
 for skill in learn sync; do
@@ -95,16 +95,20 @@ with open('${skill_dir}/SKILL.md', 'w', encoding='utf-8') as f:
 }
 
 for command in "${L0_COMMANDS[@]}"; do
-  link_path "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" "../../agents/a-agentzero/commands/${command}.md" \
+  link_path "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" "../../../agents/a-agentzero/commands/${command}.md" \
     "${WORKSPACE_ROOT}/product/adapters/commands/${command}.md"
+  link_path "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" "../../agents/a-agentzero/commands/${command}.md" \
+    "${WORKSPACE_ROOT}/.agents/commands/${command}.md"
   link_zed_prompt "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" \
     "${WORKSPACE_ROOT}/.zed/prompts/${command}.md"
   link_zed_skill "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" "${command}"
 done
 
 if [[ -f "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" ]]; then
-  link_path "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" "../../agents/project-skills/laya/commands/laya.md" \
+  link_path "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" "../../../agents/project-skills/laya/commands/laya.md" \
     "${WORKSPACE_ROOT}/product/adapters/commands/laya.md"
+  link_path "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" "../../agents/project-skills/laya/commands/laya.md" \
+    "${WORKSPACE_ROOT}/.agents/commands/laya.md"
   link_zed_prompt "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" \
     "${WORKSPACE_ROOT}/.zed/prompts/laya.md"
   link_zed_skill "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" "laya-cmd"

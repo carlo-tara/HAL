@@ -24,7 +24,7 @@ All'avvio: `a-agentzero` → `a-product` → **questo file**.
 
 | Artefatto | Path |
 |-----------|------|
-| Progress | `.cursor/product/agent-progress.md` |
+| Progress | `docs/product/agent-progress.md` |
 | PRD / notes | (compilare) |
 
 ## Guardrail (opz.)

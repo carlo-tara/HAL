@@ -81,7 +81,7 @@ Competenze: risolvi L1 (e override sotto `competencies/{id}/` se presenti). Ness
 Crea solo override necessari:
 
 ```
-.cursor/skills/seozoom-{progetto}/competencies/
+.agents/skills/seozoom-{progetto}/competencies/
   seo-import/SKILL.md
   metriche-analisi/SKILL.md
   onpage-seo/SKILL.md
@@ -119,7 +119,7 @@ Body: **solo delta**. Check: `bash agents/a-agentzero/scripts/agent-version.sh c
 
 | Skill | Path | Quando |
 |-------|------|--------|
-| | `.cursor/skills/` | |
+| | `.agents/skills/` | |
 | a-copywriter / tono-di-voce | | Title/meta/FAQ e copy lungo |
 
 ---
@@ -159,6 +159,6 @@ Canone L1: `a-seozoom/competencies/geo-citabilita/references/ricerca-on-site-seo
 |-------|--------|
 | `version` | Delta L2 |
 | `extends-version` | Versione `a-seozoom` (1.5.0+) |
-| CHANGELOG | `.cursor/skills/seozoom-{progetto}/CHANGELOG.md` |
+| CHANGELOG | `.agents/skills/seozoom-{progetto}/CHANGELOG.md` |
 
-Sync: `agent-version.sh pending .cursor/skills/seozoom-{progetto}/SKILL.md`
+Sync: `agent-version.sh pending .agents/skills/seozoom-{progetto}/SKILL.md`

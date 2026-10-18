@@ -1,1 +1,1 @@
-../../agents/a-harness/agents/a-harness.md
+../../../agents/a-harness/agents/a-harness.md

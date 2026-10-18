@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/todo.md
+../../../agents/a-agentzero/commands/todo.md

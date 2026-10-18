@@ -32,10 +32,6 @@ def collect():
         if "GuideStile" in str(l2) or "PremioStrega" in str(l2):
             continue
         files.append(l2)
-    for l2 in root.glob(".cursor/skills/**/*.md"):
-        if "GuideStile" in str(l2) or "PremioStrega" in str(l2):
-            continue
-        files.append(l2)
     return files
 
 for md in collect():

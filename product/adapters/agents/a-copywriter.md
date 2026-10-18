@@ -1,1 +1,1 @@
-../../agents/a-copywriter/agents/a-copywriter.md
+../../../agents/a-copywriter/agents/a-copywriter.md

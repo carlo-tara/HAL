@@ -5,24 +5,40 @@ Tutte le modifiche e le evoluzioni rilevanti del progetto HAL sono documentate i
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/),
 e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
+## [Unreleased]
+
+- Rafforzato `SystemEvaluationEngine`: promozione fail-closed su qualità per task, validazione semantica indipendente, latenza serving comparabile e rifiuto dei benchmark troncati; durata end-to-end separata dalla latenza. `#system2-gating` · P1 · HAL
+- Ottimizzazione prompt e progressive disclosure per skill ad alto carico (@learn, @sync, @slice, @cycle) `#techdebt` · P1 · HAL
+- Integrazione System 1 (Laya) per routing e scoring euristico (@learn, @version, @improve, @document) `#feature` · P1 · HAL
+- Diff-tiering e pre-filtraggio contestuale working tree (@commit, @review, @improve) `#infra` · P1 · HAL
+- Pipeline CLI deterministica per igiene backlog e flush changelog (@todo) `#infra` · P1 · HAL
+- Script deterministico per bump semver e aggiornamento frontmatter (@version) `#infra` · P1 · HAL
+- Standardizzazione contratti di output compatti e rimozione boilerplate (Tutti i 10 skill) `#techdebt` · P2 · HAL
+- Modalità silenziosa diff-only e analizzatore CLI per sincronizzazione e generalizzazione (@sync) `#infra` · P2 · HAL
+- Filtraggio e troncamento log per runner di test e gate Make (@cycle) `#infra` · P2 · HAL
+
 ## [2.3.0] - 2026-10-09
 
 ### Added
+
 - Creazione della cartella `tests/` e migrazione di tutti i file di test unitari al suo interno, con configurazione del test discovery (`python3 -m unittest discover -s tests`).
 
 ## [2.2.0] - 2026-10-09
 
 ### Added
+
 - Creazione della cartella `scripts/` e centralizzazione di tutti gli script di utilità e test eseguibili al suo interno (`check_secrets.py`, `check_deps.py`, `check_sast.py`, `bench_hot_paths.py`, `test_laya.py`), con aggiornamento dei riferimenti in CI e nei test suite.
 
 ## [2.1.0] - 2026-10-09
 
 ### Removed
+
 - Rimozione definitiva di ogni cartella e riferimento a Cursor (`.cursor/`, `.agents/.cursor/` e relativi file di adapter e reference), rendendo il workspace focalizzato ed esclusivo per Zed.
 
 ## [2.0.0] - 2026-10-09
 
 ### Added
+
 - Collegamento di `SystemTwoEngine` a backend configurabili / mock (`register_backend`) con gestione dei fallback e restituzione di metadati strutturati (`SystemTwoResponse`), validato da `test_system_two_provider.py`.
 - Risoluzione del modello System 2 per profilo d'uso e capability indipendentemente dall'identità dell'agente (`resolve_model_for_profile`), con fallback condiviso `ACTIVE_MODEL_NAME` e validazione di sicurezza contro nomi modello arbitrari, testata da `test_system_two_provider.py`.
 - Policy di instradamento System 1 / System 2 e riduzione del budget System 2 (`SystemRoutingPolicy`), che distingue decisioni chiuse (System 1), generazione semplice a basso rischio (System 2 ridotto) e richieste complesse/con side-effect o astensione (System 2 completo), testata da `test_system_two_provider.py`.
@@ -39,13 +55,16 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Aggiunta del flag di completezza informativa WYSIATI (`augment_response_with_wysiati`) nei payload di risposta e monitoraggio della tensione cognitiva in `SystemRoutingPolicy` per impedire la pigrizia di System 2 su task complessi, testati da `test_kahneman_evolution.py`.
 
 ### Fixed
+
 - Ripristinato il comando Laya `score` e `noul` in `router.py` (`handle_score`, `handle_noul`), risolvendo il `NameError` precedente e testato da `test_router_score.py`.
 
 ### Changed
+
 - Rimosso ogni riferimento a Cursor, spostando i file di stato in `product/state/`, gli adapter in `product/adapters/`, e rimuovendo i fallback ai modelli interni Cursor dalle istruzioni e dai frontmatter degli agenti.
 - Laya espone l’astensione su indisponibilità e output non validi; il triage evita instradamenti degradati.
 
 ### Changed
+
 - Riallineate con sync selettivo le catene `extends-version` L1/L2 marcate `[sync:safe]`.
 - Aggiunto il workflow root `ready-for-review` per i test gateway su push e pull request.
 - Collegata la redaction di segreti e PII al writer JSONL; body rilevati o con scansione incerta non vengono persistiti.
@@ -53,6 +72,7 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 ## [1.9.0] - 2026-10-06
 
 ### Added
+
 - **Cache L1 (`07`)**: Normalizzazione prompt, hashing SHA-256 canonico, chiavi Redis composte, TTL e invalidazione contesto `#techdebt` · P0
 - **Retention & Redaction (`05`)**: Denylist regex avanzata, redaction in scrittura, scansione PII tramite preset Laya `#infra` · P0
 - **Circuit Breaker & Session (`19`)**: Derivazione deterministica del `session_id` e State Machine del circuit breaker per i provider `#feature` · P1
@@ -61,17 +81,20 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 ## [1.8.0] - 2026-10-02
 
 ### Added
+
 - Verificata la copertura dei contenuti post-razionalizzazione degli agenti (`#agents` · P2) nell'albero canonico HAL [sync:safe].
 
 ### Performance
+
 - Ottimizzazione delle chiamate System 1 (Laya) tramite HTTP session pooling persistente (`requests.Session`) e decoratore `@lru_cache` (maxsize=128) per il caching in-memory delle query identiche (`choice`, `routing`, `score`, `noul`) in `laya_service.py`.
 
 ## [1.7.0] - 2026-10-02
 
 ### Added
+
 - **Integrazione Zed Editor**: Configurazione workspace (`.zed/settings.json`), prompt mapping in `.zed/prompts/`, e pacchetti skill in `.agents/skills/` per il supporto multi-editor Cursor ⇄ Zed.
 - **Script di Sincronizzazione Bidirezionale**: Aggiornato `agents/scripts/link-workspace-skills.sh` per rimuovere il frontmatter YAML di Cursor dai prompt di Zed e generare automaticamente skill conformi per tutti i comandi L0 (`/HAL:version`, `/HAL:document`, `/HAL:commit`, ecc.).
-- **Layer Cognitivo System 1 (Laya) Esteso**: 
+- **Layer Cognitivo System 1 (Laya) Esteso**:
   - Aggiunti metodi batch (`batch_score`, `batch_routing`) in `router.py` e `laya_service.py`.
   - Integrato Laya come pre-filtro e gating obbligatorio in **tutti gli 8 agenti L1** (`a-agentzero`, `a-harness`, `a-product`, `a-seozoom`, `a-design`, `a-copywriter`, `a-b2b`, `a-wordpress`).
 - **Pubblicazione GitHub**: Inizializzato repository Git, tracciati tutti i file e pubblicato il repository pubblico su GitHub (`carlo-tara/HAL`).

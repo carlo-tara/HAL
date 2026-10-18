@@ -1,1 +1,1 @@
-../../agents/a-b2b/agents/a-b2b.md
+../../../agents/a-b2b/agents/a-b2b.md

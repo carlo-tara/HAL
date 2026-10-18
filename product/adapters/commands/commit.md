@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/commit.md
+../../../agents/a-agentzero/commands/commit.md

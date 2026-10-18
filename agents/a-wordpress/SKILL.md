@@ -1,9 +1,9 @@
 ---
 name: a-wordpress
 extends: a-agentzero
-version: 1.3.1
+version: 1.3.2
 model: orcarouter/z-ai/glm-5.3-flash
-extends-version: 1.8.1
+extends-version: 1.8.5
 description: >-
   Reason why: senza un metodo condiviso per analizzare siti e consegnare plugin ordinati, ogni intervento WordPress diventa un pezzo isolato e fragile.
   Analizza installazioni WordPress specifiche e sviluppa, mantiene e revisiona plugin
@@ -25,10 +25,10 @@ All'avvio: carica `a-agentzero` → **questo skill** → skill figlia L2 se pres
 
 ## Tipi di plugin
 
-| Tipo | Scopo | Ciclo di vita |
-|------|--------|---------------|
-| **Stabile** | Aggiunge funzionalità a WordPress | Sviluppo → attivo in produzione → manutenzione |
-| **Migrate** | Modifica dati e configurazioni | Install → Activate → Dry-run → Execute → Verify → **Deactivate** |
+| Tipo        | Scopo                             | Ciclo di vita                                                    |
+| ----------- | --------------------------------- | ---------------------------------------------------------------- |
+| **Stabile** | Aggiunge funzionalità a WordPress | Sviluppo → attivo in produzione → manutenzione                   |
+| **Migrate** | Modifica dati e configurazioni    | Install → Activate → Dry-run → Execute → Verify → **Deactivate** |
 
 Naming migrate: `{prefix}migrate-{slug}`. Dettaglio in [references/plugin-migrate.md](references/plugin-migrate.md).
 
@@ -36,26 +36,27 @@ Naming migrate: `{prefix}migrate-{slug}`. Dettaglio in [references/plugin-migrat
 
 ## Avvio dominio
 
-1. **Profilo sito** — `.cursor/wordpress/*.md` (discovery: a-agentzero)
+1. **Profilo sito** — `docs/wordpress/*.md` (discovery: a-agentzero)
 2. **Skill figlia L2** — `extends: a-wordpress`; fallback legacy: `wordpress-*`
-3. **Documenti progetto** — `.cursorrules`, `CONTRIBUTING.md`, `STANDARDS.md` se presenti
+3. **Documenti progetto** — `docs/rules/`, `CONTRIBUTING.md`, `STANDARDS.md` se presenti
 4. **Reference on-demand** — tabella sotto
 
 ### Gerarchia in conflitto (WordPress)
 
-| Priorità | Fonte | Cosa governa |
-|----------|-------|--------------|
-| 1 | Skill figlia L2 (`extends: a-wordpress`) | Override convenzioni locali |
-| 2 | `.cursor/wordpress/{sito}.md` | Path WP, prefix plugin, Docker, test |
-| 3 | Documenti progetto | Standard codice, RGR/BDD se obbligatori |
-| 4 | **a-wordpress** (questo skill) | Workflow generico, checklist, template |
-| 5 | **a-agentzero** | Protocollo, sicurezza, checklist comuni |
+| Priorità | Fonte                                    | Cosa governa                            |
+| -------- | ---------------------------------------- | --------------------------------------- |
+| 1        | Skill figlia L2 (`extends: a-wordpress`) | Override convenzioni locali             |
+| 2        | `docs/wordpress/{sito}.md`               | Path WP, prefix plugin, Docker, test    |
+| 3        | Documenti progetto                       | Standard codice, RGR/BDD se obbligatori |
+| 4        | **a-wordpress** (questo skill)           | Workflow generico, checklist, template  |
+| 5        | **a-agentzero**                          | Protocollo, sicurezza, checklist comuni |
 
 ---
 
 ## System 1 (Laya) Integration in WordPress
 
 Prima di impegnare System 2 nello sviluppo di plugin o fix complessi, l'agente `a-wordpress` utilizza **Laya (System 1)** per:
+
 1. **Routing dei componenti WP (`router.py routing`)**: Instrada istantaneamente il task verso il pattern corretto (`plugin-stabile`, `plugin-migrate`, `REST API`, `WP-CLI`, `Shortcode`).
 2. **Classificazione rapida degli errori (`router.py routing` / `score`)**: Identifica in millisecondi la tipologia di errore o conflitto nei log di installazione (es. `hook_conflict`, `database_error`, `plugin_fatal`).
 
@@ -70,26 +71,26 @@ Template: [extension-template.md](extension-template.md).
 
 ## Lettura selettiva reference
 
-| Task | Leggi |
-|------|-------|
-| Primo accesso, audit, debug | [references/site-analysis.md](references/site-analysis.md) |
-| Nuovo plugin permanente | [references/plugin-stabile.md](references/plugin-stabile.md) |
-| Migrazione dati/config one-shot | [references/plugin-migrate.md](references/plugin-migrate.md) |
-| Pacchetto .zip per deploy / wp-admin | [references/plugin-package.md](references/plugin-package.md) |
-| Code review plugin | [references/plugin-review.md](references/plugin-review.md) |
-| WP-CLI remoto / cron sistema / Elementor / Yoast | [references/remote-wp-cli.md](references/remote-wp-cli.md) |
-| Cheatsheet WP-CLI (inventario, smoke, cache) | [references/wp-cli-cheatsheet.md](references/wp-cli-cheatsheet.md) |
+| Task                                             | Leggi                                                              |
+| ------------------------------------------------ | ------------------------------------------------------------------ |
+| Primo accesso, audit, debug                      | [references/site-analysis.md](references/site-analysis.md)         |
+| Nuovo plugin permanente                          | [references/plugin-stabile.md](references/plugin-stabile.md)       |
+| Migrazione dati/config one-shot                  | [references/plugin-migrate.md](references/plugin-migrate.md)       |
+| Pacchetto .zip per deploy / wp-admin             | [references/plugin-package.md](references/plugin-package.md)       |
+| Code review plugin                               | [references/plugin-review.md](references/plugin-review.md)         |
+| WP-CLI remoto / cron sistema / Elementor / Yoast | [references/remote-wp-cli.md](references/remote-wp-cli.md)         |
+| Cheatsheet WP-CLI (inventario, smoke, cache)     | [references/wp-cli-cheatsheet.md](references/wp-cli-cheatsheet.md) |
 
 ---
 
 ## Quattro modalità operative
 
-| Modalità | Quando | Output |
-|----------|--------|--------|
-| **Analisi** | Primo accesso, debug, pre-intervento migrate | Report stack, plugin, path, rischi |
-| **Stabile** | Nuova funzionalità permanente | Plugin source + `{slug}-{versione}.zip` |
-| **Migrate** | Trasformazione dati/config temporanea | Plugin migrate + lifecycle + `{slug}-{versione}.zip` |
-| **Revisione** | Review pre-merge o audit codice | Findings critical/warning/suggestion |
+| Modalità      | Quando                                       | Output                                               |
+| ------------- | -------------------------------------------- | ---------------------------------------------------- |
+| **Analisi**   | Primo accesso, debug, pre-intervento migrate | Report stack, plugin, path, rischi                   |
+| **Stabile**   | Nuova funzionalità permanente                | Plugin source + `{slug}-{versione}.zip`              |
+| **Migrate**   | Trasformazione dati/config temporanea        | Plugin migrate + lifecycle + `{slug}-{versione}.zip` |
+| **Revisione** | Review pre-merge o audit codice              | Findings critical/warning/suggestion                 |
 
 Classifica ogni task in una modalità prima di scrivere codice.
 
@@ -162,29 +163,32 @@ Checklist in [references/plugin-review.md](references/plugin-review.md).
 
 ## Deleghe
 
-| Agente | Quando |
-|--------|--------|
-| **a-copywriter** | Copy, meta description, testi admin |
-| **a-seozoom** | SEO, keyword, analisi traffico |
-| **a-illustrator** | Asset visivi plugin/tema |
+| Agente            | Quando                              |
+| ----------------- | ----------------------------------- |
+| **a-copywriter**  | Copy, meta description, testi admin |
+| **a-seozoom**     | SEO, keyword, analisi traffico      |
+| **a-illustrator** | Asset visivi plugin/tema            |
 
 ---
 
 ## Checklist pre-consegna (WordPress)
 
 ### Tutti i task
+
 - [ ] Profilo sito letto o creato
 - [ ] Task classificato (stabile/migrate/analisi/revisione)
 - [ ] Documenti progetto rispettati se presenti
 - [ ] Checklist comune a-agentzero completata
 
 ### Plugin stabile
+
 - [ ] Standard plugin-stabile.md rispettato
 - [ ] Sync runtime eseguito
 - [ ] Test passano (se previsti)
 - [ ] Zip versionato `{slug}-{versione}.zip` generato e path comunicato
 
 ### Plugin migrate
+
 - [ ] Dry-run verificato
 - [ ] Execute idempotente
 - [ ] Verify completata
@@ -201,15 +205,15 @@ Eredita `/learn ?` e `/learn !` da **a-agentzero** ([learn/SKILL.md](../a-agentz
 
 ## Riferimenti
 
-| File | Contenuto |
-|------|-----------|
-| [references/site-analysis.md](references/site-analysis.md) | Checklist analisi installazione |
-| [references/plugin-stabile.md](references/plugin-stabile.md) | Standard plugin permanenti |
-| [references/plugin-migrate.md](references/plugin-migrate.md) | Standard plugin one-shot |
-| [references/plugin-package.md](references/plugin-package.md) | Zip versionato per wp-admin |
-| [references/plugin-review.md](references/plugin-review.md) | Checklist revisione |
-| [references/remote-wp-cli.md](references/remote-wp-cli.md) | Apply SSH lungo, cron sistema, batch, Elementor, Yoast |
-| [references/wp-cli-cheatsheet.md](references/wp-cli-cheatsheet.md) | Comandi inventario / smoke / cache / migrate |
-| [site-brief-template.md](site-brief-template.md) | Template profilo installazione |
-| [extension-template.md](extension-template.md) | Template skill figlia L2 |
-| [agents/a-wordpress.md](agents/a-wordpress.md) | Subagent operativo |
+| File                                                               | Contenuto                                              |
+| ------------------------------------------------------------------ | ------------------------------------------------------ |
+| [references/site-analysis.md](references/site-analysis.md)         | Checklist analisi installazione                        |
+| [references/plugin-stabile.md](references/plugin-stabile.md)       | Standard plugin permanenti                             |
+| [references/plugin-migrate.md](references/plugin-migrate.md)       | Standard plugin one-shot                               |
+| [references/plugin-package.md](references/plugin-package.md)       | Zip versionato per wp-admin                            |
+| [references/plugin-review.md](references/plugin-review.md)         | Checklist revisione                                    |
+| [references/remote-wp-cli.md](references/remote-wp-cli.md)         | Apply SSH lungo, cron sistema, batch, Elementor, Yoast |
+| [references/wp-cli-cheatsheet.md](references/wp-cli-cheatsheet.md) | Comandi inventario / smoke / cache / migrate           |
+| [site-brief-template.md](site-brief-template.md)                   | Template profilo installazione                         |
+| [extension-template.md](extension-template.md)                     | Template skill figlia L2                               |
+| [agents/a-wordpress.md](agents/a-wordpress.md)                     | Subagent operativo                                     |

@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/version.md
+../../../agents/a-agentzero/commands/version.md

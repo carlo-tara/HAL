@@ -1,17 +1,17 @@
 # Permission modes — Plan vs Act + policy points
 
-| Mode | Fasi | Write filesystem | Shell mutante |
-|------|------|------------------|---------------|
-| **Plan / ReadOnly** | `/slice`, analisi pre-RED, `/progress` read | No (solo note progress se già aperto) | Solo read/`make` dry se documentato |
-| **Act / Write** | `/red`, `/green`, `/refactor`, `/steward` infra | Sì, nel perimetro slice | Sì, via Makefile |
+| Mode                | Fasi                                            | Write filesystem                      | Shell mutante                       |
+| ------------------- | ----------------------------------------------- | ------------------------------------- | ----------------------------------- |
+| **Plan / ReadOnly** | `/slice`, analisi pre-RED, `/progress` read     | No (solo note progress se già aperto) | Solo read/`make` dry se documentato |
+| **Act / Write**     | `/red`, `/green`, `/refactor`, `/steward` infra | Sì, nel perimetro slice               | Sì, via Makefile                    |
 
 ## Stati del ciclo (HFDP State / Strategy)
 
-| Stato | Significato | Owner tipico |
-|-------|-------------|--------------|
-| **Plan** | Slice/acceptance; no write di produzione | `/slice`, permission Plan |
-| **Act** | RED→GREEN→REFACTOR nel perimetro | `/red` `/green` `/refactor` |
-| **Stuck** | Hard stop dopo 3 fallimenti stesso approccio | `when-stuck` (`stuck@3`) |
+| Stato     | Significato                                   | Owner tipico                 |
+| --------- | --------------------------------------------- | ---------------------------- |
+| **Plan**  | Slice/acceptance; no write di produzione      | `/slice`, permission Plan    |
+| **Act**   | RED→GREEN→REFACTOR nel perimetro              | `/red` `/green` `/refactor`  |
+| **Stuck** | Hard stop dopo 3 fallimenti stesso approccio  | `when-stuck` (`stuck@3`)     |
 | **Ready** | Gate sustainable-pace; review umana di intent | `/ready`, `ready-for-review` |
 
 **Strategy** (senso harness, non polymorphism OO) = competenza di **fase** caricata on-demand (`tdd-red` / `tdd-green` / `tdd-refactor` / `steward`…), non una hierarchy di Strategy classes.
@@ -30,13 +30,13 @@
 
 Analogia Harness.io — **senza** OPA/SaaS.
 
-| Point | Quando | warn | fail |
-|-------|--------|------|------|
-| **On Slice** | Fine `/slice` | Slice ampio ma &lt;6 file | &gt;4 file senza waiver; no acceptance; no Makefile |
-| **On Green** | Fine `/green` | Test flaky | `make test-unit`/`pre-commit` ≠ 0 |
-| **On Ready** | `/ready` | PR vicino a budget LOC | `ready-for-review` ≠ 0; lazy-delete; shadow intent |
-| **On Steward** | `/steward` | Regola morta | Gate make rotto; freeze violato |
+| Point          | Quando        | warn                      | fail                                                |
+| -------------- | ------------- | ------------------------- | --------------------------------------------------- |
+| **On Slice**   | Fine `/slice` | Slice ampio ma &lt;6 file | &gt;4 file senza waiver; no acceptance; no Makefile |
+| **On Green**   | Fine `/green` | Test flaky                | `make test-unit`/`pre-commit` ≠ 0                   |
+| **On Ready**   | `/ready`      | PR vicino a budget LOC    | `ready-for-review` ≠ 0; lazy-delete; shadow intent  |
+| **On Steward** | `/steward`    | Regola morta              | Gate make rotto; freeze violato                     |
 
 Severity default: **fail** su gate Make; **warn** su sizing/effort.
 
-Pin: [harness-lol-source.md](harness-lol-source.md) · [cursor-cloud-harness-source.md](cursor-cloud-harness-source.md) · [harness-io-source.md](harness-io-source.md)
+Pin: [harness-lol-source.md](harness-lol-source.md) · `cursor-cloud-harness-source.md` (not bundled) · [harness-io-source.md](harness-io-source.md)

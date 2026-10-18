@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/graph.md
+../../../agents/a-agentzero/commands/graph.md

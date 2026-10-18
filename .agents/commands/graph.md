@@ -1,0 +1,1 @@
+../../agents/a-agentzero/commands/graph.md

@@ -1,7 +1,7 @@
 ---
 name: learn
 parent: a-agentzero
-version: 1.2.5
+version: 1.3.0
 model: orcarouter/openai/gpt-4o-mini
 description: >-
   Slash /learn con doppia modalità: /learn ? illustra gli apprendimenti dalla

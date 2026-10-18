@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/document.md
+../../../agents/a-agentzero/commands/document.md

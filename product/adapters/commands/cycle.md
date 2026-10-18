@@ -1,1 +1,1 @@
-../../agents/a-agentzero/commands/cycle.md
+../../../agents/a-agentzero/commands/cycle.md

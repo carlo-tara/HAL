@@ -14,7 +14,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEFAULT_MAX=200
-HANDOFF_DIR="${HANDOFF_DIR:-$ROOT/.cursor/product}"
+HANDOFF_DIR="${HANDOFF_DIR:-$ROOT/../product/state}"
 
 estimate_tokens() {
   local text="$1"
@@ -267,7 +267,7 @@ harness-prompt-builder.sh — deterministic lean prompts + handoff JSON
   handoff-read PATH|KIND
   self-test
 
-Default token budget: 200. Handoff dir: .cursor/product/handoff-<kind>.json
+Default token budget: 200. Handoff dir: product/state/handoff-<kind>.json
 Kinds: graph | slice | cycle | todo
 EOF
       [[ -n "$cmd" ]] || return 2
