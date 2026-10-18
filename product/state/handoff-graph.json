@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-18T12:26:28Z",
+  "ts": "2026-10-18T14:04:11Z",
   "flags": {"y": true},
   "acceptance": "Test preflight/coherence/budget/telemetry and benchmark per model-task; separate technical status, heuristic rubric and independent semantic validation; require comparable serving latency, report load-inclusive duration separately, and block truncations or missing evidence.",
-  "files": "global_config.py; new preflight module; focused tests",
-  "node_id": "cycle-preflight",
+  "files": "global_config.py,laya_service.py,system1_preflight.py,router.py,tests/test_laya_service.py (two sequential <=4-file slices)",
+  "node_id": "cycle-budget",
   "next": "cycle-coherence",
-  "summary": "Preflight complete: 54 Gateway tests pass; ready-for-review exit 0; requests security advisory remains. Continue with cycle-coherence.",
-  "brief": "Continue P1 system1-gating sequentially. cycle-preflight ready; next cycle-coherence. Keep benchmark promotion evidence separate: semantic quality, serving latency, and load-inclusive duration.",
+  "summary": "cycle-budget complete: 75 Gateway tests, fresh agents ready-for-review exit 0. Corrected stale progression: cycle-coherence is still an always-ok stub, not a completed gate. P1 remains open; telemetry/compare follow coherence.",
+  "brief": "Implement real cycle-coherence next; budget is already verified. Preserve source/format. Later benchmark promotion requires independent semantic validation and serving latency separate from load-inclusive duration.",
   "token_budget": 200
 }

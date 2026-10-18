@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from threading import Lock
 from typing import Any
 
 SUPPORTED_TASKS = {"choice", "routing", "score", "noul"}
@@ -28,6 +29,8 @@ class TaskContract:
     complexity: str = "unknown"
     candidates: tuple[str, ...] = ()
     criteria: str = ""
+    is_intermediate: bool = False
+    changes_flow: bool = False
 
     @classmethod
     def from_request(
@@ -63,6 +66,14 @@ class TaskContract:
             "criteria", args[1] if task_type == "score" and len(args) > 1 else ""
         )
         constraints = _string_tuple(metadata.get("constraints", ()), "constraints")
+        is_intermediate = metadata.get("is_intermediate", False)
+        changes_flow = metadata.get("changes_flow", False)
+        for name, value in (
+            ("is_intermediate", is_intermediate),
+            ("changes_flow", changes_flow),
+        ):
+            if not isinstance(value, bool):
+                raise TypeError(f"{name} must be a boolean")
         for name, value in (
             ("source", source),
             ("output_format", output_format),
@@ -83,7 +94,61 @@ class TaskContract:
             complexity=complexity,
             candidates=candidates,
             criteria=criteria,
+            is_intermediate=is_intermediate,
+            changes_flow=changes_flow,
         )
+
+
+@dataclass
+class LayaCallBudget:
+    """Share one instance across a run; count HTTP attempts, not local/cache hits."""
+
+    max_calls: int = 1
+    max_retries: int = 0
+    retry_reason: str = ""
+    _calls: int = field(default=0, init=False, repr=False)
+    _retries: int = field(default=0, init=False, repr=False)
+    _lock: Any = field(default_factory=Lock, init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        for name, value in (
+            ("max_calls", self.max_calls),
+            ("max_retries", self.max_retries),
+        ):
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                raise ValueError(f"{name} must be a non-negative integer")
+        if self.max_retries > 1:
+            raise ValueError("At most one transient retry is allowed per run")
+        if not isinstance(self.retry_reason, str):
+            raise TypeError("retry_reason must be a string")
+        if self.max_retries and not self.retry_reason.strip():
+            raise ValueError("Retries require an explicit reason")
+
+    @property
+    def calls(self) -> int:
+        with self._lock:
+            return self._calls
+
+    @property
+    def retries(self) -> int:
+        with self._lock:
+            return self._retries
+
+    def try_consume(self, *, ceiling: int | None = None) -> bool:
+        with self._lock:
+            limit = self.max_calls if ceiling is None else min(self.max_calls, ceiling)
+            if self._calls >= limit:
+                return False
+            self._calls += 1
+            return True
+
+    def try_retry(self, *, ceiling: int | None = None) -> bool:
+        with self._lock:
+            limit = self.max_calls if ceiling is None else min(self.max_calls, ceiling)
+            if self._retries >= self.max_retries or self._calls >= limit:
+                return False
+            self._retries += 1
+            return True
 
 
 @dataclass(frozen=True)

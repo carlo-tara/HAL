@@ -8,6 +8,8 @@
 - **Mode:** loop
 - **Why mode:** un solo P1, un bounded context e un owner; le attività condividono il percorso Laya e vanno validate in sequenza. Un DAG aggiungerebbe graph-trap.
 - **Next:** `cycle-coherence`
+- **Verified:** `cycle-budget` completato in due slice (API e integrazione router); 75 test Gateway e gate Make verdi.
+- **Residual:** `cycle-coherence` resta aperto: lo stub `coherence_ok` non verifica famiglia/strategia/modalità. Non avanzare a telemetry senza completarlo.
 
 ## Loop Spec
 
@@ -21,10 +23,12 @@
    - Stop: test dimostrano skip, payload compatto e rispetto di fonte/formato.
    - Next: `cycle-coherence`.
 3. **`cycle-coherence` — `/slice`**
+   - Stato: aperto; lo scaffold precedente non soddisfa l'acceptance.
    - Output: gate di coerenza famiglia/strategia/modalità; single-pass predefinito; plan-then-solve soltanto con scomponibilità esplicita e confidenza sufficiente.
    - Stop: incoerenze e bassa confidenza degradano in modo conservativo, senza perdere o scartare segmenti.
    - Next: `cycle-budget`.
 4. **`cycle-budget` — `/slice`**
+   - Stato: completato; tentativi HTTP contati, redirect bloccati, budget e limiti locali non aggirabili tramite scope annidati. Triage massimo 2 tentativi, batch massimo un tentativo per input; nessun retry in queste operazioni. Retry generico massimo 1, motivato e dentro il tetto del run.
    - Output: limite alle chiamate Laya, decisioni intermedie solo se cambiano il flusso, retry limitati e motivati.
    - Stop: test verificano budget chiamate/retry e preservazione dei segmenti.
    - Next: `cycle-telemetry`.

@@ -1,13 +1,13 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-10-18T12:20:28Z",
+  "ts": "2026-10-18T14:04:11Z",
   "flags": {"y": true},
-  "acceptance": "Local task contract skips remote Laya only for explicitly low-risk atomic choice/routing with one candidate; other tasks send compact metadata without source; source and output format remain unchanged; unknown or invalid evidence stays conservative.",
-  "files": "system1_preflight.py,laya_service.py,global_config.py,tests/test_laya_service.py",
-  "node_id": "cycle-preflight",
+  "acceptance": "Shared triage/batch budgets with stricter operation ceilings and no inherited retries; source/request and output positions preserved on exhaustion.",
+  "files": "router.py,laya_service.py,system1_preflight.py,tests/test_laya_service.py",
+  "node_id": "cycle-budget",
   "next": "cycle-coherence",
-  "summary": "Accepted via prior /graph -y; stale node-deps slice superseded by current P1 cycle-preflight.",
-  "brief": "Implement local preflight and compact Laya metadata; preserve source and format; unknown risk calls Laya.",
+  "summary": "Completed integration slice: phase=ready; ready=1; MAKE_EXIT=0; Gateway 75/75. Previous API slice covered global_config.py,laya_service.py,system1_preflight.py,tests/test_laya_service.py. Next coherence remains incomplete.",
+  "brief": "Completed budget slice; do not rerun RED. Resume graph at cycle-coherence with its own acceptance and file scope.",
   "token_budget": 200
 }

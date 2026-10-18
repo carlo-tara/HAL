@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import math
 import os
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, Generic, Literal, TypeVar
@@ -10,7 +12,7 @@ from typing import Any, Generic, Literal, TypeVar
 import requests
 import urllib3
 
-from system1_preflight import TaskContract, prepare_laya_request
+from system1_preflight import LayaCallBudget, TaskContract, prepare_laya_request
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -37,26 +39,59 @@ class _LayaAbstention(Exception):
 _session = requests.Session()
 
 
+@dataclass(frozen=True)
+class _BudgetScope:
+    budget: LayaCallBudget
+    ceiling: int
+    allow_retries: bool
+
+
+_active_budget: ContextVar[_BudgetScope | None] = ContextVar(
+    "laya_call_budget", default=None
+)
+
+
 class LayaSystemOneService:
     """Servizio System 1 con session pooling e cache dei soli risultati validi."""
 
     @classmethod
     def _call(cls, payload: dict[str, Any]) -> dict[str, Any]:
         url = f"{LAYA_BASE_URL}/predict"
-        try:
-            response = _session.post(
-                url, json=payload, timeout=LAYA_TIMEOUT, verify=False
-            )
-            response.raise_for_status()
-            result = response.json()
-        except requests.exceptions.RequestException as exc:
-            raise _LayaAbstention("unavailable") from exc
-        except (TypeError, ValueError) as exc:
-            raise _LayaAbstention("invalid_response") from exc
+        scope = _active_budget.get()
+        budget = scope.budget if scope is not None else LayaCallBudget()
+        ceiling = scope.ceiling if scope is not None else budget.max_calls
+        while True:
+            if not budget.try_consume(ceiling=ceiling):
+                raise _LayaAbstention("call_budget_exhausted")
+            try:
+                response = _session.post(
+                    url,
+                    json=payload,
+                    timeout=LAYA_TIMEOUT,
+                    verify=False,
+                    allow_redirects=False,
+                )
+                response.raise_for_status()
+                if 300 <= response.status_code < 400:
+                    raise _LayaAbstention("redirect_not_allowed")
+                result = response.json()
+            except (
+                requests.exceptions.Timeout,
+                requests.exceptions.ConnectionError,
+            ) as exc:
+                if (scope is None or scope.allow_retries) and budget.try_retry(
+                    ceiling=ceiling
+                ):
+                    continue
+                raise _LayaAbstention("unavailable") from exc
+            except requests.exceptions.RequestException as exc:
+                raise _LayaAbstention("unavailable") from exc
+            except (TypeError, ValueError) as exc:
+                raise _LayaAbstention("invalid_response") from exc
 
-        if not isinstance(result, dict):
-            raise _LayaAbstention("invalid_response")
-        return result
+            if not isinstance(result, dict):
+                raise _LayaAbstention("invalid_response")
+            return result
 
     @classmethod
     def _evaluate(cls, operation: Callable[..., T], *args: Any) -> LayaOutcome[T]:
@@ -138,11 +173,24 @@ class LayaSystemOneService:
     @classmethod
     def preflight(cls, contract: TaskContract) -> LayaOutcome[dict[str, Any]]:
         """Evaluate a compact task contract, skipping only deterministic low-risk work."""
+
+        def abstain(reason: str) -> LayaOutcome[dict[str, Any]]:
+            return LayaOutcome(
+                status="abstain",
+                reason=reason,
+                value={
+                    "source": contract.source,
+                    "output_format": contract.output_format,
+                },
+            )
+
+        if contract.is_intermediate and not contract.changes_flow:
+            return abstain("no_flow_change")
         if contract.task_type in {"choice", "routing"} and not contract.candidates:
             reason = "no_options" if contract.task_type == "choice" else "no_routes"
-            return LayaOutcome(status="abstain", reason=reason)
+            return abstain(reason)
         if contract.task_type == "score" and not contract.criteria:
-            return LayaOutcome(status="abstain", reason="no_criteria")
+            return abstain("no_criteria")
 
         decision = prepare_laya_request(contract)
         if decision.local_result is not None:
@@ -156,17 +204,15 @@ class LayaSystemOneService:
                 },
             )
         if decision.payload is None:
-            return LayaOutcome(status="abstain", reason="invalid_preflight")
+            return abstain("invalid_preflight")
 
         response = cls._evaluate(cls._call, decision.payload)
         if response.status != "ok" or not isinstance(response.value, dict):
-            return LayaOutcome(
-                status="abstain", reason=response.reason or "invalid_response"
-            )
+            return abstain(response.reason or "invalid_response")
         try:
             result = cls._preflight_result(contract, response.value)
         except _LayaAbstention as exc:
-            return LayaOutcome(status="abstain", reason=exc.reason)
+            return abstain(exc.reason)
         return LayaOutcome(
             status="ok",
             value={
@@ -220,13 +266,61 @@ class LayaSystemOneService:
         )
 
     @classmethod
+    @contextmanager
+    def budget(
+        cls, budget: LayaCallBudget | None = None, *, max_calls: int | None = None
+    ) -> Iterator[LayaCallBudget]:
+        """Bound a run's HTTP attempts; nested operations inherit the same budget.
+
+        Without a run context, each gateway evaluation gets one attempt, no retry.
+        For multi-decision runs, share a LayaCallBudget via this context manager
+        or the gateway's laya_budget argument. Cache/local hits cost no attempts.
+        A retry requires max_retries=1, a retry_reason and remaining max_calls.
+        max_calls adds a stricter operation ceiling and disables retries there;
+        triage/batches cannot inherit a looser parent's cap or retry policy.
+        """
+        if budget is not None and not isinstance(budget, LayaCallBudget):
+            raise TypeError("laya_budget must be a LayaCallBudget")
+        if max_calls is not None and (
+            isinstance(max_calls, bool)
+            or not isinstance(max_calls, int)
+            or max_calls < 0
+        ):
+            raise ValueError("max_calls must be a non-negative integer")
+        enclosing = _active_budget.get()
+        if enclosing is not None:
+            if budget is not None and budget is not enclosing.budget:
+                raise ValueError("Cannot replace an active Laya run budget")
+            active = enclosing.budget
+            ceiling = enclosing.ceiling
+            allow_retries = enclosing.allow_retries
+        else:
+            active = (
+                budget
+                if budget is not None
+                else LayaCallBudget(max_calls=1 if max_calls is None else max_calls)
+            )
+            ceiling = active.max_calls
+            allow_retries = True
+        if max_calls is not None:
+            ceiling = min(ceiling, active.calls + max_calls)
+            allow_retries = False
+        token = _active_budget.set(_BudgetScope(active, ceiling, allow_retries))
+        try:
+            yield active
+        finally:
+            _active_budget.reset(token)
+
+    @classmethod
     def batch_score(cls, texts: list[str], criteria: str) -> list[LayaOutcome[float]]:
         """e) Batch Score (System 1)."""
-        return [cls.score(text, criteria) for text in texts]
+        with cls.budget(max_calls=len(texts)):
+            return [cls.score(text, criteria) for text in texts]
 
     @classmethod
     def batch_routing(
         cls, texts: list[str], routes: list[str]
     ) -> list[LayaOutcome[str]]:
         """f) Batch Routing (System 1)."""
-        return [cls.routing(text, routes) for text in texts]
+        with cls.budget(max_calls=len(texts)):
+            return [cls.routing(text, routes) for text in texts]

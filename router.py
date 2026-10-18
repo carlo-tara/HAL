@@ -7,7 +7,8 @@ import sys
 from typing import Any
 
 from global_config import GlobalLayaHandler, configure_laya_defaults
-from laya_service import LayaOutcome
+from laya_service import LayaOutcome, LayaSystemOneService
+from system1_preflight import LayaCallBudget
 
 # Assicura che le impostazioni di default siano attive all'importazione
 configure_laya_defaults()
@@ -29,7 +30,15 @@ AGENT_SUB_SKILLS: dict[str, list[str]] = {
     "a-product": ["personas", "jtbd", "gherkin", "core"],
 }
 
-def triage_request(request_text: str) -> dict[str, Any]:
+def triage_request(
+    request_text: str, *, laya_budget: LayaCallBudget | None = None
+) -> dict[str, Any]:
+    """Bound agent/skill decisions to two attempts, or a stricter enclosing budget."""
+    with LayaSystemOneService.budget(laya_budget, max_calls=2):
+        return _triage_request(request_text)
+
+
+def _triage_request(request_text: str) -> dict[str, Any]:
     """
     Valuta una richiesta utente tramite Laya System 1 per decidere:
     1. A quale agente primario instradarla (o 'none' se fuori perimetro)
@@ -88,13 +97,15 @@ def handle_noul(text: str) -> Any:
     """Interfaccia obbligatoria per noul (System 1 - Laya)."""
     return GlobalLayaHandler.evaluate("noul", text)
 
-def handle_batch_score(texts: list[str], criteria: str) -> list[float]:
+def handle_batch_score(texts: list[str], criteria: str) -> list[LayaOutcome[float]]:
     """Valuta in batch una lista di testi rispetto a un criterio (System 1 - Laya)."""
-    return [handle_score(t, criteria) for t in texts]
+    with LayaSystemOneService.budget(max_calls=len(texts)):
+        return [handle_score(t, criteria) for t in texts]
 
 def handle_batch_routing(texts: list[str], routes: list[str]) -> list[LayaOutcome[str]]:
     """Instrada in batch una lista di testi verso le rotte candidate (System 1 - Laya)."""
-    return [handle_routing(t, routes) for t in texts]
+    with LayaSystemOneService.budget(max_calls=len(texts)):
+        return [handle_routing(t, routes) for t in texts]
 
 def route_task(task_type: str, *args: Any, **kwargs: Any) -> Any:
     """
