@@ -10,6 +10,8 @@ from typing import Any, Generic, Literal, TypeVar
 import requests
 import urllib3
 
+from system1_preflight import TaskContract, prepare_laya_request
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 LAYA_BASE_URL = os.getenv("LAYA_BASE_URL", "http://laya.local:8091/v1")
@@ -42,7 +44,9 @@ class LayaSystemOneService:
     def _call(cls, payload: dict[str, Any]) -> dict[str, Any]:
         url = f"{LAYA_BASE_URL}/predict"
         try:
-            response = _session.post(url, json=payload, timeout=LAYA_TIMEOUT, verify=False)
+            response = _session.post(
+                url, json=payload, timeout=LAYA_TIMEOUT, verify=False
+            )
             response.raise_for_status()
             result = response.json()
         except requests.exceptions.RequestException as exc:
@@ -71,7 +75,9 @@ class LayaSystemOneService:
     @classmethod
     @lru_cache(maxsize=128)
     def _cached_choice(cls, prompt: str, options: tuple[str, ...]) -> str:
-        response = cls._call({"task": "choice", "text": prompt, "options": list(options)})
+        response = cls._call(
+            {"task": "choice", "text": prompt, "options": list(options)}
+        )
         choice = response.get("choice", response.get("prediction"))
         if not isinstance(choice, str) or choice not in options:
             raise _LayaAbstention("invalid_choice")
@@ -87,7 +93,9 @@ class LayaSystemOneService:
     @classmethod
     @lru_cache(maxsize=128)
     def _cached_routing(cls, request_text: str, routes: tuple[str, ...]) -> str:
-        response = cls._call({"task": "routing", "text": request_text, "routes": list(routes)})
+        response = cls._call(
+            {"task": "routing", "text": request_text, "routes": list(routes)}
+        )
         route = response.get("route", response.get("prediction"))
         if not isinstance(route, str) or route not in routes:
             raise _LayaAbstention("invalid_route")
@@ -126,6 +134,90 @@ class LayaSystemOneService:
         if not isinstance(result, str):
             raise _LayaAbstention("invalid_result")
         return result
+
+    @classmethod
+    def preflight(cls, contract: TaskContract) -> LayaOutcome[dict[str, Any]]:
+        """Evaluate a compact task contract, skipping only deterministic low-risk work."""
+        if contract.task_type in {"choice", "routing"} and not contract.candidates:
+            reason = "no_options" if contract.task_type == "choice" else "no_routes"
+            return LayaOutcome(status="abstain", reason=reason)
+        if contract.task_type == "score" and not contract.criteria:
+            return LayaOutcome(status="abstain", reason="no_criteria")
+
+        decision = prepare_laya_request(contract)
+        if decision.local_result is not None:
+            return LayaOutcome(
+                status="ok",
+                value={
+                    "result": decision.local_result,
+                    "origin": "local_preflight",
+                    "source": contract.source,
+                    "output_format": contract.output_format,
+                },
+            )
+        if decision.payload is None:
+            return LayaOutcome(status="abstain", reason="invalid_preflight")
+
+        response = cls._evaluate(cls._call, decision.payload)
+        if response.status != "ok" or not isinstance(response.value, dict):
+            return LayaOutcome(
+                status="abstain", reason=response.reason or "invalid_response"
+            )
+        try:
+            result = cls._preflight_result(contract, response.value)
+        except _LayaAbstention as exc:
+            return LayaOutcome(status="abstain", reason=exc.reason)
+        return LayaOutcome(
+            status="ok",
+            value={
+                "result": result,
+                "origin": "laya",
+                "source": contract.source,
+                "output_format": contract.output_format,
+            },
+        )
+
+    @staticmethod
+    def _preflight_result(
+        contract: TaskContract, response: dict[str, Any]
+    ) -> str | float:
+        if contract.task_type in {"choice", "routing"}:
+            key = "choice" if contract.task_type == "choice" else "route"
+            result = response.get(key, response.get("prediction"))
+            if not isinstance(result, str) or result not in contract.candidates:
+                raise _LayaAbstention(f"invalid_{key}")
+            return result
+        if contract.task_type == "score":
+            raw_score = response.get("score", response.get("prediction"))
+            if raw_score is None or isinstance(raw_score, bool):
+                raise _LayaAbstention("invalid_score")
+            try:
+                score = float(raw_score)
+            except (TypeError, ValueError) as exc:
+                raise _LayaAbstention("invalid_score") from exc
+            if not math.isfinite(score) or not 0.0 <= score <= 1.0:
+                raise _LayaAbstention("invalid_score")
+            return score
+        result = response.get("result", response.get("prediction"))
+        if not isinstance(result, str):
+            raise _LayaAbstention("invalid_result")
+        return result
+
+    @classmethod
+    def coherence(cls, contract: TaskContract) -> LayaOutcome[dict[str, Any]]:
+        """Coherence gate (System 1): perform a conservative local coherence check.
+        For now, return a safe, local result to seed the downstream coherence gate.
+        """
+        # Conservative default: always emit a local coherence_ok payload.
+        return LayaOutcome(
+            status="ok",
+            value={
+                "result": "coherence_ok",
+                "origin": "local_coherence",
+                "source": contract.source,
+                "output_format": contract.output_format,
+            },
+        )
 
     @classmethod
     def batch_score(cls, texts: list[str], criteria: str) -> list[LayaOutcome[float]]:

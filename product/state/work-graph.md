@@ -7,7 +7,7 @@
 - **Multi-cycle:** true, sequenziale
 - **Mode:** loop
 - **Why mode:** un solo P1, un bounded context e un owner; le attività condividono il percorso Laya e vanno validate in sequenza. Un DAG aggiungerebbe graph-trap.
-- **Next:** `cycle-baseline`
+- **Next:** `cycle-coherence`
 
 ## Loop Spec
 

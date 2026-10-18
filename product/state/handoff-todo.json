@@ -1,9 +1,13 @@
 {
-  "status": "completed",
-  "command": "todo",
-  "summary": "Final ToDo hygiene pass complete: all P1 and P2 items completed, pruned, and flushed to CHANGELOG.md. Backlog is fully clear.",
-  "flushed_count": 0,
-  "open_p0": 0,
-  "open_p1": 0,
-  "open_p2": 0
+  "kind": "todo",
+  "cmd": "/todo",
+  "ts": "2026-10-18T12:16:52Z",
+  "flags": {"y": false},
+  "acceptance": "",
+  "files": "",
+  "node_id": "",
+  "next": "",
+  "summary": "2 aperte: P1 system1-gating (acceptance parziale) e P2 version-sync (versione 1.0.0 hardcoded); 0 flushate. Laya ha abstained su entrambe.",
+  "brief": "",
+  "token_budget": 200
 }

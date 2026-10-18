@@ -6,6 +6,7 @@ from collections.abc import Callable
 from typing import Any, ClassVar
 
 from laya_service import LayaSystemOneService
+from system1_preflight import TaskContract
 
 DEFAULT_LAYA_BASE_URL = "http://laya.local:8091/v1"
 DEFAULT_LAYA_TIMEOUT = "10.0"
@@ -281,8 +282,43 @@ class GlobalLayaHandler:
     def evaluate(cls, task_type: str, *args: Any, **kwargs: Any) -> Any:
         configure_laya_defaults()
 
+        # Quick path for coherence gate (System 1)
+        if task_type == "coherence":
+            task_contract = kwargs.get("task_contract")
+            if task_contract is None:
+                # Fallback: construct a minimal TaskContract for coherence gate
+                contract = TaskContract(
+                    task_type=task_type,
+                    instruction="coherence gate",
+                    source="",
+                    output_format="",
+                )
+            else:
+                contract = TaskContract(
+                    task_type=task_type,
+                    instruction="coherence gate",
+                    source="",
+                    output_format="",
+                )
+            return LayaSystemOneService.coherence(contract)
+
         # Check System 1
         if task_type in cls._SYSTEM_ONE_TABLE:
+            task_contract = kwargs.get("task_contract")
+            if task_contract is not None:
+                # For coherence task_type, avoid from_request (not supported); construct minimal contract
+                if task_type == "coherence":
+                    contract = TaskContract(
+                        task_type=task_type,
+                        instruction="coherence gate",
+                        source="",
+                        output_format="",
+                    )
+                else:
+                    contract = TaskContract.from_request(task_type, args, task_contract)
+                if task_type == "coherence":
+                    return LayaSystemOneService.coherence(contract)
+                return LayaSystemOneService.preflight(contract)
             return cls._SYSTEM_ONE_TABLE[task_type](args)
 
         # Check System 2

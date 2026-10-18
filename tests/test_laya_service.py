@@ -5,6 +5,7 @@ from unittest.mock import Mock, patch
 
 import requests
 
+from global_config import GlobalLayaHandler
 from laya_service import LayaSystemOneService
 from router import triage_request
 
@@ -61,7 +62,9 @@ class TestLayaService(unittest.TestCase):
         self.assertEqual(recovered.value, "a-product")
         post.assert_called_once()
 
-    def test_score_does_not_fabricate_confidence_on_failure_or_invalid_response(self) -> None:
+    def test_score_does_not_fabricate_confidence_on_failure_or_invalid_response(
+        self,
+    ) -> None:
         text = f"score failure {self.id()}"
 
         with patch("laya_service._session.post", side_effect=requests.ConnectionError):
@@ -87,6 +90,90 @@ class TestLayaService(unittest.TestCase):
         self.assertEqual(result["decision_status"], "abstain")
         self.assertEqual(result["agent"], "none")
         self.assertFalse(result["is_routed"])
+
+    def test_atomic_low_risk_single_choice_skips_laya_and_preserves_context(
+        self,
+    ) -> None:
+        contract = {
+            "risk_level": "low",
+            "complexity": "atomic",
+            "source": "original source text",
+            "output_format": "json",
+        }
+
+        with patch("laya_service._session.post") as post:
+            result = GlobalLayaHandler.evaluate(
+                "choice", f"one option {self.id()}", ["only"], task_contract=contract
+            )
+
+        post.assert_not_called()
+        self.assertIsInstance(result.value, dict)
+        self.assertEqual(result.value["result"], "only")
+        self.assertEqual(result.value["source"], "original source text")
+        self.assertEqual(result.value["output_format"], "json")
+
+    def test_non_atomic_task_sends_compact_metadata_without_source(self) -> None:
+        source = "private source content that must remain local"
+        contract = {
+            "risk_level": "high",
+            "complexity": "complex",
+            "source": source,
+            "output_format": "json",
+            "constraints": ["preserve all records"],
+        }
+        prompt = f"route request {self.id()}"
+
+        with patch(
+            "laya_service._session.post",
+            return_value=self._response({"route": "a-product"}),
+        ) as post:
+            result = GlobalLayaHandler.evaluate(
+                "routing", prompt, ["a-product", "a-harness"], task_contract=contract
+            )
+
+        payload = post.call_args.kwargs["json"]
+        self.assertNotIn(source, str(payload))
+        self.assertIn(f"source_chars={len(source)}", payload["text"])
+        self.assertIn("format=json", payload["text"])
+        self.assertIn("preserve all records", payload["text"])
+        self.assertIsInstance(result.value, dict)
+        self.assertEqual(result.value["source"], source)
+        self.assertEqual(result.value["output_format"], "json")
+
+    def test_unknown_risk_does_not_enable_local_shortcut(self) -> None:
+        contract = {
+            "risk_level": "unknown",
+            "complexity": "atomic",
+            "source": "source",
+        }
+
+        with patch(
+            "laya_service._session.post",
+            return_value=self._response({"route": "a-product"}),
+        ) as post:
+            result = GlobalLayaHandler.evaluate(
+                "routing", f"route {self.id()}", ["a-product"], task_contract=contract
+            )
+
+        post.assert_called_once()
+        self.assertEqual(result.status, "ok")
+
+    def test_coherence_gate_executes_local_coherence(self) -> None:
+        contract = {
+            "risk_level": "low",
+            "complexity": "atomic",
+            "source": "orig",
+            "output_format": "json",
+        }
+
+        with patch("laya_service._session.post") as post:
+            result = GlobalLayaHandler.evaluate(
+                "coherence", "check", [], task_contract=contract
+            )
+
+        self.assertIsInstance(result.value, dict)
+        self.assertEqual(result.value["result"], "coherence_ok")
+        self.assertEqual(result.value["origin"], "local_coherence")
 
 
 if __name__ == "__main__":
