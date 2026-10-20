@@ -139,6 +139,66 @@ class System2Metrics:
             ).fetchall()
             return [dict(row) for row in rows]
 
+    def get_token_breakdown(self, *, run_id: str | None = None) -> dict[str, Any]:
+        """Token usage per workflow category, plus tokens lost to failed prompts.
+
+        ``wasted_tokens`` counts tokens spent by successful stages of a
+        (run, prompt, model) workflow that also contains a failed stage: their
+        output is discarded because the workflow as a whole failed.
+        """
+        where = "WHERE run_id = ?" if run_id is not None else ""
+        params: tuple[Any, ...] = (run_id,) if run_id is not None else ()
+        with self._connect() as connection:
+            rows = connection.execute(
+                f"""
+                SELECT CASE
+                         WHEN stage LIKE 'segmento_%' THEN 'segment'
+                         WHEN stage = 'assemblaggio_finale' THEN 'assembly'
+                         WHEN stage = 'assemblaggio_locale' THEN 'local_assembly'
+                         WHEN stage = 'risposta_finale' THEN 'single_pass'
+                         WHEN stage LIKE 'piano_%' THEN 'plan'
+                         ELSE 'other'
+                       END AS category,
+                       COUNT(*) AS events,
+                       SUM(COALESCE(tokens_total, 0)) AS tokens
+                FROM system2_workflow_events
+                {where}
+                {"AND" if where else "WHERE"} system = 'system2'
+                GROUP BY category
+                """,
+                params,
+            ).fetchall()
+            wasted = connection.execute(
+                f"""
+                SELECT SUM(COALESCE(e.tokens_total, 0))
+                FROM system2_workflow_events e
+                WHERE {"e.run_id = ? AND" if where else ""} e.system = 'system2'
+                  AND e.status = 'ok'
+                  AND EXISTS (
+                    SELECT 1 FROM system2_workflow_events f
+                    WHERE f.run_id = e.run_id AND f.prompt_id = e.prompt_id
+                      AND f.model = e.model AND f.system = 'system2'
+                      AND f.status != 'ok'
+                  )
+                """,
+                params,
+            ).fetchone()
+        total = sum(int(row["tokens"] or 0) for row in rows)
+        return {
+            "total_tokens": total,
+            "wasted_tokens": int(wasted[0] or 0),
+            "by_category": {
+                row["category"]: {
+                    "events": int(row["events"]),
+                    "tokens": int(row["tokens"] or 0),
+                    "share": round(int(row["tokens"] or 0) / total, 4)
+                    if total
+                    else 0.0,
+                }
+                for row in rows
+            },
+        }
+
     def get_summary(self, *, run_id: str) -> dict[str, int]:
         with self._connect() as connection:
             row = connection.execute(

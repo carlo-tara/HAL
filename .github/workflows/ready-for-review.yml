@@ -11,6 +11,8 @@ jobs:
   gateway-tests:
     name: Gateway unit tests
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -19,6 +21,9 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
+      - name: Install dependencies
+        run: python3 -m pip install -r requirements-dev.txt
 
       - name: Run secret scanner
         run: python3 scripts/check_secrets.py
@@ -30,37 +35,52 @@ jobs:
         run: python3 scripts/check_sast.py
 
       - name: Test gateway core
-        run: python3 test_gateway_core.py
+        run: python3 -m unittest tests.test_gateway_core
 
       - name: Test agent LLM configuration
-        run: python3 test_agent_llm_config.py
+        run: python3 -m unittest tests.test_agent_llm_config
 
       - name: Test Laya abstention and routing fallback
-        run: python3 test_laya_service.py
+        run: python3 -m unittest tests.test_laya_service
+
+      - name: Test Laya score routing
+        run: python3 -m unittest tests.test_router_score
 
       - name: Test System 2 provider & policy
-        run: python3 test_system_two_provider.py
+        run: python3 -m unittest tests.test_system_two_provider
 
       - name: Test System evaluation engine
-        run: python3 test_system_evals.py
+        run: python3 -m unittest tests.test_system_evals
 
       - name: Test L1 Redis cache manager
-        run: python3 test_gateway_cache.py
+        run: python3 -m unittest tests.test_gateway_cache
 
       - name: Test Circuit breaker resolver
-        run: python3 test_circuit_breaker.py
+        run: python3 -m unittest tests.test_circuit_breaker
 
       - name: Test secret scanner validator
-        run: python3 test_secret_scanner.py
+        run: python3 -m unittest tests.test_secret_scanner
 
       - name: Test dependency audit validator
-        run: python3 test_deps_audit.py
+        run: python3 -m unittest tests.test_deps_audit
 
       - name: Test SAST validator
-        run: python3 test_sast.py
+        run: python3 -m unittest tests.test_sast
 
       - name: Test event retention, encryption & access control
-        run: python3 test_retention.py
+        run: python3 -m unittest tests.test_retention
 
       - name: Test Kahneman System 1 / System 2 evolution (WYSIATI & cognitive tension)
-        run: python3 test_kahneman_evolution.py
+        run: python3 -m unittest tests.test_kahneman_evolution
+
+      - name: Test benchmark runner token gating
+        run: python3 -m unittest tests.test_runner_token_gating
+
+      - name: Test hot path benchmarks
+        run: python3 -m unittest tests.test_benchmarks
+
+      - name: Test hal_system2 mirror sync script
+        run: python3 -m unittest tests.test_sync_hal_system2
+
+      - name: Test workspace skill wrapper versioning
+        run: python3 -m unittest tests.test_link_workspace_skills

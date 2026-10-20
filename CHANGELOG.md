@@ -7,11 +7,18 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+- Versione: comando canonico `agents/a-agentzero/commands/version.md` (e wrapper `.agents/skills/version/SKILL.md`) 1.2.1 → 1.3.0 (minor: il wrapper ora deriva la versione dal frontmatter canonico); `a-agentzero` non bumpato (modifica confinata al comando) `#version-sync` · HAL
+- README: preflight saltato per richieste atomiche, test in CI, sorgente della versione dei wrapper e `sync_hal_system2.sh check` `#docs` · Progetto
+- `link-workspace-skills.sh`: la versione dei wrapper `SKILL.md` generati deriva da `version:` nel frontmatter del comando canonico (non più `1.0.0` fisso), così un bump sopravvive ai sync; `command_version` e script sourceable; `version.md` con `version:` nel frontmatter; test in `tests/test_link_workspace_skills.py` `#version-sync` · P2 · Progetto
+- Benchmark: `benchmark/scripts/sync_hal_system2.sh check|apply` per tenere allineati generatore, runner e metriche del gateway con la sorgente `hal_system2`; test in `tests/test_sync_hal_system2.py` e in CI `#benchmark` · P2 · Progetto
+- Runner benchmark: `--cooldown SECONDI` tra i modelli (canonico `hal_system2/app/`, mirror nel gateway); test in `hal_system2/tests/test_benchmark_models.py` e `tests/test_runner_token_gating.py` `#benchmark` · P1 · Progetto
+- Runner benchmark: copia del gateway riallineata a `hal_system2/app/` (assemblaggio locale dei segmenti, `--segment-max-tokens`, stop su troncamento, `get_token_breakdown`); mirror verificato con `diff`; test di guardia in `tests/test_runner_token_gating.py` `#benchmark` · P1 · Progetto
+- CI: i passi test di `ready-for-review.yml` usano `PYTHONPATH=. python3 -m unittest tests.<modulo>` dalla root, con installazione di `requirements-dev.txt` (nuovo: `httpx`, `python-dotenv`) e passi per `test_router_score`, `test_runner_token_gating`, `test_benchmarks` `#infra` · P1 · Progetto
+- Gateway: il preflight Laya viene saltato per richieste atomiche, a basso rischio e brevi (`istruzione + fonte < PREFLIGHT_SHORT_MAX_CHARS = 400`); `LayaSystemOneService.preflight` restituisce `abstain` con `reason=preflight_skipped_atomic`, senza consumare il budget e preservando `source`/`output_format`; test in `tests/test_laya_service.py` `#system1-gating` · P1 · Progetto
 - Benchmark: ripetizione `20261020_2` di `phi3:mini` e `llama3.2:3b` (Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_2/` con report, executive summary e confronto con `20261020_1`; timeout `phi3:mini` su `estrazione_json` aperto in `ToDo.md` `#benchmark` · P1 · Progetto
 - Benchmark: run `20261020_1` (middleware nuovo, Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_1/` con report e executive summary; confronto con `20261019_3` e residui aggiornati in `ToDo.md` `#benchmark` · P1 · Progetto
 - Versionati a 1.0.1 i documenti L0 `AGENT-PROTOCOL.md`, `references/agent-versioning.md`, `references/extension-scaffold.md`; modulo `a-agentzero` a 1.8.6 `#docs` · Progetto
 - Benchmark: sezione "Vincoli operativi" nel README (`--output` dentro `--run-dir`, nessun cooldown nel runner, `setsid`, copie del generatore), storico `20261019_3` e residui in `ToDo.md` `#benchmark` · P1 · Progetto
-- Passi di test del workflow `ready-for-review` da correggere: i test sono in `tests/` e vanno lanciati con `PYTHONPATH=.` `#infra` · P1 · Progetto
 - GitHub Actions portate a runtime Node 24: `actions/checkout@v5`, `actions/setup-python@v6` `#infra` · Progetto
 - Ripristinata versione `version/SKILL.md` a 1.2.1 (frontmatter era regredito a 1.0.0) `#infra` · HAL
 - Aggiunto `.gitignore` per escludere `.env` e `.env.*` (mantiene `.env.example`) `#infra` · Progetto

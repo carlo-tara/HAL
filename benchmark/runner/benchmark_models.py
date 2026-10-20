@@ -50,6 +50,8 @@ class Settings:
     laya_timeout: float = 120
     laya_min_confidence: float = 0.7
     laya_model: str = "multilingual"
+    # Opt-in cap on output tokens per source segment; None keeps requests unlimited.
+    segment_max_output_tokens: int | None = None
 
     @classmethod
     def from_env(cls, env_file: Path) -> Settings:
@@ -94,6 +96,11 @@ class Settings:
             laya_timeout=float(env.get("LAYA_TIMEOUT", "120")),
             laya_min_confidence=float(env.get("LAYA_MIN_CONFIDENCE", "0.7")),
             laya_model=env.get("LAYA_MODEL", "multilingual"),
+            segment_max_output_tokens=(
+                int(env["BENCHMARK_SEGMENT_MAX_TOKENS"])
+                if env.get("BENCHMARK_SEGMENT_MAX_TOKENS")
+                else None
+            ),
         )
 
 
@@ -802,10 +809,12 @@ def benchmark_call(
     client: httpx.Client,
     *,
     system1: dict | None = None,
+    max_output_tokens: int | None = None,
 ) -> dict:
     provider = model["provider"]
     headers = headers_for(provider, config)
     message = system1_prompt(prompt, system1) if system1 else prompt_message(prompt)
+    payload: dict[str, Any]
     if provider == "ollama":
         url = f"{config.ollama_base_url}/api/chat"
         payload = {
@@ -814,7 +823,10 @@ def benchmark_call(
             "stream": False,
             # Unload the runner after generation instead of retaining its KV cache.
             "keep_alive": 0,
-            "options": {"num_predict": -1, "num_ctx": config.ollama_num_ctx},
+            "options": {
+                "num_predict": -1 if max_output_tokens is None else max_output_tokens,
+                "num_ctx": config.ollama_num_ctx,
+            },
         }
     elif openai_compatible_google(config):
         url = f"{config.llm_base_url}/chat/completions"
@@ -824,10 +836,14 @@ def benchmark_call(
         }
         if config.llm_temperature is not None:
             payload["temperature"] = config.llm_temperature
+        if max_output_tokens is not None:
+            payload["max_tokens"] = max_output_tokens
         provider = "google_openai"
     else:
         url = f"{config.google_base_url}/models/{model['model']}:generateContent"
         payload = {"contents": [{"role": "user", "parts": [{"text": message}]}]}
+        if max_output_tokens is not None:
+            payload["generationConfig"] = {"maxOutputTokens": max_output_tokens}
     response = client.post(url, headers=headers, json=payload)
     response.raise_for_status()
     return parse_response(provider, response.json())
@@ -865,10 +881,19 @@ def system2_workflow_call(
         except (OSError, sqlite3.Error, ValueError, TypeError) as exc:
             log(f"    Metriche SQLite non registrate: {type(exc).__name__}")
 
-    def run_stage(stage_prompt: dict, stage: str) -> dict:
+    def run_stage(
+        stage_prompt: dict, stage: str, max_output_tokens: int | None = None
+    ) -> dict:
         started = time.perf_counter()
         try:
-            result = benchmark_call(model, stage_prompt, config, client, system1=guide)
+            result = benchmark_call(
+                model,
+                stage_prompt,
+                config,
+                client,
+                system1=guide,
+                max_output_tokens=max_output_tokens,
+            )
         except Exception:
             record_metric(
                 system="system2",
@@ -953,6 +978,7 @@ def system2_workflow_call(
         if language:
             instructions = f"Lingua di destinazione: {language}.\n{instructions}"
         artifacts: list[str] = []
+        truncated_part: dict | None = None
         for index, chunk in enumerate(chunks, start=1):
             # Preserve every in-scope source segment: a generic relevance classifier
             # must not silently drop content needed for extraction or translation.
@@ -961,19 +987,60 @@ def system2_workflow_call(
                 "Non completare il lavoro sugli altri segmenti e non dichiarare che questa è la risposta complessiva. "
                 f"Mantieni informazioni utili all'assemblaggio finale.\n\n<segmento_fonte>\n{chunk}\n</segmento_fonte>"
             )
-            part = run_stage(part_prompt, f"segmento_{index}")
+            part = run_stage(
+                part_prompt, f"segmento_{index}", config.segment_max_output_tokens
+            )
+            if part.get("status") == "truncated":
+                # The prompt can no longer succeed: do not spend tokens on the rest.
+                truncated_part = part
+                break
             if part.get("response"):
                 artifacts.append(part["response"])
-        assembled = "\n\n---\n\n".join(
-            f"<risultato_segmento_{index}>\n{artifact}\n</risultato_segmento_{index}>"
-            for index, artifact in enumerate(artifacts, start=1)
+        local_text = (
+            None
+            if truncated_part is not None
+            else assemble_segments_locally(
+                guide.get("task_family", "general"), instructions, artifacts
+            )
         )
-        final_prompt = user_prompt(
-            f"{instructions}\n\nAssembla i risultati parziali seguenti in un'unica risposta completa. "
-            "Rimuovi duplicazioni introdotte dai confini dei segmenti, preserva l'ordine e rispetta esattamente il formato richiesto. "
-            f"Non aggiungere fatti non presenti nei risultati.\n\n<risultati_parziali>\n{assembled}\n</risultati_parziali>"
-        )
-        final = run_stage(final_prompt, "assemblaggio_finale")
+        if truncated_part is not None:
+            final = truncated_part
+        elif local_text is not None:
+            zero_tokens = {"input": 0, "output": 0, "reasoning": 0, "total": 0}
+            trace.append(
+                {
+                    "system": "system2_local",
+                    "stage": "assemblaggio_locale",
+                    "status": "ok",
+                    "tokens": zero_tokens,
+                }
+            )
+            record_metric(
+                system="system2",
+                stage="assemblaggio_locale",
+                status="ok",
+                output_chars=len(local_text),
+                tokens_in=0,
+                tokens_out=0,
+                tokens_total=0,
+            )
+            final = {
+                "status": "ok" if local_text.strip() else "empty_response",
+                "tokens": zero_tokens,
+                "finish_reason": "local_assembly",
+                "response": local_text,
+            }
+        else:
+            assembled = "\n\n---\n\n".join(
+                f"<risultato_segmento_{index}>\n{artifact}\n</risultato_segmento_{index}>"
+                for index, artifact in enumerate(artifacts, start=1)
+            )
+            final_prompt = user_prompt(
+                f"{instructions}\n\nAssembla i risultati parziali seguenti in un'unica risposta completa. "
+                "Rimuovi duplicazioni introdotte dai confini dei segmenti, preserva l'ordine e rispetta esattamente il formato richiesto. "
+                f"Non aggiungere fatti non presenti nei risultati.\n\n<risultati_parziali>\n{assembled}\n</risultati_parziali>"
+            )
+            final = run_stage(final_prompt, "assemblaggio_finale")
     else:
         plan = None
         if mode == "plan_then_solve":
@@ -1075,17 +1142,53 @@ def validate_quality(checks: object) -> None:
             raise ValueError("min_chars richiede value intero positivo")
 
 
-def json_document(text: str) -> bool:
+_NO_JSON = object()
+
+
+def parse_json_document(text: str) -> Any:
+    """Return the first JSON array/object in text (optionally fenced), else _NO_JSON."""
     fenced = re.search(r"```(?:json)?(.*?)```", text, re.DOTALL | re.IGNORECASE)
     candidate = fenced.group(1) if fenced else text
     starts = [i for i in (candidate.find("["), candidate.find("{")) if i >= 0]
     if not starts:
-        return False
+        return _NO_JSON
     try:
-        json.JSONDecoder().raw_decode(candidate, min(starts))
+        return json.JSONDecoder().raw_decode(candidate, min(starts))[0]
     except ValueError:
-        return False
-    return True
+        return _NO_JSON
+
+
+def json_document(text: str) -> bool:
+    return parse_json_document(text) is not _NO_JSON
+
+
+def assemble_segments_locally(
+    task_family: str, instructions: str, artifacts: list[str]
+) -> str | None:
+    """Combine segment results without a model call when the merge is mechanical.
+
+    Telemetry showed the model-based assembly stage costing ~18% of all tokens while
+    shrinking the output (translations lost most of their text) and being the stage
+    that most often timed out. Segments never overlap, so translations are plain
+    concatenation, a single segment needs no merge, and a JSON extraction whose
+    segments are all valid JSON is merged into one array. Returns None when only a
+    model can assemble the result.
+    """
+    if not artifacts:
+        return None
+    if len(artifacts) == 1:
+        return artifacts[0]
+    if task_family == "translation":
+        return "\n\n".join(artifact.strip() for artifact in artifacts)
+    if "json" in instructions.lower():
+        merged: list[Any] = []
+        for artifact in artifacts:
+            value = parse_json_document(artifact)
+            if value is _NO_JSON:
+                return None
+            merged.extend(value if isinstance(value, list) else [value])
+        return json.dumps(merged, ensure_ascii=False, indent=2)
+    return None
 
 
 def quality_check_passes(check: dict, text: str) -> bool:
@@ -1228,6 +1331,8 @@ def run_benchmark(
     system1_guides: dict[str, dict] | None = None,
     metrics_db: Path | None = None,
     clock: Callable[[], float] = time.perf_counter,
+    cooldown: float = 0.0,
+    sleep: Callable[[float], None] = time.sleep,
 ) -> dict:
     models = apply_llm_model_override(models, config)
     log(
@@ -1294,6 +1399,10 @@ def run_benchmark(
                 log(f"Metriche SQLite non registrate: {type(exc).__name__}")
     write_json(output, report)
     for model_index, model in enumerate(models, start=1):
+        if model_index > 1 and cooldown > 0:
+            log()
+            log(f"Pausa di {cooldown:g}s prima del modello successivo…")
+            sleep(cooldown)
         log()
         log(
             f"━━ [{model_index}/{len(models)}] {model['provider']}/{model['model']} "
@@ -1473,6 +1582,20 @@ def main(argv: list[str] | None = None) -> int:
         help="Timeout HTTP per operazione in secondi (default: 600)",
     )
     parser.add_argument(
+        "--cooldown",
+        type=float,
+        default=0.0,
+        help="Pausa in secondi tra un modello e il successivo (default: 0)",
+    )
+    parser.add_argument(
+        "--segment-max-tokens",
+        type=int,
+        help=(
+            "Tetto opzionale di token in uscita per ogni segmento delle fonti lunghe "
+            "(default: nessun limite; env BENCHMARK_SEGMENT_MAX_TOKENS)"
+        ),
+    )
+    parser.add_argument(
         "--refresh-models",
         action="store_true",
         help="Aggiorna solo il catalogo, senza generazione",
@@ -1490,7 +1613,16 @@ def main(argv: list[str] | None = None) -> int:
         timeout = config.timeout if args.timeout is None else args.timeout
         if not math.isfinite(timeout) or timeout <= 0:
             raise ValueError("Il timeout deve essere un numero positivo finito")
-        config = replace(config, timeout=timeout)
+        if not math.isfinite(args.cooldown) or args.cooldown < 0:
+            raise ValueError("Il cooldown deve essere un numero finito non negativo")
+        segment_cap = (
+            config.segment_max_output_tokens
+            if args.segment_max_tokens is None
+            else args.segment_max_tokens
+        )
+        if segment_cap is not None and segment_cap < 1:
+            raise ValueError("Il tetto di token per segmento deve essere positivo")
+        config = replace(config, timeout=timeout, segment_max_output_tokens=segment_cap)
         if args.system1 and (
             not math.isfinite(config.laya_timeout)
             or config.laya_timeout <= 0
@@ -1555,6 +1687,7 @@ def main(argv: list[str] | None = None) -> int:
                 run_dir=args.run_dir,
                 system1_guides=guides,
                 metrics_db=args.metrics_db if args.system1 else None,
+                cooldown=args.cooldown,
             )
         print(
             f"Risultati: {args.output}; successi: {report['summary']['successful']}; errori: {report['summary']['failed']}"

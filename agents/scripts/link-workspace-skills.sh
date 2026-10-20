@@ -31,6 +31,64 @@ link_path() {
   ln -sfn "${target}" "${destination}"
 }
 
+link_zed_prompt() {
+  local source="$1" target="$2"
+  if [[ ! -e "${source}" ]]; then
+    echo "Missing source: ${source}" >&2
+    return 1
+  fi
+  mkdir -p "$(dirname "${target}")"
+  rm -f "${target}"
+  python3 -c "
+import re
+with open('${source}', 'r', encoding='utf-8') as f:
+    content = f.read()
+content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, flags=re.DOTALL)
+with open('${target}', 'w', encoding='utf-8') as f:
+    f.write(content)
+"
+}
+
+# Unica sorgente della versione di un wrapper: `version:` nel frontmatter del
+# comando canonico; 1.0.0 se assente. Un bump va fatto sul canonico, mai sul wrapper.
+command_version() {
+  local source="$1" version
+  version="$(awk 'BEGIN{fm=0} /^---$/{if(fm){exit} fm=1; next} fm && $1=="version:"{print $2; exit}' "${source}")"
+  version="${version:-1.0.0}"
+  if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "Invalid version '${version}' in ${source}" >&2
+    return 1
+  fi
+  printf '%s' "${version}"
+}
+
+link_zed_skill() {
+  local source="$1"
+  local name="$2"
+  local skill_dir="${WORKSPACE_ROOT}/.agents/skills/${name}"
+  local version
+  version="$(command_version "${source}")"
+  mkdir -p "${skill_dir}"
+  python3 -c "
+import re
+with open('${source}', 'r', encoding='utf-8') as f:
+    content = f.read()
+content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, flags=re.DOTALL)
+skill_content = '''---
+name: ${name}
+version: ${version}
+description: Command ${name} for HAL workspace.
+---\n\n''' + content
+with open('${skill_dir}/SKILL.md', 'w', encoding='utf-8') as f:
+    f.write(skill_content)
+"
+}
+
+# Permette di fare `source` dello script (test) senza eseguire i collegamenti.
+if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+  return 0
+fi
+
 for agent in "${AGENT_IDS[@]}"; do
   link_path "${AGENTS_ROOT}/${agent}" "../../agents/${agent}" "${WORKSPACE_ROOT}/.agents/skills/${agent}"
   link_path "${AGENTS_ROOT}/${agent}/agents/${agent}.md" "../../../agents/${agent}/agents/${agent}.md" "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md"
@@ -55,44 +113,6 @@ link_path "${AGENTS_ROOT}/project-skills/harness-agentfactory" "../../agents/pro
 
 link_path "${AGENTS_ROOT}/project-skills/laya" "../../agents/project-skills/laya" \
   "${WORKSPACE_ROOT}/.agents/skills/laya"
-
-link_zed_prompt() {
-  local source="$1" target="$2"
-  if [[ ! -e "${source}" ]]; then
-    echo "Missing source: ${source}" >&2
-    return 1
-  fi
-  mkdir -p "$(dirname "${target}")"
-  rm -f "${target}"
-  python3 -c "
-import re
-with open('${source}', 'r', encoding='utf-8') as f:
-    content = f.read()
-content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, flags=re.DOTALL)
-with open('${target}', 'w', encoding='utf-8') as f:
-    f.write(content)
-"
-}
-
-link_zed_skill() {
-  local source="$1"
-  local name="$2"
-  local skill_dir="${WORKSPACE_ROOT}/.agents/skills/${name}"
-  mkdir -p "${skill_dir}"
-  python3 -c "
-import re
-with open('${source}', 'r', encoding='utf-8') as f:
-    content = f.read()
-content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, flags=re.DOTALL)
-skill_content = '''---
-name: ${name}
-version: 1.0.0
-description: Command ${name} for HAL workspace.
----\n\n''' + content
-with open('${skill_dir}/SKILL.md', 'w', encoding='utf-8') as f:
-    f.write(skill_content)
-"
-}
 
 for command in "${L0_COMMANDS[@]}"; do
   link_path "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" "../../../agents/a-agentzero/commands/${command}.md" \

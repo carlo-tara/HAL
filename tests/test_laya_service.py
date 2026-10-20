@@ -162,6 +162,81 @@ class TestLayaService(unittest.TestCase):
         post.assert_called_once()
         self.assertEqual(result.status, "ok")
 
+    def _evaluate_atomic(self, task, candidates, source, **extra):
+        contract = {
+            "risk_level": "low",
+            "complexity": "atomic",
+            "source": source,
+            "output_format": "json",
+            **extra,
+        }
+        return GlobalLayaHandler.evaluate(
+            task, f"short request {self.id()}", candidates, task_contract=contract
+        )
+
+    def test_atomic_short_low_risk_multi_choice_skips_preflight(self) -> None:
+        budget = system1_preflight.LayaCallBudget(max_calls=0)
+
+        with patch("laya_service._session.post") as post:
+            result = self._evaluate_atomic(
+                "choice", ["a", "b", "c"], "short source", laya_budget=budget
+            )
+
+        post.assert_not_called()
+        self.assertEqual(result.status, "abstain")
+        self.assertEqual(result.reason, "preflight_skipped_atomic")
+        self.assertEqual(result.value["source"], "short source")
+        self.assertEqual(result.value["output_format"], "json")
+        self.assertEqual(budget.calls, 0)
+
+    def test_atomic_short_low_risk_score_skips_preflight(self) -> None:
+        with patch("laya_service._session.post") as post:
+            result = self._evaluate_atomic("score", [], "short source", criteria="fit")
+
+        post.assert_not_called()
+        self.assertEqual(result.reason, "preflight_skipped_atomic")
+
+    def test_atomic_low_risk_long_request_still_calls_laya(self) -> None:
+        source = "x" * system1_preflight.PREFLIGHT_SHORT_MAX_CHARS
+
+        with patch(
+            "laya_service._session.post",
+            return_value=self._response({"choice": "b"}),
+        ) as post:
+            result = self._evaluate_atomic("choice", ["a", "b"], source)
+
+        post.assert_called_once()
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.value["origin"], "laya")
+
+    def test_preflight_length_threshold_is_exclusive(self) -> None:
+        limit = system1_preflight.PREFLIGHT_SHORT_MAX_CHARS
+
+        def contract(source_len: int, **overrides):
+            instruction = "pick"
+            return system1_preflight.TaskContract(
+                task_type="choice",
+                instruction=instruction,
+                source="x" * source_len,
+                output_format="json",
+                candidates=("a", "b"),
+                risk_level=overrides.get("risk_level", "low"),
+                complexity=overrides.get("complexity", "atomic"),
+            )
+
+        below = contract(limit - len("pick") - 1)
+        at_limit = contract(limit - len("pick"))
+        self.assertTrue(system1_preflight.is_atomic_short_low_risk(below))
+        self.assertFalse(system1_preflight.is_atomic_short_low_risk(at_limit))
+        self.assertFalse(
+            system1_preflight.is_atomic_short_low_risk(contract(5, risk_level="high"))
+        )
+        self.assertFalse(
+            system1_preflight.is_atomic_short_low_risk(
+                contract(5, complexity="complex")
+            )
+        )
+
     def test_coherence_gate_executes_local_coherence(self) -> None:
         contract = {
             "risk_level": "low",

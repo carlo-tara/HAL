@@ -87,11 +87,23 @@ docker compose -f docker-compose.benchmark.yml run --rm benchmark \
 ## Vincoli operativi
 
 - `--run-dir` deve non esistere; `--output` deve trovarsi direttamente dentro `--run-dir`.
-- Non esiste un'opzione di cooldown tra modelli. Per la pausa si usa una run per modello (`--model`), con `sleep` tra una run e l'altra; ogni run ha la sua cartella, quindi il generatore va eseguito su una cartella piatta con i JSON per-test (il generatore non legge le sottocartelle).
+- `--cooldown SECONDI` mette una pausa tra un modello e il successivo (default 0, nessuna pausa dopo l'ultimo): una sola cartella di run, quindi il generatore funziona senza aggregazione manuale. Le run storiche fino a `20261020_2` usavano invece una run per modello con `sleep` (generatore su cartella piatta: non legge le sottocartelle).
 - Per lanciare in background usare `setsid` (un `nohup ... &` lanciato dalla shell del tool termina con la shell).
-- `scripts/generate_benchmark_report.py` esiste in due copie (`benchmark/scripts/` e `hal_system2/scripts/`): modificarle insieme e verificare con `diff`.
+- Generatore, runner e metriche esistono in due copie: la sorgente è `hal_system2`, il gateway è un mirror. `bash benchmark/scripts/sync_hal_system2.sh check` verifica (exit 1 se divergono), `apply` copia canonico → gateway. Modificare sempre prima `hal_system2`.
+- I test del runner stanno in `hal_system2/tests/test_benchmark_models.py`; nel gateway c'è solo una guardia (`tests/test_runner_token_gating.py`). Le run lanciate da `hal_system2` usano la copia di `hal_system2`.
+- In `source_chunks` l'assemblaggio è locale quando meccanico (`assemble_segments_locally`: traduzione concatenata, segmento unico, estrazione JSON con segmenti validi unita in un array); altrimenti resta la chiamata al modello. Il tetto opzionale per segmento è `--segment-max-tokens`. La copia del gateway è un mirror: la logica canonica è in `hal_system2/app/`.
 - I test `estrazione_json` e `sintesi_traduzione` leggono `docs/Pensieri_lenti_e_veloci.epub`, presente in `hal_system2/docs/` e assente in `benchmark/docs/`.
 - Lo strumento di scrittura del progetto accetta solo percorsi in `hal_gateway`: le modifiche a `hal_system2` vanno fatte via terminale.
+
+## Telemetria (token per stage)
+
+La telemetria viva è `hal_system2/events/benchmarks/system2_metrics.sqlite3` (la copia in `history/` è un'istantanea più vecchia). Aprirla in sola lettura, ad esempio `sqlite3.connect("file:<path>?mode=ro", uri=True)`.
+
+- Tabella `system2_workflow_events`: `run_id` è un UUID, non il nome della run; per datare le run usare `timestamp`.
+- Gli eventi `system1` (`preflight_laya`) non hanno token; i token sono solo negli stage `system2` (`segmento_N`, `assemblaggio_finale`, `risposta_finale`).
+- `--timeout` (default 600 s) vale per **singola chiamata HTTP**; `seconds` nei JSON di test è la durata dell'intero workflow, quindi può superare il timeout (es. 1172 s = stage riusciti + 600 s dello stage in timeout).
+- Gli stage in errore (timeout) non registrano token, quindi il costo dei retry non è misurabile da qui.
+- `System2Metrics.get_token_breakdown(run_id=None)` restituisce token per categoria (segmenti, assemblaggio, risposta singola) e `wasted_tokens`: token spesi da stage riusciti in workflow che poi hanno avuto uno stage fallito (output scartato).
 
 ## Report e confronti
 

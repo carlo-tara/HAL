@@ -8,7 +8,7 @@
 
 - **Integrazione Zed Editor**: Supporto nativo per l'editor Zed tramite link simbolici e mappature di prompt automatiche.
 - **Architettura Cognitiva a Due Livelli**:
-  - **System 1 (Laya)**: Svolge compiti preliminari ad alta velocità (routing, scelta discreta, scoring euristico, pre-filtro `noul`) con HTTP session pooling e cache in-memory `@lru_cache`.
+  - **System 1 (Laya)**: Svolge compiti preliminari ad alta velocità (routing, scelta discreta, scoring euristico, pre-filtro `noul`) con HTTP session pooling e cache in-memory `@lru_cache`. Per richieste atomiche, a basso rischio e brevi (istruzione + fonte < `PREFLIGHT_SHORT_MAX_CHARS`, 400 caratteri) il preflight remoto è saltato: `preflight` restituisce `abstain` con `reason=preflight_skipped_atomic`, senza consumare il budget e conservando fonte e formato; il chiamante procede in locale.
   - **System 2 (Reasoning)**: Riservato al ragionamento profondo, pianificazione, generazione di codice e refactoring.
 - **Gateway Core Avanzato (v2.3.0) — [Verificato & Integrato in CI]**:
   - **Cache L1 Esatta (`07`)**: Chiave composita Redis con hashing SHA-256 dei contenuti reali dei file di contesto, TTL configurato per profilo d'uso e validazione dei tool boundary (**Verificato**).
@@ -25,7 +25,8 @@
 
 - `agents/`: Sorgenti canoniche di tutti gli agenti, skill, competenze e script.
 - `scripts/`: Script di utilità e gate CI (secret scanning, dependency audit, SAST audit, benchmark).
-- `tests/`: Suite completa dei test unitari e di integrazione.
+- `tests/`: Suite completa dei test unitari e di integrazione (eseguita in CI da `.github/workflows/ready-for-review.yml`; dipendenze di sviluppo in `requirements-dev.txt`).
+- `benchmark/`: Runner, report e storico dei benchmark System 1/System 2; `hal_system2` è la sorgente canonica, vedi [benchmark/README.md](benchmark/README.md).
 - `.agents/skills/`: Symlink condivisi per tutte le skill L0/L1/L2.
 - `.zed/prompts/`: Prompt e comandi convertiti ed esposti come slash-command in Zed.
 - `router.py` / `laya_service.py`: Interfaccia di System 1 (Laya) con supporto per routing e batch scoring.
@@ -40,6 +41,8 @@ Per rigenerare tutti i link simbolici e le mappature dei prompt per Zed:
 bash agents/scripts/link-workspace-skills.sh
 ```
 
+La versione di ogni wrapper `.agents/skills/<comando>/SKILL.md` generato viene dal campo `version:` nel frontmatter del comando canonico (`agents/a-agentzero/commands/<comando>.md`, default `1.0.0`): il bump va fatto lì, non sul wrapper.
+
 Per testare il router System 1 (Laya):
 
 ```bash
@@ -51,6 +54,12 @@ Per eseguire i test unitari del Gateway Core:
 
 ```bash
 python3 -m unittest discover -s tests
+```
+
+Per verificare che le copie del runner nel gateway coincidano con `hal_system2`:
+
+```bash
+bash benchmark/scripts/sync_hal_system2.sh check   # `apply` copia canonico → gateway
 ```
 
 ---

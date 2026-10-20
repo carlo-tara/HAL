@@ -1,5 +1,6 @@
 ---
 model: orcarouter/deepseek/deepseek-v4-flash-free
+version: 1.3.0
 ---
 
 # /version <tipo> — Incremento versione file e documenti modificati (L0)

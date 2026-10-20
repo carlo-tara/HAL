@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-18T15:04:03Z",
-  "flags": { "y": true },
-  "acceptance": "Test preflight/coherence/budget/telemetry and benchmark per model-task; separate technical status, heuristic rubric and independent semantic validation; require comparable serving latency, report load-inclusive duration separately, and block truncations or missing evidence.",
-  "files": "system1_preflight.py,laya_service.py,global_config.py,tests/test_laya_service.py",
-  "node_id": "cycle-coherence",
-  "next": "cycle-telemetry",
-  "summary": "cycle-coherence complete: 80 Gateway tests and current Make gate pass. Next cycle-telemetry. P1 remains open until telemetry and cycle-compare provide independent semantic validation, comparable serving latency, and no truncations/missing evidence.",
-  "brief": "Proceed cycle-telemetry next; cycle-compare still owns final benchmark evidence and P1 closure.",
+  "ts": "2026-10-20T20:15:41Z",
+  "flags": {"y": true},
+  "acceptance": "",
+  "files": "",
+  "node_id": "g7-cpu-gpu",
+  "next": "g7-cpu-gpu",
+  "summary": "HARD STOP: g7 richiede Laya su CPU (hardware); g8 richiede run lunga. g1-g6 completati: 97 test gateway, 190 hal_system2, CI 20/20.",
+  "brief": "Attendere l utente per g7; poi g8 dopo run con 300s di pausa (--cooldown 300).",
   "token_budget": 200
 }

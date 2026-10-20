@@ -6,6 +6,8 @@ from threading import Lock
 from typing import Any
 
 SUPPORTED_TASKS = {"choice", "routing", "score", "noul"}
+# Richieste atomiche e a basso rischio sotto questa soglia (istruzione + fonte) non giustificano una chiamata preflight remota.
+PREFLIGHT_SHORT_MAX_CHARS = 400
 
 
 def _string_tuple(value: Any, field: str) -> tuple[str, ...]:
@@ -155,6 +157,15 @@ class LayaCallBudget:
 class PreflightDecision:
     payload: dict[str, Any] | None
     local_result: str | None = None
+    skipped: bool = False
+
+
+def is_atomic_short_low_risk(contract: TaskContract) -> bool:
+    return (
+        contract.complexity == "atomic"
+        and contract.risk_level == "low"
+        and len(contract.instruction) + len(contract.source) < PREFLIGHT_SHORT_MAX_CHARS
+    )
 
 
 def prepare_laya_request(contract: TaskContract) -> PreflightDecision:
@@ -165,6 +176,8 @@ def prepare_laya_request(contract: TaskContract) -> PreflightDecision:
         and len(contract.candidates) == 1
     ):
         return PreflightDecision(payload=None, local_result=contract.candidates[0])
+    if is_atomic_short_low_risk(contract):
+        return PreflightDecision(payload=None, skipped=True)
 
     instruction = " ".join(contract.instruction.split())[:160]
     metadata = [

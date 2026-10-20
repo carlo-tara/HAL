@@ -203,6 +203,8 @@ class LayaSystemOneService:
                     "output_format": contract.output_format,
                 },
             )
+        if decision.skipped:
+            return abstain("preflight_skipped_atomic")
         if decision.payload is None:
             return abstain("invalid_preflight")
 
