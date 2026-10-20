@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        #sudoku {
+            width: 300px;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-gap: 1px;
+            width: 280px;
+        }
+        
+        .cell {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .cell:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .cell:focus {
+            background-color: #ccc;
+        }
+        
+        .error {
+            background-color: #ff6666;
+        }
+    </style>
+</head>
+<body>
+    <div id="sudoku">
+        <h2>Sudoku</h2>
+        <button id="reset">Ricomincia</button>
+        <div id="grid">
+            <!-- celle precompilate -->
+            <div class="cell" content="5">5</div>
+            <div class="cell" content="3">3</div>
+            <div class="cell" content="0">0</div>
+            <div class="cell" content="8">8</div>
+            <div class="cell" content="9">9</div>
+            <div class="cell" content="1">1</div>
+            <div class="cell" content="6">6</div>
+            <div class="cell" content="4">4</div>
+            <div class="cell" content="2">2</div>
+        </div>
+    </div>
+
+    <script>
+        // definiamo la griglia di Sudoku
+        const grid = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        ];
+
+        // funzione per calcolare la soluzione
+        function solveSudoku() {
+            const gridCopy = grid.map(row => row.slice());
+            const n = grid.length;
+            const find = function findEmpty() {
+                for (let i = 0; i < n; i++) {
+                    for (let j = 0; j < n; j++) {
+                        if (gridCopy[i][j] === 0) {
+                            return [i, j];
+                        }
+                    }
+                }
+                return null;
+            };
+
+            const checkRow = function checkRow(i) {
+                const row = gridCopy[i].slice();
+                const n = gridCopy[i].length;
+                for (let x = 0; x < n; x++) {
+                    if (row[x] === row[x + 1]) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            const checkCol = function checkCol(j) {
+                const n = gridCopy.length;
+                for (let i = 0; i < n; i++) {
+                    if (gridCopy[i][j] === gridCopy[i + 1][j]) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            const checkBox = function checkBox(i, j) {
+                const n = Math.floor(Math.sqrt(gridCopy.length));
+                const boxX = Math.floor(i / n);
+                const boxY = Math.floor(j / n);
+                for (let x = (boxX * n) + i;
+                    x < (boxX * n) + n;
+                    x++) {
+                    for (let y = (boxY * n) + j;
+                        y < (boxY * n) + n;
+                        y++) {
+                        if (gridCopy[x][y] === gridCopy[i][j]) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+
+            const solve = function solveSudoku() {
+                const findEmpty = findEmpty();
+                if (!findEmpty()) {
+                    return true;
+                }
+                const [row, col] = findEmpty();
+                for (let num = 1; num <= 9; num++) {
+                    if (checkBox(row, col)) {
+                        if (num === grid[row][col]) {
+                            continue;
+                        } else {
+                            gridCopy[row][col] = num;
+                            if (solve()) {
+                                return true;
+                            }
+                            gridCopy[row][col] = 0;
+                        }
+                    }
+                }
+                return false;
+            };
+
+            solve();
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    document.getElementById(`${i + 1}_${j + 1}`).content = gridCopy[i][j];
+                }
+            }
+        }
+
+        // event listener per cliccare su una cella
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                if (cell.content === '') {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.max = 9;
+                    input.min = 1;
+                    input.value = '';
+                    input.addEventListener('input', () => {
+                        if (input.value === '') {
+                            cell.content = '';
+                        } else {
+                            cell.content = input.value;
+                        }
+                    });
+                    cell.appendChild(input);
+                } else {
+                    cell.content = '';
+                }
+            });
+        });
+
+        // event listener per cliccare sul pulsante di reset
+        document.getElementById('reset').addEventListener('click', () => {
+            solveSudoku();
+        });
+
+        // funzione per mostrare il messaggio di fine gioco
+        function showResult() {
+            const result = 'Hai vinto!';
+            alert(result);
+        }
+
+        // funzione per validare la soluzione
+        function validate() {
+            for (let i = 0; i < grid.length; i++) {
+                for (let j = 0; j < grid[i].length; j++) {
+                    if (grid[i][j] !== 0 && !grid[i][j].toString().match(/^[123456789]$/)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // event listener per cliccare su una cella per inserire un numero
+        cells.forEach(cell => {
+            cell.addEventListener('focus', () => {
+                cell.content = '';
+            });
+            cell.addEventListener('blur', () => {
+                cell.content = '';
+            });
+        });
+
+        // funzione per evidenziare gli errori
+        function highlightErrors() {
+            const errors = document.querySelectorAll('.error');
+            errors.forEach(error => {
+                error.classList.remove('error');
+            });
+            cells.forEach(cell => {
+                if (cell.content !== '') {
+                    const number = parseInt(cell.content);
+                    if (number < 1 || number > 9) {
+                        cell.classList.add('error');
+                    }
+                }
+            });
+        }
+
+        // event listener per cliccare su una cella per inserire un numero
+        cells.forEach(cell => {
+            cell.addEventListener('input', () => {
+                highlightErrors();
+            });
+        });
+
+        // funzione per calcolare la soluzione e mostrare il messaggio di fine gioco
+        cells.forEach(cell => {
+            cell.addEventListener('blur', () => {
+                solveSudoku();
+                if (validate()) {
+                    showResult();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

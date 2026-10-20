@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T15:34:21.261353+00:00",
+  "quality": {
+    "passed": 6,
+    "total": 6,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": true
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 368,
+    "output": 1645,
+    "reasoning": null,
+    "total": 2013
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku Game</title>\n    <style>\n        body, html {\n            margin: 0;\n            padding: 0;\n            width: 100%;\n            height: 100%;\n        end>\n        .game-container {\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            justify-content: center;\n            height: 100%;\n        end>\n        .grid {\n            display: grid;\n            grid-template-columns: repeat(9, minmax(3rem, 1fr));\n            grid-gap: 0.5rem;\n        end>\n        .cell {\n            width: 100%;\n            height: 100%;\n            display: flex;\n            align-items: center;0\n            justify-content: center;\n        end>\n        .solved {\n            background-color: green;\n        end>\n        .error {\n            background-color: red;\n        end>\n        .input {\n            width: 50px;\n            height: 50px;\n            text-align: center;\n            font-size: 2rem;\n        end>\n        button {\n            padding: 0.5rem;\n            margin: 0.5rem;\n        end>\n    end>\n    <script>\n        let cells = Array.from({ length: 81 }, () => ({ value: null, error: false, solved: false }));\n\n        function initGame() {\n            for (let i = 0; i < 81; i++) {\n                let cell = cells[i];\n                let cellElement = document.getElementById(`cell-${i}`);\n                cellElement.addEventListener('click', inputValue);\n                cellElement.addEventListener('keydown', inputValue);\n                cellElement.addEventListener('blur', inputValue);\n\n                function inputValue(event) {\n                    if (event.target.classList.contains('input')) {\n                        return;\n                    end>\n\n                    let index = event.target.dataset.index;\n                    let value = parseInt(event.target.value, 10);\n                    let cell = cells[index];\n\n                    if (cell.solved || cell.error) {\n                        return;\n                    end>\n\n                    if (cell.value === value && !cell.error) {\n                        cell.value = value;\n                        cell.solved = true;\n                        cellElement.classList.add('solved');\n                        cellElement.textContent = value;\n                        checkForErrors();\n                        checkForSolution();\n                    end>\n\n                    if (cell.value !== value && cell.value !== null && !cell.error) {\n                        cell.error = true;\n                        cellElement.classList.add('error');\n                        cellElement.textContent = '';\n                        cellElement.style.backgroundColor = 'red';\n                    end>\n\n                    event.target.textContent = '';\n                end>\n\n                function checkForErrors() {\n                    for (let i = 0; i < 81; i++) {\n                        let cell = cells[i];\n                        if (cell.solved && cell.value !== cell.originalValue && cell.error) {\n                            return;\n                        end>\n\n                        if (cell.solved && cell.value && Array.from(cell.solvedCellElements).some(e => e.textContent === cell.value.toString() && e !== cellElement)) {\n                            cell.error = true;\n                            cellElement.classList.add('error');\n                            cellElement.style.backgroundColor = 'red';\n                        end>\n                    end>\n\n                    function checkForSolution() {\n                        let solutionFound = true;\n                        for (let i = 0; i < 81; i++) {\n                            let cell = cells[i];\n                            if (!cell.solved && cell.value !== null && cell.value) {\n                                solutionFound = false;\n                                break;\n                            end>\n                        end>\n\n                        function generateSolution() {\n                            cells = Array.from({ length: 81 }, () => ({ value: null, error: false, solved: false }));\n                            for (let i = 0; i < 81; i++) {\n                                let index = i;\n                                let value = i % 9 + 1;\n                                let cell = cells[index];\n                                cells[index] = { value, error: false, solved: false };\n                                let cellElement = document.getElementById(`cell-${index}`);\n                                cellElement.addEventListener('click', inputValue);\n                                cellElement.addEventListener('keydown', inputValue);\n                                cellElement.addEventListener('blur', inputValue);\n                            end>\n\n                            function inputValue(event) {\n                                if (event.target.classList.contains('input')) {\n                                    return;\n                                end>\n\n                                let index = event.target.dataset.index;\n                                let value = parseInt(event.target.value, 10);\n                                let cell = cells[index];\n\n                                if (cell.solved || cell.error) {\n                                    return;\n                                end>\n\n                                if (cell.value === value && !cell.error) {\n                                    cell.value = value;\n                                    cell.solved = true;\n                                    cellElement.classList.add('solved');\n                                    cellElement.textContent = value;\n                                    checkForErrors();\n                                    checkForSolution();\n                                end>\n\n                                if (cell.value !== value && cell.value !== null && !cell.error) {\n                                    cell.error = true;\n                                    cellElement.classList.add('error');\n                                    cellElement.textContent = '';\n                                    cellElement.style.backgroundColor = 'red';\n                                end>\n\n                                event.target.textContent = '';\n                            end>\n\n                        }\n                    end>\n                    <body>\n                        <div class=\"game-container\">\n                            <div class=\"grid\">\n                                <div id=\"cell-0\" class=\"cell\">\n                                    <input type=\"text\" class=\"input\" data-index=\"0\">\n                                </div>\n                                <!-- Repeat the above div 81 times -->\n                            end>\n                            <button onclick=\"initGame()\">New Game</button>\n                        end>\n                    end>\n                </body>\n            </html>\n",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 368,
+        "output": 1645,
+        "reasoning": null,
+        "total": 2013
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 196.955538,
+  "result_file": "03_programmazione_phi3_mini.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

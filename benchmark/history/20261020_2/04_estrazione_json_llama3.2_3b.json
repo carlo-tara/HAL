@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T16:16:20.994545+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 14548,
+    "output": 4818,
+    "reasoning": null,
+    "total": 19366
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco la sintesi completa dei contenuti estratti dei singoli capitoli del libro in formato JSON:\n\n```json\n{\n  \"capitoli\": [\n    {\n      \"id\": \"capitolo_1\",\n      \"titolo\": \"L'intuizione esperta: una questione di riconoscimento\",\n      \"testo\": \"L'intuizione esperta ci appare magica, ma non lo è. In realtà, ciascuno di noi compie operazioni di competenza intuitiva molte volte al giorno. Quasi tutte le persone colgono benissimo una nota di rabbia nelle prime parole di una telefonata, capiscono nel momento in cui entrano in una stanza che si stava parlando di loro, e reagiscono subito a piccoli indizi che il guidatore dell’auto nella corsia accanto è pericoloso.\"\n    },\n    {\n      \"id\": \"capitolo_2\",\n      \"titolo\": \"La psicologia dell'intuizione esatta\",\n      \"testo\": \"La psicologia dell'intuizione esatta non ha niente a che vedere con la magia. Forse il miglior giudizio sintetico che è stato dato di tale tipo di intuizione è quello del grande Herbert Simon, il quale studiò i campioni di scacchi e dimostrò che dopo migliaia di ore di pratica essi finivano per vedere i pezzi sulla scacchiera in maniera diversa da tutti gli altri.\"\n    },\n    {\n      \"id\": \"capitolo_3\",\n      \"titolo\": \"I miracoli dell'intuizione esperta\",\n      \"testo\": \"Non ci stupiamo quando un bambino di due anni guarda un cane e dice: «Cagnolino!», perché siamo abituati a contemplare il miracolo dei bambini che imparano a riconoscere e nominare le cose. Secondo Simon i presunti miracoli dell’intuizione esperta hanno lo stesso identico carattere. Le intuizioni valide maturano quando soggetti esperti imparano a riconoscere elementi familiari in una situazione nuova e ad agire in maniera appropriata.\"\n    },\n    {\n      \"id\": \"capitolo_4\",\n      \"titolo\": \"La teoria della scelta\",\n      \"testo\": \"Il capitolo introduce la teoria della scelta, una teoria della scelta che per certi aspetti è più importante del lavoro sul giudizio e rappresenta uno dei fondamenti dell'economia comportamentale. L'autore spiega come la teoria della scelta sia stata sviluppata da Amos Tversky e da lui stesso.\"\n    },\n    {\n      \"id\": \"capitolo_5\",\n      \"titolo\": \"La ricerca sul giudizio e il processo decisionale\",\n      \"testo\": \"Il capitolo discute la ricerca di Amos Tversky e dell'autore sull'analisi del giudizio e del processo decisionale. L'autore spiega come la loro ricerca abbia portato alla scoperta di bias sistematici nelle nostre decisioni e come le euristiche del giudizio siano a volte utili ma anche produttrici di errori sistematici.\"\n    },\n    {\n      \"id\": \"capitolo_6\",\n      \"titolo\": \"La mente collettiva\",\n      \"testo\": \"Nel capitolo 6, gli autori raccontano la storia di come Amos Tversky e l'autore abbiano costituito una sorta di mente collettiva superiore alle loro menti individuali. L'autore spiega come il loro rapporto abbia reso il loro lavoro insieme proficuo e divertente.\"\n    },\n    {\n      \"id\": \"capitolo_7\",\n      \"titolo\": \"La visione del funzionamento della mente\",\n      \"testo\": \"La psicologia del giudizio e del processo decisionale ci aiuta a capire come funziona la nostra mente e come prendiamo decisioni. L'autore spiega come capiamo oggi sia le meraviglie sia i difetti del pensiero intuitivo e come la competenza e le euristiche del giudizio siano fonti alternative dei giudizi e delle scelte intuitivi.\"\n    },\n    {\n      \"id\": \"capitolo_8\",\n      \"titolo\": \"La competenza e le euristiche\",\n      \"testo\": \"Il capitolo discute la competenza e le euristiche del giudizio e come siano fonti alternative dei giudizi e delle scelte intuitive. L'autore spiega come le intuizioni esatte degli esperti siano dovute più alla pratica prolungata che alle euristiche.\"\n    },\n    {\n      \"id\": \"capitolo_9\",\n      \"titolo\": \"Il quadro più ricco ed equilibrato\",\n      \"testo\": \"Il capitolo presenta un quadro più ricco ed equilibrato del funzionamento della mente, nel quale la competenza e le euristiche costituiscono fonti alternative dei giudizi e delle scelte intuitive. L'autore spiega come questo quadro sia stato ottenuto grazie ai recenti sviluppi della psicologia cognitiva e sociale.\"\n    },\n    {\n      \"id\": \"capitolo_10\",\n      \"titolo\": \"La storia di Gary Klein\",\n      \"testo\": \"Il capitolo racconta la storia di Gary Klein e come la sua ricerca abbia contribuito a migliorare la comprensione del funzionamento della mente. L'autore spiega come la storia di Gary Klein sia stata influenzata dalla sua ricerca sul giudizio e il processo decisionale.\"\n    }\n  ]\n}\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 399,
+        "reasoning": null,
+        "total": 1465
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 117,
+        "reasoning": null,
+        "total": 1193
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 408,
+        "reasoning": null,
+        "total": 1461
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 184,
+        "reasoning": null,
+        "total": 1253
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 258,
+        "reasoning": null,
+        "total": 1305
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 456,
+        "reasoning": null,
+        "total": 1515
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 172,
+        "reasoning": null,
+        "total": 1239
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 159,
+        "reasoning": null,
+        "total": 1203
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 844,
+        "reasoning": null,
+        "total": 1875
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 531,
+        "reasoning": null,
+        "total": 1613
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3954,
+        "output": 1290,
+        "reasoning": null,
+        "total": 5244
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 547.424724,
+  "result_file": "04_estrazione_json_llama3.2_3b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 10
+  }
+}

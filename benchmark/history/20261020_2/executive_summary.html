@@ -1,0 +1,125 @@
+<section>
+    <h2>Executive summary</h2>
+    <p class="lead">
+        Run <b>20261020_2</b>: ripetizione di <code>phi3:mini</code> e
+        <code>llama3.2:3b</code> nelle stesse condizioni di
+        <b>20261020_1</b> (middleware nuovo, <b>Laya su GPU</b>, pausa di
+        <b>300 s</b>). Il confronto diretto è con 20261020_1; la baseline è
+        <b>20261017_all</b> (senza middleware). Il timeout di phi3 su
+        <code>estrazione_json</code> riduce a 15 i check disponibili per quel
+        modello.
+    </p>
+
+    <h3>Decisioni proposte</h3>
+    <ol>
+        <li>
+            <b>Il calo di qualità di phi3:mini non si ripete.</b> Sui 4 test
+            comuni alle due run (ragionamento, matematica, programmazione,
+            sintesi) phi3 passa da 9/15 a 10/15. Il punteggio 9/17 di 20261020_1
+            è quindi rumore o variazione tra run, non un effetto stabile. Il
+            13/17 con Laya su CPU resta non spiegato. <i>Decisione:</i>
+            non attribuire a Laya GPU il calo di qualità di phi3.
+        </li>
+        <li>
+            <b>Nuovo timeout di phi3:mini su <code>estrazione_json</code></b>
+            (1172 s registrati, limite dichiarato 600 s). Anche le run
+            precedenti mostrano tempi oltre 600 s su timeout (qwen2.5:1.5b 694,9
+            s; phi3:mini su <code>sintesi_traduzione</code> 1102 s in
+            20261020_1). Ipotesi da verificare: il limite si applica per
+            tentativo, con retry, e il tempo registrato somma più tentativi.
+            <i>Decisione:</i> verificare la gestione del timeout in
+            <code>hal_system2</code> prima di cambiare il limite.
+        </li>
+        <li>
+            <b>llama3.2:3b è stabile sui tempi e varia sulla qualità.</b>
+            La mediana passa da 172 s a 152 s, nello stesso intervallo osservato
+            nella run precedente. La qualità scende da 12/17 a 10/17: la
+            differenza sta in <code>estrazione_json</code> (2/2 → 1/2) e
+            <code>sintesi_traduzione</code> (1/2 → 0/2). <i>Decisione:</i>
+            il dato non basta per decidere; le repliche indicano un rumore di
+            almeno ±2 check.
+        </li>
+        <li>
+            <b>Token: l'eccesso è concentrato sui test con input lungo.</b>
+            <code>estrazione_json</code> (≈30k caratteri) e
+            <code>sintesi_traduzione</code> (≈15k caratteri) producono la
+            maggior parte dei token: llama3.2:3b 19,4k e 13,4k, phi3:mini 12,1k
+            su <code>sintesi_traduzione</code>. Il dato non chiude il punto su
+            <code>ToDo.md</code>: la causa va cercata nel percorso di prompt del
+            middleware, come già indicato.
+        </li>
+    </ol>
+
+    <h3>Confronto per modello</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Modello</th>
+                <th>Qualità baseline</th>
+                <th>Qualità 20261020_1 (Laya GPU)</th>
+                <th>Qualità 20261020_2 (Laya GPU, repliche)</th>
+                <th>Mediana tempo/chiamata (20261020_1 → 20261020_2)</th>
+                <th>Non ok (20261020_1 → 20261020_2)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>phi3:mini</td>
+                <td>15/17</td>
+                <td>9/17</td>
+                <td>10/15 (su 15 check, 1 timeout)</td>
+                <td>141 s → 197 s</td>
+                <td>0 → 1</td>
+            </tr>
+            <tr>
+                <td>llama3.2:3b</td>
+                <td>10/17</td>
+                <td>12/17</td>
+                <td>10/17</td>
+                <td>172 s → 152 s</td>
+                <td>0 → 0</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="note">
+        Token sui 4 test comuni e ok nelle due run: phi3:mini 18.926 → 15.798;
+        llama3.2:3b 34.662 → 36.299 (su 5 test ok in entrambe). Il totale di
+        phi3 in 20261020_1 (37.829) include il test
+        <code>estrazione_json</code>, assente in 20261020_2 per timeout. Con 5
+        chiamate per modello la mediana è poco stabile.
+    </p>
+
+    <h3>Cosa non si può attribuire</h3>
+    <p>
+        Due repliche per modello non bastano a separare effetto e rumore. Le
+        mediane di tempo variano da una run all'altra in modo comparabile
+        all'effetto di Laya. Il check <code>sintesi_traduzione</code>
+        (lessico spagnolo, lunghezza minima) risulta 0/2 per tutti i modelli in
+        quasi tutte le run: potrebbe indicare un problema del check, da
+        verificare e non ancora provato.
+    </p>
+
+    <h3>Prossimi passi</h3>
+    <ol>
+        <li>
+            Verificare in <code>hal_system2</code> se il timeout è per tentativo
+            (retry) e perché i tempi registrati superano 600 s.
+        </li>
+        <li>
+            Controllare il check <code>sintesi_traduzione</code> su output reali
+            per distinguere un problema del modello da uno del check.
+        </li>
+        <li>
+            Verificare il percorso dei prompt del middleware che genera i token
+            in più su <code>estrazione_json</code> e
+            <code>sintesi_traduzione</code>.
+        </li>
+    </ol>
+
+    <p class="note">
+        Limiti: due repliche su due modelli; la qualità è una rubrica euristica
+        (<code>status: ok</code> non implica risposta corretta); tempi
+        dipendenti dalla macchina e dal carico del momento. Con questi dati non
+        è possibile escludere variazioni casuali tra le run.
+    </p>
+</section>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        end>
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        end>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(9, minmax(3rem, 1fr));
+            grid-gap: 0.5rem;
+        end>
+        .cell {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;0
+            justify-content: center;
+        end>
+        .solved {
+            background-color: green;
+        end>
+        .error {
+            background-color: red;
+        end>
+        .input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 2rem;
+        end>
+        button {
+            padding: 0.5rem;
+            margin: 0.5rem;
+        end>
+    end>
+    <script>
+        let cells = Array.from({ length: 81 }, () => ({ value: null, error: false, solved: false }));
+
+        function initGame() {
+            for (let i = 0; i < 81; i++) {
+                let cell = cells[i];
+                let cellElement = document.getElementById(`cell-${i}`);
+                cellElement.addEventListener('click', inputValue);
+                cellElement.addEventListener('keydown', inputValue);
+                cellElement.addEventListener('blur', inputValue);
+
+                function inputValue(event) {
+                    if (event.target.classList.contains('input')) {
+                        return;
+                    end>
+
+                    let index = event.target.dataset.index;
+                    let value = parseInt(event.target.value, 10);
+                    let cell = cells[index];
+
+                    if (cell.solved || cell.error) {
+                        return;
+                    end>
+
+                    if (cell.value === value && !cell.error) {
+                        cell.value = value;
+                        cell.solved = true;
+                        cellElement.classList.add('solved');
+                        cellElement.textContent = value;
+                        checkForErrors();
+                        checkForSolution();
+                    end>
+
+                    if (cell.value !== value && cell.value !== null && !cell.error) {
+                        cell.error = true;
+                        cellElement.classList.add('error');
+                        cellElement.textContent = '';
+                        cellElement.style.backgroundColor = 'red';
+                    end>
+
+                    event.target.textContent = '';
+                end>
+
+                function checkForErrors() {
+                    for (let i = 0; i < 81; i++) {
+                        let cell = cells[i];
+                        if (cell.solved && cell.value !== cell.originalValue && cell.error) {
+                            return;
+                        end>
+
+                        if (cell.solved && cell.value && Array.from(cell.solvedCellElements).some(e => e.textContent === cell.value.toString() && e !== cellElement)) {
+                            cell.error = true;
+                            cellElement.classList.add('error');
+                            cellElement.style.backgroundColor = 'red';
+                        end>
+                    end>
+
+                    function checkForSolution() {
+                        let solutionFound = true;
+                        for (let i = 0; i < 81; i++) {
+                            let cell = cells[i];
+                            if (!cell.solved && cell.value !== null && cell.value) {
+                                solutionFound = false;
+                                break;
+                            end>
+                        end>
+
+                        function generateSolution() {
+                            cells = Array.from({ length: 81 }, () => ({ value: null, error: false, solved: false }));
+                            for (let i = 0; i < 81; i++) {
+                                let index = i;
+                                let value = i % 9 + 1;
+                                let cell = cells[index];
+                                cells[index] = { value, error: false, solved: false };
+                                let cellElement = document.getElementById(`cell-${index}`);
+                                cellElement.addEventListener('click', inputValue);
+                                cellElement.addEventListener('keydown', inputValue);
+                                cellElement.addEventListener('blur', inputValue);
+                            end>
+
+                            function inputValue(event) {
+                                if (event.target.classList.contains('input')) {
+                                    return;
+                                end>
+
+                                let index = event.target.dataset.index;
+                                let value = parseInt(event.target.value, 10);
+                                let cell = cells[index];
+
+                                if (cell.solved || cell.error) {
+                                    return;
+                                end>
+
+                                if (cell.value === value && !cell.error) {
+                                    cell.value = value;
+                                    cell.solved = true;
+                                    cellElement.classList.add('solved');
+                                    cellElement.textContent = value;
+                                    checkForErrors();
+                                    checkForSolution();
+                                end>
+
+                                if (cell.value !== value && cell.value !== null && !cell.error) {
+                                    cell.error = true;
+                                    cellElement.classList.add('error');
+                                    cellElement.textContent = '';
+                                    cellElement.style.backgroundColor = 'red';
+                                end>
+
+                                event.target.textContent = '';
+                            end>
+
+                        }
+                    end>
+                    <body>
+                        <div class="game-container">
+                            <div class="grid">
+                                <div id="cell-0" class="cell">
+                                    <input type="text" class="input" data-index="0">
+                                </div>
+                                <!-- Repeat the above div 81 times -->
+                            end>
+                            <button onclick="initGame()">New Game</button>
+                        end>
+                    end>
+                </body>
+            </html>

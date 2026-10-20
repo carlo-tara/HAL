@@ -7,6 +7,7 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+- Benchmark: ripetizione `20261020_2` di `phi3:mini` e `llama3.2:3b` (Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_2/` con report, executive summary e confronto con `20261020_1`; timeout `phi3:mini` su `estrazione_json` aperto in `ToDo.md` `#benchmark` · P1 · Progetto
 - Benchmark: run `20261020_1` (middleware nuovo, Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_1/` con report e executive summary; confronto con `20261019_3` e residui aggiornati in `ToDo.md` `#benchmark` · P1 · Progetto
 - Versionati a 1.0.1 i documenti L0 `AGENT-PROTOCOL.md`, `references/agent-versioning.md`, `references/extension-scaffold.md`; modulo `a-agentzero` a 1.8.6 `#docs` · Progetto
 - Benchmark: sezione "Vincoli operativi" nel README (`--output` dentro `--run-dir`, nessun cooldown nel runner, `setsid`, copie del generatore), storico `20261019_3` e residui in `ToDo.md` `#benchmark` · P1 · Progetto

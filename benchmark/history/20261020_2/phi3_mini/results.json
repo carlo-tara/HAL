@@ -1,0 +1,611 @@
+{
+  "started_at": "2026-10-20T15:32:05.672855+00:00",
+  "finished_at": "2026-10-20T16:07:26.263409+00:00",
+  "status": "completed",
+  "expected_results": 5,
+  "timing": "end_to_end_including_model_load",
+  "results": [
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "ragionamento_logico",
+      "started_at": "2026-10-20T15:32:05.679019+00:00",
+      "quality": {
+        "passed": 4,
+        "total": 4,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "menziona la scatola Miste",
+            "passed": true
+          },
+          {
+            "label": "menziona Mele",
+            "passed": true
+          },
+          {
+            "label": "menziona Arance",
+            "passed": true
+          },
+          {
+            "label": "risposta argomentata",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 199,
+        "output": 539,
+        "reasoning": null,
+        "total": 738
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Per risolvere questo problema, seguiremo un approccio logico basato sul ragionamento deduttivo, noto come single_pass nella nostra strategia. Nonostante il contratto locale di etichette errate, possiamo determinare la distribuzione dei frutti attraverso una serie di passaggi deduttivi.\n\n1. Prestare attenzione al problema: Ci viene detto che tutte le etichette sono sbagliate. Questo significa che la scatola che sembra contenere Arance non le contiene affatto, ma le Mele o i Misti, e analogamente per le altre due scatole.\n\n2. Scegliere la scatola da testare: Per determinare la distribuzione dei frutti, dobbiamo estrarre un solo frutto da una sola scatola. Perché facciamo scegliere questa scatola? Possiamo iniziare con qualsiasi scatola, ma per semplicità, scegliamo la scatola che sembra contenere Arance. Supponiamo che questa scatola sia la scatola Mele per il momento.\n\n3. Estrarre un frutto e utilizzare il risultato per dedurre la distribuzione: Supponiamo di estrarre un frutto e scoprire che è una Mela. Questo significa che la scatola che sembra contenere Mele in realtà contiene Mele, la scatola che sembra contenere Arance contiene Miste, e la scatola che sembola contenere Miste contiene Arance.\n\n4. Riequilibrare le etichette: Poiché tutte le etichette sono sbagliate, possiamo ora determinare che la scatola che sembra contenere Arance contiene in realtà Mele, la scatola che sembra contenere Mele contiene Arance, e la scatola che sembra contenere Miste contiene Mele.\n\nQuindi, per determinare la distribuzione di tutti e tre i frutti, possiamo estrarre un frutto da una delle tre scatole che sembrano contenere un altro frutto. Utilizzando il ragionamento deduttivo e il solo approccio di passaggio, possiamo risolvere il problema senza dover guardare il contenuto di tutte e tre le scatole.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 199,
+            "output": 539,
+            "reasoning": null,
+            "total": 738
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 58.748846,
+      "result_file": "01_ragionamento_logico_phi3_mini.json",
+      "system1": {
+        "task_family": "reasoning",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "reasoning",
+          "required_strategy": "reasoning_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.7001,
+        "strategy": "reasoning_check",
+        "strategy_confidence": 0.2409,
+        "execution_confidence": 0.6528,
+        "confidence": 0.2409,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 14
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "matematica",
+      "started_at": "2026-10-20T15:33:04.429569+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 3,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "ricavo totale 2.770,20",
+            "passed": false
+          },
+          {
+            "label": "utile 610,20",
+            "passed": false
+          },
+          {
+            "label": "margine 22,03%",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 238,
+        "output": 699,
+        "reasoning": null,
+        "total": 937
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Strategia di risoluzione del compito:\n\n1. Calcolo del costo totale dell'acquisto:\n\n   120 articoli * 18 euro/articolo = 2160 euro.\n\n\n2. Calcolo dei ricavi dei primi 90 articoli:\n\n   Ricavo prima vendita = 90 articoli * 18 euro/articolo = 1620 euro.\n\n   Ricco esposizione di ricarico del 35%:\n\n   35% di 1620 euro = 0,35 * 1620 euro = 567 euro.\n\n   Ricavo totale per i primi 90 articoli = 1620 euro + 567 euro = 2187 euro.\n\n\n3. Calcolo del prezzo venduto per i restanti 30 articoli:\n\n   Prezzo venduto con uno sconto del 20%:\n\n   20% di 18 euro/articolo = 0,20 * 18 euro/articolo = 3,6 euro.\n\n   Prezzo venduto per articolo dopo lo sconto:\n\n   18 euro/articolo - 3,6 euro/articolo = 14,4 euro/articolo.\n\n\n4. Calcolo del ricavo totale dei restanti 30 articoli:\n\n   Ricavo totale = 30 articoli * 14,4 euro/articolo = 432 euro.\n\n\n5. Calcolo del ricavo totale di tutti gli articoli:\n\n   Ricavo totale complessivo = Ricavo dei primi 90 articoli + Ricavo dei restanti 30 articoli\n\n   Ricavo totale complessivo = 2187 euro + 432 euro = 2619 euro.\n\n\n6. Calcolo dell'utile:\n\n   Utile complessivo = Ricavo totale complessivo - Costo totale dell'acquisto\n\n   Utile complessivo = 2619 euro - 2160 euro = 459 euro.\n\n\n7. Calcolo del margine percentuale sul ricavo:\n\n   Margine = Utile complessivo / Ricavo totale complessivo\n\n   Margine = 459 euro / 2619 euro = 0,1752 o 17,52% quando arrotondato a due decimali.\n\n\nRisultati:\n\n- Ricavo totale: 2619 euro\n\n- Utile complessivo: 459 euro\n\n- Margine percentuale sul ricavo: 17,52%\n\n\nI passaggi sono stati seguiti senza modifiche al compito, ai dati o al formato, rispetta i contratti locali e estrae chiaramente i requisiti dal prompt.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 238,
+            "output": 699,
+            "reasoning": null,
+            "total": 937
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 76.830307,
+      "result_file": "02_matematica_phi3_mini.json",
+      "system1": {
+        "task_family": "math",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "math",
+          "required_strategy": "math_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.4791,
+        "strategy": "math_check",
+        "strategy_confidence": 0.814,
+        "execution_confidence": 0.062,
+        "confidence": 0.062,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 10
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "programmazione",
+      "started_at": "2026-10-20T15:34:21.261353+00:00",
+      "quality": {
+        "passed": 6,
+        "total": 6,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "documento HTML completo",
+            "passed": true
+          },
+          {
+            "label": "CSS e JavaScript inline",
+            "passed": true
+          },
+          {
+            "label": "gestione input da tastiera",
+            "passed": true
+          },
+          {
+            "label": "azione per nuova partita",
+            "passed": true
+          },
+          {
+            "label": "nessun salvataggio persistente",
+            "passed": true
+          },
+          {
+            "label": "nessuna dipendenza o risorsa remota",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 368,
+        "output": 1645,
+        "reasoning": null,
+        "total": 2013
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku Game</title>\n    <style>\n        body, html {\n            margin: 0;\n            padding: 0;\n            width: 100%;\n            height: 100%;\n        end>\n        .game-container {\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            justify-content: center;\n            height: 100%;\n        end>\n        .grid {\n            display: grid;\n            grid-template-columns: repeat(9, minmax(3rem, 1fr));\n            grid-gap: 0.5rem;\n        end>\n        .cell {\n            width: 100%;\n            height: 100%;\n            display: flex;\n            align-items: center;0\n            justify-content: center;\n        end>\n        .solved {\n            background-color: green;\n        end>\n        .error {\n            background-color: red;\n        end>\n        .input {\n            width: 50px;\n            height: 50px;\n            text-align: center;\n            font-size: 2rem;\n        end>\n        button {\n            padding: 0.5rem;\n            margin: 0.5rem;\n        end>\n    end>\n    <script>\n        let cells = Array.from({ length: 81 }, () => ({ value: null, error: false, solved: false }));\n\n        function initGame() {\n            for (let i = 0; i < 81; i++) {\n                let cell = cells[i];\n                let cellElement = document.getElementById(`cell-${i}`);\n                cellElement.addEventListener('click', inputValue);\n                cellElement.addEventListener('keydown', inputValue);\n                cellElement.addEventListener('blur', inputValue);\n\n                function inputValue(event) {\n                    if (event.target.classList.contains('input')) {\n                        return;\n                    end>\n\n                    let index = event.target.dataset.index;\n                    let value = parseInt(event.target.value, 10);\n                    let cell = cells[index];\n\n                    if (cell.solved || cell.error) {\n                        return;\n                    end>\n\n                    if (cell.value === value && !cell.error) {\n                        cell.value = value;\n                        cell.solved = true;\n                        cellElement.classList.add('solved');\n                        cellElement.textContent = value;\n                        checkForErrors();\n                        checkForSolution();\n                    end>\n\n                    if (cell.value !== value && cell.value !== null && !cell.error) {\n                        cell.error = true;\n                        cellElement.classList.add('error');\n                        cellElement.textContent = '';\n                        cellElement.style.backgroundColor = 'red';\n                    end>\n\n                    event.target.textContent = '';\n                end>\n\n                function checkForErrors() {\n                    for (let i = 0; i < 81; i++) {\n                        let cell = cells[i];\n                        if (cell.solved && cell.value !== cell.originalValue && cell.error) {\n                            return;\n                        end>\n\n                        if (cell.solved && cell.value && Array.from(cell.solvedCellElements).some(e => e.textContent === cell.value.toString() && e !== cellElement)) {\n                            cell.error = true;\n                            cellElement.classList.add('error');\n                            cellElement.style.backgroundColor = 'red';\n                        end>\n                    end>\n\n                    function checkForSolution() {\n                        let solutionFound = true;\n                        for (let i = 0; i < 81; i++) {\n                            let cell = cells[i];\n                            if (!cell.solved && cell.value !== null && cell.value) {\n                                solutionFound = false;\n                                break;\n                            end>\n                        end>\n\n                        function generateSolution() {\n                            cells = Array.from({ length: 81 }, () => ({ value: null, error: false, solved: false }));\n                            for (let i = 0; i < 81; i++) {\n                                let index = i;\n                                let value = i % 9 + 1;\n                                let cell = cells[index];\n                                cells[index] = { value, error: false, solved: false };\n                                let cellElement = document.getElementById(`cell-${index}`);\n                                cellElement.addEventListener('click', inputValue);\n                                cellElement.addEventListener('keydown', inputValue);\n                                cellElement.addEventListener('blur', inputValue);\n                            end>\n\n                            function inputValue(event) {\n                                if (event.target.classList.contains('input')) {\n                                    return;\n                                end>\n\n                                let index = event.target.dataset.index;\n                                let value = parseInt(event.target.value, 10);\n                                let cell = cells[index];\n\n                                if (cell.solved || cell.error) {\n                                    return;\n                                end>\n\n                                if (cell.value === value && !cell.error) {\n                                    cell.value = value;\n                                    cell.solved = true;\n                                    cellElement.classList.add('solved');\n                                    cellElement.textContent = value;\n                                    checkForErrors();\n                                    checkForSolution();\n                                end>\n\n                                if (cell.value !== value && cell.value !== null && !cell.error) {\n                                    cell.error = true;\n                                    cellElement.classList.add('error');\n                                    cellElement.textContent = '';\n                                    cellElement.style.backgroundColor = 'red';\n                                end>\n\n                                event.target.textContent = '';\n                            end>\n\n                        }\n                    end>\n                    <body>\n                        <div class=\"game-container\">\n                            <div class=\"grid\">\n                                <div id=\"cell-0\" class=\"cell\">\n                                    <input type=\"text\" class=\"input\" data-index=\"0\">\n                                </div>\n                                <!-- Repeat the above div 81 times -->\n                            end>\n                            <button onclick=\"initGame()\">New Game</button>\n                        end>\n                    end>\n                </body>\n            </html>\n",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 368,
+            "output": 1645,
+            "reasoning": null,
+            "total": 2013
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 196.955538,
+      "result_file": "03_programmazione_phi3_mini.json",
+      "system1": {
+        "task_family": "coding",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "coding",
+          "required_strategy": "requirements_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.9999,
+        "strategy": "requirements_check",
+        "strategy_confidence": 0.3321,
+        "execution_confidence": 0.3415,
+        "confidence": 0.3321,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "coding",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "estrazione_json",
+      "started_at": "2026-10-20T15:37:38.219438+00:00",
+      "quality": null,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "total": null
+      },
+      "status": "error",
+      "error": {
+        "type": "timeout"
+      },
+      "seconds": 1172.048075,
+      "result_file": "04_estrazione_json_phi3_mini.json",
+      "system1": {
+        "task_family": "source",
+        "execution_mode": "source_chunks",
+        "source_chars": 30000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "source",
+          "required_strategy": "grounded_extract",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.4826,
+        "strategy": "grounded_extract",
+        "strategy_confidence": 0.3731,
+        "execution_confidence": 0.1138,
+        "confidence": 0.1138,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "source",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "source_chunks",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "sintesi_traduzione",
+      "started_at": "2026-10-20T15:57:10.275322+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 2,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "presenza di lessico spagnolo",
+            "passed": false
+          },
+          {
+            "label": "lunghezza minima della traduzione",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 7681,
+        "output": 4429,
+        "reasoning": null,
+        "total": 12110
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "\nThe text provided consists of five different segments, each offering a distinct aspect of the translated content related to psychology, intuition, biases, and decision-making. Here's a summary of each segment's main focus:\n\n**Segmento 1**: The narrative explores how personal beliefs, decisions, and perceptions occur silently within our thoughts, largely influenced by intuitive biases. The story revolves around a person who thought there was a lamp in front of them and delves into the cognitive processes leading to such a belief.\n\n**Segmento 2**: This segment emphasizes the importance of recognizing and transforming our understanding of biases into catalysts for continuous personal and professional development. It highlights how a comprehensive vocabulary and self-examination contribute to making better-informed and fair decisions.\n\n**Segmento 3**: This piece discusses a seminar on intuitive cognition in statistics, where the author and peers found that even experts often lacked a reliable intuition for small sample size results, leading to the proposal of a collaborative study to investigate this bias further.\n\n**Segmento 4**: An extension of the seminar experience led the author to plan a collaborative study with other experts, with the aim to understand if statisticians shared the same lack of intuitive understanding regarding small sample size results. The findings were surprising, revealing a lack of statistical intuition among the experts.\n\n**Segmento 5**: Here, the author introspects on their personal characteristics, such as being reserved and meticulous, and contrasts these traits with a stereotype of a librarian versus an agriculturist, illustrating the disconnect between common stereotypes and actual statistical data, which suggests that librarians might actually be more common.\n\nEach of these segments offers insights into how our cognitive biases and intuitions can shape our understanding and interactions with the world around us, and how acknowledging these biases can lead to growth and fairer decision-making. The last segment, in particular, prompts a reflection on stereotypes versus realistic representations in statistics and societal roles.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1182,
+            "output": 891,
+            "reasoning": null,
+            "total": 2073
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1127,
+            "output": 1275,
+            "reasoning": null,
+            "total": 2402
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1114,
+            "output": 353,
+            "reasoning": null,
+            "total": 1467
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1107,
+            "output": 1055,
+            "reasoning": null,
+            "total": 2162
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1101,
+            "output": 371,
+            "reasoning": null,
+            "total": 1472
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 2050,
+            "output": 484,
+            "reasoning": null,
+            "total": 2534
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 6,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 615.985773,
+      "result_file": "05_sintesi_traduzione_phi3_mini.json",
+      "system1": {
+        "task_family": "translation",
+        "execution_mode": "source_chunks",
+        "source_chars": 15000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "translation",
+          "required_strategy": "faithful_translate",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.9696,
+        "strategy": "faithful_translate",
+        "strategy_confidence": 0.9829,
+        "execution_confidence": 0.0329,
+        "confidence": 0.0329,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "translation",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 9
+      }
+    }
+  ],
+  "result_directories": [
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "directory": "."
+    }
+  ],
+  "summary": {
+    "completed": 5,
+    "successful": 4,
+    "failed": 1,
+    "seconds": 2120.568539,
+    "total_tokens": null,
+    "known_total_tokens": 15798,
+    "usage_missing": 1
+  },
+  "system1": {
+    "ragionamento_logico": {
+      "task_family": "reasoning",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "reasoning",
+        "required_strategy": "reasoning_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.7001,
+      "strategy": "reasoning_check",
+      "strategy_confidence": 0.2409,
+      "execution_confidence": 0.6528,
+      "confidence": 0.2409,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 14
+    },
+    "matematica": {
+      "task_family": "math",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "math",
+        "required_strategy": "math_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.4791,
+      "strategy": "math_check",
+      "strategy_confidence": 0.814,
+      "execution_confidence": 0.062,
+      "confidence": 0.062,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 10
+    },
+    "programmazione": {
+      "task_family": "coding",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "coding",
+        "required_strategy": "requirements_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.9999,
+      "strategy": "requirements_check",
+      "strategy_confidence": 0.3321,
+      "execution_confidence": 0.3415,
+      "confidence": 0.3321,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "coding",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 9
+    },
+    "estrazione_json": {
+      "task_family": "source",
+      "execution_mode": "source_chunks",
+      "source_chars": 30000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "source",
+        "required_strategy": "grounded_extract",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.4826,
+      "strategy": "grounded_extract",
+      "strategy_confidence": 0.3731,
+      "execution_confidence": 0.1138,
+      "confidence": 0.1138,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "source",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "source_chunks",
+      "preflight_latency_ms": 9
+    },
+    "sintesi_traduzione": {
+      "task_family": "translation",
+      "execution_mode": "source_chunks",
+      "source_chars": 15000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "translation",
+        "required_strategy": "faithful_translate",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.9696,
+      "strategy": "faithful_translate",
+      "strategy_confidence": 0.9829,
+      "execution_confidence": 0.0329,
+      "confidence": 0.0329,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "translation",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 9
+    }
+  },
+  "system2_metrics": {
+    "run_id": "4fe0f0524f6e4e6788e0490f0d3c02b7",
+    "db_path": "/var/www/hal_system2/events/benchmarks/system2_metrics.sqlite3",
+    "summary": {
+      "events": 25,
+      "system1_events": 5,
+      "system2_events": 20,
+      "latency_ms": 2120602,
+      "tokens_total": 30877,
+      "errors": 1
+    }
+  }
+}

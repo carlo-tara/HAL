@@ -1,0 +1,85 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-20T16:12:26.782390+00:00",
+  "quality": {
+    "passed": 4,
+    "total": 4,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "menziona la scatola Miste",
+        "passed": true
+      },
+      {
+        "label": "menziona Mele",
+        "passed": true
+      },
+      {
+        "label": "menziona Arance",
+        "passed": true
+      },
+      {
+        "label": "risposta argomentata",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 188,
+    "output": 515,
+    "reasoning": null,
+    "total": 703
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<risposta_system1_laya>\nPer risolvere questo problema, seguirò la strategia di classificazione Laya incerta, seguendo il contratto locale (non avere informazioni precise) e estragendo i requisiti dal prompt.\n\nLa prima cosa da considerare è che tutte le etichette sono sbagliate, quindi non possiamo fidarci delle etichette fornite. Il solo modo per determinare il contenuto di una scatola è quello di esaminare il contenuto fisico della scatola stessa.\n\nConsiderando le scatole con il solo nome etichettato, Mele, Arance e Miste, devo prendere una scatola a caso. Poiché non ho informazioni precise, sceglierei la scatola etichettata \"Miste\" come punto di partenza.\n\nLa scatola etichettata \"Miste\" contiene frutta che non corrisponde alle altre due etichette. La cosa più probabile è che contenga frutta che è stata confusa con un'altra scatola.\n\nPer determinare il contenuto di tutte e tre le scatole, dovrei esaminare il contenuto fisico di ciascuna scatola. Tuttavia, senza vedere le scatole, non posso determinare con certezza il contenuto di ciascuna.\n\nConsiderando le scatole con il solo nome etichettato, potrei supporre che la scatola etichettata \"Mele\" contenga solo mele, la scatola etichettata \"Arance\" contenga solo arance e la scatola etichettata \"Miste\" contenga frutta diversa.\n\nTuttavia, questa è solo una supposizione e non una certezza. La cosa più probabile è che la scatola etichettata \"Miste\" contenga frutta che è stata confusa con un'altra scatola.\n\nIn sintesi, senza vedere le scatole, non posso determinare con certezza il contenuto di ciascuna scatola. La scatola etichettata \"Miste\" sembra essere la scelta più probabile, ma la cosa più importante è che tutte le etichette sono sbagliate e che il contenuto di ciascuna scatola è incerto.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 188,
+        "output": 515,
+        "reasoning": null,
+        "total": 703
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 42.750046,
+  "result_file": "01_ragionamento_logico_llama3.2_3b.json",
+  "system1": {
+    "task_family": "reasoning",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "reasoning",
+      "required_strategy": "reasoning_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.7001,
+    "strategy": "reasoning_check",
+    "strategy_confidence": 0.2409,
+    "execution_confidence": 0.6528,
+    "confidence": 0.2409,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 13
+  }
+}

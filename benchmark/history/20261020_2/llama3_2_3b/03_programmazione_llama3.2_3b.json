@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T16:13:49.134780+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 340,
+    "output": 1836,
+    "reasoning": null,
+    "total": 2176
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n        }\n        \n        #sudoku {\n            width: 300px;\n            margin: 50px auto;\n            border: 1px solid #ccc;\n            padding: 10px;\n        }\n        \n        #grid {\n            display: grid;\n            grid-template-columns: repeat(9, 1fr);\n            grid-gap: 1px;\n            width: 280px;\n        }\n        \n        .cell {\n            background-color: #fff;\n            padding: 10px;\n            border: 1px solid #ccc;\n            text-align: center;\n            font-size: 24px;\n            cursor: pointer;\n        }\n        \n        .cell:hover {\n            background-color: #f0f0f0;\n        }\n        \n        .cell:focus {\n            background-color: #ccc;\n        }\n        \n        .error {\n            background-color: #ff6666;\n        }\n    </style>\n</head>\n<body>\n    <div id=\"sudoku\">\n        <h2>Sudoku</h2>\n        <button id=\"reset\">Ricomincia</button>\n        <div id=\"grid\">\n            <!-- celle precompilate -->\n            <div class=\"cell\" content=\"5\">5</div>\n            <div class=\"cell\" content=\"3\">3</div>\n            <div class=\"cell\" content=\"0\">0</div>\n            <div class=\"cell\" content=\"8\">8</div>\n            <div class=\"cell\" content=\"9\">9</div>\n            <div class=\"cell\" content=\"1\">1</div>\n            <div class=\"cell\" content=\"6\">6</div>\n            <div class=\"cell\" content=\"4\">4</div>\n            <div class=\"cell\" content=\"2\">2</div>\n        </div>\n    </div>\n\n    <script>\n        // definiamo la griglia di Sudoku\n        const grid = [\n            [5, 3, 0, 0, 7, 0, 0, 0, 0],\n            [6, 0, 0, 1, 9, 5, 0, 0, 0],\n            [0, 9, 8, 0, 0, 0, 0, 6, 0],\n            [8, 0, 0, 0, 6, 0, 0, 0, 3],\n            [4, 0, 0, 8, 0, 3, 0, 0, 1],\n            [7, 0, 0, 0, 2, 0, 0, 0, 6],\n            [0, 6, 0, 0, 0, 0, 2, 8, 0],\n            [0, 0, 0, 4, 1, 9, 0, 0, 5],\n            [0, 0, 0, 0, 8, 0, 0, 7, 9]\n        ];\n\n        // funzione per calcolare la soluzione\n        function solveSudoku() {\n            const gridCopy = grid.map(row => row.slice());\n            const n = grid.length;\n            const find = function findEmpty() {\n                for (let i = 0; i < n; i++) {\n                    for (let j = 0; j < n; j++) {\n                        if (gridCopy[i][j] === 0) {\n                            return [i, j];\n                        }\n                    }\n                }\n                return null;\n            };\n\n            const checkRow = function checkRow(i) {\n                const row = gridCopy[i].slice();\n                const n = gridCopy[i].length;\n                for (let x = 0; x < n; x++) {\n                    if (row[x] === row[x + 1]) {\n                        return false;\n                    }\n                }\n                return true;\n            };\n\n            const checkCol = function checkCol(j) {\n                const n = gridCopy.length;\n                for (let i = 0; i < n; i++) {\n                    if (gridCopy[i][j] === gridCopy[i + 1][j]) {\n                        return false;\n                    }\n                }\n                return true;\n            };\n\n            const checkBox = function checkBox(i, j) {\n                const n = Math.floor(Math.sqrt(gridCopy.length));\n                const boxX = Math.floor(i / n);\n                const boxY = Math.floor(j / n);\n                for (let x = (boxX * n) + i;\n                    x < (boxX * n) + n;\n                    x++) {\n                    for (let y = (boxY * n) + j;\n                        y < (boxY * n) + n;\n                        y++) {\n                        if (gridCopy[x][y] === gridCopy[i][j]) {\n                            return false;\n                        }\n                    }\n                }\n                return true;\n            };\n\n            const solve = function solveSudoku() {\n                const findEmpty = findEmpty();\n                if (!findEmpty()) {\n                    return true;\n                }\n                const [row, col] = findEmpty();\n                for (let num = 1; num <= 9; num++) {\n                    if (checkBox(row, col)) {\n                        if (num === grid[row][col]) {\n                            continue;\n                        } else {\n                            gridCopy[row][col] = num;\n                            if (solve()) {\n                                return true;\n                            }\n                            gridCopy[row][col] = 0;\n                        }\n                    }\n                }\n                return false;\n            };\n\n            solve();\n            for (let i = 0; i < n; i++) {\n                for (let j = 0; j < n; j++) {\n                    document.getElementById(`${i + 1}_${j + 1}`).content = gridCopy[i][j];\n                }\n            }\n        }\n\n        // event listener per cliccare su una cella\n        const cells = document.querySelectorAll('.cell');\n        cells.forEach(cell => {\n            cell.addEventListener('click', () => {\n                if (cell.content === '') {\n                    const input = document.createElement('input');\n                    input.type = 'number';\n                    input.max = 9;\n                    input.min = 1;\n                    input.value = '';\n                    input.addEventListener('input', () => {\n                        if (input.value === '') {\n                            cell.content = '';\n                        } else {\n                            cell.content = input.value;\n                        }\n                    });\n                    cell.appendChild(input);\n                } else {\n                    cell.content = '';\n                }\n            });\n        });\n\n        // event listener per cliccare sul pulsante di reset\n        document.getElementById('reset').addEventListener('click', () => {\n            solveSudoku();\n        });\n\n        // funzione per mostrare il messaggio di fine gioco\n        function showResult() {\n            const result = 'Hai vinto!';\n            alert(result);\n        }\n\n        // funzione per validare la soluzione\n        function validate() {\n            for (let i = 0; i < grid.length; i++) {\n                for (let j = 0; j < grid[i].length; j++) {\n                    if (grid[i][j] !== 0 && !grid[i][j].toString().match(/^[123456789]$/)) {\n                        return false;\n                    }\n                }\n            }\n            return true;\n        }\n\n        // event listener per cliccare su una cella per inserire un numero\n        cells.forEach(cell => {\n            cell.addEventListener('focus', () => {\n                cell.content = '';\n            });\n            cell.addEventListener('blur', () => {\n                cell.content = '';\n            });\n        });\n\n        // funzione per evidenziare gli errori\n        function highlightErrors() {\n            const errors = document.querySelectorAll('.error');\n            errors.forEach(error => {\n                error.classList.remove('error');\n            });\n            cells.forEach(cell => {\n                if (cell.content !== '') {\n                    const number = parseInt(cell.content);\n                    if (number < 1 || number > 9) {\n                        cell.classList.add('error');\n                    }\n                }\n            });\n        }\n\n        // event listener per cliccare su una cella per inserire un numero\n        cells.forEach(cell => {\n            cell.addEventListener('input', () => {\n                highlightErrors();\n            });\n        });\n\n        // funzione per calcolare la soluzione e mostrare il messaggio di fine gioco\n        cells.forEach(cell => {\n            cell.addEventListener('blur', () => {\n                solveSudoku();\n                if (validate()) {\n                    showResult();\n                }\n            });\n        });\n    </script>\n</body>\n</html>",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 340,
+        "output": 1836,
+        "reasoning": null,
+        "total": 2176
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 151.857825,
+  "result_file": "03_programmazione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

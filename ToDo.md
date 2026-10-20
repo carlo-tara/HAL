@@ -31,16 +31,17 @@ _(nessuna)_
 - [ ] Verificare i timeout di `qwen2.5:1.5b` su prompt lunghi (`estrazione_json`, `sintesi_traduzione`) #benchmark · P1
   - Perché utile: la run 20261019_3 ha 2 timeout a 600 s su questi test; i risultati non sono confrontabili su quei test.
   - Acceptance: determinare se il problema è il timeout o il modello (rilanciare con `--timeout` più alto e `--prompt` mirati); documentare la causa.
+  - Progresso: nella run `20261020_2` phi3:mini va in timeout su `estrazione_json` (1172 s registrati, limite 600 s). Anche run precedenti superano 600 s su timeout (qwen 694,9 s; phi3 `sintesi_traduzione` 1102 s in `20261020_1`): verificare se il limite si applica per tentativo (retry) prima di cambiare il valore.
 
 - [ ] Isolare l'effetto di Laya su CPU vs GPU sul tempo per chiamata #benchmark · P1
   - Perché utile: nella run 20261019_3 tre variazioni sono avvenute insieme (Laya su CPU, middleware nuovo, cooldown); la mediana del tempo per chiamata è salita su phi3 (87→169 s), llama3.2:3b (45→126 s) e qwen (27→91 s).
   - Acceptance: run con middleware nuovo e Laya su GPU, stesse condizioni; confronto per coppia (modello, test) nel report.
-  - Progresso: run `20261020_1` eseguita (Laya su GPU, pausa 300 s invece di 180 s, quindi condizioni non identiche). Tempi misti, token invariati: Laya CPU/GPU non spiega il tetto dei token. Da ripetere con la stessa pausa per chiudere il punto.
+  - Progresso: run `20261020_1` eseguita (Laya su GPU, pausa 300 s invece di 180 s, quindi condizioni non identiche). Tempi misti, token invariati: Laya CPU/GPU non spiega il tetto dei token. Ripetizione `20261020_2` (phi3:mini e llama3.2:3b, stesse condizioni, pausa 300 s): tempi ancora misti (phi3 141→197 s, llama3.2:3b 172→152 s), nessun effetto stabile di Laya GPU. Serve almeno un confronto con Laya CPU alla stessa pausa per chiudere il punto.
 
 - [ ] Verificare l'aumento dei token del middleware nuovo su phi3:mini e llama3.2:1b #benchmark · P1
   - Perché utile: i token totali sono circa 3 volte quelli della baseline 20261017_all (≈34k contro ≈11k); i dati non spiegano il motivo.
   - Acceptance: identificare il percorso di prompt che genera i token in più (misurati vs non disponibili in SQLite) e documentare la causa.
-  - Progresso: la run `20261020_1` conferma ≈31–38k token su phi3:mini e llama3.2:1b anche con Laya su GPU, quindi la causa è nel middleware, non nel dispositivo di Laya.
+  - Progresso: la run `20261020_1` conferma ≈31–38k token su phi3:mini e llama3.2:1b anche con Laya su GPU, quindi la causa è nel middleware, non nel dispositivo di Laya. Ripetizione `20261020_2`: su phi3:mini l'eccesso resta sui test con input lungo (`sintesi_traduzione` 12,1k token; `estrazione_json` in timeout); su llama3.2:3b `estrazione_json` 19,4k e `sintesi_traduzione` 13,4k.
 
 ## P2
 
