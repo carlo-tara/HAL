@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.3.1] - 2026-10-20
+
+### Fixed
+
+- Changelog apprendimenti spostato da `.cursor/product/session-learnings.md` a `product/session-learnings.md` (SKILL e target di consolidamento) [sync:safe]
+
 ## [1.2.5] - 2026-10-16
 
 ### Fixed

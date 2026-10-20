@@ -24,7 +24,27 @@ _(nessuna)_
   - Perché utile: tutti gli step di test del workflow puntano alla root, ma i file sono in `tests/`; in locale il comando corretto è `PYTHONPATH=. python3 tests/test_gateway_core.py` (eseguito con successo, 11 test).
   - Acceptance: tutti gli step test del workflow passano in CI; verificare lanciando i comandi del workflow dalla root del repo.
 
+- [ ] Aggiungere un cooldown configurabile tra i modelli nel runner benchmark, o rendere il generatore ricorsivo #benchmark · P1
+  - Perché utile: il runner non ha pause tra run; la run 20261019_3 è stata fatta con una run per modello e uno script con `sleep 180`. Il generatore legge solo i JSON nella cartella indicata, quindi le sottocartelle vanno aggregate a mano.
+  - Acceptance: `--cooldown` (o equivalente) nel runner canonico di hal_system2, con un'unica cartella di run; oppure `generate_benchmark_report.py` legge le sottocartelle; test di regressione.
+
+- [ ] Verificare i timeout di `qwen2.5:1.5b` su prompt lunghi (`estrazione_json`, `sintesi_traduzione`) #benchmark · P1
+  - Perché utile: la run 20261019_3 ha 2 timeout a 600 s su questi test; i risultati non sono confrontabili su quei test.
+  - Acceptance: determinare se il problema è il timeout o il modello (rilanciare con `--timeout` più alto e `--prompt` mirati); documentare la causa.
+
+- [ ] Isolare l'effetto di Laya su CPU vs GPU sul tempo per chiamata #benchmark · P1
+  - Perché utile: nella run 20261019_3 tre variazioni sono avvenute insieme (Laya su CPU, middleware nuovo, cooldown); la mediana del tempo per chiamata è salita su phi3 (87→169 s), llama3.2:3b (45→126 s) e qwen (27→91 s).
+  - Acceptance: run con middleware nuovo e Laya su GPU, stesse condizioni; confronto per coppia (modello, test) nel report.
+
+- [ ] Verificare l'aumento dei token del middleware nuovo su phi3:mini e llama3.2:1b #benchmark · P1
+  - Perché utile: i token totali sono circa 3 volte quelli della baseline 20261017_all (≈34k contro ≈11k); i dati non spiegano il motivo.
+  - Acceptance: identificare il percorso di prompt che genera i token in più (misurati vs non disponibili in SQLite) e documentare la causa.
+
 ## P2
+
+- [ ] Sincronizzare automaticamente `generate_benchmark_report.py` tra `hal_gateway/benchmark/scripts/` e `hal_system2/scripts/` #benchmark · P2
+  - Perché utile: oggi la copia è manuale; i due file sono identici solo dopo `cp`.
+  - Acceptance: una sola sorgente, o uno script di sync con verifica `diff`.
 
 - [ ] Allineare la versione dei wrapper CLI generati con la sorgente canonica #version-sync · P2
   - Perché utile: `link-workspace-skills.sh` imposta `version: 1.0.0` nei wrapper `SKILL.md`, quindi una versione bumpata sul wrapper generato può essere persa al sync successivo.

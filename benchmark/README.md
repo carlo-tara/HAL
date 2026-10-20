@@ -9,13 +9,13 @@ per hal_gateway.
 
 ## Struttura
 
-| Percorso | Contenuto |
-| --- | --- |
-| `runner/` | Copia dei moduli `benchmark_models.py` + `system2_metrics.py` (pacchetto eseguibile) |
-| `config/` | `benchmark-models.json` (catalogo modelli) e `benchmark-prompts.json` (5 test) |
-| `scripts/generate_benchmark_report.py` | Generatore `report.htm` (D3.js), anche in modalità `--confronto` |
-| `docker-compose.benchmark.yml` | Compose di riferimento (build dal contesto hal_system2) |
-| `history/` | Storico run: cartelle `yyyymmdd_id` + baseline `results.json` + `system2_metrics.sqlite3` |
+| Percorso                               | Contenuto                                                                                 |
+| -------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `runner/`                              | Copia dei moduli `benchmark_models.py` + `system2_metrics.py` (pacchetto eseguibile)      |
+| `config/`                              | `benchmark-models.json` (catalogo modelli) e `benchmark-prompts.json` (5 test)            |
+| `scripts/generate_benchmark_report.py` | Generatore `report.htm` (D3.js), anche in modalità `--confronto`                          |
+| `docker-compose.benchmark.yml`         | Compose di riferimento (build dal contesto hal_system2)                                   |
+| `history/`                             | Storico run: cartelle `yyyymmdd_id` + baseline `results.json` + `system2_metrics.sqlite3` |
 
 ## Convenzioni (obbligatorie)
 
@@ -42,6 +42,7 @@ per hal_gateway.
 cd /var/www/hal_system2
 python3 -m app.benchmark_models \
   --run-dir events/benchmarks/20261019_2 \
+  --output events/benchmarks/20261019_2/results.json \
   --system1 \
   --provider ollama \
   --metrics-db events/benchmarks/system2_metrics.sqlite3
@@ -55,6 +56,7 @@ python3 -m runner.benchmark_models \
   --models config/benchmark-models.json \
   --prompts config/benchmark-prompts.json \
   --run-dir history/20261019_2 \
+  --output history/20261019_2/results.json \
   --system1 \
   --provider ollama \
   --metrics-db history/system2_metrics.sqlite3
@@ -79,8 +81,17 @@ dal contesto hal_system2 (serve il suo `Dockerfile`) e monta `./config`, `./docs
 ```bash
 cd /var/www/hal_system2
 docker compose -f docker-compose.benchmark.yml run --rm benchmark \
-  -- --run-dir /app/events/benchmarks/20261019_2 --system1 --provider ollama
+  -- --run-dir /app/events/benchmarks/20261019_2 --output /app/events/benchmarks/20261019_2/results.json --system1 --provider ollama
 ```
+
+## Vincoli operativi
+
+- `--run-dir` deve non esistere; `--output` deve trovarsi direttamente dentro `--run-dir`.
+- Non esiste un'opzione di cooldown tra modelli. Per la pausa si usa una run per modello (`--model`), con `sleep` tra una run e l'altra; ogni run ha la sua cartella, quindi il generatore va eseguito su una cartella piatta con i JSON per-test (il generatore non legge le sottocartelle).
+- Per lanciare in background usare `setsid` (un `nohup ... &` lanciato dalla shell del tool termina con la shell).
+- `scripts/generate_benchmark_report.py` esiste in due copie (`benchmark/scripts/` e `hal_system2/scripts/`): modificarle insieme e verificare con `diff`.
+- I test `estrazione_json` e `sintesi_traduzione` leggono `docs/Pensieri_lenti_e_veloci.epub`, presente in `hal_system2/docs/` e assente in `benchmark/docs/`.
+- Lo strumento di scrittura del progetto accetta solo percorsi in `hal_gateway`: le modifiche a `hal_system2` vanno fatte via terminale.
 
 ## Report e confronti
 
@@ -95,14 +106,15 @@ con `--confronto` mostra i delta rispetto alla baseline nominata dalla cartella)
 
 ## Storico incluso in `history/`
 
-| Cartella | Contenuto | Stato |
-| --- | --- | --- |
-| `results.json` (root) | Baseline storica completa: 7 modelli × 5 test = 35 risultati, senza middleware | completa |
-| `20261017_all/` | Run baseline 7 modelli × 5 test (senza `--system1`), con `report.htm` | completa |
-| `20261017_2/` | Run middleware System1/System2 **versione vecchia**, 7 modelli × 5 test, con `report.htm` | completa |
-| `20261019_1/` | Run gating **nuovo** (task-aware + telemetria SQLite), 4 modelli Ollama rimasti; interrotta a 8/20 (`status: running`). `report.htm` rigenerato con `--confronto 20261017_2` | **incompleta** |
-| `system2_metrics.sqlite3` | Telemetria System1/System2 delle run con `--system1` | — |
-| `cloudflare-workers-ai-free-models.json` | Catalogo modelli Cloudflare (non referenziato dal runner) | archivio |
+| Cartella                                 | Contenuto                                                                                                                                                                                                                                | Stato                  |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| `results.json` (root)                    | Baseline storica completa: 7 modelli × 5 test = 35 risultati, senza middleware                                                                                                                                                           | completa               |
+| `20261017_all/`                          | Run baseline 7 modelli × 5 test (senza `--system1`), con `report.htm`                                                                                                                                                                    | completa               |
+| `20261017_2/`                            | Run middleware System1/System2 **versione vecchia**, 7 modelli × 5 test, con `report.htm`                                                                                                                                                | completa               |
+| `20261019_1/`                            | Run gating **nuovo** (task-aware + telemetria SQLite), 4 modelli Ollama rimasti; interrotta a 8/20 (`status: running`). `report.htm` rigenerato con `--confronto 20261017_2`                                                             | **incompleta**         |
+| `20261019_3/`                            | Run gating **nuovo** con Laya su CPU e cooldown, una run per modello (`phi3_mini`, `qwen2_5_1_5b`, `llama3_2_3b`, `llama3_2_1b`): 19/20 ok, 2 timeout su `qwen2.5:1.5b`. `report.htm` con executive summary e confronto con `20261017_2` | completa, con 2 errori |
+| `system2_metrics.sqlite3`                | Telemetria System1/System2 delle run con `--system1`                                                                                                                                                                                     | —                      |
+| `cloudflare-workers-ai-free-models.json` | Catalogo modelli Cloudflare (non referenziato dal runner)                                                                                                                                                                                | archivio               |
 
 ### Lettura dei risultati
 
@@ -110,4 +122,4 @@ con `--confronto` mostra i delta rispetto alla baseline nominata dalla cartella)
 - Confronti validi solo per coppie `(modello, test)` appaiate.
 - Esito ad oggi: il nuovo gating riduce token (~−53%) e tempi (~−46%) vs il middleware
   vecchio, qualità ~piatta; resta sopra la baseline `20261017_all` per costo.
-  Serve una run completa 4×5 per confermare.
+  La run `20261019_3` (4×5, una run per modello) conferma il miglioramento su phi3, llama3.2:3b e llama3.2:1b, ma resta sotto la baseline su phi3 e llama3.2:1b; vedi l'executive summary nel report.

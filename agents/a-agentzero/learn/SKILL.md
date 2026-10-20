@@ -1,7 +1,7 @@
 ---
 name: learn
 parent: a-agentzero
-version: 1.3.0
+version: 1.3.1
 model: orcarouter/openai/gpt-4o-mini
 description: >-
   Slash /learn con doppia modalità: /learn ? illustra gli apprendimenti dalla
@@ -77,7 +77,7 @@ Task Progress:
 - [ ] 1. Estrai apprendimenti (se non fatto prima in sessione).
 - [ ] 2. Applica diff minimo sui target (vedi `consolidation-targets.md`).
 - [ ] 3. Se serve ToDo: `- [ ] Titolo #tag · P1` (non sovrascrivere `todo` tool).
-- [ ] 4. Changelog apprendimenti in `.cursor/product/session-learnings.md` (obbligatorio).
+- [ ] 4. Changelog apprendimenti in `product/session-learnings.md` (obbligatorio).
 - [ ] 5. Bump patch version e agg. `CHANGELOG.md` delle `SKILL.md` toccate.
 - [ ] 6. Emetti report finale.
 ```
@@ -95,7 +95,7 @@ Task Progress:
 
 ## Changelog
 
-Appended: `.cursor/product/session-learnings.md`
+Appended: `product/session-learnings.md`
 
 ## Versioni
 

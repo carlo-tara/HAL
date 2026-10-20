@@ -7,9 +7,11 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+- Benchmark: sezione "Vincoli operativi" nel README (`--output` dentro `--run-dir`, nessun cooldown nel runner, `setsid`, copie del generatore), storico `20261019_3` e residui in `ToDo.md` `#benchmark` · P1 · Progetto
 - Passi di test del workflow `ready-for-review` da correggere: i test sono in `tests/` e vanno lanciati con `PYTHONPATH=.` `#infra` · P1 · Progetto
 - GitHub Actions portate a runtime Node 24: `actions/checkout@v5`, `actions/setup-python@v6` `#infra` · Progetto
 - Ripristinata versione `version/SKILL.md` a 1.2.1 (frontmatter era regredito a 1.0.0) `#infra` · HAL
+- Aggiunto `.gitignore` per escludere `.env` e `.env.*` (mantiene `.env.example`) `#infra` · Progetto
 - Rafforzato `SystemEvaluationEngine`: promozione fail-closed su qualità per task, validazione semantica indipendente, latenza serving comparabile e rifiuto dei benchmark troncati; durata end-to-end separata dalla latenza. `#system2-gating` · P1 · HAL
 - Ottimizzazione prompt e progressive disclosure per skill ad alto carico (@learn, @sync, @slice, @cycle) `#techdebt` · P1 · HAL
 - Integrazione System 1 (Laya) per routing e scoring euristico (@learn, @version, @improve, @document) `#feature` · P1 · HAL
