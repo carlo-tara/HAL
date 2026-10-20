@@ -1,7 +1,7 @@
 ---
 name: seozoom-{progetto}
 extends: a-seozoom
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.5.0
 competencies:
   - seo-import
@@ -98,14 +98,14 @@ Crea solo override necessari:
 ---
 name: seo-import
 kind: competency
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0   # = version L1 a-seozoom/competencies/seo-import/
 description: >-
   Override seo-import per {progetto}.
 ---
 ```
 
-Body: **solo delta**. Check: `bash agents/a-agentzero/scripts/agent-version.sh competency-chain .cursor/skills/seozoom-{progetto}/competencies/{id}/SKILL.md`
+Body: **solo delta**. Check: `bash agents/a-agentzero/scripts/agent-version.sh competency-chain .agents/skills/seozoom-{progetto}/competencies/{id}/SKILL.md`
 
 ---
 

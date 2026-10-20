@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T14:08:31.124908+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 14218,
+    "output": 4459,
+    "reasoning": null,
+    "total": 18677
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```json\n{\n  \"capitoli\": [\n    {\n      \"segmento\": 1,\n      \"fonte\": {\n        \"title\": \"Il libro\",\n        \"author\": {\n          \"name\": \"Daniel Kahneman\",\n          \"profession\": \"Psicologo e economista\"\n        },\n        \"description\": \"Un libro che esplora la mente umana e i meccanismi di pensiero che ci guida nella vita quotidiana\"\n      },\n      \"capitoli\": [\n        {\n          \"title\": \"L'illusione della razionalità\",\n          \"description\": \"Kahneman ci guida in un'affascinante esplorazione della mente umana e ci spiega come essa sia caratterizzata da due processi di pensiero ben distinti: uno veloce e intuitivo (sistema 1), e uno più lento ma anche più logico e riflessivo (sistema 2)\"\n        },\n        {\n          \"title\": \"L'effetto dei bias cognitivi\",\n          \"description\": \"L'effetto profondo dei bias cognitivi si manifesta in tutti gli ambiti della nostra vita, dai progetti per le vacanze al gioco in borsa\"\n        }\n      ]\n    },\n    {\n      \"capitolo\": \"005_introduzione\",\n      \"riassunto\": \"L'autore introduce l'importanza di utilizzare un vocabolario più ricco per discutere giudizi e scelte altrui. La mente umana non funziona in modo lineare e molti pensieri e impressioni si presentano senza che sappiamo come vi si sono presentati.\"\n    },\n    {\n      \"capitolo_1\": \"La psicologia della decisione: un'introduzione\",\n      \"capitolo_2\": \"I limiti della ragione: la psicologia della intuizione\",\n      \"capitolo_3\": \"La ricerca di Amos Tversky: come la psicologia ha cercato di comprendere il processo decisionale umano\",\n      \"capitolo_4\": \"La teoria del \\\"punto di riferimento\\\" e la sua applicazione nella scelta\",\n      \"capitolo_5\": \"La natura umana: princìpi e assunti\",\n      \"capitolo\": [\n        {\n          \"numero\": 7,\n          \"titolo\": \"La natura umana: princìpi e assunti\",\n          \"riassunto\": \"L'articolo contesta due princìpi riguardanti la natura umana: la gente è perlopiù razionale e le emozioni spiegano quasi tutti i casi di deviazione dalla razionalità. L'autore sostiene che la struttura del meccanismo cognitivo è a causa della struttura del pensiero, anziché l'emotività.\"\n        }\n      ]\n    },\n    {\n      \"capitolo\": \"Il processo decisionale in condizioni di incertezza\",\n      \"riassunto\": \"Dopo aver analizzato il giudizio, lo studio si sposta sul processo decisionale in condizioni di incertezza. L'obiettivo è mettere a punto una teoria che possa spiegare come le persone fanno a prendere decisioni quando ci sono incertezze e sfide.\"\n    },\n    {\n      \"capitoli\": [\n        {\n          \"titolo\": \"Capitolo 9: La teoria della scelta\",\n          \"riassunto\": \"La teoria della scelta è una teoria della psicologia che spiega come le persone prendono decisioni su opzioni di rischio semplici. Il libro esamina come le nostre preferenze intuitive si conformano alle regole della scelta razionale, ma come queste regole possono essere influenzate da bias sistematici. La teoria della scelta è importante perché rappresenta uno dei fondamenti dell'economia comportamentale.\"\n        },\n        {\n          \"titolo\": \"Capitolo 10: La mente collettiva\",\n          \"riassunto\": \"Amos Tversky e io avevamo la fortuna di costituire una sorta di mente collettiva che rese il nostro lavoro insieme proficuo e divertente. La nostra comune ricerca sul giudizio e il processo decisionale fu il motivo del premio Nobel che ricevetti nel 2002.\"\n        },\n        {\n          \"titolo\": \"Capitolo 11: La comprensione del pensiero intuitivo\",\n          \"riassunto\": \"Il libro esamina la comprensione del pensiero intuitivo e come le nostre intuizioni possono essere influenzate da bias e euristiche. Amos e io non ci occupammo delle intuizioni esatte date dalla competenza, ma solo delle euristiche del giudizio.\"\n        }\n      ]\n    },\n    {\n      \"capitolo\": \"L'intuizione esperta\",\n      \"riassunto\": \"L'intuizione esperta è spesso considerata magica, ma in realtà è il risultato di una competenza intuitiva che si sviluppa attraverso l'esperienza. I professionisti compiono operazioni di competenza intuitiva molte volte al giorno, come ad esempio notare una nota di rabbia nelle prime parole di una telefonata o capire subito che un guidatore dell'auto nella corsia accanto è pericoloso.\"\n    }\n  ]\n}\n```\nHo combinato i dati delle 10 sezioni in un unico oggetto JSON, con le chiavi `capitoli` e `fonte` ove appropriato. Ho anche aggiunto le chiavi `titolo` e `riassunto` per ogni capitolo e sezione.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 300,
+        "reasoning": null,
+        "total": 1366
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 94,
+        "reasoning": null,
+        "total": 1170
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 197,
+        "reasoning": null,
+        "total": 1250
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 311,
+        "reasoning": null,
+        "total": 1380
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 711,
+        "reasoning": null,
+        "total": 1758
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 854,
+        "reasoning": null,
+        "total": 1913
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 136,
+        "reasoning": null,
+        "total": 1203
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 121,
+        "reasoning": null,
+        "total": 1165
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 339,
+        "reasoning": null,
+        "total": 1370
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 130,
+        "reasoning": null,
+        "total": 1212
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3624,
+        "output": 1266,
+        "reasoning": null,
+        "total": 4890
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 508.958106,
+  "result_file": "04_estrazione_json_llama3.2_3b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 11
+  }
+}

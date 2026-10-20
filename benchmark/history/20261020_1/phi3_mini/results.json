@@ -1,0 +1,752 @@
+{
+  "started_at": "2026-10-20T13:05:07.155106+00:00",
+  "finished_at": "2026-10-20T13:37:50.742252+00:00",
+  "status": "completed",
+  "expected_results": 5,
+  "timing": "end_to_end_including_model_load",
+  "results": [
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "ragionamento_logico",
+      "started_at": "2026-10-20T13:05:07.163084+00:00",
+      "quality": {
+        "passed": 4,
+        "total": 4,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "menziona la scatola Miste",
+            "passed": true
+          },
+          {
+            "label": "menziona Mele",
+            "passed": true
+          },
+          {
+            "label": "menziona Arance",
+            "passed": true
+          },
+          {
+            "label": "risposta argomentata",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 199,
+        "output": 367,
+        "reasoning": null,
+        "total": 566
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Per risolvere questo problema con una sola azione, dovrei seguire questa strategia:\n\n1. Primo passaggio: Selezionare la scatola etichettata \"Mele\".\n\n2. Secondo passaggio: Confrontare il contenuto della scatola \"Mele\" con la conoscenza esterna che le mela e le arance non possono essere in una scatola etichettata in questo modo.\n\n3. Terzo passaggio: Sulla base del confronto, dedurre che le mela non possono essere nella scatola etichettata \"Mele\". Dal momento che le scatole sono etichettate in modo errato, e poich endopo ciò, le mela devono essere nella scatola etichettata \"Miste\".\n\n4. Quarto passaggio: Conoscendo che le arance non sono nella scatola etichettata \"Mele\", le arance devono essere nella scatola etichettata \"Misti\".\n\n5. Quinto passaggio: Dato che le mela e le arance sono state collocate nelle scatole etichettate \"Miste\" e \"Mele\" rispettivamente, il contenuto della scatola etichettata \"Arance\" deve essere le mele.\n\nQuindi, seguendo questi passaggi, posso determinare il contenuto di tutte e tre le scatole senza guardarne il contenuto e facendo solo un'estrazione.\n\nScatola Mele: Miste\nScatola Arance: Mele\nScatola Miste: Arance",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 199,
+            "output": 367,
+            "reasoning": null,
+            "total": 566
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 43.922463,
+      "result_file": "01_ragionamento_logico_phi3_mini.json",
+      "system1": {
+        "task_family": "reasoning",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "reasoning",
+          "required_strategy": "reasoning_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.7001,
+        "strategy": "reasoning_check",
+        "strategy_confidence": 0.2409,
+        "execution_confidence": 0.6528,
+        "confidence": 0.2409,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 12
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "matematica",
+      "started_at": "2026-10-20T13:05:51.087141+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 3,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "ricavo totale 2.770,20",
+            "passed": false
+          },
+          {
+            "label": "utile 610,20",
+            "passed": false
+          },
+          {
+            "label": "margine 22,03%",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 238,
+        "output": 798,
+        "reasoning": null,
+        "total": 1036
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "\n**Strategia:**\n\n1. Identificare i dati richiesti e le informazioni necessarie per le operazioni matematiche:\n\n   - Numero di articoli acquistati: 120\n\n   - Costo per articolo: 18 euro\n\n   - Numero di articoli venduti con ricarico del 35%: 90\n\n   - Numero di articoli venduti con uno sconto del 20%: 30\n\n\n2. Calcolare il costo totale dell'acquisto dei 120 articoli:\n\n   - Costo totale = 120 articoli * 18 euro/articolo = 2160 euro\n\n\n3. Calcolare il prezzo di vendita per i primi 90 articoli con ricarico del 35%:\n\n   - Ricarico = 18 euro * 0rante = 3.24 euro\n\n   - Prezzo di vendita = 18 euro + 3.24 euro = 21.24 euro\n\n\n4. Calcolare il prezzo di vendita per i restanti 30 articoli con uno sconto del 20% sul prezzo unitario dei primi 90 articoli:\n\n   - Sconto = 21.24 euro * 20% = 4.25 euro\n\n   - Prezzo di vendita con sconto = 21.24 euro - 4.25 euro = 16.99 euro\n\n\n5. Calcolare il ricavo totale dalla vendita di tutti i 120 articoli:\n\n   - Ricavo dai primi 90 articoli = 90 * 21.24 euro = 1911.60 euro\n\n   - Ricavo dai restanti 30 articoli = 30 * 16.99 euro = 509.70 euro\n\n   - Ricavo totale = 1911.60 euro + 509.70 euro = 2421.30 euro\n\n\n6. Calcolare il costo totale di acquisto dei 120 articoli:\n\n   - Costo totale = 2160 euro (dal passaggio 2)\n\n\n7. Calcolare il profitto totale dalla vendita di tutti i 120 articoli:\n\n   - Profitto totale = 2421.30 euro (dal passaggio 5) - 2160 euro (dal passaggio 6) = 261.30 euro\n\n\n8. Calcolare il margine percentuale sul ricavo:\n\n   - Margine percentuale = (Profitto totale / Ricavo totale) * 100%\n\n   - Margine percentuale = (261.30 euro / 2421.30 euro) * 100% ≈ 10.79%\n\n\n**Conclusione:**\n\n- Ricavo totale: 2421.30 euro\n\n- Utilizzo (Profitto totale): 261.30 euro\n\n- Margine percentuale sul ricavo: 10.79%\n\n\nI risultati sono arrotondati a due decimali, come richiesto.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 238,
+            "output": 798,
+            "reasoning": null,
+            "total": 1036
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 90.261217,
+      "result_file": "02_matematica_phi3_mini.json",
+      "system1": {
+        "task_family": "math",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "math",
+          "required_strategy": "math_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.4791,
+        "strategy": "math_check",
+        "strategy_confidence": 0.814,
+        "execution_confidence": 0.062,
+        "confidence": 0.062,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 11
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "programmazione",
+      "started_at": "2026-10-20T13:07:21.351721+00:00",
+      "quality": {
+        "passed": 5,
+        "total": 6,
+        "score": 0.83,
+        "checks": [
+          {
+            "label": "documento HTML completo",
+            "passed": true
+          },
+          {
+            "label": "CSS e JavaScript inline",
+            "passed": true
+          },
+          {
+            "label": "gestione input da tastiera",
+            "passed": false
+          },
+          {
+            "label": "azione per nuova partita",
+            "passed": true
+          },
+          {
+            "label": "nessun salvataggio persistente",
+            "passed": true
+          },
+          {
+            "label": "nessuna dipendenza o risorsa remota",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 368,
+        "output": 1211,
+        "reasoning": null,
+        "total": 1579
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku Game</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            display: flex;\n            justify-content: center;\n            align-items: center; end;\n            height: 100vh;\n        }\n        .grid { display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); grid-gap: 10px; }\n        .grid > div { background-color: #f0f0f0; padding: 10px; cursor: pointer; }\n        .selected { background-color: #ccc; }\n        .error { background-color: #ffcccc; }\n        button { margin-left: 20px; }\n    </style>\n</head>s\n<body>\n    <section class=\"grid\" id=\"sudoku-grid\"></section>\n    <button id=\"new-game\">New Game</button>\n    <script>\n        const grid = document.getElementById(\"sudoku-grid\");\n        const newGameButton = document.getElementById(\"new-game\");\n        let solution = [\n            [5, 3, 0, 0, 7, 0, 0, 0, 0],\n            [6, 0, 0, 1, 9, 5, 0, 0, 0],\n            [0, 9, 8, 0, 0, 0, 0, 6, 0],\n            [8, 0, 0, 0, 6, 0, 2, 5, 0],\n            [4, 0, 0, 8, 0, 3, 0, 0, 7],\n            [0, 0, 0, 0, 6, 0, 0, 2, 8],\n            [0, 0, 0, 4, 1, 9, 0, 0, 5],\n            [0, 2, 3, 0, 0, 0, 0, 0, 9],\n            [0, 0, 0, 0, 8, 0, 0, 0, 0]\n        ];\n        const numbers = \"123456789\".split('');\n\n        function generateGrid() {\n            const cells = Array.from({ length: 81 }, () => ({\n                cell: undefined,\n                value: '',\n                selected: false,\n                error: false\n            }));\n\n            numbers.forEach(number => {\n                cells.filter(cell => cell.value === number).forEach(cell => {\n                    cell.value = number;\n                    cell.selected = true;\n                    cell.error = false;\n                });\n            });\n\n            numbers.forEach(number => {\n                cells.filter(cell => cell.value === 0 && cell.cell.id % 9 === number % 9).forEach(cell => {\n                    cell.value = number;\n                    cell.selected = false;\n                    cell.error = false;\n                });\n            });\n\n            cells.forEach(cell => {\n                if (cell.value === 0) grid.appendChild(document.createElement(\"div\")).textContent = \" \";\n                if (cell.value !== \"\") grid.appendChild(documents.createElement(\"div\")).textContent = cell.value;\n                if (cell.error) grid.appendChild(document.createElement(\"div\")).className = \"error\";\n                if (cell.selected) grid.appendChild(document.createElement(\"div\")).className = \"selected\";\n            });\n        }\n\n        function resetGame() {\n            document.getElementById(\"sudoku-grid\").innerHTML = \"\";\n            generateGrid();\n        }\n\n        function onCellClick(event) {\n            const cell = event.target;\n            cell.classList.toggle(\"selected\");\n            if (cell.value === '') {\n                const value = prompt(\"Enter a number (1-9): \");\n                cell.value = value;\n                if (value.match(/[^1-9]/i)) return; // Validation\n            } else if (cell.value > 9) {\n                cell.value = '';\n                cell.classList.remove(\"selected\");\n                cell.classList.add(\"error\");\n            }\n        }\n\n        function onCellChange(event) {\n            const cell = event.target;\n            cell.classList.toggle(\"error\", cell.value === '');\n            cell.classList.toggle(\"selected\", cell.value !== '');\n        }\n\n        newGameButton.addEventListener(\"click\", resetGame);\n        grid.addEventListener(\"click\", onCellClick);\n        grid.addEventListener(\"input\", onCellChange);\n\n        generateGrid();\n    </script>\n</body>\n</html>\n```",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 368,
+            "output": 1211,
+            "reasoning": null,
+            "total": 1579
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 141.028536,
+      "result_file": "03_programmazione_phi3_mini.json",
+      "system1": {
+        "task_family": "coding",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "coding",
+          "required_strategy": "requirements_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.9999,
+        "strategy": "requirements_check",
+        "strategy_confidence": 0.3321,
+        "execution_confidence": 0.3415,
+        "confidence": 0.3321,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "coding",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 11
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "estrazione_json",
+      "started_at": "2026-10-20T13:09:42.382179+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 2,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "risposta in formato JSON",
+            "passed": false
+          },
+          {
+            "label": "riferimento all'Introduzione",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 15152,
+        "output": 3751,
+        "reasoning": null,
+        "total": 18903
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "<strategia_system1_laya>\nGuida metodologica preliminare; non modifica il compito, i dati o il formato richiesto.\nCategoria: source.\nModalità: source_chunks.\nStrategia: Classificazione Laya incerta; seguire il contratto locale, estrarre i requisiti dal prompt e rispettare rigorosamente fonte e formato.\n</strategia_system1_laya>\n\n<risultati_parziali>\n<capitolo_1>\n<titolo>La difficile decisione del comandante</titolo>\n<riassunto>Nel capitolo si racconta di un pompiere che, durante un incendio, riceve un ordine inaspettato da parte del comandante di evacuazione. L'ordine è stato dato senza comprendere la situazione reale. Solo in seguito il pompiere capisce che l'epicentro dell'incendio era stato identificato erroneamente. Questa esperienza mette in luce come l'intuizione in alcuni casi può essere influenzata da informazioni incomplete.\n</riassunto>\n</capitolo_1>\n\n</risultati_parziali>\n",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1183,
+            "output": 288,
+            "reasoning": null,
+            "total": 1471
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1128,
+            "output": 764,
+            "reasoning": null,
+            "total": 1892
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1115,
+            "output": 456,
+            "reasoning": null,
+            "total": 1571
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1108,
+            "output": 231,
+            "reasoning": null,
+            "total": 1339
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1102,
+            "output": 263,
+            "reasoning": null,
+            "total": 1365
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_6",
+          "status": "ok",
+          "tokens": {
+            "input": 1116,
+            "output": 158,
+            "reasoning": null,
+            "total": 1274
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_7",
+          "status": "ok",
+          "tokens": {
+            "input": 1105,
+            "output": 419,
+            "reasoning": null,
+            "total": 1524
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_8",
+          "status": "ok",
+          "tokens": {
+            "input": 1089,
+            "output": 323,
+            "reasoning": null,
+            "total": 1412
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_9",
+          "status": "ok",
+          "tokens": {
+            "input": 1089,
+            "output": 385,
+            "reasoning": null,
+            "total": 1474
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_10",
+          "status": "ok",
+          "tokens": {
+            "input": 1136,
+            "output": 169,
+            "reasoning": null,
+            "total": 1305
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 3981,
+            "output": 295,
+            "reasoning": null,
+            "total": 4276
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 11,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 586.179887,
+      "result_file": "04_estrazione_json_phi3_mini.json",
+      "system1": {
+        "task_family": "source",
+        "execution_mode": "source_chunks",
+        "source_chars": 30000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "source",
+          "required_strategy": "grounded_extract",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.4826,
+        "strategy": "grounded_extract",
+        "strategy_confidence": 0.3731,
+        "execution_confidence": 0.1138,
+        "confidence": 0.1138,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "source",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "source_chunks",
+        "preflight_latency_ms": 11
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "test_id": "sintesi_traduzione",
+      "started_at": "2026-10-20T13:19:28.564287+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 2,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "presenza di lessico spagnolo",
+            "passed": false
+          },
+          {
+            "label": "lunghezza minima della traduzione",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 7681,
+        "output": 8064,
+        "reasoning": null,
+        "total": 15745
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "La instrucción anterior es una continuación del análisis que se llevó a cabo en el contexto del experimento y la teoría. Se trata de presentar un conjunto de respuestas que se derivan de una perspectiva centrada en la similitud y cómo esta influye en la predicción de las profesiones a pesar de los datos estadísticos. Cada respuesta refuerza la idea de que, a pesar de que estadísticamente hablando, los hombres en la agricultura superan a los bibliotecarios en Estados Unidos, la similitud con el estereotipo del bibliotecario llevó a la conclusión intuitiva de que Steve es más probable que sea bibliotecario. La solución a continuación, que sigue esta línea de razonamiento, responde a las preguntas formuladas en la instrucción.\n\n\nRespuesta a la pregunta de seguimiento 1:\n<|start_of_solution|>\nLa tendencia observada en los experimentos nos indica que la percepción social influye significativcially en la forma en que los individuos asocian profesiones con personalidades. En nuestros ensayos, donde Steve fue descrito con rasgos que se asemejan al estereotipo del bibliotecario, la mayoría de los participantes seleccionaron la profesión de bibliotecario, ignorando las probabilidades estadísticas. Este fenómeno revela cómo los estereotipos culturales pueden sesgar nuestras predicciones y cómo la similitud con un ideal culturalmente establecido puede tener un peso enorme en la toma de decisiones a pesar de la información estadística opuesta. La respuesta que hemos obtenido sugiere que la percepción y el conocimiento cultural juegan un rol dominante en nuestras predicciones sobre la profesión de los individuos.\n\n\nRespuesta a la pregunta de seguimiento 2:\n<|start_of_solution|>\nEl estudio revela que incluso cuando los datos estadísticos son claros y la prevalencia de una profesión es clara, la percepción social y los estereotipos pueden alterar nuestras expectativas. En la cultura norteamericana, el bibliotecario es percibido como un personaje típicamente introvertido y organizado, características que se reflejan en la descripción de Steve. A pesar de que estadísticamente hablando, los hombres en la agricultura son más comunes, nuestra respuesta tiende a el libro de la personalidad y el estereotipo cultural. Este resultado subraya cómo nuestras predicciones pueden ser fuertemente influenciadas por los estereotipos culturales, que pueden sobreponerse a los datos estadísticos o estadísticos, lo que resalta la importancia de tener en cuenta tanto la similitud como la realidad numérica en nuestras evaluaciones.\n\n\nRespuesta a la pregunta de seguimiento 3:\n<|start_of_solution|>\nLa investigación lleva a la conclusión de que los estereotipos y la percepción social pueden tener un impacto significativo en nuestras predicciones sobre las profesiones, a veces más que la realidad estadística. En los experimentos realizados, los participantes se inclinaron hacia la profesión de bibliotecario cuando Steve era descrito con rasgos que coincidían con el estereotipo cultural de esa profesión, incluso cuando se sabía que en Estados Unidos hay más hombres en la agricultura. Este resultado sugiere que nuestras tendencias intuitivas y las percepciones comunes en la sociedad pueden desempeñar un papel más importante en nuestras predicciones que las probabilidades estadísticas. Esto señala una necesidad de ser conscientes de la influencia de los estereotipos en nuestras actitudes y creencias y resalta la importancia de examinar tanto la similitud personal como la realidad estadística para obtener una comprensión más matizada.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1182,
+            "output": 1294,
+            "reasoning": null,
+            "total": 2476
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1127,
+            "output": 1976,
+            "reasoning": null,
+            "total": 3103
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1114,
+            "output": 812,
+            "reasoning": null,
+            "total": 1926
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1107,
+            "output": 863,
+            "reasoning": null,
+            "total": 1970
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1101,
+            "output": 2184,
+            "reasoning": null,
+            "total": 3285
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 2050,
+            "output": 935,
+            "reasoning": null,
+            "total": 2985
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 6,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 1102.175618,
+      "result_file": "05_sintesi_traduzione_phi3_mini.json",
+      "system1": {
+        "task_family": "translation",
+        "execution_mode": "source_chunks",
+        "source_chars": 15000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "translation",
+          "required_strategy": "faithful_translate",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.9696,
+        "strategy": "faithful_translate",
+        "strategy_confidence": 0.9829,
+        "execution_confidence": 0.0329,
+        "confidence": 0.0329,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "translation",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 10
+      }
+    }
+  ],
+  "result_directories": [
+    {
+      "provider": "ollama",
+      "model": "phi3:mini",
+      "directory": "."
+    }
+  ],
+  "summary": {
+    "completed": 5,
+    "successful": 5,
+    "failed": 0,
+    "seconds": 1963.567721,
+    "total_tokens": 37829,
+    "known_total_tokens": 37829,
+    "usage_missing": 0
+  },
+  "system1": {
+    "ragionamento_logico": {
+      "task_family": "reasoning",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "reasoning",
+        "required_strategy": "reasoning_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.7001,
+      "strategy": "reasoning_check",
+      "strategy_confidence": 0.2409,
+      "execution_confidence": 0.6528,
+      "confidence": 0.2409,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 12
+    },
+    "matematica": {
+      "task_family": "math",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "math",
+        "required_strategy": "math_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.4791,
+      "strategy": "math_check",
+      "strategy_confidence": 0.814,
+      "execution_confidence": 0.062,
+      "confidence": 0.062,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 11
+    },
+    "programmazione": {
+      "task_family": "coding",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "coding",
+        "required_strategy": "requirements_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.9999,
+      "strategy": "requirements_check",
+      "strategy_confidence": 0.3321,
+      "execution_confidence": 0.3415,
+      "confidence": 0.3321,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "coding",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 11
+    },
+    "estrazione_json": {
+      "task_family": "source",
+      "execution_mode": "source_chunks",
+      "source_chars": 30000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "source",
+        "required_strategy": "grounded_extract",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.4826,
+      "strategy": "grounded_extract",
+      "strategy_confidence": 0.3731,
+      "execution_confidence": 0.1138,
+      "confidence": 0.1138,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "source",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "source_chunks",
+      "preflight_latency_ms": 11
+    },
+    "sintesi_traduzione": {
+      "task_family": "translation",
+      "execution_mode": "source_chunks",
+      "source_chars": 15000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "translation",
+        "required_strategy": "faithful_translate",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.9696,
+      "strategy": "faithful_translate",
+      "strategy_confidence": 0.9829,
+      "execution_confidence": 0.0329,
+      "confidence": 0.0329,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "translation",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 10
+    }
+  },
+  "system2_metrics": {
+    "run_id": "65fe2230693249c4ba2e1d9dcf680189",
+    "db_path": "/var/www/hal_system2/events/benchmarks/system2_metrics.sqlite3",
+    "summary": {
+      "events": 25,
+      "system1_events": 5,
+      "system2_events": 20,
+      "latency_ms": 1963603,
+      "tokens_total": 37829,
+      "errors": 0
+    }
+  }
+}

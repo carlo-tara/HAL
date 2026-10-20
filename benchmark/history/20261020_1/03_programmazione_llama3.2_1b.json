@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T14:28:38.723987+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 6,
+    "score": 0.33,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": false
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": false
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 340,
+    "output": 221,
+    "reasoning": null,
+    "total": 561
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Gioco di Sudoku</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <div class=\"sudoku-container\">\n        <div class=\"grid\">\n            <div class=\"grid-row\">1</div>\n            <div class=\"grid-row\">2</div>\n            <div class=\"grid-row\">3</div>\n            <div class=\"grid-row\">4</div>\n            <div class=\"grid-row\">5</div>\n            <div class=\"grid-row\">6</div>\n            <div class=\"grid-row\">7</div>\n            <div class=\"grid-row\">8</div>\n            <div class=\"grid-row\">9</div>\n        </div>\n    </div>\n\n    <script src=\"script.js\"></script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 340,
+        "output": 221,
+        "reasoning": null,
+        "total": 561
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 9.842042,
+  "result_file": "03_programmazione_llama3.2_1b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-20T14:28:10.289013+00:00",
+  "quality": {
+    "passed": 4,
+    "total": 4,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "menziona la scatola Miste",
+        "passed": true
+      },
+      {
+        "label": "menziona Mele",
+        "passed": true
+      },
+      {
+        "label": "menziona Arance",
+        "passed": true
+      },
+      {
+        "label": "risposta argomentata",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 188,
+    "output": 284,
+    "reasoning": null,
+    "total": 472
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per risolvere questo problema, dobbiamo analizzare le scatole e le etichette in modo logico.\n\n**Analisi delle scatole:**\n\n*   Mele: etichetta \"Miste\"\n*   Arance: etichetta \"Mele\"\n*   Miste: etichetta \"Arance\"\n\n**Analisi delle etichette:**\n\n*   Mele: \"Mele\"\n*   Arance: \"Arance\"\n*   Miste: \"Miste\"\n\n**Scegliamo la scatola corretta:**\n\nNel caso non ci sia una scatola corretta, possiamo decidere di scegliere la scatola più simile alla più corretta.\n\nIn questo caso, la scatola più simile alle etichette \"Mele\" e \"Miste\" è la \"Arance\", quindi scegliamo la \"Arance\" come la scatola corretta.\n\n**Determiniamo il contenuto di ogni scatola:**\n\n*   Arance: contenuto di \"Arance\"\n*   Mele: contenuto di \"Mele\"\n*   Miste: contenuto di \"Miste\"\n\nSia la scatola \"Arance\" che la scatola \"Miste\" contengono l'elemento \"Arance\".",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 188,
+        "output": 284,
+        "reasoning": null,
+        "total": 472
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 12.888919,
+  "result_file": "01_ragionamento_logico_llama3.2_1b.json",
+  "system1": {
+    "task_family": "reasoning",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "reasoning",
+      "required_strategy": "reasoning_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.7001,
+    "strategy": "reasoning_check",
+    "strategy_confidence": 0.2409,
+    "execution_confidence": 0.6528,
+    "confidence": 0.2409,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 12
+  }
+}

@@ -9,7 +9,7 @@ Registro ufficiale (sezione speciale) di **startup innovative**, **PMI innovativ
 ### 1) File open list fornito dall’utente
 
 Elenchi tabellari (storicamente XLS, aggiornamento settimanale riferito da MIMIT) scaricati manualmente dal portale/area open data.  
-Chiedi al PO di allegare il file in `.cursor/product/data/` e analizzalo — **non inventare conteggi**.
+Chiedi al PO di allegare il file in `product/data/` e analizzalo — **non inventare conteggi**.
 
 ### 2) Browser assistito
 

@@ -107,8 +107,8 @@ Dettaglio path, comandi e file: **solo** nella skill L2 (`pagefind-*.md`, sezion
 
 | Campo | Valore tipico |
 |-------|----------------|
-| Skill | `.cursor/skills/seozoom-{slug}/SKILL.md` |
-| Playbook | `.cursor/skills/seozoom-{slug}/pagefind-seo-geo.md` (o equivalente) |
+| Skill | `.agents/skills/seozoom-{slug}/SKILL.md` |
+| Playbook | `.agents/skills/seozoom-{slug}/pagefind-seo-geo.md` (o equivalente) |
 
 ---
 

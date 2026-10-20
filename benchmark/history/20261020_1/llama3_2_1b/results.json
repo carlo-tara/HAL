@@ -1,0 +1,752 @@
+{
+  "started_at": "2026-10-20T14:28:10.282233+00:00",
+  "finished_at": "2026-10-20T14:35:18.282007+00:00",
+  "status": "completed",
+  "expected_results": 5,
+  "timing": "end_to_end_including_model_load",
+  "results": [
+    {
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "test_id": "ragionamento_logico",
+      "started_at": "2026-10-20T14:28:10.289013+00:00",
+      "quality": {
+        "passed": 4,
+        "total": 4,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "menziona la scatola Miste",
+            "passed": true
+          },
+          {
+            "label": "menziona Mele",
+            "passed": true
+          },
+          {
+            "label": "menziona Arance",
+            "passed": true
+          },
+          {
+            "label": "risposta argomentata",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 188,
+        "output": 284,
+        "reasoning": null,
+        "total": 472
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Per risolvere questo problema, dobbiamo analizzare le scatole e le etichette in modo logico.\n\n**Analisi delle scatole:**\n\n*   Mele: etichetta \"Miste\"\n*   Arance: etichetta \"Mele\"\n*   Miste: etichetta \"Arance\"\n\n**Analisi delle etichette:**\n\n*   Mele: \"Mele\"\n*   Arance: \"Arance\"\n*   Miste: \"Miste\"\n\n**Scegliamo la scatola corretta:**\n\nNel caso non ci sia una scatola corretta, possiamo decidere di scegliere la scatola più simile alla più corretta.\n\nIn questo caso, la scatola più simile alle etichette \"Mele\" e \"Miste\" è la \"Arance\", quindi scegliamo la \"Arance\" come la scatola corretta.\n\n**Determiniamo il contenuto di ogni scatola:**\n\n*   Arance: contenuto di \"Arance\"\n*   Mele: contenuto di \"Mele\"\n*   Miste: contenuto di \"Miste\"\n\nSia la scatola \"Arance\" che la scatola \"Miste\" contengono l'elemento \"Arance\".",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 188,
+            "output": 284,
+            "reasoning": null,
+            "total": 472
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 12.888919,
+      "result_file": "01_ragionamento_logico_llama3.2_1b.json",
+      "system1": {
+        "task_family": "reasoning",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "reasoning",
+          "required_strategy": "reasoning_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.7001,
+        "strategy": "reasoning_check",
+        "strategy_confidence": 0.2409,
+        "execution_confidence": 0.6528,
+        "confidence": 0.2409,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 12
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "test_id": "matematica",
+      "started_at": "2026-10-20T14:28:23.179369+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 3,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "ricavo totale 2.770,20",
+            "passed": false
+          },
+          {
+            "label": "utile 610,20",
+            "passed": false
+          },
+          {
+            "label": "margine 22,03%",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 221,
+        "output": 450,
+        "reasoning": null,
+        "total": 671
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Ecco i passaggi per calcolare ricavo totale, utile e margine percentuale:\n\n**Calcolo del ricavo totale:**\n\n*   Prezzo degli articoli venduti a 35% del prezzo di acquisto: 120 x 0,35 = 42\n*   Prezzo degli articoli venduti a 20% del prezzo di acquisto: 120 x 0,20 = 24\n*   Ricavo totale degli articoli venduti a 35% del prezzo di acquisto: 42 + 24 = 66\n*   Ricavo totale degli articoli venduti a 20% del prezzo di acquisto: 120 - 30 = 90\n*   Ricavo totale totale: 66 + 90 = 156\n\n**Calcolo dell'utile:**\n\n*   Ricavo totale - Spese di acquisto degli articoli venduti a 35% del prezzo di acquisto: 156 - (120 x 0,35) = 156 - 42 = 114\n*   Ricavo totale - Spese di acquisto degli articoli venduti a 20% del prezzo di acquisto: 156 - (120 x 0,20) = 156 - 24 = 132\n*   Utile totale: 114 + 132 = 246\n\n**Calcolo del margine percentuale:**\n\n*   Utile totale / Spese di acquisto degli articoli venduti a 35% del prezzo di acquisto: (246 / 120) x 100% = 206%\n*   Spese di acquisto degli articoli venduti a 35% del prezzo di acquisto: 120 x 0,35 = 42\n*   Margine percentuale: (246 - 42) / 120 = 204%\n\n**Calcolo del ricavo totale, utile e margine percentuale:**\n\n*   Ricavo totale: 156\n*   Utile: 246\n*   Margine percentuale: 206%",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 221,
+            "output": 450,
+            "reasoning": null,
+            "total": 671
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 15.543229,
+      "result_file": "02_matematica_llama3.2_1b.json",
+      "system1": {
+        "task_family": "math",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "math",
+          "required_strategy": "math_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.4791,
+        "strategy": "math_check",
+        "strategy_confidence": 0.814,
+        "execution_confidence": 0.062,
+        "confidence": 0.062,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "test_id": "programmazione",
+      "started_at": "2026-10-20T14:28:38.723987+00:00",
+      "quality": {
+        "passed": 2,
+        "total": 6,
+        "score": 0.33,
+        "checks": [
+          {
+            "label": "documento HTML completo",
+            "passed": true
+          },
+          {
+            "label": "CSS e JavaScript inline",
+            "passed": false
+          },
+          {
+            "label": "gestione input da tastiera",
+            "passed": false
+          },
+          {
+            "label": "azione per nuova partita",
+            "passed": false
+          },
+          {
+            "label": "nessun salvataggio persistente",
+            "passed": true
+          },
+          {
+            "label": "nessuna dipendenza o risorsa remota",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 340,
+        "output": 221,
+        "reasoning": null,
+        "total": 561
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Gioco di Sudoku</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <div class=\"sudoku-container\">\n        <div class=\"grid\">\n            <div class=\"grid-row\">1</div>\n            <div class=\"grid-row\">2</div>\n            <div class=\"grid-row\">3</div>\n            <div class=\"grid-row\">4</div>\n            <div class=\"grid-row\">5</div>\n            <div class=\"grid-row\">6</div>\n            <div class=\"grid-row\">7</div>\n            <div class=\"grid-row\">8</div>\n            <div class=\"grid-row\">9</div>\n        </div>\n    </div>\n\n    <script src=\"script.js\"></script>\n</body>\n</html>\n```",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 340,
+            "output": 221,
+            "reasoning": null,
+            "total": 561
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 9.842042,
+      "result_file": "03_programmazione_llama3.2_1b.json",
+      "system1": {
+        "task_family": "coding",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "coding",
+          "required_strategy": "requirements_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.9999,
+        "strategy": "requirements_check",
+        "strategy_confidence": 0.3321,
+        "execution_confidence": 0.3415,
+        "confidence": 0.3321,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "coding",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "test_id": "estrazione_json",
+      "started_at": "2026-10-20T14:28:48.567745+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 2,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "risposta in formato JSON",
+            "passed": false
+          },
+          {
+            "label": "riferimento all'Introduzione",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 12644,
+        "output": 5576,
+        "reasoning": null,
+        "total": 18220
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Questa risposta è un riassunto dei contenuti dei quattro capitoli di un libro o una pubblicazione su un argomento specifico, come la comprensione del giudizio. Non è una analisi dettagliata delle idee presentate in quelli capitoli, ma piuttosto un riassunto generale dei contenuti principali e delle loro relazioni tra loro.\n\nLa prima parte del riassunto copre i contenuti del capitolo 1, che introduce l'argomento di giudizio e delle sue diverse sfumature. La seconda parte si concentra sui contenuti del capitolo 2, che discute della competenza e delle euristiche del giudizio, nonché della critica alla teoria dell'umorismo.\n\nLa terza parte del riassunto copre i contenuti del capitolo 3, che analizza i bias e le loro implicazioni, e del capitolo 4, che esamina lo sviluppo cognitivo e la comprensione della mente umana. La quarta parte si concentra sui contenuti del capitolo 5, che discute l'importanza della competenza nella scelta, e del capitolo 6, che analizza la diversità e l'incertezza nella scelta.\n\nLa quinta parte del riassunto copre i contenuti del capitolo 7, che esamina le applicazioni della comprensione del giudizio nella vita quotidiana, e del capitolo 8, che analizza la comprensione del giudizio nella psicologia dell'uso della mente.\n\nInfine, la sesta parte del riassunto copre i contenuti del capitolo 9, che esamina la psicologia dell'intuizione esatta e la sua relazione con la magia, e del capitolo 10, che analizza la psicologia dell'intuizione esperta e la sua relazione con la magia.\n\nQuesto riassunto è un riassunto generale dei contenuti principali e delle loro relazioni tra loro, e non contiene nessun'analisi dettagliata delle idee presentate in quelli capitoli.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1066,
+            "output": 553,
+            "reasoning": null,
+            "total": 1619
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1076,
+            "output": 217,
+            "reasoning": null,
+            "total": 1293
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1053,
+            "output": 752,
+            "reasoning": null,
+            "total": 1805
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1069,
+            "output": 225,
+            "reasoning": null,
+            "total": 1294
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1047,
+            "output": 558,
+            "reasoning": null,
+            "total": 1605
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_6",
+          "status": "ok",
+          "tokens": {
+            "input": 1059,
+            "output": 382,
+            "reasoning": null,
+            "total": 1441
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_7",
+          "status": "ok",
+          "tokens": {
+            "input": 1067,
+            "output": 706,
+            "reasoning": null,
+            "total": 1773
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_8",
+          "status": "ok",
+          "tokens": {
+            "input": 1044,
+            "output": 224,
+            "reasoning": null,
+            "total": 1268
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_9",
+          "status": "ok",
+          "tokens": {
+            "input": 1031,
+            "output": 856,
+            "reasoning": null,
+            "total": 1887
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_10",
+          "status": "ok",
+          "tokens": {
+            "input": 1082,
+            "output": 633,
+            "reasoning": null,
+            "total": 1715
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 2050,
+            "output": 470,
+            "reasoning": null,
+            "total": 2520
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 11,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 222.281143,
+      "result_file": "04_estrazione_json_llama3.2_1b.json",
+      "system1": {
+        "task_family": "source",
+        "execution_mode": "source_chunks",
+        "source_chars": 30000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "source",
+          "required_strategy": "grounded_extract",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.4826,
+        "strategy": "grounded_extract",
+        "strategy_confidence": 0.3731,
+        "execution_confidence": 0.1138,
+        "confidence": 0.1138,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "source",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "source_chunks",
+        "preflight_latency_ms": 11
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "test_id": "sintesi_traduzione",
+      "started_at": "2026-10-20T14:32:30.854503+00:00",
+      "quality": {
+        "passed": 1,
+        "total": 2,
+        "score": 0.5,
+        "checks": [
+          {
+            "label": "presenza di lessico spagnolo",
+            "passed": false
+          },
+          {
+            "label": "lunghezza minima della traduzione",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 7299,
+        "output": 4137,
+        "reasoning": null,
+        "total": 11436
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Ecco i risultati parziali della traduzione delle prime 5 pagine del libro \"E la lingua di Amos Tversky\" in spagnolo, mantenendo fedeltà al testo originale e la struttura dei paragrafi:\n\nAssembla i risultati parziali seguenti in un'unica risposta completa:\n\n<risultato_segmento_1>\nPer la categoria: translation, seguiamo il contratto locale, estraiamo i requisiti dal prompt e rispettiamo rigorosamente fonte e formato.\n</risultato_segmento_1>\n\n---\n\n<risultato_segmento_2>\nIl libro \"E la lingua di Amos Tversky\" descrive la teoria dei \"bias\" o \"preconcetti\" che ci sono nel linguaggio quotidiano. Ecco una traduzione della sezione 2/5:\n\n\"Introduzione\"\n\nLa mia speranza è di arricchire il vocabolario che si usa quando si esprimono commenti sui giudizi e le scelte altrui, sulle nuove politiche aziendali o sulle scelte d'investimento di un collega. Perché curarsi di simili pettegolezzi? Perché è molto più facile, nonché molto più divertente, riconoscere ed etichettare gli errori altrui piuttosto che i propri. Mettere in discussione ciò che crediamo e vogliamo è, nella migliore delle circostanze, difficile, e particolarmente difficile quando la situazione ci impone di farlo, ma è indubbio che traiamo beneficio dalle opinioni informate degli altri. Spesso noi prevediamo istintivamente come amici e colleghi giudicheranno le nostre scelte, sicché la qualità e il contenuto di tali previsioni hanno importanza. L'aspettativa di un'osservazione intelligente sul nostro conto rappresenta un potente incentivo per una seria autocritica, e può dimostrarsi uno stimolo persino più forte del proposito di migliorare, per il nuovo anno, il nostro processo decisionale a casa e al lavoro.\n\n\"Classificazione Laya incerta: Segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.\"\n\nLa classificazione dei \"bias\" è suddivisa in due categorie: \"bias generali\" e \"bias specifici\". I \"bias generali\" sono preconcetti che riguardano generalemente le persone, mentre i \"bias specifici\" sono preconcetti che riguardano una determinata situazione o scelta.\n\n\"La classificazione dei bias\"\n\nLa classificazione dei \"bias\" può essere suddivisa in due categorie: bias generali e bias specifici.\n\n* Bias generali: sono preconcetti che riguardano generalemente le persone. Ad esempio, il bias della \"galli\" è il preconcetto di pensare che le persone siano più interessate a ciò che è giusto di loro che a ciò che è giusto dell'altro.\n* Bias specifici: sono preconcetti che riguardano una determinata situazione o scelta. Ad esempio, il bias della \"galli\" può essere un bias specifico per una determinata situazione, come un'atmosfera di lavoro o un tipo di personaggio.\n\n\"Effettoalone\"\n\nL'effettoalone è un meccanismo che rende più facile prevedere i \"bias\". Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\nEffettivamente, la classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\n\"Effettoalone\"\n\nL'effettoalone è un meccanismo che rende più facile prevedere i \"bias\". Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Classificazione dei bias\"\n\nLa classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici.\n\n* Bias generali: sono preconcetti che riguardano generamente le persone. Ad esempio, il bias della \"galli\" è il preconcetto di pensare che le persone siano più interessate a ciò che è giusto di loro che a ciò che è giusto dell'altro.\n* Bias specifici: sono preconcetti che riguardano una determinata situazione o scelta. Ad esempio, il bias della \"galli\" può essere un bias specifico per una determinata situazione, come un'atmosfera di lavoro o un tipo di personaggio.\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\nEffettivamente, la classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\n\"Effettoalone\"\n\nL'effettoalone è un meccanismo che rende più facile prevedere i \"bias\". Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Classificazione dei bias\"\n\nLa classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici. I bias generali sono preconcetti che riguardano generamente le persone, mentre i bias specifici sono preconcetti che riguardano una determinata situazione o scelta.\n\nEffettivamente, la classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\n\"In conclusione, la classificazione dei bias è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni. La classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione.\n\n\"In conclusione, la classificazione dei bias è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni. La classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione.\"\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\nIn conclusione, la classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione.\n\n\"In conclusione, la classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\"",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1068,
+            "output": 36,
+            "reasoning": null,
+            "total": 1104
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1078,
+            "output": 813,
+            "reasoning": null,
+            "total": 1891
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1055,
+            "output": 346,
+            "reasoning": null,
+            "total": 1401
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1071,
+            "output": 309,
+            "reasoning": null,
+            "total": 1380
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1049,
+            "output": 135,
+            "reasoning": null,
+            "total": 1184
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 1978,
+            "output": 2498,
+            "reasoning": null,
+            "total": 4476
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 6,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 167.424803,
+      "result_file": "05_sintesi_traduzione_llama3.2_1b.json",
+      "system1": {
+        "task_family": "translation",
+        "execution_mode": "source_chunks",
+        "source_chars": 15000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "translation",
+          "required_strategy": "faithful_translate",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.9696,
+        "strategy": "faithful_translate",
+        "strategy_confidence": 0.9829,
+        "execution_confidence": 0.0329,
+        "confidence": 0.0329,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "translation",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 9
+      }
+    }
+  ],
+  "result_directories": [
+    {
+      "provider": "ollama",
+      "model": "llama3.2:1b",
+      "directory": "."
+    }
+  ],
+  "summary": {
+    "completed": 5,
+    "successful": 5,
+    "failed": 0,
+    "seconds": 427.980136,
+    "total_tokens": 31360,
+    "known_total_tokens": 31360,
+    "usage_missing": 0
+  },
+  "system1": {
+    "ragionamento_logico": {
+      "task_family": "reasoning",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "reasoning",
+        "required_strategy": "reasoning_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.7001,
+      "strategy": "reasoning_check",
+      "strategy_confidence": 0.2409,
+      "execution_confidence": 0.6528,
+      "confidence": 0.2409,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 12
+    },
+    "matematica": {
+      "task_family": "math",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "math",
+        "required_strategy": "math_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.4791,
+      "strategy": "math_check",
+      "strategy_confidence": 0.814,
+      "execution_confidence": 0.062,
+      "confidence": 0.062,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 9
+    },
+    "programmazione": {
+      "task_family": "coding",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "coding",
+        "required_strategy": "requirements_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.9999,
+      "strategy": "requirements_check",
+      "strategy_confidence": 0.3321,
+      "execution_confidence": 0.3415,
+      "confidence": 0.3321,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "coding",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 9
+    },
+    "estrazione_json": {
+      "task_family": "source",
+      "execution_mode": "source_chunks",
+      "source_chars": 30000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "source",
+        "required_strategy": "grounded_extract",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.4826,
+      "strategy": "grounded_extract",
+      "strategy_confidence": 0.3731,
+      "execution_confidence": 0.1138,
+      "confidence": 0.1138,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "source",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "source_chunks",
+      "preflight_latency_ms": 11
+    },
+    "sintesi_traduzione": {
+      "task_family": "translation",
+      "execution_mode": "source_chunks",
+      "source_chars": 15000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "translation",
+        "required_strategy": "faithful_translate",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.9696,
+      "strategy": "faithful_translate",
+      "strategy_confidence": 0.9829,
+      "execution_confidence": 0.0329,
+      "confidence": 0.0329,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "translation",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 9
+    }
+  },
+  "system2_metrics": {
+    "run_id": "2c190ca25ab147259b6d3bf33d546747",
+    "db_path": "/var/www/hal_system2/events/benchmarks/system2_metrics.sqlite3",
+    "summary": {
+      "events": 25,
+      "system1_events": 5,
+      "system2_events": 20,
+      "latency_ms": 428016,
+      "tokens_total": 31360,
+      "errors": 0
+    }
+  }
+}

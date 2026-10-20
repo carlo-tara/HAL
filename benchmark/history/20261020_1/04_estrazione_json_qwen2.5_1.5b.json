@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T13:44:00.554835+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 12747,
+    "output": 4602,
+    "reasoning": null,
+    "total": 17349
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```json\n{\n  \"title\": \"Pompiere incendi\",\n  \"chapters\": [\n    {\n      \"chapter\": \"Incendio in una casa\",\n      \"content\": [\n        \"Nostro obiettivo era mettere a punto una teoria sulla decisione di incertezza.\",\n        \"Nel complesso, però, l'idea che la nostra mente sia soggetta a errori sistematici è ora generalmente accettata.\"\n      ]\n    },\n    {\n      \"chapter\": \"L'intuizione esperta\",\n      \"content\": [\n        \"Amos e io non ci occupammo delle intuizioni esatte date dalla competenza, ma solo delle euristiche del giudizio, le quali, com’è stato occasionalmente osservato, «sono molto utili, ma a volte conducono a gravi errori sistematici». Ci concentrammo sui bias sia perché li trovavamo interessanti di per sé sia perché fornivano prove delle euristiche del giudizio. Non ci chiedemmo se tutti i giudizi intuitivi in condizioni di incertezza fossero prodotti dalle euristiche che studiavamo: oggi è chiaro che non lo sono. In particolare, le intuizioni esatte degli esperti sono dovute più alla pratica prolungata6 che alle euristiche. Siamo oggi in grado di elaborare un quadro più ricco ed equilibrato, nel quale la competenza e le euristiche costituiscono fonti alternative dei giudizi e delle scelte intuitivi.\"\n      ]\n    },\n    {\n      \"chapter\": \"La psicologia dell'intuizione\",\n      \"content\": [\n        \"Herbert Simon è stato il grande esempio di una competenza intuitiva.\",\n        \"Le intuizioni valide richiedono lo studio di un campione di scacchi.\",\n        \"Le intuizioni valide maturano quando soggetti esperti imparano a riconoscere elementi familiari in una situazione nuova e agire in maniera appropriata.\",\n        \"I buoni giudizi intuitivi vengono in mente con la stessa immedianza di 'cagnolino!'.\"\n      ]\n    }\n  ]\n}\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1087,
+        "output": 265,
+        "reasoning": null,
+        "total": 1352
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1083,
+        "output": 854,
+        "reasoning": null,
+        "total": 1937
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1062,
+        "output": 683,
+        "reasoning": null,
+        "total": 1745
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1077,
+        "output": 104,
+        "reasoning": null,
+        "total": 1181
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1052,
+        "output": 246,
+        "reasoning": null,
+        "total": 1298
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1070,
+        "output": 168,
+        "reasoning": null,
+        "total": 1238
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1077,
+        "output": 470,
+        "reasoning": null,
+        "total": 1547
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1052,
+        "output": 98,
+        "reasoning": null,
+        "total": 1150
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 277,
+        "reasoning": null,
+        "total": 1324
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1090,
+        "output": 943,
+        "reasoning": null,
+        "total": 2033
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2050,
+        "output": 494,
+        "reasoning": null,
+        "total": 2544
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 208.678388,
+  "result_file": "04_estrazione_json_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 10
+  }
+}

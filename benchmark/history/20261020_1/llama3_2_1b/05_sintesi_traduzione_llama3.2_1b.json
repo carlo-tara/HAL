@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-20T14:32:30.854503+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 7299,
+    "output": 4137,
+    "reasoning": null,
+    "total": 11436
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati parziali della traduzione delle prime 5 pagine del libro \"E la lingua di Amos Tversky\" in spagnolo, mantenendo fedeltà al testo originale e la struttura dei paragrafi:\n\nAssembla i risultati parziali seguenti in un'unica risposta completa:\n\n<risultato_segmento_1>\nPer la categoria: translation, seguiamo il contratto locale, estraiamo i requisiti dal prompt e rispettiamo rigorosamente fonte e formato.\n</risultato_segmento_1>\n\n---\n\n<risultato_segmento_2>\nIl libro \"E la lingua di Amos Tversky\" descrive la teoria dei \"bias\" o \"preconcetti\" che ci sono nel linguaggio quotidiano. Ecco una traduzione della sezione 2/5:\n\n\"Introduzione\"\n\nLa mia speranza è di arricchire il vocabolario che si usa quando si esprimono commenti sui giudizi e le scelte altrui, sulle nuove politiche aziendali o sulle scelte d'investimento di un collega. Perché curarsi di simili pettegolezzi? Perché è molto più facile, nonché molto più divertente, riconoscere ed etichettare gli errori altrui piuttosto che i propri. Mettere in discussione ciò che crediamo e vogliamo è, nella migliore delle circostanze, difficile, e particolarmente difficile quando la situazione ci impone di farlo, ma è indubbio che traiamo beneficio dalle opinioni informate degli altri. Spesso noi prevediamo istintivamente come amici e colleghi giudicheranno le nostre scelte, sicché la qualità e il contenuto di tali previsioni hanno importanza. L'aspettativa di un'osservazione intelligente sul nostro conto rappresenta un potente incentivo per una seria autocritica, e può dimostrarsi uno stimolo persino più forte del proposito di migliorare, per il nuovo anno, il nostro processo decisionale a casa e al lavoro.\n\n\"Classificazione Laya incerta: Segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.\"\n\nLa classificazione dei \"bias\" è suddivisa in due categorie: \"bias generali\" e \"bias specifici\". I \"bias generali\" sono preconcetti che riguardano generalemente le persone, mentre i \"bias specifici\" sono preconcetti che riguardano una determinata situazione o scelta.\n\n\"La classificazione dei bias\"\n\nLa classificazione dei \"bias\" può essere suddivisa in due categorie: bias generali e bias specifici.\n\n* Bias generali: sono preconcetti che riguardano generalemente le persone. Ad esempio, il bias della \"galli\" è il preconcetto di pensare che le persone siano più interessate a ciò che è giusto di loro che a ciò che è giusto dell'altro.\n* Bias specifici: sono preconcetti che riguardano una determinata situazione o scelta. Ad esempio, il bias della \"galli\" può essere un bias specifico per una determinata situazione, come un'atmosfera di lavoro o un tipo di personaggio.\n\n\"Effettoalone\"\n\nL'effettoalone è un meccanismo che rende più facile prevedere i \"bias\". Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\nEffettivamente, la classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\n\"Effettoalone\"\n\nL'effettoalone è un meccanismo che rende più facile prevedere i \"bias\". Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Classificazione dei bias\"\n\nLa classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici.\n\n* Bias generali: sono preconcetti che riguardano generamente le persone. Ad esempio, il bias della \"galli\" è il preconcetto di pensare che le persone siano più interessate a ciò che è giusto di loro che a ciò che è giusto dell'altro.\n* Bias specifici: sono preconcetti che riguardano una determinata situazione o scelta. Ad esempio, il bias della \"galli\" può essere un bias specifico per una determinata situazione, come un'atmosfera di lavoro o un tipo di personaggio.\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\nEffettivamente, la classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\n\"Effettoalone\"\n\nL'effettoalone è un meccanismo che rende più facile prevedere i \"bias\". Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. Ad esempio, se un'azienda decide di aumentare i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\". Se invece un'azienda decide di diminuire i salari, il preconcetto di pensare che il personale è più interessato a ciò che è giusto di loro potrebbe portare a prevedere un bias della \"galli\" o del \"bias della merce\".\n\n\"Classificazione dei bias\"\n\nLa classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici. I bias generali sono preconcetti che riguardano generamente le persone, mentre i bias specifici sono preconcetti che riguardano una determinata situazione o scelta.\n\nEffettivamente, la classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\n\"In conclusione, la classificazione dei bias è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni. La classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione.\n\n\"In conclusione, la classificazione dei bias è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni. La classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione.\"\n\n\"Effetto di base\"\n\nL'effetto di base è un meccanismo che rende più facile prevedere i \"bias\" in base alla condizione e alla situazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\n\nIn conclusione, la classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione.\n\n\"In conclusione, la classificazione dei bias può essere utilizzata per migliorare la decisione di azienda e prevenire gli errori di comunicazione. La classificazione dei bias può essere suddivisa in due categorie: bias generali e bias specifici, che sono dannosi nella maggior parte delle situazioni.\"",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1068,
+        "output": 36,
+        "reasoning": null,
+        "total": 1104
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1078,
+        "output": 813,
+        "reasoning": null,
+        "total": 1891
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1055,
+        "output": 346,
+        "reasoning": null,
+        "total": 1401
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1071,
+        "output": 309,
+        "reasoning": null,
+        "total": 1380
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1049,
+        "output": 135,
+        "reasoning": null,
+        "total": 1184
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 1978,
+        "output": 2498,
+        "reasoning": null,
+        "total": 4476
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 6,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 167.424803,
+  "result_file": "05_sintesi_traduzione_llama3.2_1b.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 9
+  }
+}

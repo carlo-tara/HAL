@@ -97,4 +97,4 @@ Handoff ranking fine → `backlog-prioritization` (stesso bucket Now/Next/Later)
 
 Template artefatto: [references/scamper-template.md](references/scamper-template.md)
 
-Path tipico progetto: `projects/.../05-strategia/scamper-*.md` o `.cursor/product/scamper-YYYY-MM-DD.md`
+Path tipico progetto: `projects/.../05-strategia/scamper-*.md` o `product/scamper-YYYY-MM-DD.md`

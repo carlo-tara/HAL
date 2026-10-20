@@ -2,6 +2,12 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag sync sul padre `a-harness`.
 
+## [Unreleased] - 2026-10-20
+
+### Changed
+
+- Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `context-budget` 1.3.1 [sync:safe]
+
 ## [Unreleased]
 
 ## [1.3.0] - 2026-10-14

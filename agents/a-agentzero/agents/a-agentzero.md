@@ -45,8 +45,8 @@ Fornisci protocollo, workflow generici e la skill per generare agenti figli di p
 ```
 1. Identifica agente madre L1 (a-b2b | a-copywriter | a-design | a-harness | a-product | a-seozoom | a-wordpress)
 2. Carica catena L0 + L1
-3. Verifica .cursor/skills/ per duplicati
-4. mkdir .cursor/skills/{dominio}-{progetto}/
+3. Verifica .agents/skills/ per duplicati
+4. mkdir .agents/skills/{dominio}-{progetto}/
 5. Compila extension-template.md → SKILL.md con extends: a-{dominio}
 6. Aggiungi delta: path, override, capacità, deleghe
 7. (Opzionale) Crea file dati da template L1
@@ -77,7 +77,7 @@ Dettaglio: [references/agent-versioning.md](references/agent-versioning.md)
 | a-copywriter | Copy web, tono di voce, humanizer | brand-brief-template.md |
 | a-design | UI/UX, accessibilità WCAG, charts, illustrazioni | chart/illustration/UI templates |
 | a-harness | TDD / Makefile / steward / DDD | harness-scaffold.md + glossary/Makefile |
-| a-product | Discovery, PO (PRD/Canvas), Personas, JTBD, BDD | extension-template.md + `.cursor/product/` |
+| a-product | Discovery, PO (PRD/Canvas), Personas, JTBD, BDD | extension-template.md + `product/` |
 | a-seozoom | SEO/GEO, import dati, Google Ads | project-brief-template.md |
 | a-wordpress | Plugin, migrazioni, WP-CLI | site-brief-template.md |
 
@@ -92,7 +92,7 @@ Fonte lista: `Makefile` `L1_AGENTS` / `AGENT-PROTOCOL.md`.
 | Scaffold skill L2 | Pilot B2B, account research → a-b2b |
 | Debug catena extends | Copy, editing, tono → a-copywriter |
 | Spiegazione protocollo | Design, UI shell, charts, illustrazioni → a-design |
-| Setup .agents/skills/ (.cursor/skills/) | Ingegnerizzazione, TDD, gates → a-harness |
+| Setup .agents/skills/ | Ingegnerizzazione, TDD, gates → a-harness |
 | Verifica gerarchia | Discovery, PO, Personas, JTBD, BDD → a-product |
 | Sync / learn L0 | SEO/GEO, Ads → a-seozoom |
 | | Plugin WordPress, migrazioni → a-wordpress |

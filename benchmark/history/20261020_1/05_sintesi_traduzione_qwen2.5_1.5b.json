@@ -1,0 +1,46 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-20T13:47:29.235753+00:00",
+  "quality": null,
+  "tokens": {
+    "input": null,
+    "output": null,
+    "reasoning": null,
+    "total": null
+  },
+  "status": "error",
+  "error": {
+    "type": "timeout"
+  },
+  "seconds": 694.937299,
+  "result_file": "05_sintesi_traduzione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 10
+  }
+}

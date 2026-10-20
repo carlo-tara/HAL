@@ -30,7 +30,7 @@ Sul **repository del prodotto** (non su HAL):
 | `Makefile` con almeno `test-unit`, `pre-commit`, `ready-for-review` | Platform API: verità deterministica |
 | `docs/glossary.md` (consigliato) | Nomi allineati al dominio |
 | `docs/bounded-contexts.md` (consigliato) | Dove può toccare i file |
-| Skill L2 opzionale `.cursor/skills/harness-{progetto}/` | Path/stack specifici del progetto |
+| Skill L2 opzionale `.agents/skills/harness-{progetto}/` | Path/stack specifici del progetto |
 
 Se il repo è greenfield:
 
@@ -80,7 +80,7 @@ Poi in chat: `@a-harness` o subagent `a-harness`.
 
 Slice: aggiungere rate limiting a POST /api/auth/login
 usando il middleware già in /api/users.
-Contratto: .cursor/product/features/auth-login.feature — scenario "…"
+Contratto: product/features/auth-login.feature — scenario "…"
 Bounded context: Auth (src/modules/auth/)
 File max 4. Effort: thorough.
 Non chiedermi attenzione finché make ready-for-review non è verde.
@@ -325,7 +325,7 @@ ESEMPI
 
        Slice: aggiungere rate limiting a POST /api/auth/login
        usando il middleware già in /api/users.
-       Contratto: .cursor/product/features/auth-login.feature
+       Contratto: product/features/auth-login.feature
        Bounded context: Auth (src/modules/auth/)
        Non chiedermi attenzione finché make ready-for-review non è verde.
 
@@ -418,7 +418,7 @@ ESEMPI
        Report: cosa è emerso in questa sessione, target proposti per !.
 
        @a-harness /learn !
-       Consolida convenzioni progetto in .cursor/skills/harness-progetto/.
+       Consolida convenzioni progetto in .agents/skills/harness-progetto/.
 
        @a-harness /learn ! solo notazione minuti
 
@@ -506,7 +506,7 @@ SINTASSI
        @a-harness /progress
 
 DESCRIZIONE
-       Legge (e riassume) il file .cursor/product/agent-progress.md:
+       Legge (e riassume) il file product/agent-progress.md:
        session_id, fase corrente, ultimi eventi, exit code make, stuck count.
 
        History append-only — non riscrive eventi passati. Fork = nuovo

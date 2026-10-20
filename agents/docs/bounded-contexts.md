@@ -8,9 +8,9 @@ Mappa confini del meta-repo. Ogni `/slice` dichiara quale context è attivo.
 |---------|-------------|----------------|--------------|
 | Protocol / L0 | `a-agentzero/` | Protocollo ereditarietà, sicurezza non sovrascrivibile, `/learn`, `/sync`, comandi L0, competenze baseline, `agent-version.sh` | → Domain Agents via `extends:`; → Tooling via scripts; → Consumer Delta via scaffold |
 | Domain Agents / L1 | `a-copywriter/`, `a-illustrator/`, `a-seozoom/`, `a-wordpress/`, `a-personas/`, `a-jtbd/`, `a-gherkin/`, `a-charts/`, `a-b2b/`, `a-product/`, `a-po/`, `a-enrichment/`, `a-harness/`, `a-uiux/` | Skill di dominio, competencies locali, extension-template, deploy per agente | ← Protocol; → Consumer Delta (template L2); → Tooling (`deploy.sh`) |
-| Consumer Delta / L2 | `.cursor/skills/*/` (qui: `harness-agentfactory/`); nei consumer: `{repo}/.cursor/skills/` | Delta progetto: path, brand, override, bootstrap locale | ← L1 via `extends:`; non importa codice L1 cross-tree |
+| Consumer Delta / L2 | `.agents/skills/*/` (qui: `harness-agentfactory/`); nei consumer: `{repo}/.agents/skills/` | Delta progetto: path, brand, override, bootstrap locale | ← L1 via `extends:`; non importa codice L1 cross-tree |
 | Tooling / Sync-Deploy | `deploy-all.sh`, `a-*/deploy.sh`, `a-agentzero/scripts/`, `scripts/export-*.sh`, `dist/` | Deploy dual-runtime, report versioni, export pack Claude | ← Protocol/L1 path; emette report STALE |
-| Docs / Harness meta | `docs/`, `Makefile`, `.cursor/product/` | Glossario, bounded contexts, Platform API, progress, manuali harness | Legge path L0/L1; non muta business skill senza slice |
+| Docs / Harness meta | `docs/`, `Makefile`, `product/` | Glossario, bounded contexts, Platform API, progress, manuali harness | Legge path L0/L1; non muta business skill senza slice |
 
 ## Regole
 

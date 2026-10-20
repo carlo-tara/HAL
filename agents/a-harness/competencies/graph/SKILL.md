@@ -1,13 +1,13 @@
 ---
 name: graph
 kind: competency
-version: 1.3.1
+version: 1.3.2
 model: orcarouter/deepseek/deepseek-v4-flash
 description: >-
   Genera Loop o Work Graph (Markdown + Mermaid) da contesto, file (es. /graph
   ToDo.md) o richiesta esplicita. Flag -y = auto-accept + multi-cycle sequenziale
   fino a fine backlog (ogni nodo = /slice|/cycle). Default Plan-only: scrive
-  .cursor/product/work-graph.md; preferisci Loop (anti graph-trap). Lean brief
+  product/work-graph.md; preferisci Loop (anti graph-trap). Lean brief
   ≤200 token + handoff-graph.json via prompt-builder. Use when user invokes
   /graph or needs loop/graph engineering from a series of requests.
 ---

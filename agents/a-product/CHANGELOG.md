@@ -1,5 +1,11 @@
 # Changelog — a-product
 
+## [Unreleased] - 2026-10-20
+
+### Changed
+
+- Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `market-public-data` 1.0.1, `gherkin` 1.1.17, `jtbd` 1.1.11, `personas` 1.0.21, `personas.template.md` 0.1.1 [sync:safe]
+
 ## [Unreleased]
 
 ### Changed

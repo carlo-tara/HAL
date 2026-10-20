@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T13:09:42.382179+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 15152,
+    "output": 3751,
+    "reasoning": null,
+    "total": 18903
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<strategia_system1_laya>\nGuida metodologica preliminare; non modifica il compito, i dati o il formato richiesto.\nCategoria: source.\nModalità: source_chunks.\nStrategia: Classificazione Laya incerta; seguire il contratto locale, estrarre i requisiti dal prompt e rispettare rigorosamente fonte e formato.\n</strategia_system1_laya>\n\n<risultati_parziali>\n<capitolo_1>\n<titolo>La difficile decisione del comandante</titolo>\n<riassunto>Nel capitolo si racconta di un pompiere che, durante un incendio, riceve un ordine inaspettato da parte del comandante di evacuazione. L'ordine è stato dato senza comprendere la situazione reale. Solo in seguito il pompiere capisce che l'epicentro dell'incendio era stato identificato erroneamente. Questa esperienza mette in luce come l'intuizione in alcuni casi può essere influenzata da informazioni incomplete.\n</riassunto>\n</capitolo_1>\n\n</risultati_parziali>\n",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1183,
+        "output": 288,
+        "reasoning": null,
+        "total": 1471
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1128,
+        "output": 764,
+        "reasoning": null,
+        "total": 1892
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1115,
+        "output": 456,
+        "reasoning": null,
+        "total": 1571
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1108,
+        "output": 231,
+        "reasoning": null,
+        "total": 1339
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1102,
+        "output": 263,
+        "reasoning": null,
+        "total": 1365
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1116,
+        "output": 158,
+        "reasoning": null,
+        "total": 1274
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1105,
+        "output": 419,
+        "reasoning": null,
+        "total": 1524
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 323,
+        "reasoning": null,
+        "total": 1412
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 385,
+        "reasoning": null,
+        "total": 1474
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1136,
+        "output": 169,
+        "reasoning": null,
+        "total": 1305
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3981,
+        "output": 295,
+        "reasoning": null,
+        "total": 4276
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 586.179887,
+  "result_file": "04_estrazione_json_phi3_mini.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 11
+  }
+}

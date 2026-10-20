@@ -1,0 +1,132 @@
+<section>
+    <h2>Executive summary</h2>
+    <p class="lead">
+        Run <b>20261020_1</b>: middleware nuovo con <b>Laya su GPU</b>, una run
+        per modello con pausa di <b>300 s</b>. Confrontata con
+        <b>20261019_3</b> (stesso middleware, Laya su CPU, pausa di 180 s) e con
+        la baseline <b>20261017_all</b> (senza middleware). Sui 4 modelli
+        comuni, un check di qualità vale 1/17 del punteggio; per
+        <code>qwen2.5:1.5b</code> la run ha 15 check disponibili su 17 a causa
+        del timeout.
+    </p>
+
+    <h3>Decisioni proposte</h3>
+    <ol>
+        <li>
+            <b>Spostare Laya su GPU non risolve l'eccesso di token.</b> Su
+            phi3:mini e llama3.2:1b la run usa ancora circa 3 volte i token
+            della baseline (≈31–38k contro ≈11–12k), come nella run 20261019_3.
+            La causa va cercata nel percorso di prompt del middleware, non nel
+            dispositivo di Laya. <i>Decisione:</i> non chiudere il punto su
+            <code>ToDo.md</code>.
+        </li>
+        <li>
+            <b>La qualità di phi3:mini scende</b> a 9/17, contro 13/17 con Laya
+            su CPU e 15/17 nella baseline. È un calo su una sola ripetizione e
+            non è spiegato dai dati disponibili. <i>Decisione:</i> ripetere
+            phi3:mini prima di decidere se il middleware va bene su quel
+            modello.
+        </li>
+        <li>
+            <b>I tempi per chiamata sono misti.</b> La mediana scende su
+            llama3.2:1b (34 → 16 s) e qwen2.5:1.5b (91 → 30 s) e phi3:mini (169
+            → 141 s), ma sale su llama3.2:3b (126 → 172 s). Con 5 chiamate per
+            modello la mediana è poco stabile. <i>Decisione:</i> non attribuire
+            il calo di latenza a Laya GPU senza repliche.
+        </li>
+        <li>
+            <b>Affidabilità</b>: <code>qwen2.5:1.5b</code> ha 1 timeout (694,9 s
+            con limite a 600 s), contro 2 nella run 20261019_3. Gli altri
+            modelli hanno 5/5 ok. <i>Decisione:</i> rivedere il timeout su
+            <code>qwen2.5:1.5b</code> come da <code>ToDo.md</code>.
+        </li>
+    </ol>
+
+    <h3>Confronto per modello</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Modello</th>
+                <th>Qualità baseline</th>
+                <th>Qualità 20261019_3 (Laya CPU)</th>
+                <th>Qualità 20261020_1 (Laya GPU)</th>
+                <th>Mediana tempo/chiamata (20261019_3 → 20261020_1)</th>
+                <th>Non ok (20261019_3 → 20261020_1)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>phi3:mini</td>
+                <td>15/17</td>
+                <td>13/17</td>
+                <td>9/17</td>
+                <td>169 s → 141 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>llama3.2:3b</td>
+                <td>10/17</td>
+                <td>12/17</td>
+                <td>12/17</td>
+                <td>126 s → 172 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>llama3.2:1b</td>
+                <td>11/17</td>
+                <td>8/17</td>
+                <td>7/17</td>
+                <td>34 s → 16 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>qwen2.5:1.5b</td>
+                <td>11/17</td>
+                <td>9/13 (su 13 check)</td>
+                <td>10/15 (su 15 check)</td>
+                <td>91 s → 30 s</td>
+                <td>2 → 1</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="note">
+        Token totali per modello (20261019_3 → 20261020_1): phi3:mini 34.386 →
+        37.829; llama3.2:3b 35.050 → 34.662; llama3.2:1b 34.669 → 31.360;
+        qwen2.5:1.5b 3.426 → 20.141 (non confrontabile, 3/5 ok nella
+        20261019_3). Nella baseline 20261017_all phi3:mini e llama3.2:1b usavano
+        circa 11–12k token.
+    </p>
+
+    <h3>Cosa non si può attribuire</h3>
+    <p>
+        Il confronto con 20261019_3 cambia due variabili insieme: il dispositivo
+        di Laya (CPU → GPU) e la pausa tra le run (180 → 300 s). La pausa non
+        dovrebbe incidere sul tempo della singola chiamata (inferenza, non
+        verificata). Il dispositivo di Laya non spiega né il tetto dei token né
+        la variazione della qualità.
+    </p>
+
+    <h3>Prossimi passi</h3>
+    <ol>
+        <li>
+            Ripetere phi3:mini e llama3.2:3b (stesse condizioni, pausa 300 s)
+            per separare il rumore dal segnale su qualità e tempi.
+        </li>
+        <li>
+            Verificare il percorso dei prompt del middleware che genera i token
+            in più su phi3:mini e llama3.2:1b.
+        </li>
+        <li>
+            Rivedere il timeout di <code>qwen2.5:1.5b</code> su
+            <code>estrazione_json</code> e <code>sintesi_traduzione</code>
+            (prompt lunghi, timeout a 600 s).
+        </li>
+    </ol>
+
+    <p class="note">
+        Limiti: una sola ripetizione per test; la qualità è una rubrica
+        euristica (<code>status: ok</code> non implica risposta corretta); tempi
+        dipendenti dalla macchina e dal carico del momento. Con questi dati non
+        è possibile escludere variazioni casuali tra le run.
+    </p>
+</section>

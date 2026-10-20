@@ -35,10 +35,12 @@ _(nessuna)_
 - [ ] Isolare l'effetto di Laya su CPU vs GPU sul tempo per chiamata #benchmark · P1
   - Perché utile: nella run 20261019_3 tre variazioni sono avvenute insieme (Laya su CPU, middleware nuovo, cooldown); la mediana del tempo per chiamata è salita su phi3 (87→169 s), llama3.2:3b (45→126 s) e qwen (27→91 s).
   - Acceptance: run con middleware nuovo e Laya su GPU, stesse condizioni; confronto per coppia (modello, test) nel report.
+  - Progresso: run `20261020_1` eseguita (Laya su GPU, pausa 300 s invece di 180 s, quindi condizioni non identiche). Tempi misti, token invariati: Laya CPU/GPU non spiega il tetto dei token. Da ripetere con la stessa pausa per chiudere il punto.
 
 - [ ] Verificare l'aumento dei token del middleware nuovo su phi3:mini e llama3.2:1b #benchmark · P1
   - Perché utile: i token totali sono circa 3 volte quelli della baseline 20261017_all (≈34k contro ≈11k); i dati non spiegano il motivo.
   - Acceptance: identificare il percorso di prompt che genera i token in più (misurati vs non disponibili in SQLite) e documentare la causa.
+  - Progresso: la run `20261020_1` conferma ≈31–38k token su phi3:mini e llama3.2:1b anche con Laya su GPU, quindi la causa è nel middleware, non nel dispositivo di Laya.
 
 ## P2
 

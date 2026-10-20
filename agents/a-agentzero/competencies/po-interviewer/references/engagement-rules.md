@@ -28,7 +28,7 @@
 
 ## Output
 
-- Deliverable finale sui path product portabili (vedi discovery L1): `.cursor/product/` → `.claude/product/` → `product/`
+- Deliverable finale sui path product portabili (vedi discovery L1): `.claude/product/` → `product/`
 - Preview in chat ammessi; persistenza solo post-conferma
 
 ## Anti-pattern

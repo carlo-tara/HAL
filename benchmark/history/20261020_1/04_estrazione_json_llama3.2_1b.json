@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T14:28:48.567745+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 12644,
+    "output": 5576,
+    "reasoning": null,
+    "total": 18220
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Questa risposta è un riassunto dei contenuti dei quattro capitoli di un libro o una pubblicazione su un argomento specifico, come la comprensione del giudizio. Non è una analisi dettagliata delle idee presentate in quelli capitoli, ma piuttosto un riassunto generale dei contenuti principali e delle loro relazioni tra loro.\n\nLa prima parte del riassunto copre i contenuti del capitolo 1, che introduce l'argomento di giudizio e delle sue diverse sfumature. La seconda parte si concentra sui contenuti del capitolo 2, che discute della competenza e delle euristiche del giudizio, nonché della critica alla teoria dell'umorismo.\n\nLa terza parte del riassunto copre i contenuti del capitolo 3, che analizza i bias e le loro implicazioni, e del capitolo 4, che esamina lo sviluppo cognitivo e la comprensione della mente umana. La quarta parte si concentra sui contenuti del capitolo 5, che discute l'importanza della competenza nella scelta, e del capitolo 6, che analizza la diversità e l'incertezza nella scelta.\n\nLa quinta parte del riassunto copre i contenuti del capitolo 7, che esamina le applicazioni della comprensione del giudizio nella vita quotidiana, e del capitolo 8, che analizza la comprensione del giudizio nella psicologia dell'uso della mente.\n\nInfine, la sesta parte del riassunto copre i contenuti del capitolo 9, che esamina la psicologia dell'intuizione esatta e la sua relazione con la magia, e del capitolo 10, che analizza la psicologia dell'intuizione esperta e la sua relazione con la magia.\n\nQuesto riassunto è un riassunto generale dei contenuti principali e delle loro relazioni tra loro, e non contiene nessun'analisi dettagliata delle idee presentate in quelli capitoli.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 553,
+        "reasoning": null,
+        "total": 1619
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 217,
+        "reasoning": null,
+        "total": 1293
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 752,
+        "reasoning": null,
+        "total": 1805
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 225,
+        "reasoning": null,
+        "total": 1294
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 558,
+        "reasoning": null,
+        "total": 1605
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 382,
+        "reasoning": null,
+        "total": 1441
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 706,
+        "reasoning": null,
+        "total": 1773
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 224,
+        "reasoning": null,
+        "total": 1268
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 856,
+        "reasoning": null,
+        "total": 1887
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 633,
+        "reasoning": null,
+        "total": 1715
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2050,
+        "output": 470,
+        "reasoning": null,
+        "total": 2520
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 222.281143,
+  "result_file": "04_estrazione_json_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 11
+  }
+}

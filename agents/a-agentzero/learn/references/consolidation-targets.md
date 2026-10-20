@@ -19,12 +19,12 @@ Mappa operativa per `/learn !`: dove persistere ogni tipo di apprendimento nel r
 
 | Tipo                                                 | Target primario                                                    | Sezione tipica               | Note                                                        |
 | ---------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------- | ----------------------------------------------------------- |
-| Lessico / tono / inclusività                         | `.cursor/brands/{brand}.md`                                        | tabella Usa / Evita          | No duplicare in SKILL se già in brand                       |
-| Registri / struttura / writing-rules (voice pesante) | `.cursor/skills/{slug}-voice/` o `*-tone-of-voice`                 | registri, checklist          | Solo se brand non basta; vedi L0 tono-di-voce               |
-| Regole copy / formato brevi                          | `.cursor/skills/{dominio}-{progetto}/` o writing-rules             | checklist o tabella          | Delta, non corpus                                           |
-| Workflow dominio                                     | `.cursor/skills/{dominio}-{progetto}/SKILL.md`                     | § Workflow, § Invariants     | Solo delta progetto                                         |
-| Template articoli / schema                           | `.cursor/skills/copywriter-{progetto}/template-*.md` o schema JSON | regole tabella               | Se specifico del progetto                                   |
-| SEO / meta / FAQ                                     | `.cursor/skills/seozoom-{progetto}/` (o sibling `role: editorial`) | checklist GEO                | No metriche inventate; no restatement L1                    |
+| Lessico / tono / inclusività                         | `brands/{brand}.md`                                        | tabella Usa / Evita          | No duplicare in SKILL se già in brand                       |
+| Registri / struttura / writing-rules (voice pesante) | `.agents/skills/{slug}-voice/` o `*-tone-of-voice`                 | registri, checklist          | Solo se brand non basta; vedi L0 tono-di-voce               |
+| Regole copy / formato brevi                          | `.agents/skills/{dominio}-{progetto}/` o writing-rules             | checklist o tabella          | Delta, non corpus                                           |
+| Workflow dominio                                     | `.agents/skills/{dominio}-{progetto}/SKILL.md`                     | § Workflow, § Invariants     | Solo delta progetto                                         |
+| Template articoli / schema                           | `.agents/skills/copywriter-{progetto}/template-*.md` o schema JSON | regole tabella               | Se specifico del progetto                                   |
+| SEO / meta / FAQ                                     | `.agents/skills/seozoom-{progetto}/` (o sibling `role: editorial`) | checklist GEO                | No metriche inventate; no restatement L1                    |
 | Illustrazioni / asset                                | `.cursor/illustration-styles/{nome}.md` + skill L2                 | path, QA, stile              | Credenziali restano in `.env`                               |
 | Vincolo always-on su path                            | `.cursor/rules/{nome}.mdc`                                         | body + `globs`               | Usa solo se la regola è automatica                          |
 | Checklist repo-wide                                  | `.cursorrules` o `CONTRIBUTING.md`                                 | checklist pre-consegna       | Non duplicare skill                                         |
@@ -33,7 +33,7 @@ Mappa operativa per `/learn !`: dove persistere ogni tipo di apprendimento nel r
 | Residuo / follow-up / techdebt / bug aperto          | `./ToDo.md`                                                        | Attività P0\|P1\|P2 + `#tag` | Solo se necessario; formato Mappa residui; igiene → `/todo` |
 | Glossario / sinonimi (UL)                            | `docs/glossary.md`                                                 | voce termine                 | Doc locale; non skill se è solo naming                      |
 | Confini / owner path (BC)                            | `docs/bounded-contexts.md`                                         | riga contesto                | Doc locale                                                  |
-| Howto / operativo repo                               | `docs/operativo.md`, `README.md`, `.cursor/product/README.md`      | sezione pertinente           | Solo gap reale; no chat dump                                |
+| Howto / operativo repo                               | `docs/operativo.md`, `README.md`, `product/README.md`      | sezione pertinente           | Solo gap reale; no chat dump                                |
 
 ---
 
@@ -41,7 +41,7 @@ Mappa operativa per `/learn !`: dove persistere ogni tipo di apprendimento nel r
 
 | Tipo                         | Target                                                              |
 | ---------------------------- | ------------------------------------------------------------------- |
-| Brand / tono HAL             | `.cursor/brands/agentfactory.md`                                    |
+| Brand / tono HAL             | `brands/agentfactory.md`                                    |
 | Comandi Cursor L0 (baseline) | `a-agentzero/commands/*.md` (pubblicati da `/sync !`)               |
 | Comandi Cursor override AF   | `.cursor/commands/*.md`                                             |
 | Protocollo agenti            | `a-agentzero/AGENT-PROTOCOL.md`, `SKILL.md`                         |
@@ -60,20 +60,20 @@ Per ogni sito/blog/WP con skill L2:
 
 | Tipo                                                       | Target tipico                                                                                         |
 | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Tono / brand                                               | `.cursor/brands/{slug}.md`                                                                            |
+| Tono / brand                                               | `brands/{slug}.md`                                                                            |
 | Override slash command                                     | `.cursor/commands/{nome}.md` (solo se diverso da L0 user)                                             |
-| Skill dominio                                              | `.cursor/skills/{dominio}-{slug}/SKILL.md`                                                            |
+| Skill dominio                                              | `.agents/skills/{dominio}-{slug}/SKILL.md`                                                            |
 | Brief WordPress                                            | `.cursor/wordpress/{slug}.md`                                                                         |
 | Manifest SEO                                               | `seo/export-manifest.json`                                                                            |
-| Preferenze intervista PO / formato personas                | L2 `personas-*` o `.cursor/product/README.md`                                                         |
+| Preferenze intervista PO / formato personas                | L2 `personas-*` o `product/README.md`                                                         |
 | Convenzioni schema `personas.md` / campi extra             | L2; template L1 solo se globali                                                                       |
 | Job map / unmet heuristics di progetto                     | L2 `jtbd-*` o meta accettata in `jtbd.md` (non fiction)                                               |
 | Glossary step Gherkin / tag progetto                       | L2 `gherkin-*` o `features/README.md`                                                                 |
-| Path artefatti / dual-runtime note                         | `.cursor/product/README.md` (o `.claude/product/`, `product/`)                                        |
+| Path artefatti / dual-runtime note                         | `product/README.md` (o `.claude/product/`, `product/`)                                        |
 | Authorship nuovi L1 da proto-prompt o corpus skill esterni | `a-agentzero/references/l1-from-proto.md` (critica/estensione, non copia; vendor+pin se aggiornabile) |
 | Export pack Claude discovery                               | `scripts/export-discovery-claude.sh` + doc pipeline                                                   |
 | Residui actionable                                         | `./ToDo.md` (root consumer)                                                                           |
-| Doc prodotto / path artefatti                              | `.cursor/product/README.md`, `docs/` se presenti                                                      |
+| Doc prodotto / path artefatti                              | `product/README.md`, `docs/` se presenti                                                      |
 
 **Discovery — non consolidare con `/learn !`:** bozze `hypothesis` non ratificate, microcopy one-off, PRD grezzi, segreti. Task già chiusi in sessione → non ToDo.
 

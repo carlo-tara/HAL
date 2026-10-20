@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T14:05:39.509473+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 340,
+    "output": 2079,
+    "reasoning": null,
+    "total": 2419
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        table {\n            border-collapse: collapse;\n        }\n        td {\n            border: 1px solid black;\n            padding: 20px;\n            text-align: center;\n            width: 30px;\n            height: 30px;\n            font-size: 24px;\n            font-weight: bold;\n            cursor: pointer;\n        }\n        td:hover {\n            background-color: #ccc;\n        }\n        .errore {\n            background-color: #ff0000;\n        }\n        .soluzione {\n            background-color: #0ff;\n        }\n        #ripista {\n            font-size: 18px;\n            margin-bottom: 10px;\n        }\n    </style>\n</head>\n<body>\n    <table id=\"sudoku\">\n        <tr>\n            <td id=\"0\">3</td>\n            <td id=\"1\"></td>\n            <td id=\"2\"></td>\n            <td id=\"3\"></td>\n            <td id=\"4\"></td>\n            <td id=\"5\"></td>\n            <td id=\"6\"></td>\n            <td id=\"7\"></td>\n            <td id=\"8\">4</td>\n        </tr>\n        <tr>\n            <td id=\"9\">0</td>\n            <td id=\"10\"></td>\n            <td id=\"11\"></td>\n            <td id=\"12\"></td>\n            <td id=\"13\"></td>\n            <td id=\"14\"></td>\n            <td id=\"15\"></td>\n            <td id=\"16\"></td>\n            <td id=\"17\"></td>\n        </tr>\n        <tr>\n            <td id=\"18\">0</td>\n            <td id=\"19\"></td>\n            <td id=\"20\"></td>\n            <td id=\"21\"></td>\n            <td id=\"22\"></td>\n            <td id=\"23\"></td>\n            <td id=\"24\"></td>\n            <td id=\"25\"></td>\n            <td id=\"26\">9</td>\n        </tr>\n    </table>\n    <button id=\"ripista\">Ripista</button>\n    <button id=\"risoluzione\">Risoluzione</button>\n    <p id=\"errore\"></p>\n    <p id=\"messaggio\"></p>\n    <script>\n        let sudoku = [\n            [3, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 1, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 2, 0, 0, 0],\n            [0, 0, 3, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 1, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 3, 0, 0],\n            [0, 2, 0, 0, 0, 0, 0, 1, 0],\n            [0, 0, 0, 0, 0, 0, 0, 3, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 2]\n        ];\n        let contatore = 0;\n        let errori = 0;\n\n        function verificaSudoku() {\n            for (let i = 0; i < 9; i++) {\n                let riga = sudoku[i];\n                for (let j = 0; j < 9; j++) {\n                    let cella = sudoku[i * 9 + j];\n                    if (cella !== 0) {\n                        let cont = 1;\n                        for (let k = 0; k < 9; k++) {\n                            if (k !== i * 9 + j) {\n                                let cellaM = sudoku[k * 9 + j];\n                                if (cella === cellaM) {\n                                    cont++;\n                                }\n                            }\n                        }\n                        if (cont > 1) {\n                            errori++;\n                        }\n                    }\n                }\n            }\n            for (let j = 0; j < 9; j++) {\n                let colonna = [];\n                for (let i = 0; i < 9; i++) {\n                    colonna.push(sudoku[i * 9 + j]);\n                }\n                for (let k = 0; k < 9; k++) {\n                    if (colonna[k] !== 0) {\n                        let cont = 1;\n                        for (let l = k; l < 9; l++) {\n                            if (colonna[l] === colonna[k]) {\n                                cont++;\n                            }\n                        }\n                        if (cont > 1) {\n                            errori++;\n                        }\n                    }\n                }\n            }\n            for (let i = 0; i < 3; i++) {\n                for (let j = 0; j < 3; j++) {\n                    let blocchi = [];\n                    for (let k = i * 3; k < i * 3 + 3; k++) {\n                        for (let l = j * 3; l < j * 3 + 3; l++) {\n                            blocchi.push(sudoku[k * 9 + l]);\n                        }\n                    }\n                    for (let k = 0; k < 9; k++) {\n                        if (blocchi[k] !== 0) {\n                            let cont = 1;\n                            for (let l = k; l < 9; l++) {\n                                if (blocchi[l] === blocchi[k]) {\n                                    cont++;\n                                }\n                            }\n                            if (cont > 1) {\n                                errori++;\n                            }\n                        }\n                    }\n                }\n            }\n            if (errori > 0) {\n                document.getElementById('errore').innerText = 'Errore! Puoi provare nuovamente o iniziare una nuova partita.';\n            } else {\n                document.getElementById('messaggio').innerText = 'Hai risolto il Sudoku!';\n            }\n        }\n\n        function aggiornaSudoku(cella) {\n            sudoku[cella] = parseInt(document.getElementById('0'+cella).innerText);\n            contatore++;\n            verificaSudoku();\n            if (contatore === 81) {\n                document.getElementById('ripista').disabled = true;\n                document.getElementById('risoluzione').disabled = false;\n                document.getElementById('errore').innerText = '';\n            }\n        }\n\n        function cancellaSudoku(cella) {\n            sudoku[cella] = 0;\n            document.getElementById('0'+cella).innerText = '';\n            contatore--;\n            verificaSudoku();\n            if (contatore === 0) {\n                document.getElementById('ripista').disabled = false;\n                document.getElementById('risoluzione').disabled = true;\n                document.getElementById('errore').innerText = '';\n            }\n        }\n\n        document.getElementById('0').addEventListener('click', function() {\n            document.getElementById('0').style.background = '#ccc';\n            document.getElementById('1').style.background = '';\n            document.getElementById('2').style.background = '';\n        });\n        document.getElementById('1').addEventListener('click', function() {\n            document.getElementById('1').style.background = '#ccc';\n            document.getElementById('0').style.background = '';\n            document.getElementById('2').style.background = '';\n        });\n        document.getElementById('2').addEventListener('click', function() {\n            document.getElementById('2').style.background = '#ccc';\n            document.getElementById('1').style.background = '';\n            document.getElementById('0').style.background = '';\n        });\n        for (let i = 0; i < 81; i++) {\n            document.getElementById(i.toString()).addEventListener('click', function() {\n                document.getElementById(i.toString()).style.background = '#ccc';\n                document.getElementById((i+1).toString()).style.background = '';\n                document.getElementById((i+2).toString()).style.background = '';\n            });\n        }\n        document.getElementById('ripista').addEventListener('click', function() {\n            for (let i = 0; i < 81; i++) {\n                document.getElementById(i.toString()).style.background = '';\n            }\n            for (let i = 0; i < 81; i++) {\n                if (sudoku[i] === 0) {\n                    document.getElementById(i.toString()).style.background = '#ccc';\n                    document.getElementById((i+1).toString()).style.background = '';\n                    document.getElementById((i+2).toString()).style.background = '';\n                }\n            }\n            contatore = 0;\n            verificaSudoku();\n        });\n        document.getElementById('risoluzione').addEventListener('click', function() {\n            for (let i = 0; i < 81; i++) {\n                document.getElementById(i.toString()).style.background = '';\n            }\n            for (let i = 0; i < 81; i++) {\n                if (sudoku[i] === 0) {\n                    document.getElementById(i.toString()).style.background = '#ccc';\n                    document.getElementById((i+1).toString()).style.background = '';\n                    document.getElementById((i+2).toString()).style.background = '';\n                }\n            }\n            document.getElementById('ripista').disabled = false;\n            document.getElementById('risoluzione').disabled = true;\n            document.getElementById('errore').innerText = '';\n        });\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 340,
+        "output": 2079,
+        "reasoning": null,
+        "total": 2419
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 171.613291,
+  "result_file": "03_programmazione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 10
+  }
+}

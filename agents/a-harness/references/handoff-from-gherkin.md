@@ -12,7 +12,7 @@ Pipeline: **personas → JTBD → Gherkin → implementazione TDD**.
 ```
 @a-harness /cycle per {nome-flusso}.
 
-Contratto: .cursor/product/features/{file}.feature — scenario "{nome}".
+Contratto: product/features/{file}.feature — scenario "{nome}".
 Bounded context: {Context} ({path modulo}).
 Rispetta docs/glossary.md e docs/bounded-contexts.md.
 Non chiedermi attenzione finché make ready-for-review non è verde.

@@ -18,12 +18,12 @@ Use before `/shape` or `/validate`. Fill from L2 / product files; mark unknowns.
 - Existing vs new product:
 
 ## 4) Lean Canvas (new / early)
-- Latest file (`.cursor/product/lean-canvas-YYYY-MM-DD.md`):
+- Latest file (`product/lean-canvas-YYYY-MM-DD.md`):
 - Riskiest boxes / assumptions:
 - Stress-test notes:
 
 ## 5) PRD status
-- File (`.cursor/product/prd.md` o snapshot datato):
+- File (`product/prd.md` o snapshot datato):
 - Vision one-liner:
 - Epic count / US ready vs draft:
 - Open Questions blocking:

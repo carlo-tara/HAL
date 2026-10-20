@@ -139,4 +139,4 @@ Task Progress:
 
 ## Override L2 tipici
 
-Skip fonti, soglie manifest, `SEOZOOM_PROJECT` / `SEOZOOM_PROJECT_COMPETITOR`, path sitemap — in `.cursor/skills/seozoom-{progetto}/competencies/seo-import/SKILL.md` (solo delta).
+Skip fonti, soglie manifest, `SEOZOOM_PROJECT` / `SEOZOOM_PROJECT_COMPETITOR`, path sitemap — in `.agents/skills/seozoom-{progetto}/competencies/seo-import/SKILL.md` (solo delta).

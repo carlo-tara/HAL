@@ -7,6 +7,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+- Benchmark: run `20261020_1` (middleware nuovo, Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_1/` con report e executive summary; confronto con `20261019_3` e residui aggiornati in `ToDo.md` `#benchmark` · P1 · Progetto
+- Versionati a 1.0.1 i documenti L0 `AGENT-PROTOCOL.md`, `references/agent-versioning.md`, `references/extension-scaffold.md`; modulo `a-agentzero` a 1.8.6 `#docs` · Progetto
 - Benchmark: sezione "Vincoli operativi" nel README (`--output` dentro `--run-dir`, nessun cooldown nel runner, `setsid`, copie del generatore), storico `20261019_3` e residui in `ToDo.md` `#benchmark` · P1 · Progetto
 - Passi di test del workflow `ready-for-review` da correggere: i test sono in `tests/` e vanno lanciati con `PYTHONPATH=.` `#infra` · P1 · Progetto
 - GitHub Actions portate a runtime Node 24: `actions/checkout@v5`, `actions/setup-python@v6` `#infra` · Progetto

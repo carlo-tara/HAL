@@ -1,7 +1,7 @@
 ---
 name: wordpress-{progetto}
 extends: a-wordpress
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0
 description: >-
   WordPress per {progetto} — eredita a-wordpress e aggiunge path, prefix e convenzioni locali.
@@ -69,7 +69,7 @@ Skill figlia (L2). Eredita `a-agentzero` → `a-wordpress` → **questo file**.
 |-------|--------|
 | `version` | Versione delta L2 |
 | `extends-version` | Versione `a-wordpress` integrata |
-| CHANGELOG | `.cursor/skills/wordpress-{progetto}/CHANGELOG.md` |
+| CHANGELOG | `.agents/skills/wordpress-{progetto}/CHANGELOG.md` |
 
 Alla creazione: `extends-version` = `version` corrente di `a-wordpress`.  
-Sync: [agent-versioning.md](../../a-agentzero/references/agent-versioning.md) — `agent-version.sh pending .cursor/skills/wordpress-{progetto}/SKILL.md`
+Sync: [agent-versioning.md](../../a-agentzero/references/agent-versioning.md) — `agent-version.sh pending .agents/skills/wordpress-{progetto}/SKILL.md`

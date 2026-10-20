@@ -1,5 +1,11 @@
 # Changelog — a-wordpress
 
+## [Unreleased] - 2026-10-20
+
+### Changed
+
+- Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `extension-template.md` 1.0.1 [sync:safe]
+
 ## [Unreleased]
 
 ### Changed

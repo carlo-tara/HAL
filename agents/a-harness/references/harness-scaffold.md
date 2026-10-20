@@ -14,7 +14,7 @@ Profiles: [bootstrap-profiles.md](bootstrap-profiles.md)
 ```
 Task Progress:
 - [ ] 0. Scegliere profile minimal | standard
-- [ ] 1. Creare L2 `.cursor/skills/harness-{progetto}/SKILL.md` da extension-template
+- [ ] 1. Creare L2 `.agents/skills/harness-{progetto}/SKILL.md` da extension-template
 - [ ] 2. Copiare/adattare Makefile da makefile-template.mk (CI-first)
 - [ ] 3. (standard) docs/glossary.md + docs/bounded-contexts.md
 - [ ] 4. Creare agent-progress (+ opz. session-learnings, freeze) da template

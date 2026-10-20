@@ -1,6 +1,6 @@
 # Agent progress (append-only)
 
-Path suggerito: `.cursor/product/agent-progress.md` (o `docs/harness/agent-progress.md`).
+Path suggerito: `product/agent-progress.md` (o `docs/harness/agent-progress.md`).
 
 ```markdown
 # Agent progress

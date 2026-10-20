@@ -25,7 +25,7 @@ Esempio L1:
 ---
 name: a-copywriter
 extends: a-agentzero
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0
 description: >-
   ...
@@ -38,7 +38,7 @@ Esempio L2:
 ---
 name: copywriter-esempio
 extends: a-copywriter
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0
 description: >-
   ...
@@ -153,7 +153,7 @@ Ogni agente, dopo aver caricato la catena `extends:`:
 
 1. Confronta `extends-version` con `version` del padre diretto.
 2. Se **stale** (figlio indietro): segnala all'utente sync disponibile; non bloccare il task salvo `[sync:breaking]` noto.
-3. Comando rapido: `bash agents/a-agentzero/scripts/agent-version.sh chain .cursor/skills/{dominio}-{progetto}/SKILL.md`
+3. Comando rapido: `bash agents/a-agentzero/scripts/agent-version.sh chain .agents/skills/{dominio}-{progetto}/SKILL.md`
 
 ---
 
@@ -175,7 +175,7 @@ Le competenze (`kind: competency`) hanno semver **indipendente** dall'agente hos
 |---------|------|---------------------------|
 | L0 | `a-agentzero/competencies/{id}/` | — (opzionale: non tutte le competenze hanno L0) |
 | L1 | `a-{dominio}/competencies/{id}/` | `version` L0 stessa id **se esiste**; altrimenti omettere |
-| L2 | `{repo}/.cursor/skills/{figlio}/competencies/{id}/` | `version` L1 stessa id |
+| L2 | `{repo}/.agents/skills/{figlio}/competencies/{id}/` | `version` L1 stessa id |
 
 Regole:
 

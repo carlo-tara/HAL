@@ -24,8 +24,8 @@ Chiedi solo ciò che manca (una domanda alla volta; estrai dalla chat ciò che �
 3. **Ambito**: nuovo | feature su esistente | update PRD già scritto
 4. **User story già note** in conversazione o artefatti
 5. **Path output**:
-   - profilo **af**: default `.cursor/product/prd.md`
-   - profilo **ms**: cartella PRD progetto se esiste; altrimenti `.cursor/product/PRD_<slug>_v<ver>.md`
+   - profilo **af**: default `product/prd.md`
+   - profilo **ms**: cartella PRD progetto se esiste; altrimenti `product/PRD_<slug>_v<ver>.md`
 
 Fonti: brief, lean-canvas, personas.md, jtbd.md. Profilo **af**: Distingui **Evidenza** vs **Ipotesi**; collega job story `JS-XX` quando presenti. Profilo **ms**: niente colonne Evidenza/Ipotesi né job story obbligatorie.
 
@@ -47,7 +47,7 @@ Fonti: brief, lean-canvas, personas.md, jtbd.md. Profilo **af**: Distingui **Evi
 11. Checkpoint PO → path canone
 ```
 
-Path: `.cursor/product/prd.md`. Snapshot opzionale: `prd-YYYY-MM-DD.md` se il PO chiede versioning esplicito.
+Path: `product/prd.md`. Snapshot opzionale: `prd-YYYY-MM-DD.md` se il PO chiede versioning esplicito.
 
 Versione documento: nuovo → **1.0**; revisioni contenuto → minor (1.1, …).
 

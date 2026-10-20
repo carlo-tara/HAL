@@ -1,6 +1,6 @@
 # Freeze list (L2)
 
-Path: `.cursor/product/harness-freeze.md`
+Path: `product/harness-freeze.md`
 
 ```markdown
 # Freeze

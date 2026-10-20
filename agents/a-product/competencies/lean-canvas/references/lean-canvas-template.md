@@ -2,7 +2,7 @@
 
 Framework: Ash Maurya (*Running Lean* / leanstack.com). Prompt operativi distillati per HAL (ispirazione pedagogica anche da gonogo.team primer).
 
-**File:** `.cursor/product/lean-canvas-YYYY-MM-DD.md` — non sovrascrivere versioni precedenti.
+**File:** `product/lean-canvas-YYYY-MM-DD.md` — non sovrascrivere versioni precedenti.
 
 ```markdown
 # Lean Canvas — {product}

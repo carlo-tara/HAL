@@ -1,6 +1,6 @@
 # Synthesis templates — switch interview
 
-Salva sotto `.cursor/product/interviews/` (o path L2).
+Salva sotto `product/interviews/` (o path L2).
 
 ## Per-interview
 

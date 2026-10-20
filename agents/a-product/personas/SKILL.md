@@ -1,7 +1,7 @@
 ---
 name: personas
 parent: a-product
-version: 1.0.20
+version: 1.0.21
 description: >-
   Reason why: senza profili utente reali e un percorso verificato, si progettano schermate e testi per persone che non esistono. User Researcher integrato in a-product: definisce personas da PRD/mockup con intervista PO, verifica journey coherence vs mockup/PRD, aggiunge personas da NL (/add). Usare per /create, /check, /add, /triage su profilazione utente e journey coherence.
 ---
@@ -14,7 +14,7 @@ Skill di prodotto per personas e **journey coherence** (allineamento flussi a pe
 
 ## Discovery product (portabile)
 
-Ordine: `.cursor/product/` → `.claude/product/` → `product/`
+Ordine: `.claude/product/` → `product/`
 
 | Artefatto | Ruolo |
 |-----------|--------|

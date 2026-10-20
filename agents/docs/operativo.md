@@ -103,7 +103,7 @@ Oltre a `extends:` (un solo padre), gli agenti possono dichiarare moduli in `com
 |--------|-----------|
 | Baseline L0 | **Opzionale** — copy ha L0 (`tono-di-voce`, `humanizer`, `italiano-locale`); discovery ha L0 `po-interviewer`; SEO e illustrazioni sono **solo L1** |
 | Asset operativi | `scripts/` e JSON/runtime restano sotto l'agente (es. `a-seozoom/references/export-manifest.json`), non obbligatoriamente in `competencies/` |
-| File dati | `.cursor/brands/`, `.cursor/illustration-styles/`, brief SEO, `.cursor/product/` (discovery), … restano **dati progetto**, non moduli competenza |
+| File dati | `brands/`, `.cursor/illustration-styles/`, brief SEO, `product/` (discovery), … restano **dati progetto**, non moduli competenza |
 | Adozione | Opt-in per dominio; al sync L1←L0 non copiare moduli non pertinenti |
 | Cross-dominio | Carico on-demand (es. SEO → `tono-di-voce` in scrittura title/meta); altrimenti delega all'agente L1 |
 
@@ -124,7 +124,7 @@ Oltre a `extends:` (un solo padre), gli agenti possono dichiarare moduli in `com
 | a-harness | TDD/DDD/Steward competencies (vedi `a-harness/competencies/`) | no |
 | a-uiux | `static-stack`, `accessibility`, `editorial-layout` | no |
 
-Override L2: `{progetto}/.cursor/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta). Check: `agent-version.sh competency-chain <path>`.
+Override L2: `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta). Check: `agent-version.sh competency-chain <path>`.
 
 ### Workflow release L1 (sync da L0)
 
@@ -149,7 +149,7 @@ make version-chains
 bash a-agentzero/scripts/sync-agents.sh --dry-run
 ```
 
-L2 fabbrica: `.cursor/skills/harness-agentfactory/` (oggi **1.1.0**, `extends` a-harness). STALE L2 consumer ≠ debito fabbrica — `make sync-consumer-stale`.
+L2 fabbrica: `.agents/skills/harness-agentfactory/` (oggi **1.1.0**, `extends` a-harness). STALE L2 consumer ≠ debito fabbrica — `make sync-consumer-stale`.
 
 Pipeline discovery: [`docs/discovery-pipeline.md`](discovery-pipeline.md). Export Claude stand-alone: `bash scripts/export-discovery-claude.sh`.
 
@@ -163,7 +163,7 @@ Le skill figlie **non** stanno in HAL. Si creano nel repo del sito/blog/WP.
 
 ### Workflow sintetico
 
-1. Nel repo consumer: `mkdir -p .cursor/skills/{dominio}-{slug}`
+1. Nel repo consumer: `mkdir -p .agents/skills/{dominio}-{slug}`
 2. Copia `agents/a-{dominio}/extension-template.md` → `SKILL.md`
 3. Compila `extends: a-{dominio}`, `version`, `extends-version` (versione L1 corrente)
 4. Aggiungi delta: path contenuti, brand, regole locali
@@ -171,20 +171,20 @@ Le skill figlie **non** stanno in HAL. Si creano nel repo del sito/blog/WP.
 
 | Dominio | File dati |
 |---------|-----------|
-| copywriter | `.cursor/brands/{slug}.md` |
+| copywriter | `brands/{slug}.md` |
 | illustrator | `.cursor/illustration-styles/{slug}.md` |
 | seozoom | `seo/export-manifest.json`, brief in skill L2; se ricerca interna → playbook L2 (`pagefind-*.md`) + canone L1 `competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md` |
 | wordpress | `.cursor/wordpress/{slug}.md` |
-| personas / jtbd / gherkin | `.cursor/product/` (fallback `.claude/product/`, `product/`) — `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/` |
+| personas / jtbd / gherkin | `product/` (fallback `.claude/product/`, `product/`) — `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/` |
 | charts | `.cursor/chart-styles/{slug}.md` |
 | b2b | L2 `b2b-*` + path enrichment / ICP in skill (vedi `a-b2b/extension-template.md`; canone = `a-product` § Profilo B2B) |
 | product | L2 `product-*` + path product (vedi `a-product/extension-template.md`) |
-| po | L2 `po-*` + `.cursor/product/` (vedi `a-po/extension-template.md`) |
+| po | L2 `po-*` + `product/` (vedi `a-po/extension-template.md`) |
 | enrichment | L2 `enrichment-*` o path da `b2b-*` (vedi `a-enrichment/extension-template.md`) |
 | harness | L2 `harness-{progetto}` (vedi `a-harness/extension-template.md`) |
 | uiux | L2 `uiux-*` / legacy `uiux-designer` → preferire `extends: a-uiux` (vedi `a-uiux/extension-template.md`); playbook DUP [`playbook-l2-dup-cut.md`](playbook-l2-dup-cut.md) |
 
-6. Opzionale: override competenze in `.cursor/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta; vedi `extension-template.md` del dominio)
+6. Opzionale: override competenze in `.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta; vedi `extension-template.md` del dominio)
 7. `CHANGELOG.md` figlio da template L0
 
 Guida completa: [`a-agentzero/references/extension-scaffold.md`](../a-agentzero/references/extension-scaffold.md)
@@ -223,7 +223,7 @@ HAL non ha una suite unittest centralizzata. I test dei siti consumer restano ne
 
 | Path | Contenuto |
 |------|-----------|
-| `.cursor/brands/agentfactory.md` | Tono e lessico per copy su HAL |
+| `brands/agentfactory.md` | Tono e lessico per copy su HAL |
 | `.cursor/commands/` | Override slash AF (`/commit`, `/document`, `/sync`, `/version`, …) |
 | `.cursor/plans/` | Piani storici (es. protocollo versionamento) |
 
@@ -255,7 +255,7 @@ Target consolidamento: [`a-agentzero/learn/references/consolidation-targets.md`]
 |-------------|---------|
 | `/sync ?` | Report catene L1←L0 (e L2 se path progetto) + stato comandi L0; nessun deploy |
 | `/sync !` | `deploy-all.sh` (skill, agents, `~/.cursor/commands/`) + report; sync selettivo guidato |
-| `/sync <` | Analisi L2→L1/L0 (DUP / promozione); **solo report**. Su cwd HAL: L2 in-repo + consumer noti `/var/www/*/./.cursor/skills/` — vedi sync skill § `/sync <` e [`l2-generalization.md`](../a-agentzero/sync/references/l2-generalization.md) |
+| `/sync <` | Analisi L2→L1/L0 (DUP / promozione); **solo report**. Su cwd HAL: L2 in-repo + consumer noti `/var/www/*/./.agents/skills/` — vedi sync skill § `/sync <` e [`l2-generalization.md`](../a-agentzero/sync/references/l2-generalization.md) |
 
 ```bash
 bash a-agentzero/scripts/sync-agents.sh
@@ -308,7 +308,7 @@ Vedi anche slash command `/snapshot` in `.cursor/commands/snapshot.md`.
 | Guida pipeline | [`docs/discovery-pipeline.md`](discovery-pipeline.md) |
 | L0 `po-interviewer` | [`a-agentzero/competencies/po-interviewer/`](../a-agentzero/competencies/po-interviewer/) |
 | L1 `bdd-security-performance` | `a-gherkin/competencies/bdd-security-performance/` (`/secure`, `/perf`) |
-| Product path | `.cursor/product/` → `.claude/product/` → `product/` |
+| Product path | `.claude/product/` → `product/` |
 | Export Claude pack | `scripts/export-discovery-claude.sh` → `dist/claude-discovery-agents-*.zip` |
 | Authorship da proto | [`a-agentzero/references/l1-from-proto.md`](../a-agentzero/references/l1-from-proto.md) |
 
@@ -343,7 +343,7 @@ Style file progetto: `.cursor/illustration-styles/` (dati, non competenze).
 | a-charts | `competencies/{scelta-tipo,leggibilita,implementazione,qa-grafici}/` · style `.cursor/chart-styles/` |
 | a-product | orchestra multi-step + § **Profilo B2B** · anti–**Build Trap** (Outcome vs Output) + Product Kata light · L2 `product-*` |
 | a-b2b | facade B2B → a-product § Profilo B2B · stesso gate Outcome · `references/delegation-playbook.md` · L2 `b2b-*` |
-| a-po | `competencies/{triage-request,problem-framing,lean-canvas,prd-authoring,positioning-offer,evidence-probe,slice-prioritization,growth-loops,market-public-data}/` · `po-interviewer` · `scripts/fetch-istat-sdmx.sh` · L2 `po-*` · data `.cursor/product/data/` · lean-canvas datati · `prd.md` |
+| a-po | `competencies/{triage-request,problem-framing,lean-canvas,prd-authoring,positioning-offer,evidence-probe,slice-prioritization,growth-loops,market-public-data}/` · `po-interviewer` · `scripts/fetch-istat-sdmx.sh` · L2 `po-*` · data `product/data/` · lean-canvas datati · `prd.md` |
 | a-enrichment | `references/{enrichment-gates,domain-enrichment-workflow,lead-research-output}.md` · L2 `enrichment-*` |
 
 ### Reference SEO/GEO (a-seozoom)

@@ -1,7 +1,7 @@
 ---
 name: backlog-prioritization
 kind: competency
-version: 1.1.0
+version: 1.1.1
 description: >-
   Sceglie framework di prioritizzazione contestuale, Opportunity Score per
   problems, Now/Next/Later e rewrite outcome. Solo L1 (a-po).
@@ -27,7 +27,7 @@ Non confondere con **Slice** harness (≤4 file) — vedi `docs/glossary.md`.
 - Nessuna strategy/outcome → framing o OKR prima
 - Framework già funzionante e stabile — non cambiare per moda
 - Story AC dettagliate / `.feature` → `a-gherkin` dopo il Backlog slice
-- Se esiste `.cursor/product/prd.md`, prioritizza da **Epic/US** (status + outcome), non da wishlist parallela
+- Se esiste `product/prd.md`, prioritizza da **Epic/US** (status + outcome), non da wishlist parallela
 - Iniziative ancora grezze / solution-first senza baseline → `/scamper` prima
 - Dichiarare perimetro file harness → `a-harness` `/slice`
 

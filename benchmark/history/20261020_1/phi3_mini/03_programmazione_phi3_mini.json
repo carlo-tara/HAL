@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T13:07:21.351721+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 368,
+    "output": 1211,
+    "reasoning": null,
+    "total": 1579
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku Game</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            display: flex;\n            justify-content: center;\n            align-items: center; end;\n            height: 100vh;\n        }\n        .grid { display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); grid-gap: 10px; }\n        .grid > div { background-color: #f0f0f0; padding: 10px; cursor: pointer; }\n        .selected { background-color: #ccc; }\n        .error { background-color: #ffcccc; }\n        button { margin-left: 20px; }\n    </style>\n</head>s\n<body>\n    <section class=\"grid\" id=\"sudoku-grid\"></section>\n    <button id=\"new-game\">New Game</button>\n    <script>\n        const grid = document.getElementById(\"sudoku-grid\");\n        const newGameButton = document.getElementById(\"new-game\");\n        let solution = [\n            [5, 3, 0, 0, 7, 0, 0, 0, 0],\n            [6, 0, 0, 1, 9, 5, 0, 0, 0],\n            [0, 9, 8, 0, 0, 0, 0, 6, 0],\n            [8, 0, 0, 0, 6, 0, 2, 5, 0],\n            [4, 0, 0, 8, 0, 3, 0, 0, 7],\n            [0, 0, 0, 0, 6, 0, 0, 2, 8],\n            [0, 0, 0, 4, 1, 9, 0, 0, 5],\n            [0, 2, 3, 0, 0, 0, 0, 0, 9],\n            [0, 0, 0, 0, 8, 0, 0, 0, 0]\n        ];\n        const numbers = \"123456789\".split('');\n\n        function generateGrid() {\n            const cells = Array.from({ length: 81 }, () => ({\n                cell: undefined,\n                value: '',\n                selected: false,\n                error: false\n            }));\n\n            numbers.forEach(number => {\n                cells.filter(cell => cell.value === number).forEach(cell => {\n                    cell.value = number;\n                    cell.selected = true;\n                    cell.error = false;\n                });\n            });\n\n            numbers.forEach(number => {\n                cells.filter(cell => cell.value === 0 && cell.cell.id % 9 === number % 9).forEach(cell => {\n                    cell.value = number;\n                    cell.selected = false;\n                    cell.error = false;\n                });\n            });\n\n            cells.forEach(cell => {\n                if (cell.value === 0) grid.appendChild(document.createElement(\"div\")).textContent = \" \";\n                if (cell.value !== \"\") grid.appendChild(documents.createElement(\"div\")).textContent = cell.value;\n                if (cell.error) grid.appendChild(document.createElement(\"div\")).className = \"error\";\n                if (cell.selected) grid.appendChild(document.createElement(\"div\")).className = \"selected\";\n            });\n        }\n\n        function resetGame() {\n            document.getElementById(\"sudoku-grid\").innerHTML = \"\";\n            generateGrid();\n        }\n\n        function onCellClick(event) {\n            const cell = event.target;\n            cell.classList.toggle(\"selected\");\n            if (cell.value === '') {\n                const value = prompt(\"Enter a number (1-9): \");\n                cell.value = value;\n                if (value.match(/[^1-9]/i)) return; // Validation\n            } else if (cell.value > 9) {\n                cell.value = '';\n                cell.classList.remove(\"selected\");\n                cell.classList.add(\"error\");\n            }\n        }\n\n        function onCellChange(event) {\n            const cell = event.target;\n            cell.classList.toggle(\"error\", cell.value === '');\n            cell.classList.toggle(\"selected\", cell.value !== '');\n        }\n\n        newGameButton.addEventListener(\"click\", resetGame);\n        grid.addEventListener(\"click\", onCellClick);\n        grid.addEventListener(\"input\", onCellChange);\n\n        generateGrid();\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 368,
+        "output": 1211,
+        "reasoning": null,
+        "total": 1579
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 141.028536,
+  "result_file": "03_programmazione_phi3_mini.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 11
+  }
+}

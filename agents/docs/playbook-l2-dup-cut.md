@@ -35,6 +35,6 @@ Dopo un report `/sync <`, applicare **solo** con conferma e RGR nel repo consume
 4. `/refactor` — anti-grasso residuo  
 5. `make ready-for-review` se il repo ha Platform API  
 
-**Repo target senza git o senza Makefile** (es. consumer solo-file): il gate Make è **N/A**, non “verde”. Chiudi il nodo con check greppabili (path assente, `role:` presente, righe sotto soglia, link riparati) e annota `make_exit: N/A` in progress; il commit resta assente finché il repo non viene versionato. Il `ready-proof` di HAL non osserva i path consumer (solo `a-*/` e `.cursor/skills/` locali).
+**Repo target senza git o senza Makefile** (es. consumer solo-file): il gate Make è **N/A**, non “verde”. Chiudi il nodo con check greppabili (path assente, `role:` presente, righe sotto soglia, link riparati) e annota `make_exit: N/A` in progress; il commit resta assente finché il repo non viene versionato. Il `ready-proof` di HAL non osserva i path consumer (solo `a-*/` e `.agents/skills/` locali).
 
 Non eseguire dump multi-repo in un solo Act.

@@ -1,7 +1,7 @@
 ---
 name: harness-agentfactory
 extends: a-harness
-version: 1.1.26
+version: 1.1.27
 extends-version: 1.7.6
 description: >-
   Delta harness per HAL (sorgente canonica skill L0/L1): Platform API
@@ -34,14 +34,14 @@ HAL è la **sorgente canonica** di skill/agenti, non un'app consumer. Stack = Ma
 | Platform API          | `Makefile` (root)                                                                                     |
 | Glossario             | `docs/glossary.md`                                                                                    |
 | Bounded contexts      | `docs/bounded-contexts.md`                                                                            |
-| Progress              | `.cursor/product/agent-progress.md`                                                                   |
-| Learnings (opz.)      | `.cursor/product/session-learnings.md`                                                                |
-| Contratti RED skill   | `.cursor/product/contracts/check-harness-*.sh`                                                        |
-| Freeze                | `.cursor/product/harness-freeze.md` (Makefile, GHA, hooks, RGR rule, AGENT-PROTOCOL)                  |
+| Progress              | `product/agent-progress.md`                                                                   |
+| Learnings (opz.)      | `product/session-learnings.md`                                                                |
+| Contratti RED skill   | `product/contracts/check-harness-*.sh`                                                        |
+| Freeze                | `product/harness-freeze.md` (Makefile, GHA, hooks, RGR rule, AGENT-PROTOCOL)                  |
 | Playbook DUP L2       | `docs/playbook-l2-dup-cut.md`                                                                         |
 | Consumer STALE report | `make sync-consumer-stale`                                                                            |
 | Harness changelog     | `docs/harness-CHANGELOG.md`                                                                           |
-| Features              | `.cursor/product/features/` (se presenti)                                                             |
+| Features              | `product/features/` (se presenti)                                                             |
 | Hooks                 | `.cursor/hooks.json` + `agent-skill-{pretool,edit,stop}-rgr.sh` (deny senza slice; remind; stop+make) |
 | CI remota             | `.github/workflows/ready-for-review.yml` (`make ready-for-review` su push/PR `main`)                  |
 | Rules                 | `.cursor/rules/agents-rgr-mandatory.mdc` (+ `tdd-*.mdc`)                                              |
@@ -99,9 +99,9 @@ Plan→Act: niente `/green` finché `/slice` ha acceptance e perimetro file acce
 | --------------------- | -------------------------------------------------------------------- | ------------------------------------------- |
 | Protocol / L0         | `a-agentzero/`                                                       | Protocollo, sync, learn, comandi L0         |
 | Domain Agents / L1    | `a-*/` (eccetto agentzero)                                           | Skill di dominio + competencies             |
-| Consumer Delta / L2   | `.cursor/skills/harness-agentfactory/` (+ consumer repos)            | Delta progetto; qui = harness del meta-repo |
+| Consumer Delta / L2   | `.agents/skills/harness-agentfactory/` (+ consumer repos)            | Delta progetto; qui = harness del meta-repo |
 | Tooling / Sync-Deploy | `deploy-all.sh`, `a-*/deploy.sh`, `a-agentzero/scripts/`, `scripts/` | Deploy dual-runtime, version report         |
-| Docs / Harness meta   | `docs/`, `Makefile`, `.cursor/product/`                              | Glossario, BC, progress, Platform API       |
+| Docs / Harness meta   | `docs/`, `Makefile`, `product/`                              | Glossario, BC, progress, Platform API       |
 
 ## Override workflow
 
@@ -117,7 +117,7 @@ Plan→Act: niente `/green` finché `/slice` ha acceptance e perimetro file acce
 | `/refactor` | Pulizia / anti-DUP sotto verdi; no feature nuova                                                   | `make test-unit` = 0                     |
 | `/ready`    | Gate sostenibile                                                                                   | `make ready-for-review` = 0              |
 
-**Contratti RED (meta-repo):** preferisci script greppabili in `.cursor/product/contracts/check-harness-*.sh` (exit ≠ 0 in RED, = 0 in GREEN). Non sostituiscono `make test-unit` come gate salute catena; li documentano in progress come check dichiarato. Se un ID/stringa compare anche nel frontmatter (es. `model:`), limita ordine e presenza al **body della sezione** sotto il heading di contratto — non greppare l’intero file o il check fallisce in falso positivo.
+**Contratti RED (meta-repo):** preferisci script greppabili in `product/contracts/check-harness-*.sh` (exit ≠ 0 in RED, = 0 in GREEN). Non sostituiscono `make test-unit` come gate salute catena; li documentano in progress come check dichiarato. Se un ID/stringa compare anche nel frontmatter (es. `model:`), limita ordine e presenza al **body della sezione** sotto il heading di contratto — non greppare l’intero file o il check fallisce in falso positivo.
 
 **Integrazione fonti esterne → L1:** default = **principi** (mapping + non-adopt espliciti), **enrich** competenze/reference esistenti + pin in `a-harness/SKILL.md`, **nessuna competency nuova**, ≤4 file (L2 `extends-version` pin-only con WAIVER stesso BC). Vietato adottare SaaS/CLI/MCP/offensive come Platform API AF.
 
@@ -143,16 +143,16 @@ Uno slice su agenti/skill è **Done** solo se:
 ## Steward notes
 
 - Profile **standard** + RGR obbligatorio su agenti/skill (2026-09-09).
-- **Freeze attivo:** `.cursor/product/harness-freeze.md` — cadenza `/steward` settimanale.
+- **Freeze attivo:** `product/harness-freeze.md` — cadenza `/steward` settimanale.
 - **Hooks RGR:**
   - `preToolUse` + `failClosed`: **deny** Write/StrReplace su body skill/agenti senza `/slice` aperto in `agent-progress.md` (garanzia dura)
   - `afterFileEdit`: remind non-blocking (non è enforcement; il deny è solo preToolUse)
-  - `stop`: se dirty `a-*/` o `.cursor/skills/` → esegue `make ready-for-review` e follow-up (FAIL se gate≠0; se gate=0 ricorda che Make≠tree pulito)
+  - `stop`: se dirty `a-*/` o `.agents/skills/` → esegue `make ready-for-review` e follow-up (FAIL se gate≠0; se gate=0 ricorda che Make≠tree pulito)
 - **CI remota:** GitHub Actions `ready-for-review` (+ shellcheck apt) su push/PR `main`.
 - **Git hook locale:** `make install-git-hooks` → `.git/hooks/pre-commit` lancia `make pre-commit`.
 - **Qualità Make:** un solo frontmatter (`frontmatter-all`); `shell-syntax` ≠ `shellcheck-ok`; più `md-links` / `ready-proof`.
 - **STALE consumer:** `make sync-consumer-stale` (report); apply bump nei repo consumer con RGR — vedi playbook DUP.
-- **Ambito `ready-proof`:** osserva solo `a-*/` e `.cursor/skills/` in **questo** repo. Le L2 in un consumer (`/var/www/{repo}/.cursor/skills/`) non sono gate AF: version/CHANGELOG e `make` si verificano **nel** repo target (se assente → check greppabili dichiarati in progress).
+- **Ambito `ready-proof`:** osserva solo `a-*/` e `.agents/skills/` in **questo** repo. Le L2 in un consumer (`/var/www/{repo}/.agents/skills/`) non sono gate AF: version/CHANGELOG e `make` si verificano **nel** repo target (se assente → check greppabili dichiarati in progress).
 - **a-uiux:** L1 per static/a11y/layout; consumer L2 restano delta token/IA.
 - **Versioni README:** verità live = `sync-agents.sh --dry-run`.
 - **Liste L1:** una sola fonte (`Makefile` `L1_AGENTS` / `sync-agents.sh`); docs e `.cursor/commands/*` puntano a `make version-chains` / `make test-unit` — no `for d in a-…` paralleli. **Dopo** cambio registry L0/PROTOCOL: nello stesso slice (o immediato follow-up) allinea `a-agentzero/agents/a-agentzero.md` (tabella + scaffold + Perimetro) e `a-agentzero/SKILL.md` § Deleghe ai 13 L1; non attribuire PageSpeed/CWV alla riga L1 `a-seozoom` (CWV solo L2). Contratto: `check-harness-agentzero-deleghe-l1.sh`.

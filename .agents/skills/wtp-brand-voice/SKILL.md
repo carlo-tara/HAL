@@ -2,7 +2,7 @@
 name: wtp-brand-voice
 description: >-
   Alias legacy — contenuto convergente in a-copywriter-wtp. Usare a-copywriter
-  con estensione .cursor/skills/a-copywriter-wtp/SKILL.md in questo repo.
+  con estensione .agents/skills/a-copywriter-wtp/SKILL.md in questo repo.
 disable-model-invocation: true
 ---
 
@@ -10,8 +10,8 @@ disable-model-invocation: true
 
 **Contenuto convergente.** Non duplicare regole qui.
 
-Fonte unica: [`.cursor/skills/a-copywriter-wtp/SKILL.md`](../a-copywriter-wtp/SKILL.md)
+Fonte unica: [`.agents/skills/a-copywriter-wtp/SKILL.md`](../a-copywriter-wtp/SKILL.md)
 
 Agente: [`.cursor/agents/a-copywriter.md`](../../agents/a-copywriter.md)
 
-Install base: AgentFactory `a-copywriter` in `~/.cursor/skills/` (via `/sync`).
+Install base: AgentFactory `a-copywriter` in `~/.agents/skills/` (via `/sync`).

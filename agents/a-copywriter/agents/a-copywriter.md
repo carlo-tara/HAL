@@ -15,7 +15,7 @@ Orchestri le competenze: `tono-di-voce` (stile e brand), `humanizer` (eliminazio
 
 1. Catena: `a-agentzero` → `a-copywriter/SKILL.md` → eventuale L2 `copywriter-*`.
 2. Competenze: `tono-di-voce`, `humanizer`, `italiano-locale`.
-3. Discovery brand: `.cursor/brands/*.md` o brief di progetto.
+3. Discovery brand: `brands/*.md` o brief di progetto.
 
 ---
 

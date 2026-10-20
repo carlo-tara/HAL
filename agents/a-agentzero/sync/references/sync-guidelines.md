@@ -20,7 +20,7 @@ bash agents/a-agentzero/scripts/agent-version.sh chain <SKILL.md>
 ## Workflow `/sync <` (Generalizza)
 - Analisi **sola lettura**. Non modifica `extends-version` automaticamente.
 - Risolvi progetti da path, cwd, o discovery in `/var/www/`.
-- Inventario `.cursor/skills/*/SKILL.md`.
+- Inventario `.agents/skills/*/SKILL.md`.
 - Carica padri e confronta voci: DUP | L1 | L0 | L2 | NEED-N.
 - Cross-progetto: pattern ripetuti in >=2 progetti hanno priorità di promozione.
 - Emetti report e attendi conferma utente.

@@ -20,7 +20,7 @@ Allinea a [consolidation-targets.md](../../learn/references/consolidation-target
 
 | Sorgente | Uso |
 |----------|-----|
-| Path progetto(i) dopo `/sync <` | Scan `{repo}/.cursor/skills/*/SKILL.md` |
+| Path progetto(i) dopo `/sync <` | Scan `{repo}/.agents/skills/*/SKILL.md` |
 | Repo corrente se nessun path | Default: workspace attivo |
 | Catena `extends:` | Confrontare ogni L2 col padre L1 (e L0) |
 | `role:` multi-figlio | Separare data / editorial / voice / default |
@@ -43,7 +43,7 @@ Per ogni sezione/regola/workflow nel body L2 (e reference locali non dati):
 
 ## Heuristic di scansione
 
-1. Elenca skill con `extends: a-*` (e fallback legacy) sotto `.cursor/skills/`
+1. Elenca skill con `extends: a-*` (e fallback legacy) sotto `.agents/skills/`
 2. Per ciascuna: leggi frontmatter (`role`, `extends-version`) + sezioni Workflow / Override / Regole / Checklist / Deleghe
 3. Confronta col padre L1 (SKILL + competenze dichiarate) e, se rilevante, L0
 4. Cerca pattern ripetuti **tra progetti** se `/sync <` ha ≥2 path

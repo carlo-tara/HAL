@@ -1,7 +1,7 @@
 ---
 name: gherkin
 parent: a-product
-version: 1.1.16
+version: 1.1.17
 description: >-
   Reason why: senza scenari su cosa deve succedere (e fallire), prodotto e sviluppo non hanno un accordo chiaro da verificare. QA Lead / BDD Spec integrato in a-product: suite Gherkin da jtbd seeds, inventory UI/IO, journey E2E, expand edge, /cover, add-scenario da NL, /secure e /perf. Da usare per creare o validare file .feature e definire le acceptance prima dell'handoff ad a-harness.
 ---
@@ -18,7 +18,7 @@ Competenze interne: **bdd-security-performance**.
 
 `jtbd.md` con scenario_seeds (o seed equivalenti dal PO).
 
-Discovery: `.cursor/product/` → `.claude/product/` → `product/`. Output: `features/*.feature` + `features/README.md`.
+Discovery: `.claude/product/` → `product/`. Output: `features/*.feature` + `features/README.md`.
 
 ---
 

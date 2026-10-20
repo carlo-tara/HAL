@@ -1,5 +1,11 @@
 # Changelog — harness-agentfactory (L2)
 
+## [Unreleased] - 2026-10-20
+
+### Changed
+
+- Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `harness-agentfactory` 1.1.27 [sync:safe]
+
 ## [Unreleased]
 
 ### Changed

@@ -30,7 +30,7 @@ Non saltare gli step: ogni L1 **ferma** se manca l'artefatto upstream.
 | 3 | `a-gherkin` | `jtbd.md`, `personas.md` | `features/*.feature` |
 | 4 | `a-harness` | `.feature`, `docs/glossary.md`, `Makefile` | codice + test (tiny slices) |
 
-Path product (ordine di lookup): `.cursor/product/` → `.claude/product/` → `product/`.
+Path product (ordine di lookup): `.claude/product/` → `product/`.
 
 ---
 
@@ -182,7 +182,7 @@ a-harness          → … → escalate a-gherkin se manca .feature; a-po se man
 - [ ] Skill in `~/.claude/skills/a-personas|a-jtbd|a-gherkin|a-harness`
 - [ ] Agents in `~/.claude/agents/` (incluso `a-harness.md`)
 - [ ] `/learn` e `/sync` in `~/.claude/skills/` (HAL L0; opzionale nel pack stand-alone)
-- [ ] Discovery trova `.cursor/product` o `.claude/product`
+- [ ] Discovery trova `product/` o `.claude/product`
 - [ ] (a-harness) `Makefile` e `docs/glossary.md` nel repo target
 - [ ] Bootstrap: SKILL L1 autosufficiente; personas/jtbd/gherkin includono `po-interviewer` venduto
 - [ ] Nessun tool solo-Cursor obbligatorio nel happy path

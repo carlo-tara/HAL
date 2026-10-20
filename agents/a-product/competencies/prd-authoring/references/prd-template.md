@@ -1,6 +1,6 @@
 # PRD template — a-po
 
-Struttura evoluta da Claude `prd-writer` (Reportistica) + gate AF (vivo, NON-goals, KPI, Sistema, Skill VS PRD). Prose HAL. Path canone: `.cursor/product/prd.md`.
+Struttura evoluta da Claude `prd-writer` (Reportistica) + gate AF (vivo, NON-goals, KPI, Sistema, Skill VS PRD). Prose HAL. Path canone: `product/prd.md`.
 
 Compila ogni sezione con contenuto reale — niente placeholder lasciati su campi già forniti dal PO.
 

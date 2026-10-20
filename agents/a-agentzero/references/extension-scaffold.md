@@ -22,8 +22,8 @@ Per **nuovi agenti L1** da proto-prompt o corpus skill esterni: segui [l1-from-p
 Task Progress:
 - [ ] 1. Identifica agente madre L1
 - [ ] 2. Carica catena L0 → L1 (extends:)
-- [ ] 3. Verifica assenza figlio duplicato in .cursor/skills/
-- [ ] 4. Crea directory .cursor/skills/{dominio}-{progetto}/
+- [ ] 3. Verifica assenza figlio duplicato in .agents/skills/
+- [ ] 4. Crea directory .agents/skills/{dominio}-{progetto}/
 - [ ] 5. Copia e compila extension-template.md → SKILL.md
 - [ ] 6. Aggiungi delta: path, override, capacità, deleghe
 - [ ] 7. (Opzionale) Crea file dati progetto dal template L1
@@ -41,10 +41,10 @@ Task Progress:
 | Dominio | Agente madre | Template dati opzionale |
 |---------|--------------|------------------------|
 | B2B / GTM | `a-b2b` | L2 `b2b-*` + path enrichment in skill figlio |
-| Copy | `a-copywriter` | `.cursor/brands/{nome}.md` da `brand-brief-template.md` |
+| Copy | `a-copywriter` | `brands/{nome}.md` da `brand-brief-template.md` |
 | Design (UI, Charts, Illustrazioni) | `a-design` | `.cursor/chart-styles/`, `.cursor/illustration-styles/` |
 | Harness / Engineering / TDD | `a-harness` | `docs/glossary.md`, `Makefile`, L2 `harness-*` |
-| Product (PO, Personas, JTBD, BDD) | `a-product` | L2 `product-*` + `.cursor/product/` (`prd.md`, `personas.md`, `jtbd.md`, `features/`) |
+| Product (PO, Personas, JTBD, BDD) | `a-product` | L2 `product-*` + `product/` (`prd.md`, `personas.md`, `jtbd.md`, `features/`) |
 | SEO | `a-seozoom` | brief SEO da `project-brief-template.md` |
 | WordPress | `a-wordpress` | `.cursor/wordpress/{nome}.md` da `site-brief-template.md` |
 
@@ -61,8 +61,8 @@ Non copiare nel figlio ciò che è già nel base: il figlio contiene **solo delt
 ### 3. Verifica duplicati
 
 ```bash
-ls .cursor/skills/
-grep -r "extends: a-{dominio}" .cursor/skills/ 2>/dev/null
+ls .agents/skills/
+grep -r "extends: a-{dominio}" .agents/skills/ 2>/dev/null
 ```
 
 Se esiste già un figlio per lo stesso dominio+progetto, chiedi se aggiornare o creare variante.
@@ -70,10 +70,10 @@ Se esiste già un figlio per lo stesso dominio+progetto, chiedi se aggiornare o 
 ### 4–5. Crea SKILL.md figlio
 
 ```bash
-mkdir -p .cursor/skills/{dominio}-{progetto}
-cp agents/a-agentzero/extension-template.md .cursor/skills/{dominio}-{progetto}/SKILL.md
+mkdir -p .agents/skills/{dominio}-{progetto}
+cp agents/a-agentzero/extension-template.md .agents/skills/{dominio}-{progetto}/SKILL.md
 # oppure, se presente:
-# cp agents/a-{dominio}/extension-template.md .cursor/skills/{dominio}-{progetto}/SKILL.md
+# cp agents/a-{dominio}/extension-template.md .agents/skills/{dominio}-{progetto}/SKILL.md
 ```
 
 Compila frontmatter:
@@ -82,7 +82,7 @@ Compila frontmatter:
 ---
 name: {dominio}-{progetto}
 extends: a-{dominio}
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0   # versione L1 al momento della creazione — leggi da SKILL.md padre
 description: >-
   {Una riga: cosa aggiunge rispetto al base, per quale sito/progetto.}
@@ -142,8 +142,8 @@ Crea il file dati nel path standard del dominio, compilato dal template L1:
 
 ```bash
 # Esempi
-mkdir -p .cursor/brands
-cp agents/a-copywriter/brand-brief-template.md .cursor/brands/{nome-sito}.md
+mkdir -p brands
+cp agents/a-copywriter/brand-brief-template.md brands/{nome-sito}.md
 
 mkdir -p .cursor/wordpress
 cp agents/a-wordpress/site-brief-template.md .cursor/wordpress/{nome-sito}.md
@@ -153,7 +153,7 @@ cp agents/a-wordpress/site-brief-template.md .cursor/wordpress/{nome-sito}.md
 
 ```bash
 cp agents/a-agentzero/references/changelog-template.md \
-  .cursor/skills/{dominio}-{progetto}/CHANGELOG.md
+  .agents/skills/{dominio}-{progetto}/CHANGELOG.md
 # Compila voce [1.0.0] con data e descrizione baseline progetto
 ```
 
@@ -162,7 +162,7 @@ Regole: vedi [agent-versioning.md](agent-versioning.md).
 ### 10. Verifica finale
 
 - [ ] `extends: a-{dominio}` corretto nel frontmatter
-- [ ] `name` unico in `.cursor/skills/`
+- [ ] `name` unico in `.agents/skills/`
 - [ ] `version` e `extends-version` presenti; `extends-version` = versione L1 corrente
 - [ ] Se multi-figlio: `role:` (e opz. `primary:`) documentati; Deleghe sibling complete
 - [ ] `CHANGELOG.md` figlio creato con baseline 1.0.0
@@ -172,19 +172,19 @@ Regole: vedi [agent-versioning.md](agent-versioning.md).
 - [ ] File dati creato se richiesto dal dominio
 - [ ] Agent companion `.cursor/agents/{nome}.md` creato o aggiornato (`extends-version`, path)
 - [ ] (Opzionale) Override competenze L2 solo come delta (sotto)
-- [ ] Se `.cursor/` è in `.gitignore` del repo: dopo creazione/edit skill, `git add -f .cursor/skills/{dominio}-{progetto}/…` (altrimenti restano solo locali)
+- [ ] Se `.cursor/` è in `.gitignore` del repo: dopo creazione/edit skill, `git add -f .agents/skills/{dominio}-{progetto}/…` (altrimenti restano solo locali)
 
 ---
 
 ## Git: tracciare L2 quando `.cursor/` è ignorato
 
-Molti repo ignorano l’intera cartella `.cursor/`. Le skill L2 sotto `.cursor/skills/` **non** entrano in commit/push se non forzate.
+Molti repo ignorano l’intera cartella `.cursor/`. Le skill L2 sotto `.agents/skills/` **non** entrano in commit/push se non forzate.
 
 ```bash
 # Dopo scaffold, /learn !, o edit skill L2
-git add -f .cursor/skills/{dominio}-{progetto}/SKILL.md \
-  .cursor/skills/{dominio}-{progetto}/CHANGELOG.md \
-  .cursor/skills/{dominio}-{progetto}/**/*.md
+git add -f .agents/skills/{dominio}-{progetto}/SKILL.md \
+  .agents/skills/{dominio}-{progetto}/CHANGELOG.md \
+  .agents/skills/{dominio}-{progetto}/**/*.md
 ```
 
 Vale anche per override comandi progetto (`.cursor/commands/`) e agent companion (`.cursor/agents/`) se devono vivere nel repo.
@@ -214,7 +214,7 @@ Vedi anche [agent-versioning.md](agent-versioning.md) § Companion.
 Se il dominio dichiara `competencies:` (es. copy: `tono-di-voce`…; SEO: `seo-import`…; illustrator: `stile-visivo`…), puoi aggiungere solo il delta progetto:
 
 ```bash
-mkdir -p .cursor/skills/{dominio}-{progetto}/competencies/{id}
+mkdir -p .agents/skills/{dominio}-{progetto}/competencies/{id}
 # Crea SKILL.md con kind: competency, version, extends-version = version L1 della stessa id
 ```
 
@@ -224,7 +224,7 @@ Frontmatter minimo:
 ---
 name: {id}
 kind: competency
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0   # = version L1 a-{dominio}/competencies/{id}/
 description: >-
   Override {id} per {progetto}.

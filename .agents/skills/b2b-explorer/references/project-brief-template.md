@@ -1,6 +1,6 @@
 # Project Brief Template — b2b-explorer (Lombardia)
 
-Usa questo template prima di orchestrare un task pilota. Compila i guardrail dal L2 (`.cursor/skills/b2b-explorer/SKILL.md`); non inventare ICP/geo/prezzi.
+Usa questo template prima di orchestrare un task pilota. Compila i guardrail dal L2 (`.agents/skills/b2b-explorer/SKILL.md`); non inventare ICP/geo/prezzi.
 
 Working directory: `/var/www/WTP_App`. Dati: `.shared/b2b/`. Env: **solo** `.env` in root.
 
@@ -38,7 +38,7 @@ Working directory: `/var/www/WTP_App`. Dati: `.shared/b2b/`. Env: **solo** `.env
 - Key outcomes promised:
 
 ## 6) Data and evidence
-- Available notes/data sources: `.cursor/product/`, `explorer/b2b/docs/`, `projects/b2b-piccoleimprese/`
+- Available notes/data sources: `product/`, `explorer/b2b/docs/`, `projects/b2b-piccoleimprese/`
 - Enrichment DB: Postgres schema `enrichment.*` (`DATABASE_URL`; legacy `WTP_ENRICHMENT_DB_PATH` sqlite)
 - Enrichment entry: A cohort/CRM / B domain-first / both:
 - What is already validated:

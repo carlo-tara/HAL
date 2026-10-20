@@ -35,7 +35,7 @@ Alla fine mappa [Four Forces](references/four-forces.md).
 2. Dopo 5–10: pattern Push/Pull/Anxiety/Habit; linguaggio cliente
 3. Handoff: aggiorna `jtbd.md` (stories/unmet) o seeds; messaging → `a-po` → `a-copywriter`; validate → `a-po` `/validate`
 
-Path: `.cursor/product/interviews/` (o path L2).
+Path: `product/interviews/` (o path L2).
 
 ---
 

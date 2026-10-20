@@ -1,7 +1,7 @@
 ---
 name: stile-visivo
 kind: competency
-version: 1.0.0
+version: 1.0.1
 description: >-
   Stile visivo: onboarding, style file (.cursor/illustration-styles/), anchor/palette/seed,
   coerenza sessione, cambio stile esplicito. Solo L1 (no baseline L0).
@@ -29,7 +29,7 @@ Prima sessione senza style file; coerenza tra generazioni; cambio stile su richi
 | 0 file | Ferma → onboarding → salva `.cursor/illustration-styles/{nome}.md` |
 | 2+ file | Chiedi quale (o inferisci da path/chat) |
 
-Brand opzionale (`.cursor/brands/`): allinea mood/palette; **non** dichiarare `tono-di-voce` nel frontmatter. Testo in immagine / brief vocale: on-demand `tono-di-voce` o delega **a-copywriter**.
+Brand opzionale (`brands/`): allinea mood/palette; **non** dichiarare `tono-di-voce` nel frontmatter. Testo in immagine / brief vocale: on-demand `tono-di-voce` o delega **a-copywriter**.
 
 ---
 

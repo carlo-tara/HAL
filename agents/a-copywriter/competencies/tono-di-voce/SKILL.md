@@ -1,10 +1,10 @@
 ---
 name: tono-di-voce
 kind: competency
-version: 1.0.2
+version: 1.0.3
 extends-version: 1.0.2
 description: >-
-  Tono di voce per copy web: brand file .cursor/brands/, gerarchia voce, calibrazione
+  Tono di voce per copy web: brand file brands/, gerarchia voce, calibrazione
   registro/lessico/chiusure, scrittura inclusiva. Estende L0 tono-di-voce.
 ---
 
@@ -22,7 +22,7 @@ Aggiunge regole copy web e reference di dominio.
 | 1 | Override L2 `competencies/tono-di-voce/` | Delta vocale progetto |
 | 2 | Skill voice dedicata (`*-voice`, `*-tone-of-voice`) se presente | Registri, struttura, writing-rules; se voice-as-brand anche lessico/inclusivo |
 | 3 | Skill figlia L2 (`extends: a-copywriter`) | Voce breve, path, workflow |
-| 4 | `.cursor/brands/{sito}.md` | Identità, lessico, inclusività, PS (se presente) |
+| 4 | `brands/{sito}.md` | Identità, lessico, inclusività, PS (se presente) |
 | 5 | Questa competenza L1 | Calibrazione e inclusività generiche |
 | 6 | L0 tono-di-voce | Principi voce locale |
 

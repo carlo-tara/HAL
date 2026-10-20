@@ -5,7 +5,7 @@ Dopo export Gherkin, delega a **a-harness** (non un coding agent generico).
 ```
 @a-harness /cycle per {flusso}.
 
-Contratto: .cursor/product/features/{file}.feature — scenario "{nome}".
+Contratto: product/features/{file}.feature — scenario "{nome}".
 Bounded context: {Context} ({path modulo}).
 Rispetta docs/glossary.md e docs/bounded-contexts.md.
 Tratta i .feature come contratto comportamentale.

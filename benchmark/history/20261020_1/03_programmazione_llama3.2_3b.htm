@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid black;
+            padding: 20px;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        td:hover {
+            background-color: #ccc;
+        }
+        .errore {
+            background-color: #ff0000;
+        }
+        .soluzione {
+            background-color: #0ff;
+        }
+        #ripista {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <table id="sudoku">
+        <tr>
+            <td id="0">3</td>
+            <td id="1"></td>
+            <td id="2"></td>
+            <td id="3"></td>
+            <td id="4"></td>
+            <td id="5"></td>
+            <td id="6"></td>
+            <td id="7"></td>
+            <td id="8">4</td>
+        </tr>
+        <tr>
+            <td id="9">0</td>
+            <td id="10"></td>
+            <td id="11"></td>
+            <td id="12"></td>
+            <td id="13"></td>
+            <td id="14"></td>
+            <td id="15"></td>
+            <td id="16"></td>
+            <td id="17"></td>
+        </tr>
+        <tr>
+            <td id="18">0</td>
+            <td id="19"></td>
+            <td id="20"></td>
+            <td id="21"></td>
+            <td id="22"></td>
+            <td id="23"></td>
+            <td id="24"></td>
+            <td id="25"></td>
+            <td id="26">9</td>
+        </tr>
+    </table>
+    <button id="ripista">Ripista</button>
+    <button id="risoluzione">Risoluzione</button>
+    <p id="errore"></p>
+    <p id="messaggio"></p>
+    <script>
+        let sudoku = [
+            [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 2, 0, 0, 0],
+            [0, 0, 3, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 3, 0, 0],
+            [0, 2, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 3, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 2]
+        ];
+        let contatore = 0;
+        let errori = 0;
+
+        function verificaSudoku() {
+            for (let i = 0; i < 9; i++) {
+                let riga = sudoku[i];
+                for (let j = 0; j < 9; j++) {
+                    let cella = sudoku[i * 9 + j];
+                    if (cella !== 0) {
+                        let cont = 1;
+                        for (let k = 0; k < 9; k++) {
+                            if (k !== i * 9 + j) {
+                                let cellaM = sudoku[k * 9 + j];
+                                if (cella === cellaM) {
+                                    cont++;
+                                }
+                            }
+                        }
+                        if (cont > 1) {
+                            errori++;
+                        }
+                    }
+                }
+            }
+            for (let j = 0; j < 9; j++) {
+                let colonna = [];
+                for (let i = 0; i < 9; i++) {
+                    colonna.push(sudoku[i * 9 + j]);
+                }
+                for (let k = 0; k < 9; k++) {
+                    if (colonna[k] !== 0) {
+                        let cont = 1;
+                        for (let l = k; l < 9; l++) {
+                            if (colonna[l] === colonna[k]) {
+                                cont++;
+                            }
+                        }
+                        if (cont > 1) {
+                            errori++;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    let blocchi = [];
+                    for (let k = i * 3; k < i * 3 + 3; k++) {
+                        for (let l = j * 3; l < j * 3 + 3; l++) {
+                            blocchi.push(sudoku[k * 9 + l]);
+                        }
+                    }
+                    for (let k = 0; k < 9; k++) {
+                        if (blocchi[k] !== 0) {
+                            let cont = 1;
+                            for (let l = k; l < 9; l++) {
+                                if (blocchi[l] === blocchi[k]) {
+                                    cont++;
+                                }
+                            }
+                            if (cont > 1) {
+                                errori++;
+                            }
+                        }
+                    }
+                }
+            }
+            if (errori > 0) {
+                document.getElementById('errore').innerText = 'Errore! Puoi provare nuovamente o iniziare una nuova partita.';
+            } else {
+                document.getElementById('messaggio').innerText = 'Hai risolto il Sudoku!';
+            }
+        }
+
+        function aggiornaSudoku(cella) {
+            sudoku[cella] = parseInt(document.getElementById('0'+cella).innerText);
+            contatore++;
+            verificaSudoku();
+            if (contatore === 81) {
+                document.getElementById('ripista').disabled = true;
+                document.getElementById('risoluzione').disabled = false;
+                document.getElementById('errore').innerText = '';
+            }
+        }
+
+        function cancellaSudoku(cella) {
+            sudoku[cella] = 0;
+            document.getElementById('0'+cella).innerText = '';
+            contatore--;
+            verificaSudoku();
+            if (contatore === 0) {
+                document.getElementById('ripista').disabled = false;
+                document.getElementById('risoluzione').disabled = true;
+                document.getElementById('errore').innerText = '';
+            }
+        }
+
+        document.getElementById('0').addEventListener('click', function() {
+            document.getElementById('0').style.background = '#ccc';
+            document.getElementById('1').style.background = '';
+            document.getElementById('2').style.background = '';
+        });
+        document.getElementById('1').addEventListener('click', function() {
+            document.getElementById('1').style.background = '#ccc';
+            document.getElementById('0').style.background = '';
+            document.getElementById('2').style.background = '';
+        });
+        document.getElementById('2').addEventListener('click', function() {
+            document.getElementById('2').style.background = '#ccc';
+            document.getElementById('1').style.background = '';
+            document.getElementById('0').style.background = '';
+        });
+        for (let i = 0; i < 81; i++) {
+            document.getElementById(i.toString()).addEventListener('click', function() {
+                document.getElementById(i.toString()).style.background = '#ccc';
+                document.getElementById((i+1).toString()).style.background = '';
+                document.getElementById((i+2).toString()).style.background = '';
+            });
+        }
+        document.getElementById('ripista').addEventListener('click', function() {
+            for (let i = 0; i < 81; i++) {
+                document.getElementById(i.toString()).style.background = '';
+            }
+            for (let i = 0; i < 81; i++) {
+                if (sudoku[i] === 0) {
+                    document.getElementById(i.toString()).style.background = '#ccc';
+                    document.getElementById((i+1).toString()).style.background = '';
+                    document.getElementById((i+2).toString()).style.background = '';
+                }
+            }
+            contatore = 0;
+            verificaSudoku();
+        });
+        document.getElementById('risoluzione').addEventListener('click', function() {
+            for (let i = 0; i < 81; i++) {
+                document.getElementById(i.toString()).style.background = '';
+            }
+            for (let i = 0; i < 81; i++) {
+                if (sudoku[i] === 0) {
+                    document.getElementById(i.toString()).style.background = '#ccc';
+                    document.getElementById((i+1).toString()).style.background = '';
+                    document.getElementById((i+2).toString()).style.background = '';
+                }
+            }
+            document.getElementById('ripista').disabled = false;
+            document.getElementById('risoluzione').disabled = true;
+            document.getElementById('errore').innerText = '';
+        });
+    </script>
+</body>
+</html>

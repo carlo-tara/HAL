@@ -1,6 +1,6 @@
 # Session learnings
 
-Path: `.cursor/product/session-learnings.md`
+Path: `product/session-learnings.md`
 
 ```markdown
 # Session learnings

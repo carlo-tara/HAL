@@ -25,7 +25,7 @@
 | **Escludi** | Ephemeral, fatto, sensibile, non confermato. |
 
 ## Ambito: Progetto vs HAL
-- **Progetto:** Convenzione/preferenza del repo consumer (o delta L2 locale). (Es. `.cursor/skills/...`, brands, rules, `./ToDo.md` consumer).
+- **Progetto:** Convenzione/preferenza del repo consumer (o delta L2 locale). (Es. `.agents/skills/...`, brands, rules, `./ToDo.md` consumer).
 - **HAL:** Protocollo / L0 / L1 canonici / harness meta-repo (Es. `a-*/`, `harness-agentfactory`, docs AF, `./ToDo.md` AF).
 
 ## Regole di scrittura

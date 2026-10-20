@@ -1,7 +1,7 @@
 ---
 name: market-public-data
 kind: competency
-version: 1.0.0
+version: 1.0.1
 description: >-
   Analizza registri aperti IT (ISTAT SDMX, Unioncamere, startup.registroimprese)
   per sizing/segment/ecosystem evidence. Solo L1 (a-po). Non enrichment CRM.
@@ -39,7 +39,7 @@ Helper: [`../../scripts/fetch-istat-sdmx.sh`](../../scripts/fetch-istat-sdmx.sh)
    - macro / serie nazionali → ISTAT SDMX (+ databrowser per scoprire dataflow)
    - demografia imprese locale / CSV camerali → Unioncamere (+ discovery dati.gov.it)
    - startup / PMI innovative / incubatori → registroimprese (file utente | browser | API L2)
-3. Fetch o istruzioni download; salva sotto `.cursor/product/data/` o path L2
+3. Fetch o istruzioni download; salva sotto `product/data/` o path L2
 4. Analizza: trend, confronto, caveat (copertura, lag, definizione legale startup)
 5. Output contract sotto; checkpoint: “implicazioni per shape/validate?”
 ```

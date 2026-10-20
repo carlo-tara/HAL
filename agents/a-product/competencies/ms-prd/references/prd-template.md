@@ -2,7 +2,7 @@
 
 Schema allineato a Claude `prd-writer` + istanza Reportistica (es. MoneySurfers B2B): Vincoli, NON-goals, Epic Map a blocchi, US raggruppate, DoD A+B, Artifact opt-in. Anti-invention; gate Sistema sotto.
 
-**Path file:** se il progetto ha già una cartella PRD (es. `projects/…/01-requisiti/`), salvare lì e continuare la serie di versione. Usare `.cursor/product/PRD_<slug>_v<ver>.md` solo in assenza di path di progetto.
+**Path file:** se il progetto ha già una cartella PRD (es. `projects/…/01-requisiti/`), salvare lì e continuare la serie di versione. Usare `product/PRD_<slug>_v<ver>.md` solo in assenza di path di progetto.
 
 **Versione:** continua la serie del PRD esistente (es. 0.7 → 0.8). Nuovo documento senza storia → 0.1 o 1.0 a scelta del PO (non forzare 1.0 su un update).
 

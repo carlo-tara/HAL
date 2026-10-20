@@ -22,7 +22,7 @@
 
 Se team multi-founder: ciascuno compila da solo, poi **diff** prima di reconciliare.
 
-Path artefatto: `.cursor/product/lean-canvas-YYYY-MM-DD.md` (nuova data = nuova versione).
+Path artefatto: `product/lean-canvas-YYYY-MM-DD.md` (nuova data = nuova versione).
 
 ---
 

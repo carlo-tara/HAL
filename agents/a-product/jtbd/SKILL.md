@@ -1,7 +1,7 @@
 ---
 name: jtbd
 parent: a-product
-version: 1.1.10
+version: 1.1.11
 description: >-
   Reason why: senza capire il lavoro che il cliente cerca di fare, il backlog ottimizza funzioni e non i suoi progressi. Job Analyst / JTBD integrato in a-product: Jobs-To-Be-Done job-first, ODI needs/unmet, continuity di flusso, job stories e scenario seeds per BDD; switch interview JTBD (timeline + Four Forces). Usare per mappare jobs da personas, unmet needs, affinare JTBD e switch interview.
 ---
@@ -16,7 +16,7 @@ Skill di prodotto per **Job Analyst / JTBD** (job-first + ODI). Competenza integ
 
 `personas.md` con ≥1 `primary` `active`. Altrimenti stop → esegui skill `personas` (`/create`).
 
-Discovery product: `.cursor/product/` → `.claude/product/` → `product/`. Output: `jtbd.md`.
+Discovery product: `.claude/product/` → `product/`. Output: `jtbd.md`.
 
 ---
 

@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.8.6] - 2026-10-20
+
+### Changed
+
+- Aggiornati i path di esempio da `.cursor/` a `.agents/` in `references/agent-versioning.md` e `references/extension-scaffold.md`; allineato l'ordine di lookup product in `AGENT-PROTOCOL.md` (`.claude/product/` → `product/`). Versioni dei tre documenti: 1.0.1.
+
 ## [1.8.5] - 2026-10-16
 
 ### Added

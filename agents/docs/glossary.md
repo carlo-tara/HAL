@@ -18,7 +18,7 @@ HAL = sorgente canonica skill (meta-repo), non app consumer.
 | Adapter | Confini I/O verso sistemi esterni = **ACL** (`anti-corruption-layer`); non competency GoF separata | Adapter pattern OO standalone, `competencies/adapter/` |
 | Facade (Make/L1) | Superficie unica verso l’agente: **Platform API** (`Makefile`) e/o **Facade L1** di ingresso; non catalogo GoF | Facade class tutorial, `competencies/facade/` |
 | Profilo B2B | Sezione canone in `a-product` (flow pilota, cascata GTM, Pilot fit check); ingresso anche via facade `a-b2b` + L2 `b2b-*` | Orchestra B2B separata, merge body specialisti |
-| L2 | Skill figlia di progetto (`.cursor/skills/{dominio}-{progetto}/`) con delta locale | Override file (troppo generico), fork skill |
+| L2 | Skill figlia di progetto (`.agents/skills/{dominio}-{progetto}/`) con delta locale | Override file (troppo generico), fork skill |
 | Skill | Unità caricabile con frontmatter `name` / `version` / opz. `extends` | Prompt pack, bot |
 | Competency | Modulo path-resolved (`competencies/{id}/`) dichiarato in `competencies:` — non agente sibling | Sub-agent, nested agent |
 | Platform API | `Makefile` root: unici target ammessi per verify/gate | Script ad hoc, npm scripts non mappati |
@@ -33,12 +33,12 @@ HAL = sorgente canonica skill (meta-repo), non app consumer.
 | Extends-version | Versione del padre dichiarata dal figlio; confronto → STALE | Pin generico |
 | Harness | Constraint layer (Make, TDD, DDD, progress) attorno al model | Autonomia illimitata, secondo agent loop |
 | Bootstrap | Scaffold profile `minimal` \| `standard` della Platform API | Setup chat one-off |
-| Progress | Log append-only sessione (`.cursor/product/agent-progress.md`) | Chat history come fonte di verità |
+| Progress | Log append-only sessione (`product/agent-progress.md`) | Chat history come fonte di verità |
 | Mappa residui | Backlog rinfrescabile in `./ToDo.md` (root repo); igiene via `/todo` | Progress, ToDo generico, backlog prodotto (`Backlog slice`) se inteso come roadmap PO |
 | Attività | Voce nella Mappa residui: titolo, tag, priorità P0–P2, perché utile, acceptance | Task vago, ticket, item senza tag/priorità |
 | Tag attività | Etichetta ordinabile su Attività (`feature`, `bug`, `techdebt`, `uiux`, `docs`, `infra`, `spike`) | Label ad hoc non catalogata, emoji-only |
 | Loop | Ciclo autonomo con goal osservabile, azioni, observe, termination, error triage; path scelto dall’agente entro il harness (`/cycle`) | While infinito, retry cieco, secondo agent loop |
-| Work Graph | Artefatto Plan (`.cursor/product/work-graph.md`): Nodi + Archi + Mermaid; percorsi dichiarati; via `/graph` | LangGraph-as-canone, agent org vaga, runtime multi-agent SaaS |
+| Work Graph | Artefatto Plan (`product/work-graph.md`): Nodi + Archi + Mermaid; percorsi dichiarati; via `/graph` | LangGraph-as-canone, agent org vaga, runtime multi-agent SaaS |
 | Nodo | Unità di lavoro nel Work Graph (plan/reflect/tool/act/review/human/delegate) con owner slash o L1 | Step vago, task senza stop |
 | Arco | Routing di stato tra Nodi (next/condizione) | Edge non tipizzato, handoff implicito in chat |
 | Freeze | Lista file read-only anche in Act (se attiva) | Lock git |

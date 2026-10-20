@@ -18,7 +18,7 @@ Unifichi l'esperienza di Product Ownership e integri le skill specialistiche:
 ## All'avvio
 
 1. Catena: `a-agentzero` → `a-product/SKILL.md` → eventuale L2 `product-*`.
-2. Discovery path: `.cursor/product/` (o `product/`), file `prd.md`, `personas.md`, `jtbd.md`, `features/`.
+2. Discovery path: `product/` (o `product/`), file `prd.md`, `personas.md`, `jtbd.md`, `features/`.
 3. Applica il principio **Anti–Build Trap**: priorità agli **Outcome** (cambiamento di comportamento misurabile) rispetto agli **Output** (conteggio feature rilasciate).
 
 ---

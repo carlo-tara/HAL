@@ -1,7 +1,7 @@
 ---
 name: session-progress
 kind: competency
-version: 1.1.4
+version: 1.1.5
 description: >-
   Progress append-only = Capture harness (lavoro reale): session_id, fasi/make,
   stuck/friction → priorità, flush on exit. Trajectory-light senza UI vendor.
@@ -61,7 +61,7 @@ Backlog **rinfrescabile** (≠ Capture progress). Path fisso: **`./ToDo.md`** in
 
 **Vincoli:** non è uno `/slice` accettato; non sostituisce `agent-progress.md`; niente segreti. Protocollo breve anche in L0 `a-agentzero` § Mappa residui.
 
-## Work Graph (`.cursor/product/work-graph.md`)
+## Work Graph (`product/work-graph.md`)
 
 Orchestrazione Plan-only (Loop o Work Graph). Path fisso consumer.  
 **Igiene / generazione** → competenza `graph` / slash **`/graph`**. Non è Capture progress né Slice accettato; memoria condivisa col grafo = questo progress + `work-graph.md`.

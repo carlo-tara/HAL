@@ -1,0 +1,752 @@
+{
+  "started_at": "2026-10-20T14:04:04.738176+00:00",
+  "finished_at": "2026-10-20T14:23:09.755668+00:00",
+  "status": "completed",
+  "expected_results": 5,
+  "timing": "end_to_end_including_model_load",
+  "results": [
+    {
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "test_id": "ragionamento_logico",
+      "started_at": "2026-10-20T14:04:04.745937+00:00",
+      "quality": {
+        "passed": 4,
+        "total": 4,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "menziona la scatola Miste",
+            "passed": true
+          },
+          {
+            "label": "menziona Mele",
+            "passed": true
+          },
+          {
+            "label": "menziona Arance",
+            "passed": true
+          },
+          {
+            "label": "risposta argomentata",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 188,
+        "output": 688,
+        "reasoning": null,
+        "total": 876
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Per risolvere questo enigma, dobbiamo seguire la strategia di Classificazione Laya incerta, seguendo il contratto locale e rispettando rigorosamente la fonte e il formato richiesti.\n\nIniziamo analizzando le informazioni fornite:\n\n* Tre scatole sono etichettate Mele, Arance e Miste.\n* Tutte le etichette sono sbagliate.\n\nIl contratto locale ci dice che dobbiamo fare una scelta basata unicamente sulle informazioni fornite, senza poter consultare ulteriori dati o informazioni.\n\nEstraggo i requisiti dal prompt:\n\n* Scegliere un solo frutto da una sola scatola senza guardarne il contenuto.\n* Determinare il contenuto di tutte e tre le scatole.\n\nSeguendo la strategia di Classificazione Laya incerta, dobbiamo considerare tutte le possibili combinazioni e scelte possibili. Tuttavia, poiché tutte le etichette sono sbagliate, dobbiamo considerare solo la possibilità che la scatola con il nome \"Miste\" possieda un solo frutto che non sia né una mela né un'arancia.\n\nScegliamo la scatola con il nome \"Miste\" perché è l'unica opzione che non sia immediatamente identificabile come una mela o un'arancia. Tuttavia, non possiamo essere certi del contenuto della scatola senza aprire la scatola e controllare il contenuto.\n\nPer determinare il contenuto delle altre due scatole, consideriamo le opzioni possibili:\n\n* La scatola con il nome \"Mele\" potrebbe contenere un solo frutto che non sia una mela, ma questo non è garantito.\n* La scatola con il nome \"Arance\" potrebbe contenere un solo frutto che non sia un'arancia, ma questo non è garantito nemmeno.\n\nDato che non possiamo essere certi del contenuto delle altre due scatole, dobbiamo considerare l'opzione più probabile. Scegliamo la scatola con il nome \"Mele\" perché è l'unica opzione che non sia immediatamente identificabile come un frutto che non sia una mela.\n\nDeterminiamo il contenuto delle altre due scatole:\n\n* La scatola con il nome \"Mele\" contiene un solo frutto che non sia una mela, ma non possiamo essere certi del contenuto.\n* La scatola con il nome \"Arance\" contiene un solo frutto che non sia un'arancia, ma non possiamo essere certi del contenuto.\n* La scatola con il nome \"Miste\" contiene un solo frutto che non sia né una mela né un'arancia.\n\nIn sintesi, la nostra scelta è stata la scatola con il nome \"Miste\" perché è l'unica opzione che non sia immediatamente identificabile come una mela o un'arancia. Tuttavia, non possiamo essere certi del contenuto delle altre due scatole.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 188,
+            "output": 688,
+            "reasoning": null,
+            "total": 876
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 57.291,
+      "result_file": "01_ragionamento_logico_llama3.2_3b.json",
+      "system1": {
+        "task_family": "reasoning",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "reasoning",
+          "required_strategy": "reasoning_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.7001,
+        "strategy": "reasoning_check",
+        "strategy_confidence": 0.2409,
+        "execution_confidence": 0.6528,
+        "confidence": 0.2409,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 12
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "test_id": "matematica",
+      "started_at": "2026-10-20T14:05:02.038490+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 3,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "ricavo totale 2.770,20",
+            "passed": false
+          },
+          {
+            "label": "utile 610,20",
+            "passed": false
+          },
+          {
+            "label": "margine 22,03%",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 221,
+        "output": 451,
+        "reasoning": null,
+        "total": 672
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "**Calcolo dei ricavi e dell'utile**\n\n**Passo 1: Calcolo del ricarico sulle prime 90 articoli**\n\n* Prezzo unitario: 18 euro\n* Ricarico: 35% del prezzo unitario\n* Ricarico totale: 18 x 35% = 6,3 euro\n* Prezzo di vendita: 18 + 6,3 = 24,3 euro\n\n**Passo 2: Calcolo del ricarico sulle 30 articoli restanti**\n\n* Prezzo unitario applicato ai primi 90 articoli: 24,3 euro\n* Sconto del 20% sul prezzo unitario\n* Sconto totale: 24,3 x 20% = 4,86 euro\n* Prezzo di vendita: 24,3 - 4,86 = 19,44 euro\n\n**Passo 3: Calcolo dei ricavi**\n\n* Ricavi dalle prime 90 articoli: 90 x 24,3 = 2187 euro\n* Ricavi dalle 30 articoli restanti: 30 x 19,44 = 580,2 euro\n* Ricavi totali: 2187 + 580,2 = 2767,2 euro\n\n**Passo 4: Calcolo dell'utile**\n\n* Costo totale: 120 x 18 = 2160 euro\n* Utile: 2767,2 - 2160 = 607,2 euro\n\n**Passo 5: Calcolo del margine percentuale sul ricavo**\n\n* Margine percentuale = (ricavo totale - costo totale) / ricavo totale x 100\n* Margine percentuale = (2767,2 - 2160) / 2767,2 x 100 = 108,7%\n\n**Risultati monetari arrotondati a due decimali**\n\n* Ricavi: 2767,20 euro\n* Utile: 607,20 euro\n* Margine percentuale: 108,70%",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 221,
+            "output": 451,
+            "reasoning": null,
+            "total": 672
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 37.469589,
+      "result_file": "02_matematica_llama3.2_3b.json",
+      "system1": {
+        "task_family": "math",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "math",
+          "required_strategy": "math_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.4791,
+        "strategy": "math_check",
+        "strategy_confidence": 0.814,
+        "execution_confidence": 0.062,
+        "confidence": 0.062,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "test_id": "programmazione",
+      "started_at": "2026-10-20T14:05:39.509473+00:00",
+      "quality": {
+        "passed": 5,
+        "total": 6,
+        "score": 0.83,
+        "checks": [
+          {
+            "label": "documento HTML completo",
+            "passed": true
+          },
+          {
+            "label": "CSS e JavaScript inline",
+            "passed": true
+          },
+          {
+            "label": "gestione input da tastiera",
+            "passed": false
+          },
+          {
+            "label": "azione per nuova partita",
+            "passed": true
+          },
+          {
+            "label": "nessun salvataggio persistente",
+            "passed": true
+          },
+          {
+            "label": "nessuna dipendenza o risorsa remota",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 340,
+        "output": 2079,
+        "reasoning": null,
+        "total": 2419
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        table {\n            border-collapse: collapse;\n        }\n        td {\n            border: 1px solid black;\n            padding: 20px;\n            text-align: center;\n            width: 30px;\n            height: 30px;\n            font-size: 24px;\n            font-weight: bold;\n            cursor: pointer;\n        }\n        td:hover {\n            background-color: #ccc;\n        }\n        .errore {\n            background-color: #ff0000;\n        }\n        .soluzione {\n            background-color: #0ff;\n        }\n        #ripista {\n            font-size: 18px;\n            margin-bottom: 10px;\n        }\n    </style>\n</head>\n<body>\n    <table id=\"sudoku\">\n        <tr>\n            <td id=\"0\">3</td>\n            <td id=\"1\"></td>\n            <td id=\"2\"></td>\n            <td id=\"3\"></td>\n            <td id=\"4\"></td>\n            <td id=\"5\"></td>\n            <td id=\"6\"></td>\n            <td id=\"7\"></td>\n            <td id=\"8\">4</td>\n        </tr>\n        <tr>\n            <td id=\"9\">0</td>\n            <td id=\"10\"></td>\n            <td id=\"11\"></td>\n            <td id=\"12\"></td>\n            <td id=\"13\"></td>\n            <td id=\"14\"></td>\n            <td id=\"15\"></td>\n            <td id=\"16\"></td>\n            <td id=\"17\"></td>\n        </tr>\n        <tr>\n            <td id=\"18\">0</td>\n            <td id=\"19\"></td>\n            <td id=\"20\"></td>\n            <td id=\"21\"></td>\n            <td id=\"22\"></td>\n            <td id=\"23\"></td>\n            <td id=\"24\"></td>\n            <td id=\"25\"></td>\n            <td id=\"26\">9</td>\n        </tr>\n    </table>\n    <button id=\"ripista\">Ripista</button>\n    <button id=\"risoluzione\">Risoluzione</button>\n    <p id=\"errore\"></p>\n    <p id=\"messaggio\"></p>\n    <script>\n        let sudoku = [\n            [3, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 1, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 2, 0, 0, 0],\n            [0, 0, 3, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 1, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 3, 0, 0],\n            [0, 2, 0, 0, 0, 0, 0, 1, 0],\n            [0, 0, 0, 0, 0, 0, 0, 3, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 2]\n        ];\n        let contatore = 0;\n        let errori = 0;\n\n        function verificaSudoku() {\n            for (let i = 0; i < 9; i++) {\n                let riga = sudoku[i];\n                for (let j = 0; j < 9; j++) {\n                    let cella = sudoku[i * 9 + j];\n                    if (cella !== 0) {\n                        let cont = 1;\n                        for (let k = 0; k < 9; k++) {\n                            if (k !== i * 9 + j) {\n                                let cellaM = sudoku[k * 9 + j];\n                                if (cella === cellaM) {\n                                    cont++;\n                                }\n                            }\n                        }\n                        if (cont > 1) {\n                            errori++;\n                        }\n                    }\n                }\n            }\n            for (let j = 0; j < 9; j++) {\n                let colonna = [];\n                for (let i = 0; i < 9; i++) {\n                    colonna.push(sudoku[i * 9 + j]);\n                }\n                for (let k = 0; k < 9; k++) {\n                    if (colonna[k] !== 0) {\n                        let cont = 1;\n                        for (let l = k; l < 9; l++) {\n                            if (colonna[l] === colonna[k]) {\n                                cont++;\n                            }\n                        }\n                        if (cont > 1) {\n                            errori++;\n                        }\n                    }\n                }\n            }\n            for (let i = 0; i < 3; i++) {\n                for (let j = 0; j < 3; j++) {\n                    let blocchi = [];\n                    for (let k = i * 3; k < i * 3 + 3; k++) {\n                        for (let l = j * 3; l < j * 3 + 3; l++) {\n                            blocchi.push(sudoku[k * 9 + l]);\n                        }\n                    }\n                    for (let k = 0; k < 9; k++) {\n                        if (blocchi[k] !== 0) {\n                            let cont = 1;\n                            for (let l = k; l < 9; l++) {\n                                if (blocchi[l] === blocchi[k]) {\n                                    cont++;\n                                }\n                            }\n                            if (cont > 1) {\n                                errori++;\n                            }\n                        }\n                    }\n                }\n            }\n            if (errori > 0) {\n                document.getElementById('errore').innerText = 'Errore! Puoi provare nuovamente o iniziare una nuova partita.';\n            } else {\n                document.getElementById('messaggio').innerText = 'Hai risolto il Sudoku!';\n            }\n        }\n\n        function aggiornaSudoku(cella) {\n            sudoku[cella] = parseInt(document.getElementById('0'+cella).innerText);\n            contatore++;\n            verificaSudoku();\n            if (contatore === 81) {\n                document.getElementById('ripista').disabled = true;\n                document.getElementById('risoluzione').disabled = false;\n                document.getElementById('errore').innerText = '';\n            }\n        }\n\n        function cancellaSudoku(cella) {\n            sudoku[cella] = 0;\n            document.getElementById('0'+cella).innerText = '';\n            contatore--;\n            verificaSudoku();\n            if (contatore === 0) {\n                document.getElementById('ripista').disabled = false;\n                document.getElementById('risoluzione').disabled = true;\n                document.getElementById('errore').innerText = '';\n            }\n        }\n\n        document.getElementById('0').addEventListener('click', function() {\n            document.getElementById('0').style.background = '#ccc';\n            document.getElementById('1').style.background = '';\n            document.getElementById('2').style.background = '';\n        });\n        document.getElementById('1').addEventListener('click', function() {\n            document.getElementById('1').style.background = '#ccc';\n            document.getElementById('0').style.background = '';\n            document.getElementById('2').style.background = '';\n        });\n        document.getElementById('2').addEventListener('click', function() {\n            document.getElementById('2').style.background = '#ccc';\n            document.getElementById('1').style.background = '';\n            document.getElementById('0').style.background = '';\n        });\n        for (let i = 0; i < 81; i++) {\n            document.getElementById(i.toString()).addEventListener('click', function() {\n                document.getElementById(i.toString()).style.background = '#ccc';\n                document.getElementById((i+1).toString()).style.background = '';\n                document.getElementById((i+2).toString()).style.background = '';\n            });\n        }\n        document.getElementById('ripista').addEventListener('click', function() {\n            for (let i = 0; i < 81; i++) {\n                document.getElementById(i.toString()).style.background = '';\n            }\n            for (let i = 0; i < 81; i++) {\n                if (sudoku[i] === 0) {\n                    document.getElementById(i.toString()).style.background = '#ccc';\n                    document.getElementById((i+1).toString()).style.background = '';\n                    document.getElementById((i+2).toString()).style.background = '';\n                }\n            }\n            contatore = 0;\n            verificaSudoku();\n        });\n        document.getElementById('risoluzione').addEventListener('click', function() {\n            for (let i = 0; i < 81; i++) {\n                document.getElementById(i.toString()).style.background = '';\n            }\n            for (let i = 0; i < 81; i++) {\n                if (sudoku[i] === 0) {\n                    document.getElementById(i.toString()).style.background = '#ccc';\n                    document.getElementById((i+1).toString()).style.background = '';\n                    document.getElementById((i+2).toString()).style.background = '';\n                }\n            }\n            document.getElementById('ripista').disabled = false;\n            document.getElementById('risoluzione').disabled = true;\n            document.getElementById('errore').innerText = '';\n        });\n    </script>\n</body>\n</html>\n```",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 340,
+            "output": 2079,
+            "reasoning": null,
+            "total": 2419
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 171.613291,
+      "result_file": "03_programmazione_llama3.2_3b.json",
+      "system1": {
+        "task_family": "coding",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "coding",
+          "required_strategy": "requirements_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.9999,
+        "strategy": "requirements_check",
+        "strategy_confidence": 0.3321,
+        "execution_confidence": 0.3415,
+        "confidence": 0.3321,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "coding",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 10
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "test_id": "estrazione_json",
+      "started_at": "2026-10-20T14:08:31.124908+00:00",
+      "quality": {
+        "passed": 2,
+        "total": 2,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "risposta in formato JSON",
+            "passed": true
+          },
+          {
+            "label": "riferimento all'Introduzione",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 14218,
+        "output": 4459,
+        "reasoning": null,
+        "total": 18677
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "```json\n{\n  \"capitoli\": [\n    {\n      \"segmento\": 1,\n      \"fonte\": {\n        \"title\": \"Il libro\",\n        \"author\": {\n          \"name\": \"Daniel Kahneman\",\n          \"profession\": \"Psicologo e economista\"\n        },\n        \"description\": \"Un libro che esplora la mente umana e i meccanismi di pensiero che ci guida nella vita quotidiana\"\n      },\n      \"capitoli\": [\n        {\n          \"title\": \"L'illusione della razionalità\",\n          \"description\": \"Kahneman ci guida in un'affascinante esplorazione della mente umana e ci spiega come essa sia caratterizzata da due processi di pensiero ben distinti: uno veloce e intuitivo (sistema 1), e uno più lento ma anche più logico e riflessivo (sistema 2)\"\n        },\n        {\n          \"title\": \"L'effetto dei bias cognitivi\",\n          \"description\": \"L'effetto profondo dei bias cognitivi si manifesta in tutti gli ambiti della nostra vita, dai progetti per le vacanze al gioco in borsa\"\n        }\n      ]\n    },\n    {\n      \"capitolo\": \"005_introduzione\",\n      \"riassunto\": \"L'autore introduce l'importanza di utilizzare un vocabolario più ricco per discutere giudizi e scelte altrui. La mente umana non funziona in modo lineare e molti pensieri e impressioni si presentano senza che sappiamo come vi si sono presentati.\"\n    },\n    {\n      \"capitolo_1\": \"La psicologia della decisione: un'introduzione\",\n      \"capitolo_2\": \"I limiti della ragione: la psicologia della intuizione\",\n      \"capitolo_3\": \"La ricerca di Amos Tversky: come la psicologia ha cercato di comprendere il processo decisionale umano\",\n      \"capitolo_4\": \"La teoria del \\\"punto di riferimento\\\" e la sua applicazione nella scelta\",\n      \"capitolo_5\": \"La natura umana: princìpi e assunti\",\n      \"capitolo\": [\n        {\n          \"numero\": 7,\n          \"titolo\": \"La natura umana: princìpi e assunti\",\n          \"riassunto\": \"L'articolo contesta due princìpi riguardanti la natura umana: la gente è perlopiù razionale e le emozioni spiegano quasi tutti i casi di deviazione dalla razionalità. L'autore sostiene che la struttura del meccanismo cognitivo è a causa della struttura del pensiero, anziché l'emotività.\"\n        }\n      ]\n    },\n    {\n      \"capitolo\": \"Il processo decisionale in condizioni di incertezza\",\n      \"riassunto\": \"Dopo aver analizzato il giudizio, lo studio si sposta sul processo decisionale in condizioni di incertezza. L'obiettivo è mettere a punto una teoria che possa spiegare come le persone fanno a prendere decisioni quando ci sono incertezze e sfide.\"\n    },\n    {\n      \"capitoli\": [\n        {\n          \"titolo\": \"Capitolo 9: La teoria della scelta\",\n          \"riassunto\": \"La teoria della scelta è una teoria della psicologia che spiega come le persone prendono decisioni su opzioni di rischio semplici. Il libro esamina come le nostre preferenze intuitive si conformano alle regole della scelta razionale, ma come queste regole possono essere influenzate da bias sistematici. La teoria della scelta è importante perché rappresenta uno dei fondamenti dell'economia comportamentale.\"\n        },\n        {\n          \"titolo\": \"Capitolo 10: La mente collettiva\",\n          \"riassunto\": \"Amos Tversky e io avevamo la fortuna di costituire una sorta di mente collettiva che rese il nostro lavoro insieme proficuo e divertente. La nostra comune ricerca sul giudizio e il processo decisionale fu il motivo del premio Nobel che ricevetti nel 2002.\"\n        },\n        {\n          \"titolo\": \"Capitolo 11: La comprensione del pensiero intuitivo\",\n          \"riassunto\": \"Il libro esamina la comprensione del pensiero intuitivo e come le nostre intuizioni possono essere influenzate da bias e euristiche. Amos e io non ci occupammo delle intuizioni esatte date dalla competenza, ma solo delle euristiche del giudizio.\"\n        }\n      ]\n    },\n    {\n      \"capitolo\": \"L'intuizione esperta\",\n      \"riassunto\": \"L'intuizione esperta è spesso considerata magica, ma in realtà è il risultato di una competenza intuitiva che si sviluppa attraverso l'esperienza. I professionisti compiono operazioni di competenza intuitiva molte volte al giorno, come ad esempio notare una nota di rabbia nelle prime parole di una telefonata o capire subito che un guidatore dell'auto nella corsia accanto è pericoloso.\"\n    }\n  ]\n}\n```\nHo combinato i dati delle 10 sezioni in un unico oggetto JSON, con le chiavi `capitoli` e `fonte` ove appropriato. Ho anche aggiunto le chiavi `titolo` e `riassunto` per ogni capitolo e sezione.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1066,
+            "output": 300,
+            "reasoning": null,
+            "total": 1366
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1076,
+            "output": 94,
+            "reasoning": null,
+            "total": 1170
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1053,
+            "output": 197,
+            "reasoning": null,
+            "total": 1250
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1069,
+            "output": 311,
+            "reasoning": null,
+            "total": 1380
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1047,
+            "output": 711,
+            "reasoning": null,
+            "total": 1758
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_6",
+          "status": "ok",
+          "tokens": {
+            "input": 1059,
+            "output": 854,
+            "reasoning": null,
+            "total": 1913
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_7",
+          "status": "ok",
+          "tokens": {
+            "input": 1067,
+            "output": 136,
+            "reasoning": null,
+            "total": 1203
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_8",
+          "status": "ok",
+          "tokens": {
+            "input": 1044,
+            "output": 121,
+            "reasoning": null,
+            "total": 1165
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_9",
+          "status": "ok",
+          "tokens": {
+            "input": 1031,
+            "output": 339,
+            "reasoning": null,
+            "total": 1370
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_10",
+          "status": "ok",
+          "tokens": {
+            "input": 1082,
+            "output": 130,
+            "reasoning": null,
+            "total": 1212
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 3624,
+            "output": 1266,
+            "reasoning": null,
+            "total": 4890
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 11,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 508.958106,
+      "result_file": "04_estrazione_json_llama3.2_3b.json",
+      "system1": {
+        "task_family": "source",
+        "execution_mode": "source_chunks",
+        "source_chars": 30000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "source",
+          "required_strategy": "grounded_extract",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.4826,
+        "strategy": "grounded_extract",
+        "strategy_confidence": 0.3731,
+        "execution_confidence": 0.1138,
+        "confidence": 0.1138,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "source",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "source_chunks",
+        "preflight_latency_ms": 11
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "test_id": "sintesi_traduzione",
+      "started_at": "2026-10-20T14:17:00.085557+00:00",
+      "quality": {
+        "passed": 1,
+        "total": 2,
+        "score": 0.5,
+        "checks": [
+          {
+            "label": "presenza di lessico spagnolo",
+            "passed": true
+          },
+          {
+            "label": "lunghezza minima della traduzione",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 8464,
+        "output": 3554,
+        "reasoning": null,
+        "total": 12018
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "**Traduzione completa del libro**\n\nEcco la traduzione completa del libro, composta dalle prime 5 pagine.\n\n**Introduzione**\n\nCada autor, imagino, tiene en mente el contexto en el que los lectores pueden aplicar los posibles beneficios de leer sus obras. Mi es sencilla distribuidor de café y bebidas del despacho, donde se intercambian opiniones y chismorras. Mi esperanza es de enriquecer el vocabulario que se utiliza cuando se expresan comentarios sobre los juicios y las decisiones de los demás, sobre las nuevas políticas de la empresa o sobre las decisiones de inversión de un colega. ¿Por qué preocuparse de estos chismorras? ¿Porque es mucho más fácil, además de mucho más divertido, reconocer y etiquetar los errores de los demás que los propios.\n\nMeternos a discutir lo que creemos y queremos es, en las mejores circunstancias, difícil, y especialmente difícil cuando la situación nos obliga a hacerlo, pero es indiscutible que obtenemos beneficios de las opiniones informadas de los demás. A menudo predecimos instintivamente cómo juzgarán nuestros amigos y colegas nuestras decisiones, por lo que la calidad y el contenido de esas previsiones tienen importancia. La expectativa de una observación inteligente sobre nuestro caso representa un fuerte estímulo para una autoanálisis seria, y puede ser incluso más fuerte que el deseo de mejorar, para el nuevo año, nuestro proceso de toma de decisiones a casa y en el trabajo.\n\nPara ser un buen diagnosticista, un médico debe adquirir conocimiento de una amplia serie de «etiquetas» relacionadas con las enfermedades, cada una de las cuales compone una idea de la patología y de sus síntomas, posibles antecedentes y causas, posibles desarrollo y consecuencias, y posibles intervenciones para curarla o aliviarla. Aprender el arte médico consiste en parte en aprender su lenguaje. No es diferente, para llegar a una comprensión más profunda de los juicios y las decisiones, necesitamos un vocabulario más rico del que nos proporciona el lenguaje cotidiano.\n\nEn realidad, esperamos reconocer en un chismor inteligente patrones característicos de los errores que hace la gente. Los errores sistémicos se definen como «biases», prejuicios que ocurren de manera predecible en ciertas circunstancias. Cuando, por ejemplo, un orador de buena presencia y comportamiento desinhibido sube al palco, el público tiende a juzgar sus comentarios más favorablemente de lo que merece. La disponibilidad de una etiqueta diagnostica específica para este biase, llamado «efecto de la sombra», hace más fácil predecirlo, reconocerlo y comprenderlo.\n\nCuando nos piden a qué pensamos, respondemos normalmente. Creemos que sabemos qué está sucediendo en nuestro cerebro y, a menudo, es un pensamiento consciente que conduce a otro pensamiento consciente. Sin embargo, la mente no funciona solo así, ni este es en realidad su funcionamiento típico. La mayoría de los pensamientos y impresiones se presentan a nuestra experiencia consciente sin que sepamos cómo se presentan. No lo capaces",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "segmento_1",
+          "status": "ok",
+          "tokens": {
+            "input": 1068,
+            "output": 582,
+            "reasoning": null,
+            "total": 1650
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_2",
+          "status": "ok",
+          "tokens": {
+            "input": 1078,
+            "output": 746,
+            "reasoning": null,
+            "total": 1824
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_3",
+          "status": "ok",
+          "tokens": {
+            "input": 1055,
+            "output": 790,
+            "reasoning": null,
+            "total": 1845
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_4",
+          "status": "ok",
+          "tokens": {
+            "input": 1071,
+            "output": 485,
+            "reasoning": null,
+            "total": 1556
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "segmento_5",
+          "status": "ok",
+          "tokens": {
+            "input": 1049,
+            "output": 199,
+            "reasoning": null,
+            "total": 1248
+          }
+        },
+        {
+          "system": "system2",
+          "stage": "assemblaggio_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 3143,
+            "output": 752,
+            "reasoning": null,
+            "total": 3895
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 6,
+        "execution_mode": "source_chunks"
+      },
+      "seconds": 369.667584,
+      "result_file": "05_sintesi_traduzione_llama3.2_3b.json",
+      "system1": {
+        "task_family": "translation",
+        "execution_mode": "source_chunks",
+        "source_chars": 15000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "translation",
+          "required_strategy": "faithful_translate",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.9696,
+        "strategy": "faithful_translate",
+        "strategy_confidence": 0.9829,
+        "execution_confidence": 0.0329,
+        "confidence": 0.0329,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "translation",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 10
+      }
+    }
+  ],
+  "result_directories": [
+    {
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "directory": "."
+    }
+  ],
+  "summary": {
+    "completed": 5,
+    "successful": 5,
+    "failed": 0,
+    "seconds": 1144.99957,
+    "total_tokens": 34662,
+    "known_total_tokens": 34662,
+    "usage_missing": 0
+  },
+  "system1": {
+    "ragionamento_logico": {
+      "task_family": "reasoning",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "reasoning",
+        "required_strategy": "reasoning_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.7001,
+      "strategy": "reasoning_check",
+      "strategy_confidence": 0.2409,
+      "execution_confidence": 0.6528,
+      "confidence": 0.2409,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 12
+    },
+    "matematica": {
+      "task_family": "math",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "math",
+        "required_strategy": "math_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.4791,
+      "strategy": "math_check",
+      "strategy_confidence": 0.814,
+      "execution_confidence": 0.062,
+      "confidence": 0.062,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 9
+    },
+    "programmazione": {
+      "task_family": "coding",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "coding",
+        "required_strategy": "requirements_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.9999,
+      "strategy": "requirements_check",
+      "strategy_confidence": 0.3321,
+      "execution_confidence": 0.3415,
+      "confidence": 0.3321,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "coding",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 10
+    },
+    "estrazione_json": {
+      "task_family": "source",
+      "execution_mode": "source_chunks",
+      "source_chars": 30000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "source",
+        "required_strategy": "grounded_extract",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.4826,
+      "strategy": "grounded_extract",
+      "strategy_confidence": 0.3731,
+      "execution_confidence": 0.1138,
+      "confidence": 0.1138,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "source",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "source_chunks",
+      "preflight_latency_ms": 11
+    },
+    "sintesi_traduzione": {
+      "task_family": "translation",
+      "execution_mode": "source_chunks",
+      "source_chars": 15000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "translation",
+        "required_strategy": "faithful_translate",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.9696,
+      "strategy": "faithful_translate",
+      "strategy_confidence": 0.9829,
+      "execution_confidence": 0.0329,
+      "confidence": 0.0329,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "translation",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 10
+    }
+  },
+  "system2_metrics": {
+    "run_id": "0c47d88e99e244d7b74c92c3e076d116",
+    "db_path": "/var/www/hal_system2/events/benchmarks/system2_metrics.sqlite3",
+    "summary": {
+      "events": 25,
+      "system1_events": 5,
+      "system2_events": 20,
+      "latency_ms": 1145039,
+      "tokens_total": 34662,
+      "errors": 0
+    }
+  }
+}

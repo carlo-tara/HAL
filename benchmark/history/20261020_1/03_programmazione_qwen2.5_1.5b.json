@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T13:43:30.381828+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 344,
+    "output": 900,
+    "reasoning": null,
+    "total": 1244
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Sudoku</title>\n<style>\nbody {\n    font-family: Arial, sans-serif;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 100vh;\n    margin: 0;\n}\n\n.container {\n    text-align: center;\n    margin: 20px;\n}\n\n.grid {\n    display: grid;\n    grid-template-columns: repeat(9, 25px);\n    grid-template-rows: repeat(9, 25px);\n    gap: 1px;\n}\n\n.cell {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 25px;\n    height: 25px;\n    border: 1px solid black;\n}\n\ninput[type=\"number\"] {\n    font-size: 16px;\n    padding: 5px;\n    width: 25px;\n    height: 25px;\n    border: none;\n    border-radius: 5px;\n    background-color: #f0f0f0;\n    margin: 0;\n    font-weight: bold;\n}\n\n.error {\n    border-color: red;\n}\n\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"grid\">\n        <div class=\"cell\" data-value=\"1\" data-row=\"1\" data-col=\"1\"></div>\n        <div class=\"cell\" data-value=\"2\" data-row=\"1\" data-col=\"2\"></div>\n        <!-- ... fill the grid with pre-filled cells and random numbers -->\n    </div>\n</div>\n<div>\n    <input type=\"text\" id=\"inputCell\" disabled>\n    <button onclick=\"changeCell()\">Inserisci</button>\n    <button onclick=\"clearCell()\">Cancella</button>\n    <button onclick=\"reset()\">Nuova Partita</button>\n</div>\n<script>\n// Initialize the grid with pre-filled cells and random numbers\nfunction initGrid() {\n    const grid = document.querySelector(\".grid\");\n    for (let i = 0; i < 81; i++) {\n        const cell = document.createElement(\"div\");\n        cell.classList.add(\"cell\");\n        grid.appendChild(cell);\n        if (i % 9 === 0 && i !== 0) {\n            const row = i / 9;\n            const col = i % 9;\n            grid.insertAdjacentElement(\"afterbegin\", document.createElement(\"div\"));\n        }\n        if (i < 10) {\n            const value = document.createElement(\"div\");\n            value.classList.add(\"value\");\n            cell.appendChild(value);\n        } else if (i < 100) {\n            const value = document.createElement(\"input\");\n            value.classList.add(\"value\");\n            value.type = \"number\";\n            value.value = i - 9;\n            value.addEventListener(\"change\", function() {\n                this.closest(\".cell\").querySelector(\"input[type='text']\").value = this.value;\n            });\n            cell.appendChild(value);\n        }\n    }\n    grid.querySelectorAll(\"input[type='number']\").forEach(cell => {\n        const value = cell.value || cell.value === 0 ? parseInt(cell.value) : 0;\n        if (value === 0) {\n            cell.style.backgroundColor = \"#fff\";\n            cell.style.color = \"#000\";\n        }\n    });\n}\n\n// Change the selected cell\nfunction changeCell() {\n    const inputCell = document.getElementById(\"inputCell\");\n    const selectedCell = document.querySelector(\".cell\");\n    selectedCell.classList.add(\"selected\");\n    selectedCell.querySelector(\"input[type='text']\").value = selectedCell.querySelector(\"input[type='number']\").value;\n    selectedCell.querySelector(\"input[type='number']\").value = \"\";\n}\n\n// Clear the selected cell\nfunction clearCell() {\n    const selectedCell = document.querySelector(\".cell\");\n    selectedCell.querySelector(\"input[type='number']\").value = \"\";\n    selectedCell.classList.remove(\"selected\");\n}\n\n// Reset the grid\nfunction reset() {\n    const grid = document.querySelector(\".grid\");\n    grid.innerHTML = \"\";\n    initGrid();\n}\n\n// Initialize the grid on page load\ninitGrid();\n</script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 344,
+        "output": 900,
+        "reasoning": null,
+        "total": 1244
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 30.17111,
+  "result_file": "03_programmazione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

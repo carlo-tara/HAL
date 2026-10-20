@@ -140,7 +140,7 @@ Il template è un PRD “classico agile light”:
 | Area | In `prd-writer` | Assente o debole |
 |---|---|---|
 | Ciclo di vita | Draft + version bump | Nessun `draft` / `refine` / `live-check` |
-| Path canone | File dump one-shot | Nessun living doc tipo `.cursor/product/prd.md` |
+| Path canone | File dump one-shot | Nessun living doc tipo `product/prd.md` |
 | Discovery | Chiede “chi lo userà” | No handoff personas/jtbd; rischio invenzione |
 | Scope | — | NON-goals non strutturali |
 | Metriche | — | Nessuna sezione KPI |
@@ -164,7 +164,7 @@ La competenza parallela è [`prd-authoring/SKILL.md`](../a-product/competencies/
 | Ruolo | Skill standalone (SOP AI) | Competenza L1 di `a-po` |
 | Attivazione | Description NLP | Slash `/prd` (`draft`\|`refine`\|`live-check`) |
 | Formula US | Come / voglio / **per** | Come / voglio / **così da** |
-| Path output | `PRD_*_vX.md` + Confluence | `.cursor/product/prd.md` (vivo) |
+| Path output | `PRD_*_vX.md` + Confluence | `product/prd.md` (vivo) |
 | Artifact | Opt-in, storico SemVer ricco | Tabella semplice sempre nel template |
 | KPI / NON-goals / gate Sistema | No | Sì |
 | Backlog aperto | Sezione dedicata | Implicito in OQ / status US / prioritize |

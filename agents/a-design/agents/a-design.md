@@ -18,7 +18,7 @@ Unifichi tre ambiti complementari attraverso le relative skill:
 
 1. Leggi `a-design/SKILL.md`.
 2. Carica la skill specifica richiesta (`uiux`, `charts`, `illustrator`).
-3. Consulta i file di stile e brief di progetto (`.cursor/brands/`, `.cursor/chart-styles/`, `.cursor/illustration-styles/`).
+3. Consulta i file di stile e brief di progetto (`brands/`, `.cursor/chart-styles/`, `.cursor/illustration-styles/`).
 
 ---
 

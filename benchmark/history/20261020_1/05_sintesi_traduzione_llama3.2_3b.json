@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-20T14:17:00.085557+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 8464,
+    "output": 3554,
+    "reasoning": null,
+    "total": 12018
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "**Traduzione completa del libro**\n\nEcco la traduzione completa del libro, composta dalle prime 5 pagine.\n\n**Introduzione**\n\nCada autor, imagino, tiene en mente el contexto en el que los lectores pueden aplicar los posibles beneficios de leer sus obras. Mi es sencilla distribuidor de café y bebidas del despacho, donde se intercambian opiniones y chismorras. Mi esperanza es de enriquecer el vocabulario que se utiliza cuando se expresan comentarios sobre los juicios y las decisiones de los demás, sobre las nuevas políticas de la empresa o sobre las decisiones de inversión de un colega. ¿Por qué preocuparse de estos chismorras? ¿Porque es mucho más fácil, además de mucho más divertido, reconocer y etiquetar los errores de los demás que los propios.\n\nMeternos a discutir lo que creemos y queremos es, en las mejores circunstancias, difícil, y especialmente difícil cuando la situación nos obliga a hacerlo, pero es indiscutible que obtenemos beneficios de las opiniones informadas de los demás. A menudo predecimos instintivamente cómo juzgarán nuestros amigos y colegas nuestras decisiones, por lo que la calidad y el contenido de esas previsiones tienen importancia. La expectativa de una observación inteligente sobre nuestro caso representa un fuerte estímulo para una autoanálisis seria, y puede ser incluso más fuerte que el deseo de mejorar, para el nuevo año, nuestro proceso de toma de decisiones a casa y en el trabajo.\n\nPara ser un buen diagnosticista, un médico debe adquirir conocimiento de una amplia serie de «etiquetas» relacionadas con las enfermedades, cada una de las cuales compone una idea de la patología y de sus síntomas, posibles antecedentes y causas, posibles desarrollo y consecuencias, y posibles intervenciones para curarla o aliviarla. Aprender el arte médico consiste en parte en aprender su lenguaje. No es diferente, para llegar a una comprensión más profunda de los juicios y las decisiones, necesitamos un vocabulario más rico del que nos proporciona el lenguaje cotidiano.\n\nEn realidad, esperamos reconocer en un chismor inteligente patrones característicos de los errores que hace la gente. Los errores sistémicos se definen como «biases», prejuicios que ocurren de manera predecible en ciertas circunstancias. Cuando, por ejemplo, un orador de buena presencia y comportamiento desinhibido sube al palco, el público tiende a juzgar sus comentarios más favorablemente de lo que merece. La disponibilidad de una etiqueta diagnostica específica para este biase, llamado «efecto de la sombra», hace más fácil predecirlo, reconocerlo y comprenderlo.\n\nCuando nos piden a qué pensamos, respondemos normalmente. Creemos que sabemos qué está sucediendo en nuestro cerebro y, a menudo, es un pensamiento consciente que conduce a otro pensamiento consciente. Sin embargo, la mente no funciona solo así, ni este es en realidad su funcionamiento típico. La mayoría de los pensamientos y impresiones se presentan a nuestra experiencia consciente sin que sepamos cómo se presentan. No lo capaces",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1068,
+        "output": 582,
+        "reasoning": null,
+        "total": 1650
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1078,
+        "output": 746,
+        "reasoning": null,
+        "total": 1824
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1055,
+        "output": 790,
+        "reasoning": null,
+        "total": 1845
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1071,
+        "output": 485,
+        "reasoning": null,
+        "total": 1556
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1049,
+        "output": 199,
+        "reasoning": null,
+        "total": 1248
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3143,
+        "output": 752,
+        "reasoning": null,
+        "total": 3895
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 6,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 369.667584,
+  "result_file": "05_sintesi_traduzione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 10
+  }
+}

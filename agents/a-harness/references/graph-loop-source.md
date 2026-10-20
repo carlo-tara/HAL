@@ -18,7 +18,7 @@
 | Termination + error triage + goal osservabile | Loop Spec → `/cycle` + `when-stuck` |
 | Pattern pipeline / router / parallel / orchestrator-worker | Work Graph in `work-graph.md` |
 | Reflection / tool / plan / multi-agent | Tipi nodo → slash / Make / L1 |
-| Memoria condivisa nel grafo | progress + `.cursor/product/work-graph.md` |
+| Memoria condivisa nel grafo | progress + `product/work-graph.md` |
 | Agent = Model + Harness | già L1; graph non sostituisce harness |
 
 ## Non-adopt

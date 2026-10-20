@@ -26,7 +26,7 @@ Orchestrazione (flag strip, next pointer, handoff) = **deterministica** — non 
 1. **Brief ≤200 token** — prima di clarify/emit, costruisci un brief lean con:
    `bash scripts/harness-prompt-builder.sh render --max-tokens 200 --set goal='…' --set source='context|file|request' -- " /graph source={source} goal={goal}. Emit work-graph + handoff only."`
 2. **Niente dump** — non incollare transcript, `ToDo.md` intero, né `work-graph.md` completo nel prompt; passa solo titoli/P0–P1 o il nodo `next`.
-3. **Handoff compatto** — dopo Write, aggiorna `.cursor/product/handoff-graph.json`:
+3. **Handoff compatto** — dopo Write, aggiorna `product/handoff-graph.json`:
    `bash scripts/harness-prompt-builder.sh handoff-write graph --field node_id=… --field next=… --field y=true|false --field brief='…'`
 4. **Multi-cycle (`-y`)** — ogni nodo: leggi **solo** `handoff-graph.json` + riga nodo in `work-graph.md`; non riaprire il contesto chat della `/graph` iniziale.
 
@@ -39,7 +39,7 @@ Orchestrazione (flag strip, next pointer, handoff) = **deterministica** — non 
 5. **Decide** — Loop vs Work Graph (tabella sotto); motiva (anti **graph-trap**)
 6. **Emit** — Loop Spec **oppure** nodi+archi + Mermaid
 7. **Map AF** — ogni nodo → slash e/o L1; stop conditions; stuck@3
-8. **Write** — `.cursor/product/work-graph.md` (una scrittura)
+8. **Write** — `product/work-graph.md` (una scrittura)
 9. **Handoff** — scrivi `handoff-graph.json`. Senza `-y`: next + “attendi accept”. Con `-y`: auto-accept → **multi-cycle** nodo→nodo fino a fine backlog o hard stop (stato solo da handoff + work-graph)
 
 ## Loop vs Graph

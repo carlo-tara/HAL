@@ -1,7 +1,7 @@
 ---
 name: tono-di-voce
 kind: competency
-version: 1.0.2
+version: 1.0.3
 description: >-
   Scrivere nella voce definita localmente: file brand/dati di progetto, override L2,
   calibrazione di registro, lessico e chiusure. Principi cross-dominio (L0).
@@ -9,7 +9,7 @@ description: >-
 
 # Competenza L0 — tono-di-voce
 
-Principi generici. Le regole di dominio (copy web, brand file `.cursor/brands/`) vivono nel L1 del dominio che dichiara questa competenza.
+Principi generici. Le regole di dominio (copy web, brand file `brands/`) vivono nel L1 del dominio che dichiara questa competenza.
 
 ---
 
@@ -27,13 +27,13 @@ Principi generici. Le regole di dominio (copy web, brand file `.cursor/brands/`)
 
 | Contenuto | Dove | Esempio |
 |-----------|------|---------|
-| Identità, audience, Usa/Evita, PS, inclusività lessicale | `.cursor/brands/{slug}.md` | tabelle lessico, anti-pattern |
+| Identità, audience, Usa/Evita, PS, inclusività lessicale | `brands/{slug}.md` | tabelle lessico, anti-pattern |
 | Override breve (1–5 bullet) | Sezione delta in `copywriter-{progetto}/SKILL.md` o `competencies/tono-di-voce/` | registro tu, 2 parole vietate |
 | Voice **pesante** (registri per tipo, struttura post, writing-rules, anti-AI locale) | Skill L2 dedicata `*-voice` / `*-tone-of-voice` con `extends: a-copywriter` (o legacy naming) | newsletter long-form |
 
 **Regole:**
 
-1. **Preferisci brand file** (`.cursor/brands/`) per identità + lessico + inclusività. Non è obbligatorio se il progetto documenta **voice-as-brand**: skill L2 `*-voice` / `*-tone-of-voice` è l’unica fonte vocale (nessun brand file).
+1. **Preferisci brand file** (`brands/`) per identità + lessico + inclusività. Non è obbligatorio se il progetto documenta **voice-as-brand**: skill L2 `*-voice` / `*-tone-of-voice` è l’unica fonte vocale (nessun brand file).
 2. Skill voice dedicata se il corpus supera ciò che sta comodo in brand + delta copywriter breve; oppure se voice-as-brand (punto 1).
 3. **Una idea, un posto:** lessico inclusivo nel brand **se esiste**; altrimenti nella voice skill. Registri/struttura nella voice skill. Non duplicare paragrafi verso L1.
 4. In conflitto esplicito su inclusività/lessico vietato → **vince il brand file** se presente; altrimenti **vince la voice skill** L2.

@@ -25,7 +25,7 @@ curl -fsSL 'https://dati.gov.it/opendata/api/3/action/package_search?q=unioncame
 # Affina: q=impresa+camera, o fq su organization/holder quando noto
 ```
 
-3. Dalla scheda dataset scarica la distribuzione CSV e salvala in `.cursor/product/data/`.
+3. Dalla scheda dataset scarica la distribuzione CSV e salvala in `product/data/`.
 
 ## Licenze
 

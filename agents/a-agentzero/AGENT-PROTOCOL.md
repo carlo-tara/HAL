@@ -24,7 +24,7 @@ Ogni skill L1 e L2 **deve** dichiarare l'agente padre:
 ---
 name: copywriter-esempio
 extends: a-copywriter
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0
 description: >-
   Copy per esempio.it — eredita a-copywriter e aggiunge tono e path locali.
@@ -194,7 +194,7 @@ Esempio L2:
 ---
 name: copywriter-esempio
 extends: a-copywriter
-version: 1.0.0
+version: 1.0.1
 extends-version: 1.0.0
 description: >-
   ...
@@ -268,7 +268,7 @@ Id esempio (dominio copy): `tono-di-voce`, `humanizer`, `italiano-locale`.
 ---
 name: {id}   # es. tono-di-voce
 kind: competency
-version: 1.0.0
+version: 1.0.1
 # Solo L1/L2: versione della STESSA competenza al livello inferiore
 extends-version: 1.0.0   # L1 → L0; L2 → L1
 description: >-
@@ -305,7 +305,7 @@ Dichiarare `competencies:` e mantenere `a-{dominio}/competencies/{id}/` è **opt
 
 I **file dati di progetto** (`brands/`, `illustration-styles/`, `wordpress/`, `product/` / `.claude/product/`, brief SEO, …) restano **dati**, non moduli `kind: competency`. La competenza governa *come* usarli (discovery, onboarding, coerenza); non spostare né duplicare i file dati sotto `competencies/{id}/`. Override L2 della competenza = regole/delta, non una seconda copia del brand/style brief.
 
-**Discovery product (personas / JTBD / Gherkin):** ordine di lookup `product/` → `.claude/product/`. Artefatti tipici: `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/`. Guida: [`docs/discovery-pipeline.md`](../docs/discovery-pipeline.md). Competenza condivisa: `po-interviewer` (L0).
+**Discovery product (personas / JTBD / Gherkin):** ordine di lookup `.claude/product/` → `product/`. Artefatti tipici: `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/`. Guida: [`docs/discovery-pipeline.md`](../docs/discovery-pipeline.md). Competenza condivisa: `po-interviewer` (L0).
 
 ### Asset operativi fuori dalle competenze
 

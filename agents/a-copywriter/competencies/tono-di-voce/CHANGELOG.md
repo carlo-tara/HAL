@@ -1,5 +1,11 @@
 # Changelog — competenza tono-di-voce (L1 a-copywriter)
 
+## [Unreleased] - 2026-10-20
+
+### Changed
+
+- Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `tono-di-voce` 1.0.3 [sync:safe]
+
 ## [Unreleased]
 
 ## [1.0.2] - 2026-08-03
