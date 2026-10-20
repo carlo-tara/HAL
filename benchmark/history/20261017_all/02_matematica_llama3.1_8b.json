@@ -1,0 +1,36 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T07:12:00.665250+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 115,
+    "output": 709,
+    "reasoning": null,
+    "total": 824
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per calcolare il ricavo totale e l'utile di un negozio, dobbiamo seguire questi passaggi:\n\n1.  **Stima del costo iniziale dei materiali**: Calcola il costo iniziale dei materiali acquistati: Costo dei materiali acquistati = Prezzo unitario * Quantità acquistata = 18 * 120 = 2160 euro.\n2.  **Costo dei materiali venduti con ricarico**: Calcola il costo dei materiali venduti con ricarico: Costo dei materiali venduti con ricarico = Prezzo unitario * Quantità venduta con ricarico = 18 * 90 = 1620 euro.\n3.  **Prezzo di vendita dei materiali venduti con ricarico**: Calcola il prezzo di vendita dei materiali venduti con ricarico: Prezzo di vendita dei materiali venduti con ricarico = Prezzo unitario con ricarico \\* Quantità venduta con ricarico = (18 \\* 1.35) * 90 = 15390 euro\n4.  **Ricavo dei materiali venduti con ricarico**: Calcola il ricavo dei materiali venduti con ricarico: Ricavo dei materiali venduti con ricarico = Prezzo di vendita dei materiali venduti con ricarico - Costo dei materiali venduti con ricarico = 15390 - 1620 = 13770 euro\n5.  **Prezzo di vendita dei materiali venduti con sconto**: Calcola il prezzo di vendita dei materiali venduti con sconto: Prezzo di vendita dei materiali venduti con sconto = Prezzo unitario con sconto \\* Quantità venduta con sconto = (18 \\* 1.35) * 0.8 * 30 = 4896 euro\n6.  **Ricavo dei materiali venduti con sconto**: Calcola il ricavo dei materiali venduti con sconto: Ricavo dei materiali venduti con sconto = Prezzo di vendita dei materiali venduti con sconto - Costo dei materiali venduti con sconto = 4896 - 18 * 30 = 4896 - 540 = 4356 euro\n7.  **Ricavo totale**: Calcola il ricavo totale: Ricavo totale = Ricavo dei materiali venduti con ricarico + Ricavo dei materiali venduti con sconto = 13770 + 4356 = 18126 euro.\n8.  **Utile**: Calcola l'utile: Utile = Ricavo totale - Costo dei materiali acquistati = 18126 - 2160 = 15966 euro.\n9.  **Margine percentuale sul ricavo**: Calcola il margine percentuale sul ricavo: Margine percentuale sul ricavo = (Utile / Ricavo totale) * 100 = (15966 / 18126) * 100 = 88.07%\n\nIl ricavo totale è di 18126 euro, l'utile è di 15966 euro e il margine percentuale sul ricavo è del 88.07%.",
+  "seconds": 135.653566,
+  "result_file": "20261017_4/02_matematica_llama3.1_8b.json"
+}

@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-19T22:45:11.738008+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 14406,
+    "output": 4389,
+    "reasoning": null,
+    "total": 18795
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati parziali concatenati in un'unica risposta completa:\n\n```\n{\n  \"capitoli\": [\n    {\n      \"titolo\": \"Il libro\",\n      \"testo\": \"Siamo stati abituati a ritenere che all’uomo, in quanto essere dotato di razionalità, sia sufficiente tenere a freno l’istinto e l’emotività per essere in grado di valutare in modo obiettivo le situazioni che deve affrontare e di scegliere, tra varie alternative, quella per sé più vantaggiosa. Gli studi sul processo decisionale condotti ormai da molti anni dal premio Nobel Daniel Kahneman hanno mostrato quanto illusoria sia questa convinzione e come, in realtà, siamo sempre esposti a condizionamenti – magari da parte del nostro stesso modo di pensare – che possono insidiare la capacità di giudicare e di agire lucidamente. Illustrando gli ultimi risultati della sua ricerca, Kahneman ci guida in un’affascinante esplorazione della mente umana e ci spiega come essa sia caratterizzata da due processi di pensiero ben distinti: uno veloce e intuitivo (sistema 1), e uno più lento e analitico (sistema 2). Questi processi, come abbiamo visto, si incontrano spesso, e quando lo fanno, possono portare a errori sistematici.\"\n    },\n    {\n      \"titolo\": \"Introduzione alle euristiche e ai bias\",\n      \"riassunto\": \"Il libro esplora le euristiche e i bias nella mente umana, spiegando come questi possono influenzare il nostro modo di pensare e prendere decisioni.\"\n    },\n    {\n      \"titolo\": \"L'uso di dimostrazioni per dimostrare la propria teoria\",\n      \"riassunto\": \"L'autore spiega come l'uso di dimostrazioni abbia permesso di notare difetti del proprio modo di pensare, portando a mettere in discussione assunti dogmatici.\"\n    },\n    {\n      \"titolo\": \"La reazione al libro e la sua influenza\",\n      \"riassunto\": \"Il libro ha ricevuto diverse reazioni, ma nel complesso è stato accettato come una teoria sulla mente umana soggetta a errori sistematici.\"\n    },\n    {\n      \"titolo\": \"L'intuizione esperta: una spiegazione scientifica\",\n      \"testo\": \"Il nostro lavoro si concentra sul giudizio e sulla decisione, ma la nostra intuizione è un elemento fondamentale in entrambi i processi. La nostra intuizione è una capacità che ci permette di risolvere problemi complessi con rapidità e efficacia, ma è anche soggetta a errori sistematici.\"\n    },\n    {\n      \"titolo\": \"La competenza intuitiva quotidiana\",\n      \"testo\": \"La nostra comprensione della realtà quotidiana è spesso basata su intuizioni. Noi non pensiamo troppo alle cose, ma le comprendiamo senza bisogno di pensarci troppo. Ecco perché il nostro modo di pensare è spesso considerato meno razionale e meno complesso rispetto a quello degli esperti.\"\n    },\n    {\n      \"titolo\": \"La psicologia dell'intuizione esatta\",\n      \"testo\": \"La nostra intuizione è spesso considerata più precisa di quella di un esperto. Questo è vero in alcuni casi, ma non in tutti. La nostra intuizione è soggetta a errori sistematici, proprio come quella degli esperti. Il problema è che i nostri errori sono spesso meno visibili e meno facilmente corretti.\"\n    },\n    {\n      \"titolo\": \"La teoria della competenza intuitiva di Herbert Simon\",\n      \"testo\": \"Herbert Simon, un economista e psicologo, ha sviluppato una teoria della competenza intuitiva. Secondo Simon, la nostra competenza intuitiva è una capacità che ci permette di risolvere problemi complessi con rapidità e efficacia, ma è anche soggetta a errori sistematici.\"\n    }\n  ]\n}\n```\n\nNota che i contenuti dei capitoli 5-10 non sono stati inclusi nella risposta completa, poiché la richiesta originale specificava di estrarre solo i contenuti dei primi 4 capitoli.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 578,
+        "reasoning": null,
+        "total": 1644
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 128,
+        "reasoning": null,
+        "total": 1204
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 398,
+        "reasoning": null,
+        "total": 1451
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 182,
+        "reasoning": null,
+        "total": 1251
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 136,
+        "reasoning": null,
+        "total": 1183
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 236,
+        "reasoning": null,
+        "total": 1295
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 822,
+        "reasoning": null,
+        "total": 1889
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 370,
+        "reasoning": null,
+        "total": 1414
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 420,
+        "reasoning": null,
+        "total": 1451
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 112,
+        "reasoning": null,
+        "total": 1194
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3812,
+        "output": 1007,
+        "reasoning": null,
+        "total": 4819
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 815.430909,
+  "result_file": "04_estrazione_json_llama3.2_3b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 9
+  }
+}

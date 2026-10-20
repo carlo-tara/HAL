@@ -1,0 +1,121 @@
+{
+  "provider": "ollama",
+  "model": "mistral:7b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T14:32:35.980753+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 1642,
+    "output": 1905,
+    "reasoning": null,
+    "total": 3547
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": " Il negozio compra 120 articoli a 18 euro ciascuno, per un totale di 2.160 euro. Dei 120 articoli, 90 vengono venduti con un ricarico del 35% sul costo, che equivale a un prezzo unitario di 18 euro x (1 + 0.35) = 23.40 euro. Quindi, il ricavato totale per questi 90 articoli è 90 x 23.40 = 2.106 euro.\n\nDal momento che i 30 articoli restanti sono venduti con un sconto del 20% sul prezzo unitario applicato ai primi 90, il prezzo unitario per questi articoli scontati è 23.40 x (1 - 0.20) = 18.72 euro. Poiché non ci sono altre informazioni sulla vendita degli altri 30 articoli, non è possibile calcolare il ricavato totale per questi articoli.\n\nPer calcolare l'utile, è necessario sottrarre al ricavato totale le spese di acquisto dei 120 articoli. In questo caso, l'utile non può essere calcolato completamente a causa della mancanza di informazioni sulla vendita degli altri 30 articoli.\n\nIl margine percentuale sul ricavo è calcolato dividendo l'utile dal ricavato totale e moltiplicando per 100. In questo caso, il margine percentuale sul ricavato non può essere calcolato completamente a causa della mancanza di informazioni sull'utile.\n\nLa risposta completa nel formato richiesto è:\n- Ricavo totale: 2.106 euro (per i 90 articoli venduti con ricarico del 35%)\n- Utile: non determinabile\n- Margine percentuale sul ricavo: non determinabile",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "piano_iniziale",
+      "status": "ok",
+      "tokens": {
+        "input": 285,
+        "output": 456,
+        "reasoning": null,
+        "total": 741
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "valutazione piano",
+      "decision": "revise",
+      "confidence": 0.1791
+    },
+    {
+      "system": "system2",
+      "stage": "piano_revisionato",
+      "status": "ok",
+      "tokens": {
+        "input": 313,
+        "output": 483,
+        "reasoning": null,
+        "total": 796
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica piano revisionato",
+      "decision": "incomplete",
+      "confidence": 0.8854
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 751,
+        "output": 479,
+        "reasoning": null,
+        "total": 1230
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.0688
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 293,
+        "output": 487,
+        "reasoning": null,
+        "total": 780
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.0249
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 4,
+    "system2_stages": 4,
+    "execution_mode": "plan_then_solve"
+  },
+  "seconds": 365.850119,
+  "result_file": "02_matematica_mistral_7b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.2497,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2799,
+    "execution_mode": "plan_then_solve",
+    "execution_confidence": 0.6706,
+    "confidence": 0.2497,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

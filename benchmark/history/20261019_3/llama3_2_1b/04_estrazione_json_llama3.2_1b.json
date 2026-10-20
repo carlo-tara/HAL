@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-19T23:13:37.618868+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 12644,
+    "output": 9586,
+    "reasoning": null,
+    "total": 22230
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Il contenuto dei singoli capitoli dei primi 10 pagine del libro \"La nostra ricerca sul giudizio e il successo\" è stato estratto e sintetizzato in formato JSON. Ecco i risultati:\n\n```\n{\n  \"capitolo1\": {\n    \"title\": \"Intuitività e decisioni di rischio\",\n    \"resumo\": \"La psicologia cognitiva ha iniziato a fare notizia su come le nostre intuizioni possano influenzare le nostre decisioni di rischio. Le principali differenze tra le intuizioni e le decisioni razionali sono la comprensione del peso relativo dei diversi fattori e la capacità di analizzare le incertezze.\",\n    \"fonte\": {\n      \"nome\": \"Scienza\",\n      \"anno\": \"2002\"\n    }\n  },\n  \"capitolo2\": {\n    \"title\": \"La mente superiore alle menti individuali\",\n    \"resumo\": \"La collaborazione tra Amos e me ha permesso di creare una sorta di mente 'collettiva' superiore alle nostre menti individuali. L'interazione ha contribuito a migliorare la nostra collaborazione e a creare un rapporto che è stato proficuo e divertente.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo3\": {\n    \"title\": \"L'apprendimento dell'errore\",\n    \"resumo\": \"La comprensione del funzionamento della mente è stata fondamentale per capire come l'apprendimento dell'errore possa essere un processo efficace. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di imparare dalle nostre esperienze e dalla nostra storia di collaborazione.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo4\": {\n    \"title\": \"La comprensione del pensiero intuitivo\",\n    \"resumo\": \"La comprensione del pensiero intuitivo è stata fondamentale per capire come le nostre intuizioni possano influenzare le nostre decisioni di rischio. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di analizzare le incertezze e di comprendere il nostro pensiero intuitivo.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo5\": {\n    \"title\": \"La scelta e la decisione\",\n    \"resumo\": \"La scelta e la decisione sono due processi fondamentali che richiedono un complesso di fattori. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di analizzare le incertezze e di comprendere le nostre decisioni.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo6\": {\n    \"title\": \"La competenza e le euristiche\",\n    \"resumo\": \"La competenza e le euristiche sono due aspetti fondamentali che possono influenzare le nostre decisioni di rischio. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di comprendere le nostre euristiche e di analizzare le incertezze.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo7\": {\n    \"title\": \"La pratica e il pensiero intuitivo\",\n    \"resumo\": \"La pratica e il pensiero intuitivo sono fondamentali per capire come le nostre intuizioni possano influenzare le nostre decisioni di rischio. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di analizzare le incertezze e di comprendere il nostro pensiero intuitivo.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo8\": {\n    \"title\": \"La mente comune\",\n    \"resumo\": \"La mente comune è una fonte di ispirazione e di collaborazione tra Amos e me. L'interazione ha contribuito a migliorare la nostra capacità di lavorare insieme e di creare un rapporto che è stato proficuo e divertente.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"1996\"\n    }\n  },\n  \"capitolo9\": {\n    \"title\": \"La comprensione del funzionamento della mente\",\n    \"resumo\": \"La comprensione del funzionamento della mente è stata fondamentale per capire come le nostre intuizioni possano influenzare le nostre decisioni di rischio. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di analizzare le incertezze e di comprendere il nostro pensiero intuitivo.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"2002\"\n    }\n  },\n  \"capitolo10\": {\n    \"title\": \"La realizzazione della visione\",\n    \"resumo\": \"La realizzazione della visione di una mente 'collettiva' superiore è stata fondamentale per capire come la nostra collaborazione possa essere un modello per l'individuo. La mente 'collettiva' superiore ha aiutato a migliorare la nostra capacità di analizzare le incertezze e di comprendere il nostro pensiero intuitivo.\",\n    \"fonte\": {\n      \"nome\": \"Prospect Theory\",\n      \"anno\": \"2002\"\n    }\n  }\n}\n```\nQuesto contenuto può essere utilizzato per generare un'analisi del contenuto del libro, identificare le principali idee e le differenze tra le principali idee, e anche per generare dei sintesi più chiare e concisse dei contenuti trattati nel libro.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 812,
+        "reasoning": null,
+        "total": 1878
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 812,
+        "reasoning": null,
+        "total": 1888
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 287,
+        "reasoning": null,
+        "total": 1340
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 361,
+        "reasoning": null,
+        "total": 1430
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 876,
+        "reasoning": null,
+        "total": 1923
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 1567,
+        "reasoning": null,
+        "total": 2626
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 801,
+        "reasoning": null,
+        "total": 1868
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 834,
+        "reasoning": null,
+        "total": 1878
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 1306,
+        "reasoning": null,
+        "total": 2337
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 542,
+        "reasoning": null,
+        "total": 1624
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2050,
+        "output": 1388,
+        "reasoning": null,
+        "total": 3438
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 729.793433,
+  "result_file": "04_estrazione_json_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 9
+  }
+}

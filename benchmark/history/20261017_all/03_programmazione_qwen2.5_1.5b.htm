@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        td, th {
+            border: 1px solid #000;
+            padding: 8px;
+            width: 50px;
+            height: 50px;
+            margin: 2px;
+        }
+        input[type="number"] {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <table id="sudokuGrid">
+        <tr>
+            <td><input type="number" value="1"></td>
+            <td><input type="number" value="2"></td>
+            <td><input type="number" value="3"></td>
+        </tr>
+        <tr>
+            <td><input type="number" value="4"></td>
+            <td><input type="number" value="5"></td>
+            <td><input type="number" value="6"></td>
+        </tr>
+        <tr>
+            <td><input type="number" value="7"></td>
+            <td><input type="number" value="8"></td>
+            <td><input type="number" value="9"></td>
+        </tr>
+    </table>
+    <button onclick="resetGrid()">Nuova Partita</button>
+    <script>
+        function isNumberKey(evt) {
+            const charCode = evt.which ? evt.which : evt.keyCode;
+            if (charCode < 48 || charCode > 57) return false;
+            return true;
+        }
+        function checkValidity() {
+            const grid = document.getElementById("sudokuGrid").cells;
+            const isValid = grid.every(cell => cell.value && cell.value.length === 1 && isNumberKey(cell.value.charCodeAt(0)));
+            if (isValid) {
+                alert("Parabene! Hai completato la soluzione.");
+                document.getElementById("sudokuGrid").style.backgroundColor = "green";
+            } else {
+                alert("Completati tutti i valori!");
+                document.getElementById("sudokuGrid").style.backgroundColor = "red";
+            }
+        }
+        function cellClicked() {
+            const grid = document.getElementById("sudokuGrid").cells;
+            const selectedCell = event.target;
+            if (selectedCell.value || selectedCell.value === "0") {
+                selectedCell.value = "";
+            }
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.getElementById(`${i + 1} ${j + 1}`);
+                    if (cell.value && cell.value.length === 1 && isNumberKey(cell.value.charCodeAt(0))) {
+                        cell.value = "";
+                    }
+                }
+            }
+        }
+        function resetGrid() {
+            const grid = document.getElementById("sudokuGrid").cells;
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.getElementById(`${i + 1} ${j + 1}`);
+                    cell.value = "";
+                }
+            }
+            document.getElementById("sudokuGrid").style.backgroundColor = "white";
+        }
+    </script>
+</body>
+</html>

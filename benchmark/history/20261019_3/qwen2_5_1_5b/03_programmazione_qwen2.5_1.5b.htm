@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        /* CSS code here */
+    </style>
+</head>
+<body>
+    <input type="text" id="sudokuGrid" value="530019520 600079000 009500080" readonly>
+    <button onclick="clearGrid()">Ricompilare</button>
+    <div id="sudokuContainer"></div>
+
+    <script>
+        function clearGrid() {
+            const grid = document.getElementById('sudokuGrid');
+            const container = document.getElementById('sudokuContainer');
+            container.innerHTML = '';
+            grid.value = '';
+        }
+
+        const rows = [];
+        const cols = [];
+        const cells = [];
+        const grid = document.getElementById('sudokuGrid');
+        const container = document.getElementById('sudokuContainer');
+
+        for (let i = 0; i < 9; i++) {
+            rows[i] = [];
+            cols[i] = [];
+            cells[i] = [];
+            const row = document.createElement('div');
+            row.className = 'row';
+            container.appendChild(row);
+
+            for (let j = 0; j < 9; j++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `cell-${i * 9 + j}`;
+                row.appendChild(cell);
+
+                rows[i].push(cell);
+                cols[j].push(cell);
+                cells[i * 9 + j] = cell;
+            }
+        }
+
+        function init() {
+            const cellValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            let cellValuesCopy = [...cellValues];
+
+            function validateCell(i, j) {
+                const value = grid.value;
+                const row = value.substring(0, 9);
+                const col = value.substring(9, 18);
+                const box = value.substring(18, 27);
+
+                if (row.indexOf(cellValuesCopy[i]) >= 0 || col.indexOf(cellValuesCopy[j]) >= 0 || box.indexOf(cellValuesCopy[(i * 3 + j) % 9]) >= 0) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            function validateGrid() {
+                for (let i = 0; i < 9; i++) {
+                    for (let j = 0; j < 9; j++) {
+                        if (!validateCell(i, j)) {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            function solveGrid() {
+                const gridValue = grid.value;
+                const row = gridValue.substring(0, 9);
+                const col = gridValue.substring(9, 18);
+                const box = gridValue.substring(18, 27);
+
+                for (let i = 0; i < 9; i++) {
+                    for (let j = 0; j < 9; j++) {
+                        if (row[i] !== '0' || col[j] !== '0' || box[(i * 3 + j) % 9] !== '0') {
+                            continue;
+                        }
+
+                        const cellValuesCopy = [...cellValues];
+                        const value = gridValue.substring(0, 9);
+                        const rowValue = value.substring(0, 9);
+                        const colValue = value.substring(9, 18);
+                        const boxValue = value.substring(18, 27);
+
+                        if (validateCell(i, j)) {
+                            cellValuesCopy[i] = value.substring(0, 9);
+                            cellValuesCopy[j] = value.substring(9, 18);
+                            cellValuesCopy[(i * 3 + j) % 9] = value.substring(18, 27);
+                        }
+                    }
+                }
+
+                for (let i = 0; i < 9; i++) {
+                    for (let j = 0; j < 9; j++) {
+                        if (cellValuesCopy[i] === '0' || cellValuesCopy[j] === '0' || cellValuesCopy[(i * 3 + j) % 9] === '0') {
+                            continue;
+                        }
+
+                        for (let k = 1; k <= 9; k++) {
+                            const cell = document.getElementById(`cell-${i * 9 + j}`);
+                            if (cell.classList.contains('error')) {
+                                cell.classList.remove('error');
+                            }
+
+                            if (cell.value === '' || cell.value === cellValuesCopy[i] || cell.value === cellValuesCopy[j] || cell.value === cellValuesCopy[(i * 3 + j) % 9]) {
+                                cell.classList.add('correct');
+                            } else {
+                                cell.classList.add('incorrect');
+                            }
+                        }
+                    }
+                }
+            }
+
+            function solve() {
+                solveGrid();
+                validateGrid();
+                if (validateGrid()) {
+                    solveGrid();
+                    validateGrid();
+                    if (validateGrid()) {
+                        solveGrid();
+                        validateGrid();
+                        if (validateGrid()) {
+                            solveGrid();
+                            validateGrid();
+                            if (validateGrid()) {
+                                solveGrid();
+                                validateGrid();
+                                if (validateGrid()) {
+                                    solveGrid();
+                                    validateGrid();
+                                    if (validateGrid()) {
+                                        solveGrid();
+                                        validateGrid();
+                                        if (validateGrid()) {
+                                            solveGrid();
+                                            validateGrid();
+                                            if (validateGrid()) {
+                                                solveGrid();
+                                                validateGrid();
+                                                if (validateGrid()) {
+                                                    solveGrid();
+                                                    validateGrid();
+                                                    if (validateGrid()) {
+                                                        solveGrid();
+                                                        validateGrid();
+                                                        if (validateGrid()) {
+                                                            solveGrid();
+                                                            validateGrid();
+                                                            if (validateGrid()) {
+                                                                solveGrid();
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function fillGrid() {
+                for (let i = 0; i < 9; i++) {
+                    for (let j = 0; j < 9; j++) {
+                        const cell = document.getElementById(`cell-${i * 9 + j}`);
+                        const value = grid.value;
+                        const row = value.substring(0, 9);
+                        const col = value.substring(9, 18);
+                        const box = value.substring(18, 27);
+
+                        if (row[i] === '0' || col[j] === '0' || box[(i * 3 + j) % 9] === '0') {
+                            cell.value = row[i] || col[j] || box[(i * 3 + j) % 9];
+                        } else if (cell.value === '') {
+                            cell.value = '0';
+                        }
+                    }
+                }
+            }
+
+            function handleCellClick(i, j) {
+                const cell = document.getElementById(`cell-${i * 9 + j}`);
+                cell.value = '0';
+                cell.classList.add('error');
+                solve();
+            }
+
+            function handleCellChange(i, j) {
+                const cell = document.getElementById(`cell-${i * 9 + j}`);
+                cell.value = '';
+                cell.classList.remove('error');
+                cell.classList.add('correct');
+                solve();
+            }
+
+            function handleCellKeyDown(e) {
+                if (e.key === 'Escape') {
+                    clearGrid();
+                }
+            }
+
+            function handleCellFocus(i, j) {
+                const cell = document.getElementById(`cell-${i * 9 + j}`);
+                cell.value = '';
+                cell.classList.remove('error');
+                cell.classList.add('correct');
+                solve();
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                for (let i = 0; i < 9; i++) {
+                    for (let j = 0; j < 9; j++) {
+                        cells[i * 9 + j].addEventListener('click', handleCellClick);
+                        cells[i * 9 + j].addEventListener('keydown', handleCellKeyDown);
+                        cells[i * 9 + j].addEventListener('focus', handleCellFocus);
+                    }
+                }
+            });
+        }
+
+        function initGrid() {
+            grid.value = '530019520 600079000 009500080';
+        }
+
+        init();
+        initGrid();
+    </script>
+</body>
+</html>

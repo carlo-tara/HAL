@@ -1,0 +1,99 @@
+{
+  "provider": "ollama",
+  "model": "mistral:7b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T14:38:41.834259+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": true
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": false
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 801,
+    "output": 4419,
+    "reasoning": null,
+    "total": 5220
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": " ```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Sudoku</title>\n    <style>\n        body { font-family: Arial, sans-serif; }\n        table { border-collapse: collapse; }\n        td { border: 1px solid black; padding: 5px; text-align: center; }\n        .selected { background-color: lightblue; }\n        .invalid { background-color: red; }\n        .solved { background-color: lightgreen; }\n        #reset { display: none; }\n    </style>\n</head>\n<body>\n    <table id=\"sudoku\">\n        <!-- Riga 1 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 2 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 3 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 4 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 5 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 6 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 7 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 8 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n        <!-- Riga 9 -->\n        <tr>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n            <td class=\"selected\" contenteditable=\"true\" data-value=\"\"></td>\n        </tr>\n    </table>\n    <button id=\"reset\">Reset</button>\n    <script>\n        const table = document.getElementById('sudoku');\n        const cells = Array.from(table.getElementsByTagName('td'));\n        const solution = [\n            3, 0, 6, 5, 0, 8, 4, 0, 0,\n            5, 2, 0, 0, 0, 0, 0, 0, 0,\n            0, 8, 7, 0, 0, 0, 0, 3, 1,\n            0, 0, 3, 0, 1, 0, 0, 8, 0,\n            9, 0, 0, 8, 6, 3, 0, 0, 5,\n            0, 5, 0, 0, 9, 0, 7, 6, 0,\n            1, 3, 0, 0, 0, 0, 2, 5, 0,\n            0, 0, 0, 0, 0, 0, 0, 7, 4,\n            0, 0, 0, 0, 4, 0, 0, 0, 0\n        ];\n        let played = [];\n        let solved = false;\n\n        cells.forEach(cell => {\n            cell.addEventListener('focus', () => {\n                cell.classList.toggle('selected');\n            });\n\n            cell.addEventListener('blur', () => {\n                const value = Number(cell.textContent);\n                if (value < 1 || value > 9 || value === 0 && !cell.classList.contains('selected')) {\n                    cell.classList.add('invalid');\n                } else {\n                    cell.classList.remove('invalid');\n                    played.push(value);\n                }\n            });\n\n            document.addEventListener('keydown', e => {\n                if (e.keyCode >= 49 && e.keyCode <= 57) {\n                    const cell = cells[Array.from(table.rows[e.target.offsetParent.rowIndex].cells).indexOf(e.target)];\n                    if (cell.textContent === '') {\n                        cell.textContent = e.key;\n                        cell.setAttribute('data-value', e.key);\n                    }\n                }\n            });\n        });\n\n        function checkSolution() {\n            const playedSet = new Set(played);\n            const solutionSet = new Set(solution);\n            return playedSet.size === solutionSet.size && [...playedSet].every(value => solutionSet.has(value));\n        }\n\n        function checkWin() {\n            if (!solved) {\n                solved = checkSolution();\n                cells.forEach(cell => {\n                    if (cell.textContent !== solution[Array.from(table.rows).indexOf(cell.parentElement) * 9 + Array.from(cell.parentElement.cells).indexOf(cell) + 1 || !solved) {\n                        cell.classList.add('invalid');\n                    } else {\n                        cell.classList.add('solved');\n                    }\n                });\n            }\n        }\n\n        function reset() {\n            played = [];\n            solved = false;\n            cells.forEach(cell => {\n                cell.textContent = '';\n                cell.setAttribute('data-value', '');\n                cell.classList.remove('selected', 'invalid', 'solved');\n            });\n            checkWin();\n        }\n\n        checkWin();\n        document.getElementById('reset').addEventListener('click', reset);\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 375,
+        "output": 1481,
+        "reasoning": null,
+        "total": 1856
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.0443
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 426,
+        "output": 2938,
+        "reasoning": null,
+        "total": 3364
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.1158
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 2,
+    "system2_stages": 2,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 856.5428,
+  "result_file": "03_programmazione_mistral_7b.json",
+  "system1": {
+    "task_family": "coding",
+    "family_confidence": 0.9498,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5704,
+    "execution_mode": "single_pass",
+    "execution_confidence": 0.9268,
+    "confidence": 0.5704,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

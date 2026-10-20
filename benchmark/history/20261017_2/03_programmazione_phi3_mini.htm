@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Sudoku Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center; end;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .sudoku-grid {
+            display: grid;
+            grid-template-columns: repeat(9, minmax(3rem, 3.5rem));
+            grid-template-rows: repeat(9, minmax(3rem, 3.5rem));
+            gap: 0.5rem;
+            border: 1px solid #000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+       0.5rem;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .cell {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+        }
+        #instructions {
+            margin-top: 2rem;
+            text-align: center;
+        }
+    </style>
+    <script>
+        let sudokuBoard = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 2, 5, 0],
+            [4, 0, 0, 8, 0, 3, 0, 0, 7],
+            [0, 0, 0, 0, 6, 0, 0, 0, 9],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 3, 2],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+
+        let cells = document.querySelectorAll('.cell');
+        let instructions = document.getElementById('instructions');
+        let newGameButton = document.getElementById('newGame');
+
+        // Generate the grid
+        function generateGrid() {
+            cells.forEach((cell, index) => {
+                let row = Math.floor(index / 9);
+                let col = index % 9;
+                let cellValue = sudokuBoard[row][col];
+                let cellElement = document.createElement('div');
+                cellElement.classList.add('cell');
+                cellElement.dataset.row = row;
+                cellElement.dataset.col = col;
+                cellElement.dataset.value = cellValue;
+                instructions.textContent = 'Click on a cell to enter a number, then click outside the cell. Enter numbers 1-9 using the keyboard. Press "New Game" to start over.';
+                if (cellValue > 0) {
+                    cellElement.textContent = cellValue;
+                } else {
+                    cellElement.innerHTML = '';
+                }
+                document.querySelector('.sudoku-grid').appendChild(cellElement);
+                cellElement.addEventListener('click', handleCellClick);
+                cellElement.addEventListener('keydown', handleKeyDown);
+            });
+        }
+
+        // Handle cell clicks
+        function handleCellClick(event) {
+            let cell = document.querySelector(`[data-row="${event.target.dataset.row}"][data-col="${event.target.dataset.col}"]`);
+            if (cell.textContent === '') {
+                cell.textContent = event.key;
+                updateSudokuBoard(event.target.dataset.row, event.target.dataset.col, event.key);
+                event.stopPropagation();
+            }
+        }
+
+        // Handle keydown events
+        function handleKeyDown(event) {
+            let row = Math.floor(event.target.dataset.row);
+            let col = event.target.dataset.col;
+            if (event.key >= 1 && event.key <= 9 && event.ctrlKey || event.metaKey) {
+                event.stopPropagation();
+                updateSudokuBoard(row, col, event.key);
+                checkBoardValidity();
+            }
+        }
+
+        // Update the board
+        function updateSudokuBoard(row, col, value) {
+            sudokuBoard[row][col] = value;
+        }
+
+        // Check if the board is valid
+        function checkBoardValidity() {
+            // Implement the logic to check the validity of the board
+        }
+
+        // Clear a cell
+        function clearCell(row, col) {
+            sudokuBoard[row][col] = 0;
+            let cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            cell.textContent = '';
+        }
+
+        // Start a new game
+        function startNewGame() {
+            clearBoard();
+            generateGrid();
+        }
+
+        // Clear the board
+        function clearBoard() {
+            cells.forEach(cell => (cell.textContent = ''));
+            sudokuBoard = [
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 2, 5, 0],
+                [4, 0, 0, 8, 0, 3, 0, 0, 7],
+                [0, 0, 0, 0, 6, 0, 0, 0, 9],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 3, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ];
+            generateGrid();
+       0.5rem;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        generateGrid();
+
+        newGameButton.addEventListener('click', startNewGame);
+    </script>
+</head>
+<body>
+    <div class="sudoku-grid">
+        <div id="instructions"></div>
+    </div>
+    <button id="newGame">New Game</button>
+</body>
+</html>

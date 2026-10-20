@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; }
+        td { border: 1px solid black; padding: 5px; text-align: center; }
+        .selected { background-color: lightblue; }
+        .invalid { background-color: red; }
+        .solved { background-color: lightgreen; }
+        #reset { display: none; }
+    </style>
+</head>
+<body>
+    <table id="sudoku">
+        <!-- Riga 1 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 2 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 3 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 4 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 5 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 6 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 7 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 8 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+        <!-- Riga 9 -->
+        <tr>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+            <td class="selected" contenteditable="true" data-value=""></td>
+        </tr>
+    </table>
+    <button id="reset">Reset</button>
+    <script>
+        const table = document.getElementById('sudoku');
+        const cells = Array.from(table.getElementsByTagName('td'));
+        const solution = [
+            3, 0, 6, 5, 0, 8, 4, 0, 0,
+            5, 2, 0, 0, 0, 0, 0, 0, 0,
+            0, 8, 7, 0, 0, 0, 0, 3, 1,
+            0, 0, 3, 0, 1, 0, 0, 8, 0,
+            9, 0, 0, 8, 6, 3, 0, 0, 5,
+            0, 5, 0, 0, 9, 0, 7, 6, 0,
+            1, 3, 0, 0, 0, 0, 2, 5, 0,
+            0, 0, 0, 0, 0, 0, 0, 7, 4,
+            0, 0, 0, 0, 4, 0, 0, 0, 0
+        ];
+        let played = [];
+        let solved = false;
+
+        cells.forEach(cell => {
+            cell.addEventListener('focus', () => {
+                cell.classList.toggle('selected');
+            });
+
+            cell.addEventListener('blur', () => {
+                const value = Number(cell.textContent);
+                if (value < 1 || value > 9 || value === 0 && !cell.classList.contains('selected')) {
+                    cell.classList.add('invalid');
+                } else {
+                    cell.classList.remove('invalid');
+                    played.push(value);
+                }
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.keyCode >= 49 && e.keyCode <= 57) {
+                    const cell = cells[Array.from(table.rows[e.target.offsetParent.rowIndex].cells).indexOf(e.target)];
+                    if (cell.textContent === '') {
+                        cell.textContent = e.key;
+                        cell.setAttribute('data-value', e.key);
+                    }
+                }
+            });
+        });
+
+        function checkSolution() {
+            const playedSet = new Set(played);
+            const solutionSet = new Set(solution);
+            return playedSet.size === solutionSet.size && [...playedSet].every(value => solutionSet.has(value));
+        }
+
+        function checkWin() {
+            if (!solved) {
+                solved = checkSolution();
+                cells.forEach(cell => {
+                    if (cell.textContent !== solution[Array.from(table.rows).indexOf(cell.parentElement) * 9 + Array.from(cell.parentElement.cells).indexOf(cell) + 1 || !solved) {
+                        cell.classList.add('invalid');
+                    } else {
+                        cell.classList.add('solved');
+                    }
+                });
+            }
+        }
+
+        function reset() {
+            played = [];
+            solved = false;
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.setAttribute('data-value', '');
+                cell.classList.remove('selected', 'invalid', 'solved');
+            });
+            checkWin();
+        }
+
+        checkWin();
+        document.getElementById('reset').addEventListener('click', reset);
+    </script>
+</body>
+</html>

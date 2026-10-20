@@ -1,0 +1,81 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "matematica",
+  "started_at": "2026-10-19T22:42:10.391829+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 221,
+    "output": 526,
+    "reasoning": null,
+    "total": 747
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "**Calcolo Ricavo, Utile e Margine Percentuale**\n\n**Passaggio 1: Calcolo prezzo di vendita per i primi 90 articoli**\n\n* Prezzo unitario = 18 €\n* Ricarico del 35% sul costo = 18 € x 0,35 = 6,30 €\n* Prezzo di vendita = Prezzo unitario + Ricarico = 18 € + 6,30 € = 24,30 €\n\n**Passaggio 2: Calcolo prezzo di vendita per i 30 articoli restanti**\n\n* Prezzo unitario = 18 €\n* Sconto del 20% sul prezzo unitario = 18 € x 0,20 = 3,60 €\n* Prezzo di vendita = Prezzo unitario - Sconto = 18 € - 3,60 € = 14,40 €\n\n**Passaggio 3: Calcolo ricavo totale**\n\n* Ricavo = (Prezzo di vendita x Quantità venduta) - Costo\n* Ricavo per i primi 90 articoli = (24,30 € x 90) - (18 € x 90) = 2204,50 € - 1620 € = 584,50 €\n* Ricavo per i 30 articoli restanti = (14,40 € x 30) - (18 € x 30) = 432 € - 540 € = -108 €\n* Ricavo totale = Ricavo per i primi 90 articoli + Ricavo per i 30 articoli restanti = 584,50 € - 108 € = 476,50 €\n\n**Passaggio 4: Calcolo utile e margine percentuale sul ricavo**\n\n* Utile = Ricavo - Costo\n* Costo = 120 articoli x 18 € = 2160 €\n* Utile = 476,50 € - 2160 € = -1683,50 €\n* Margine percentuale sul ricavo = (Utile / Ricavo) x 100\n* Margine percentuale sul ricavo = (-1683,50 € / 476,50 €) x 100 = -353,56%\n\n**Risultati**\n\n* Ricavo totale: 476,50 €\n* Utile: -1683,50 €\n* Margine percentuale sul ricavo: -353,56%",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 221,
+        "output": 526,
+        "reasoning": null,
+        "total": 747
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 54.85403,
+  "result_file": "02_matematica_llama3.2_3b.json",
+  "system1": {
+    "task_family": "math",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "math",
+      "required_strategy": "math_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.4791,
+    "strategy": "math_check",
+    "strategy_confidence": 0.814,
+    "execution_confidence": 0.062,
+    "confidence": 0.062,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 9
+  }
+}

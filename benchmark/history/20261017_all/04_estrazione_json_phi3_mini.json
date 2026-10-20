@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T09:46:06.705806+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 493,
+    "reasoning": null,
+    "total": 2543
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "[\n  {\n    \"chapter\": 1,\n    \"summary\": \"Il primo capitolo riflette sui precedenti successi della coppia in psicologia cognitiva e sociale, sottolineando l'impatto della loro ricerca sul giudizio e sulla teoria del processo decisionale. L'introduzione del libro rivela la loro collaborazione riuscita, nonostante la lontananza geografica, e riconosce il contributo di Amos in un premio Nobel. Menziona anche la morte di Amos nel 1996.\"\n  },\n  {\n    \"chapter\": 2,\n    \"summary\": \"Il secondo capitolo discute i progressi recenti nella comprensione dei processi mentali, in particolare sulla natura sia delle intuizioni precise della competenza che delle euristiche del giudizio. Attualmente riconoscono che il pensiero intuitivo ha sia meraviglie che difetti e che la competenza e le euristiche forniscono prospettive alternative per i giudizi intuitivi.\"\n  },\n  {\n    \"chapter\": 3,\n    \"summary\": \"Il terzo capitolo presenta un racconto di una situazione di emergenza di un pompiere e illustra il concetto di 'sesto senso del pericolo'. Questa storia mette in evidenza la capacità umana di intuizione esperta e come un pompiere, come un medico esperto, può percepire e reagire rapidamente alle sfumature di una situazione. Non sono la loro intuizione le sole meraviglie della mente.\"\n  },\n  {\n    \"chapter\": 4,\n    \"summary\": \"Nel quarto capitolo viene discusso come la competenza è una competenza sviluppata attraverso l'esperienza prolungata, piuttosò che attraverso l'uso delle euristiche del giudizio. Il capitolo sottolinea l'importanza di riconoscere che la competenza e le euristiche sono fonti alternative per la conoscenza intuitiva, piuttosto che essere solo le euristiche che ci guidano.\"\n  }\n]",
+  "seconds": 78.474073,
+  "result_file": "20261017_9/04_estrazione_json_phi3_mini.json"
+}

@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "mistral:7b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T06:58:20.990386+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2051,
+    "output": 1247,
+    "reasoning": null,
+    "total": 3298
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": " {\n  \"Capitolo 1\": {\n    \"Titolo\": \"L'incertezza: problemi di base del processo decisionale\",\n    \"Riassunto\": \"L'autore discute della comprensione della mente umana, che è ora accettata che sia soggetta a errori sistematici. La ricerca del giudizio ebbe un'influenza notevole sugli studi sociali. Successivamente, l'autore e Amos Tversky si concentrarono sul processo decisionale in condizioni di incertezza, con lo scopo di sviluppare una teoria psicologica che spieghisse come le decisioni venivano prese sulle scommesse di rischio semplici. La loro ricerca fu il motivo del premio Nobel che Tversky ricevette nel 2002.\"\n  },\n  \"Capitolo 2\": {\n    \"Titolo\": \"La valutazione di probabilità e il principio di associazione\",\n    \"Riassunto\": \"L'autore e Tversky studiarono i processi mentali che conducono alla valutazione di probabilità e scoprirono che le persone tendono a basare le proprie valutazioni sulle probabilità di base piuttosto che sui dettagli delle situazioni. Inoltre, scoprirono il principio di associazione, ovvero che le persone tendono a considerare una probabilità di successo come legata a un rischio e una probabilità di fallimento come legata a una punizione.\"\n  },\n  \"Capitolo 3\": {\n    \"Titolo\": \"L'assioma dell'assiacco\",\n    \"Riassunto\": \"L'autore e Tversky studiarono l'assioma dell'assiacco, ovvero la tendenza delle persone a preferire una opzione che offre una probabilità di successo minore ma che garantisce una punizione minore in caso di fallimento a una opzione che offre una probabilità di successo maggiore ma che garantisce una punizione maggiore in caso di fallimento.\"\n  },\n  \"Capitolo 4\": {\n    \"Titolo\": \"La teoria della scelta\",\n    \"Riassunto\": \"L'autore e Tversky svilupparono la teoria della scelta, una teoria della scelta che descrive le decisioni su opzioni di rischio semplici e che per certi aspetti è più importante del loro lavoro sul giudizio e rappresenta uno dei fondamenti dell'economia comportamentale.\"\n  },\n  \"Capitolo 5\": {\n    \"Titolo\": \"La teoria del rischio\",\n    \"Riassunto\": \"L'autore e Tversky studiarono il processo decisionale in condizioni di rischio e svilupparono la teoria del rischio, una teoria della scelta che descrive come le persone valutano le opzioni di rischio.\"\n  },\n  \"Capitolo 6\": {\n    \"Titolo\": \"La teoria del rischio per riferimento\",\n    \"Riassunto\": \"L'autore e Tversky studiarono la teoria del rischio per riferimento, una teoria della scelta che descrive come le persone valutano una opzione di rischio in base a un riferimento preesistente.\"\n  },\n  \"Capitolo 7\": {\n    \"Titolo\": \"La teoria della regola di compenso\",\n    \"Riassunto\": \"L'autore e Tversky studiarono la teoria della regola di compenso, una teoria della scelta che descrive come le persone tendono a ridurre il rischio quando la probabilità di successo è alta e a aumentarlo quando la probabilità di successo è bassa.\"\n  },\n  \"Capitolo 8\": {\n    \"Titolo\": \"La teoria dell'opzione di riferimento\",\n    \"Riassunto\": \"L'autore e Tversky studiarono la teoria dell'opzione di riferimento, una teoria della scelta che descrive come le persone tendono a valutare una opzione in base a un riferimento preesistente.\"\n  },\n  \"Capitolo 9\": {\n    \"Titolo\": \"La teoria della scelta multipla\",\n    \"Riassunto\": \"L'autore e Tversky studiarono la teoria della scelta multipla, una teoria della scelta che descrive come le persone tendono a valutare più opzioni in base a un riferimento preesistente.\"\n  },\n  \"Capitolo 10\": {\n    \"Titolo\": \"Le applicazioni della teoria della scelta\",\n    \"Riassunto\": \"L'autore e Tversky discutono delle applicazioni della teoria della scelta in diversi campi, come la scienza politica, l'economia, la medicina e la finanza.\"\n  }\n}",
+  "seconds": 291.342863,
+  "result_file": "20261017_3/04_estrazione_json_mistral_7b.json"
+}

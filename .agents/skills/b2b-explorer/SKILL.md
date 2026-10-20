@@ -1,7 +1,7 @@
 ---
 name: b2b-explorer
 extends: a-b2b
-version: 1.2.2
+version: 1.2.3
 extends-version: 2.2.1
 description: >-
   Delta progetto B2B in WTP App: guardrail pilota ICP 6–50 ∩ bacino Chiasso ~3h (Aug-Oct 2026),
@@ -26,7 +26,7 @@ Skill figlia. Eredita `a-agentzero` → `a-b2b` (facade) → **questo file**.
 | Dati B2B          | `.shared/b2b/`                                                  |
 | Env               | `.env` **nella root WTP** (niente `.env` in `src/explorer/b2b`) |
 
-**Layout repo:** Sales Coach in `src/wtp/`; shell auth in `src/auth/`; in root `data/`, `.shared/`. Explorer in `src/explorer/b2b/`. Albero in `.cursorrules` / `README.md`. Non spostare `.shared` sotto `src/wtp`.
+**Layout repo:** Sales Coach in `src/wtp/`; shell auth in `src/auth/`; in root `data/`, `.shared/`. Explorer in `src/explorer/b2b/`. Albero in `README.md`. Non spostare `.shared` sotto `src/wtp`.
 
 ## Pilot guardrails (hard constraints)
 
@@ -58,11 +58,11 @@ If a request conflicts, flag it and propose a compliant alternative.
 
 ## Product artifacts
 
-Path dual-path: [`.cursor/product/README.md`](../../product/README.md). Canone in `.cursor/product/`.
+Path progetto: [`product/README.md`](../../product/README.md). Canone in `product/`.
 
 **Cascata post-strategia:** ordine canone `a-product` § **Profilo B2B** / Cascata post-strategia (ingresso facade `a-b2b`). Path locali: `projects/b2b-piccoleimprese/` (notes, canvas, PRD snapshot, dry-run/playbook/proposta/UA). Fonti incontri in `projects/b2b-piccoleimprese/00-docs/` e/o `src/explorer/b2b/docs/`. Riscrivere mapping / scheda-prodotti / blocco-perche-ora **solo se** cambiano livelli L1/L2/L3 o framing OCSE.
 
-**PRD e strategia (formato):** canone L1 `a-po` / `prd-authoring` § Formato evidenza. Path canone template: `.cursor/product/prd.md`.
+**PRD e strategia (formato):** canone L1 `a-po` / `prd-authoring` § Formato evidenza. Path canone template: `product/prd.md`.
 
 **PRD pilota (fonte viva):** [`projects/b2b-piccoleimprese/01-requisiti/PRD_b2b_v1-0-1.md`](../../projects/b2b-piccoleimprese/01-requisiti/PRD_b2b_v1-0-1.md) — unica fonte per Job Stories (niente mirror `prd_js_*`). Formato: `Quando` / `voglio` / `così da`. **ID canoniche = chiavi Jira `WB-*`** (`00-docs/Jira.csv`: epiche `WB-10`–`WB-16`, story `WB-17`–`WB-40`; **`WB-41`…`WB-46` riservati PRD** finché creati in Jira — sync per **riepilogo/titolo**). **Sync PRD↔Jira:** mappare per **riepilogo/titolo** sull’export CSV — non reinventare una numerazione parallela; in sessione delta PRD aggiornare solo la lista **Sync Jira** nel PRD — **non** creare ticket Jira finché non richiesto. Mappa dipendenze: [`dipendenze-job-stories.md`](../../projects/b2b-piccoleimprese/01-requisiti/dipendenze-job-stories.md) (non nel PRD). **Anti-pattern:** non ripristinare nel PRD una tabella «Allineamento ID Jira» / mapping storici ID↔`WB-*` (resta nel CSV + titoli); non riscrivere snapshot storici (`prd_js_*`, `prd-2026-08-*`) oltre una riga “storico → canone”.
 
@@ -75,7 +75,7 @@ Path dual-path: [`.cursor/product/README.md`](../../product/README.md). Canone i
 4. **WB-43** (campagna) e **WB-44** (step 2 a 6 mesi) sotto WB-16 — riusarle/estendere; **WB-45** (landing interattiva) e **WB-46** (naming ETF) sono riservate — non creare story parallele per gli stessi outcome.
 5. **Nuova JS solo** se manca un outcome non assorbibile in AC; aggiornare `dipendenze-job-stories.md`.
 6. **Anti-pattern delta MKTG:** non collassare l’offerta a due livelli (menu L1+L2 **non** ritira L3); non aprire una survey/prequalifica inbound separata da **WB-45**; su **WB-46** non inventare il nome pubblico di ETF — solo AC «proposta + mapping + ok PO».
-   Rule always-on sul path: [`.cursor/rules/b2b-prd-delta.mdc`](../../rules/b2b-prd-delta.mdc).
+   Rule always-on sul path: [`docs/rules/b2b-prd-delta.mdc`](../../docs/rules/b2b-prd-delta.mdc).
 
 Spine funnel = **WB-42** (stages: prep/analisi → discovery → interesse **A/B/C** → appuntamento/pre-accordo → won/firma; owner commerciale del deal; SLA pre-accordo→firma ≤7gg lav., distinto da onboarding post-firma). Pack **WB-24** = solvibilità/visure/N/interlocutore **+** materiale info generiche + framing settore. Post-firma: piano ≤1 sett + kick-off/avvio ≤15gg (**WB-31**); area aperta/email dominio MS → **OQ**, non AC tecnici inventati. Survey gradimento ~90gg + trigger recensione se segnale ok → **WB-36**; upsell step 2 a 6 mesi ripetibile → **WB-44** (WB-16); Blocco A resta istanza 3diEmme. Campagna Mese Educazione Finanziaria → **WB-43** (Owner _Team Marketing_, Persona **P2**), CTA primaria a landing interattiva **WB-45** (landing offerta = **WB-40**), warming non close; **distinta** da prontezza contratti novembre (WB-30). Brochure pre-discovery + menu L1/L2 (L3 resta in scheda) → **WB-27**; milestone chiamate lista calda ≤**17 nov 2026** → **WB-25**; naming pubblico modulo ETF → **WB-46** (WB-12; nome solo dopo ok PO).
 
@@ -132,7 +132,7 @@ Incomplete intake: [references/project-brief-template.md](references/project-bri
 
 **Run (ordine):** `cd src/explorer/b2b && npm install` (se manca `dotenv`/`pg`) → verificare schema/connettività su `PGDATABASE_URI_PROD` → fasi o `npm run enrich:recentsignups` → `PGDATABASE_URI_PROD=… npm run build:enrichment` → `npm run ingest:lookalike-geo` → `npm run export:icp-list` → `npm run enrich:icp-buyers`. Le migrazioni test locali (`make migrate`) sono separate e non vanno usate per enrichment. **UI live:** `/explorer/b2b/` → API score3. Export batch opzionale: `cd src/wtp/backend && node scripts/cluster-b2b-score3.js`.
 
-**Cascade run operativo:** SoT enforcement → `.cursor/rules/b2b-enrichment-run.mdc` (HS senza `--trigger`, `--since`/`--until`, doppie metriche JSON vs PG, partial Apollo, gitignore cluster, rebuild da JSON presenti, …). Cascade L1 → `a-enrichment`.
+**Cascade run operativo:** SoT enforcement → `docs/rules/b2b-enrichment-run.mdc` (HS senza `--trigger`, `--since`/`--until`, doppie metriche JSON vs PG, partial Apollo, ignore cluster, rebuild da JSON presenti, …). Cascade L1 → `a-enrichment`.
 
 **Lookalike cold:** LeadMagic arricchisce domain/people; **non** fa discovery org a scala. Batch cold: `SKIP_HUBSPOT=1`. **`enrichment-leadmagic-companies-linkedin.json` non è ingestito** da `build:enrichment` — merge live `leadmagic_linkedin` si perdono al rebuild.
 

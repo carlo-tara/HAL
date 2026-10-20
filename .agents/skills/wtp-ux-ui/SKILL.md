@@ -1,7 +1,7 @@
 ---
 name: wtp-ux-ui
 extends: a-uiux
-version: 1.3.66
+version: 1.3.67
 extends-version: 1.0.7
 description: >-
   Design System SurferDark (L2) + mapping Material Design 3 per Sales Coach / WTP App:
@@ -37,17 +37,17 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 
 ## File del DS
 
-| File | Contenuto |
-|------|-----------|
-| [design-system.md](design-system.md) | Overview, albero, boundary, decisioni LOCK |
-| [foundation.md](foundation.md) | Color, type, space, radius, motion, z, focus, touch |
-| [tokens-dark.md](tokens-dark.md) | Palette + naming target / shim |
-| [material3.md](material3.md) | Mapping MD3 ↔ SurferDark (roles, shape, state, anti-MUI) |
-| [componenti.md](componenti.md) | Primitives: classi, stati, a11y, do/don’t |
-| [patterns.md](patterns.md) | Layout, shell, menubar, form, print |
-| [inventory-classi.md](inventory-classi.md) | Classi enrico vs Liste vs Explorer + drift |
-| [migration-css.md](migration-css.md) | Piano step 1–6 migrazione CSS (TDD-aware) |
-| [CHANGELOG.md](CHANGELOG.md) | Storia L2 |
+| File                                       | Contenuto                                                |
+| ------------------------------------------ | -------------------------------------------------------- |
+| [design-system.md](design-system.md)       | Overview, albero, boundary, decisioni LOCK               |
+| [foundation.md](foundation.md)             | Color, type, space, radius, motion, z, focus, touch      |
+| [tokens-dark.md](tokens-dark.md)           | Palette + naming target / shim                           |
+| [material3.md](material3.md)               | Mapping MD3 ↔ SurferDark (roles, shape, state, anti-MUI) |
+| [componenti.md](componenti.md)             | Primitives: classi, stati, a11y, do/don’t                |
+| [patterns.md](patterns.md)                 | Layout, shell, menubar, form, print                      |
+| [inventory-classi.md](inventory-classi.md) | Classi enrico vs Liste vs Explorer + drift               |
+| [migration-css.md](migration-css.md)       | Piano step 1–6 migrazione CSS (TDD-aware)                |
+| [CHANGELOG.md](CHANGELOG.md)               | Storia L2                                                |
 
 ## Decisioni LOCK (sintesi)
 
@@ -85,26 +85,26 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 
 ## Non-goals
 
-| Fuori scope | Dove |
-|-------------|------|
-| Microcopy / locale / brand voice | `a-copywriter-wtp`, `.cursor/brands/`, `src/auth/locales/` |
-| Encoding D3 | `a-charts` |
-| Microcopy Explorer | `b2b-explorer-ui-ux` (deve consumare SurferDark) |
+| Fuori scope                      | Dove                                               |
+| -------------------------------- | -------------------------------------------------- |
+| Microcopy / locale / brand voice | `a-copywriter-wtp`, `brands/`, `src/auth/locales/` |
+| Encoding D3                      | `a-charts`                                         |
+| Microcopy Explorer               | `b2b-explorer-ui-ux` (deve consumare SurferDark)   |
 
 ## Marketing vs runtime
 
-| | tarafacilitazione.com | Suite SurferDark |
-|--|----------------------|------------------|
-| Font | Inter | System UI |
-| Accent | Teal / mauve | Gold `#ffd400` |
-| Sfondo | Chiaro | Dark `#0e0e0e` |
-| CTA | Spesso MAIUSCOLO | Sentence case |
+|        | tarafacilitazione.com | Suite SurferDark |
+| ------ | --------------------- | ---------------- |
+| Font   | Inter                 | System UI        |
+| Accent | Teal / mauve          | Gold `#ffd400`   |
+| Sfondo | Chiaro                | Dark `#0e0e0e`   |
+| CTA    | Spesso MAIUSCOLO      | Sentence case    |
 
 ## SoT implementazione
 
-| Cosa | Dove |
-|------|------|
+| Cosa                 | Dove                          |
+| -------------------- | ----------------------------- |
 | CSS shell SurferDark | `src/auth/css/surferdark.css` |
-| Chrome menubar | `src/auth/js/chrome.js` |
-| Liste | `src/wtp/frontend/` |
-| Explorer | `src/explorer/b2b/` |
+| Chrome menubar       | `src/auth/js/chrome.js`       |
+| Liste                | `src/wtp/frontend/`           |
+| Explorer             | `src/explorer/b2b/`           |

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sudoku {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            margin-bottom: 10px;
+        }
+        .cell {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .solution, .error {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="sudoku">
+        <div class="cell" id="cell-1"></div>
+        <div class="cell" id="cell-2"></div>
+        <div class="cell" id="cell-3"></div>
+        <div class="cell" id="cell-4"></div>
+        <div class="cell" id="cell-5"></div>
+        <div class="cell" id="cell-6"></div>
+        <div class="cell" id="cell-7"></div>
+        <div class="cell" id="cell-8"></div>
+        <div class="cell" id="cell-9"></div>
+    </div>
+    <button onclick="reset()">Nuova Partita</button>
+    <script>
+        // Solution is predefined in a global variable
+        const solution = [
+            [5, 3, 0, 0, 0, 0, 0, 0, 0],
+            [6, 0, 0, 1, 4, 0, 0, 0, 0],
+            [0, 0, 2, 5, 0, 0, 0, 0, 0],
+            [0, 0, 0, 3, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 9, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+
+        // Temporary solution for demonstration
+        const tempSolution = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 4, 0, 0, 0, 0],
+            [0, 0, 2, 5, 0, 0, 0, 0, 0],
+            [0, 0, 0, 3, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 9, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+
+        function reset() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.style.backgroundColor = '';
+            });
+        }
+
+        function validateCell(cellId, value) {
+            const cell = document.getElementById(cellId);
+            if (cell) {
+                cell.textContent = value;
+                if (cell.textContent === '') {
+                    return;
+                }
+                const row = cell.parentElement.rowIndex;
+                const col = cell.parentElement.columnIndex;
+                let isValid = true;
+                for (let i = 0; i < 9; i++) {
+                    if (solution[row][i] === value || solution[i][col] === value) {
+                        isValid = false;
+                        break;
+                    }
+                    if (solution[row * 3 + Math.floor(i / 3)][col * 3 + Math.floor(i % 3]] === value) {
+                        isValid = false;
+                        break;
+                    }
+                }
+                if (isValid) {
+                    cell.style.backgroundColor = 'green';
+                } else {
+                    cell.style.backgroundColor = 'red';
+                }
+            }
+        }
+
+        function checkSudoku() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                const value = cell.textContent || cell.value;
+                if (value === '') {
+                    return;
+                }
+                const row = cell.parentElement.rowIndex;
+                const col = cell.parentElement.columnIndex;
+                let isValid = true;
+                for (let i = 0; i < 9; i++) {
+                    if (solution[row][i] === value || solution[i][col] === value) {
+                        isValid = false;
+                        break;
+                    }
+                    if (solution[row * 3 + Math.floor(i / 3)][col * 3 + Math.floor(i % 3]] === value) {
+                        isValid = false;
+                        break;
+                    }
+                }
+                if (isValid) {
+                    cell.style.backgroundColor = 'green';
+                } else {
+                    cell.style.backgroundColor = 'red';
+                }
+            });
+        }
+
+        function solveSudoku() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                const row = cell.parentElement.rowIndex;
+                const col = cell.parentElement.columnIndex;
+                let value = '';
+                for (let i = 1; i <= 9; i++) {
+                    if (solution[row][col] === i) {
+                        value = i.toString();
+                        break;
+                    }
+                }
+                if (value) {
+                    cell.textContent = value;
+                    cell.style.backgroundColor = 'green';
+                }
+            });
+        }
+
+        function checkSolution() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                const value = cell.textContent || cell.value;
+                if (value === '') {
+                    return;
+                }
+                const row = cell.parentElement.rowIndex;
+                const col = cell.parentElement.columnIndex;
+                let isValid = true;
+                for (let i = 0; i < 9; i++) {
+                    if (solution[row][i] === value || solution[i][col] === value) {
+                        isValid = false;
+                        break;
+                    }
+                    if (solution[row * 3 + Math.floor(i / 3)][col * 3 + Math.floor(i % 3]] === value) {
+                        isValid = false;
+                        break;
+                    }
+                }
+                if (isValid) {
+                    cell.style.backgroundColor = 'green';
+                } else {
+                    cell.style.backgroundColor = 'red';
+                }
+            });
+        }
+
+        window.onload = function() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    const value = cell.textContent || cell.value;
+                    if (value) {
+                        cell.style.backgroundColor = 'red';
+                    } else {
+                        cell.textContent = value;
+                        cell.style.backgroundColor = 'green';
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark agg_20261019_3</title>
+<style>
+  :root { --ink: #1f2933; --muted: #52606d; --line: #d9e2ec; --accent: #2f6fb0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink);
+         max-width: 960px; margin: 0 auto; padding: 24px; line-height: 1.5; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.2rem; margin: 40px 0 4px; }
+  .lead, .note, figcaption { color: var(--muted); font-size: .92rem; }
+  figure { margin: 0; }
+  figcaption { margin-bottom: 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  .card b { display: block; font-size: 1.3rem; }
+  .card span { color: var(--muted); font-size: .85rem; }
+  svg { width: 100%; height: auto; display: block; font-size: 13px; color: var(--ink); fill: var(--ink); }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #f5f7fa; }
+  details summary { cursor: pointer; color: var(--accent); }
+  details ul { margin: 6px 0 0; padding-left: 18px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Benchmark agg_20261019_3</h1>
+  <p class="lead">Run del 2026-10-19</p>
+</header>
+<section>
+    <h2>Executive summary</h2>
+    <p class="lead">
+        Confronto tra tre benchmark sugli stessi test:
+        <b>20261017_all</b> (baseline senza middleware, 7 modelli),
+        <b>20261017_2</b> (middleware precedente) e <b>20261019_3</b> (questa
+        run: middleware nuovo, Laya su CPU, cooldown tra le run). Sui 4 modelli
+        comuni, un check di qualità vale 1/17 del punteggio; per
+        <code>qwen2.5:1.5b</code> la run 20261019_3 ha 13 check disponibili su
+        17 a causa dei timeout.
+    </p>
+
+    <h3>Decisioni proposte</h3>
+    <ol>
+        <li>
+            <b
+                >Il middleware nuovo è un miglioramento netto rispetto al
+                precedente</b
+            >
+            su phi3:mini, llama3.2:3b e llama3.2:1b; su qwen2.5:1.5b il
+            confronto non è diretto per i timeout. <i>Decisione:</i> adottarlo
+            come candidato al posto del precedente.
+        </li>
+        <li>
+            <b>Non è ancora pari alla baseline</b> su <code>phi3:mini</code> (13
+            vs 15) e <code>llama3.2:1b</code> (8 vs 11). Su
+            <code>llama3.2:3b</code> supera la baseline (12 vs 10).
+            <i>Decisione:</i> non promuoverlo come default per tutti i modelli;
+            valutarlo per modello.
+        </li>
+        <li>
+            <b>I tempi per chiamata sono cresciuti</b> su tre modelli su
+            quattro. <i>Decisione:</i> prima di accettare il costo in latenza,
+            isolare la causa (vedi sotto).
+        </li>
+        <li>
+            <b>Affidabilità invariata nel complesso</b>: la baseline aveva già 2
+            risultati non ok su <code>qwen2.5:1.5b</code> e 1 su
+            <code>llama3.2:3b</code>; la run 20261019_3 ha 2 timeout su
+            <code>qwen2.5:1.5b</code> (prompt lunghi).
+        </li>
+    </ol>
+
+    <h3>Confronto per modello</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Modello</th>
+                <th>Qualità baseline</th>
+                <th>Qualità middleware precedente</th>
+                <th>Qualità 20261019_3</th>
+                <th>Mediana tempo/chiamata (baseline → 20261019_3)</th>
+                <th>Non ok (baseline → 20261019_3)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>phi3:mini</td>
+                <td>15/17</td>
+                <td>10/17</td>
+                <td>13/17</td>
+                <td>87 s → 169 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>llama3.2:3b</td>
+                <td>10/17</td>
+                <td>10/17</td>
+                <td>12/17</td>
+                <td>45 s → 126 s</td>
+                <td>1 → 0</td>
+            </tr>
+            <tr>
+                <td>llama3.2:1b</td>
+                <td>11/17</td>
+                <td>3/17</td>
+                <td>8/17</td>
+                <td>44 s → 34 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>qwen2.5:1.5b</td>
+                <td>11/17</td>
+                <td>11/17</td>
+                <td>9/13 (su 13 check disponibili)</td>
+                <td>27 s → 91 s</td>
+                <td>2 → 2</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="note">
+        Token totali per modello: su phi3 e llama3.2:1b la run 20261019_3 ne usa
+        circa 3 volte di più della baseline (≈34k contro ≈11k); su llama3.2:3b
+        ne usa circa il 27% in meno; qwen2.5:1.5b non è confrontabile (3/5 ok).
+        Variazioni così ampie non sono spiegate dai dati disponibili: verificare
+        il percorso di prompt introdotto dal middleware.
+    </p>
+
+    <h3>Cosa non si può attribuire</h3>
+    <p>
+        Le tre variazioni (Laya su CPU, middleware nuovo, cooldown) sono
+        avvenute insieme: i delta sopra sono effetti combinati. Il cooldown tra
+        le run non dovrebbe incidere sul tempo di ogni singola chiamata
+        (inferenza, non verificata). Il rallentamento più probabile è legato a
+        Laya su CPU, ma va misurato.
+    </p>
+
+    <h3>Prossimi passi</h3>
+    <ol>
+        <li>
+            Run con middleware nuovo e Laya su GPU, stesse condizioni: separa
+            l'effetto CPU dal middleware.
+        </li>
+        <li>
+            Verificare il percorso dei token del middleware su phi3 e
+            llama3.2:1b, dove la differenza è più grande.
+        </li>
+        <li>
+            Rivedere i timeout di <code>qwen2.5:1.5b</code> su
+            <code>estrazione_json</code> e
+            <code>sintesi_traduzione</code> (timeout a 600 s).
+        </li>
+    </ol>
+
+    <p class="note">
+        Limiti: una sola ripetizione per test; la qualità è una rubrica
+        euristica (<code>status: ok</code> non implica risposta corretta); tempi
+        dipendenti dalla macchina e dal carico del momento. Con questi dati non
+        è possibile escludere variazioni casuali tra le run.
+    </p>
+</section>
+
+<div class="cards"><div class="card"><b>20</b><span>Run</span></div><div class="card"><b>4</b><span>Modelli</span></div><div class="card"><b>5</b><span>Test</span></div><div class="card"><b>2</b><span>Non ok (troncate o errore)</span></div><div class="card"><b>107.531</b><span>Token totali</span></div><div class="card"><b>1 h 55 min</b><span>Tempo totale</span></div></div>
+<section><h2>Confronto con 20261017_2</h2><p class="lead">Run abbinate per modello e test. Non abbinate: 0 nel report corrente, 15 nel precedente.</p><div class="cards"><div class="card"><b>44% → 59%</b><span>Score medio, tutte le run</span></div><div class="card"><b>0 → 2</b><span>Run non ok</span></div><div class="card"><b>5 h 10 min → 1 h 55 min</b><span>Tempo totale</span></div><div class="card"><b>20</b><span>Run abbinate</span></div></div></section><section><h2>Il punteggio è migliorato?</h2><figure><figcaption>Due pallini per modello: grigio il benchmark precedente, blu quello attuale. L&#x27;etichetta riporta la variazione in punti percentuali.</figcaption><div id="chart-compare-score"></div></figure></section><section><h2>Dove cambia il punteggio?</h2><figure><figcaption>Ogni cella confronta la stessa coppia modello-test. Blu: più check superati; rosso: meno. Sotto la variazione: check superati prima → adesso.</figcaption><div id="chart-delta-heatmap"></div></figure></section><section><h2>Il tempo è cambiato?</h2><figure><figcaption>Tempo mediano per modello, scala logaritmica. Grigio: precedente; blu: attuale.</figcaption><div id="chart-compare-time"></div></figure></section><section><h2>Run che cambiano</h2><p class="note">12 run invariate non elencate.</p><table><thead><tr><th scope="col">File</th><th scope="col">Modello</th><th scope="col">Test</th><th scope="col">Check superati</th><th scope="col">Variazione</th><th scope="col">Stato</th><th scope="col">Secondi</th></tr></thead><tbody><tr><td>01_ragionamento_logico_llama3.2_1b.json</td><td>llama3.2:1b</td><td>ragionamento_logico</td><td>0/4 → 4/4</td><td>+100 pp</td><td>ok → ok</td><td>30,0 → 33,9</td></tr><tr><td>03_programmazione_llama3.2_1b.json</td><td>llama3.2:1b</td><td>programmazione</td><td>2/6 → 3/6</td><td>+17 pp</td><td>ok → ok</td><td>157,6 → 21,0</td></tr><tr><td>04_estrazione_json_llama3.2_3b.json</td><td>llama3.2:3b</td><td>estrazione_json</td><td>1/2 → 2/2</td><td>+50 pp</td><td>ok → ok</td><td>45,4 → 815,4</td></tr><tr><td>04_estrazione_json_phi3_mini.json</td><td>phi3:mini</td><td>estrazione_json</td><td>0/2 → 2/2</td><td>+100 pp</td><td>ok → ok</td><td>2.703,5 → 1.067,6</td></tr><tr><td>04_estrazione_json_qwen2.5_1.5b.json</td><td>qwen2.5:1.5b</td><td>estrazione_json</td><td>2/2 → 0/0</td><td>n/d</td><td>ok → error</td><td>9,5 → 964,7</td></tr><tr><td>05_sintesi_traduzione_llama3.2_3b.json</td><td>llama3.2:3b</td><td>sintesi_traduzione</td><td>0/2 → 1/2</td><td>+50 pp</td><td>ok → ok</td><td>584,3 → 626,8</td></tr><tr><td>05_sintesi_traduzione_phi3_mini.json</td><td>phi3:mini</td><td>sintesi_traduzione</td><td>0/2 → 1/2</td><td>+50 pp</td><td>ok → ok</td><td>817,2 → 902,9</td></tr><tr><td>05_sintesi_traduzione_qwen2.5_1.5b.json</td><td>qwen2.5:1.5b</td><td>sintesi_traduzione</td><td>0/2 → 0/0</td><td>n/d</td><td>ok → error</td><td>1.978,8 → 735,3</td></tr></tbody></table></section>
+<section>
+  <h2>Quale modello è più accurato?</h2>
+  <figure>
+    <figcaption>Score medio per modello: media dei punteggi dei test, ciascuno con lo stesso peso. Accanto a ogni barra, i check superati sul totale.</figcaption>
+    <div id="chart-score"></div>
+  </figure>
+</section>
+<section>
+  <h2>Dove falliscono i modelli?</h2>
+  <figure>
+    <figcaption>Check superati per run. «truncated» indica una risposta interrotta al limite di generazione: il punteggio si riferisce al testo parziale.</figcaption>
+    <div id="chart-heatmap"></div>
+  </figure>
+</section>
+<section>
+  <h2>Qualità contro tempo</h2>
+  <figure>
+    <figcaption>Un punto per modello: in alto a sinistra = più accurato e più veloce. Tempo mediano per run, scala logaritmica.</figcaption>
+    <div id="chart-scatter"></div>
+  </figure>
+</section>
+<section>
+  <h2>Dettaglio run</h2>
+  <p class="note">Tempi end-to-end della chiamata, incluso il caricamento del modello (timing del runner).</p>
+  <table><thead><tr><th scope="col">File</th><th scope="col">Modello</th><th scope="col">Test</th><th scope="col">Stato</th><th scope="col">Check superati</th><th scope="col">Secondi</th><th scope="col">Token</th><th scope="col">Check non superati</th></tr></thead><tbody><tr><td><a href="01_ragionamento_logico_llama3.2_1b.json">01_ragionamento_logico_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>33,9</td><td>766</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_llama3.2_3b.json">01_ragionamento_logico_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>66,1</td><td>858</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_phi3_mini.json">01_ragionamento_logico_phi3_mini.json</a></td><td>phi3:mini</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>69,8</td><td>797</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_qwen2.5_1.5b.json">01_ragionamento_logico_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>18,4</td><td>522</td><td>—</td></tr><tr><td><a href="02_matematica_llama3.2_1b.json">02_matematica_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>matematica</td><td>ok</td><td>0/3</td><td>28,3</td><td>658</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_llama3.2_3b.json">02_matematica_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>matematica</td><td>ok</td><td>0/3</td><td>54,9</td><td>747</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_phi3_mini.json">02_matematica_phi3_mini.json</a></td><td>phi3:mini</td><td>matematica</td><td>ok</td><td>0/3</td><td>111,6</td><td>1.194</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_qwen2.5_1.5b.json">02_matematica_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>matematica</td><td>ok</td><td>0/3</td><td>28,1</td><td>753</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="03_programmazione_llama3.2_1b.json">03_programmazione_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>programmazione</td><td>ok</td><td>3/6</td><td>21,0</td><td>615</td><td><details><summary>3 non superati</summary><ul><li>CSS e JavaScript inline</li><li>gestione input da tastiera</li><li>nessuna dipendenza o risorsa remota</li></ul></details></td></tr><tr><td><a href="03_programmazione_llama3.2_3b.json">03_programmazione_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>programmazione</td><td>ok</td><td>5/6</td><td>126,5</td><td>1.594</td><td><details><summary>1 non superati</summary><ul><li>gestione input da tastiera</li></ul></details></td></tr><tr><td><a href="03_programmazione_phi3_mini.json">03_programmazione_phi3_mini.json</a></td><td>phi3:mini</td><td>programmazione</td><td>ok</td><td>6/6</td><td>169,2</td><td>1.743</td><td>—</td></tr><tr><td><a href="03_programmazione_qwen2.5_1.5b.json">03_programmazione_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>programmazione</td><td>ok</td><td>5/6</td><td>91,1</td><td>2.151</td><td><details><summary>1 non superati</summary><ul><li>azione per nuova partita</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_llama3.2_1b.json">04_estrazione_json_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>estrazione_json</td><td>ok</td><td>1/2</td><td>729,8</td><td>22.230</td><td><details><summary>1 non superati</summary><ul><li>riferimento all&#x27;Introduzione</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_llama3.2_3b.json">04_estrazione_json_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>estrazione_json</td><td>ok</td><td>2/2</td><td>815,4</td><td>18.795</td><td>—</td></tr><tr><td><a href="04_estrazione_json_phi3_mini.json">04_estrazione_json_phi3_mini.json</a></td><td>phi3:mini</td><td>estrazione_json</td><td>ok</td><td>2/2</td><td>1.067,6</td><td>17.953</td><td>—</td></tr><tr><td><a href="04_estrazione_json_qwen2.5_1.5b.json">04_estrazione_json_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>estrazione_json</td><td>error</td><td>0/0</td><td>964,7</td><td>n/d</td><td>—</td></tr><tr><td><a href="05_sintesi_traduzione_llama3.2_1b.json">05_sintesi_traduzione_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>254,1</td><td>10.400</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_llama3.2_3b.json">05_sintesi_traduzione_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>sintesi_traduzione</td><td>ok</td><td>1/2</td><td>626,8</td><td>13.056</td><td><details><summary>1 non superati</summary><ul><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_phi3_mini.json">05_sintesi_traduzione_phi3_mini.json</a></td><td>phi3:mini</td><td>sintesi_traduzione</td><td>ok</td><td>1/2</td><td>902,9</td><td>12.699</td><td><details><summary>1 non superati</summary><ul><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_qwen2.5_1.5b.json">05_sintesi_traduzione_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>sintesi_traduzione</td><td>error</td><td>0/0</td><td>735,3</td><td>n/d</td><td>—</td></tr></tbody></table>
+</section>
+<script type="application/json" id="bench-data">{"folder": "agg_20261019_3", "generated_at": "2026-10-20T07:42:22+00:00", "summary": {"runs": 20, "models": 4, "tests": 5, "ok": 18, "not_ok": 2, "truncated": 0, "seconds": 6915.3475020000005, "tokens": 107531, "first_started": "2026-10-19T21:25:44.520623+00:00", "last_started": "2026-10-19T23:25:47.415177+00:00"}, "models": [{"model": "phi3:mini", "runs": 5, "score_mean": 0.7, "passed": 13, "total": 17, "seconds_median": 169.242709, "not_ok": 0}, {"model": "llama3.2:3b", "runs": 5, "score_mean": 0.666, "passed": 12, "total": 17, "seconds_median": 126.485471, "not_ok": 0}, {"model": "qwen2.5:1.5b", "runs": 5, "score_mean": 0.61, "passed": 9, "total": 13, "seconds_median": 91.135975, "not_ok": 2}, {"model": "llama3.2:1b", "runs": 5, "score_mean": 0.4, "passed": 8, "total": 17, "seconds_median": 33.909286, "not_ok": 0}], "tests": [{"id": "ragionamento_logico", "label": "ragionamento logico"}, {"id": "matematica", "label": "matematica"}, {"id": "programmazione", "label": "programmazione"}, {"id": "estrazione_json", "label": "estrazione json"}, {"id": "sintesi_traduzione", "label": "sintesi traduzione"}], "runs": [{"file": "01_ragionamento_logico_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 33.909286, "tokens": 766, "started_at": "2026-10-19T23:12:14.471338+00:00"}, {"file": "01_ragionamento_logico_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 66.116294, "tokens": 858, "started_at": "2026-10-19T22:41:04.273723+00:00"}, {"file": "01_ragionamento_logico_phi3_mini.json", "model": "phi3:mini", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 69.806911, "tokens": 797, "started_at": "2026-10-19T21:25:44.520623+00:00"}, {"file": "01_ragionamento_logico_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 18.399777, "tokens": 522, "started_at": "2026-10-19T22:07:26.121546+00:00"}, {"file": "02_matematica_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 28.279615, "tokens": 658, "started_at": "2026-10-19T23:12:48.382414+00:00"}, {"file": "02_matematica_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 54.85403, "tokens": 747, "started_at": "2026-10-19T22:42:10.391829+00:00"}, {"file": "02_matematica_phi3_mini.json", "model": "phi3:mini", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 111.550413, "tokens": 1194, "started_at": "2026-10-19T21:26:54.331377+00:00"}, {"file": "02_matematica_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 28.06399, "tokens": 753, "started_at": "2026-10-19T22:07:44.525052+00:00"}, {"file": "03_programmazione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "programmazione", "status": "ok", "passed": 3, "total": 6, "score": 0.5, "failed_checks": ["CSS e JavaScript inline", "gestione input da tastiera", "nessuna dipendenza o risorsa remota"], "seconds": 20.953104, "tokens": 615, "started_at": "2026-10-19T23:13:16.663658+00:00"}, {"file": "03_programmazione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "programmazione", "status": "ok", "passed": 5, "total": 6, "score": 0.83, "failed_checks": ["gestione input da tastiera"], "seconds": 126.485471, "tokens": 1594, "started_at": "2026-10-19T22:43:05.247547+00:00"}, {"file": "03_programmazione_phi3_mini.json", "model": "phi3:mini", "test_id": "programmazione", "status": "ok", "passed": 6, "total": 6, "score": 1.0, "failed_checks": [], "seconds": 169.242709, "tokens": 1743, "started_at": "2026-10-19T21:28:45.883560+00:00"}, {"file": "03_programmazione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "programmazione", "status": "ok", "passed": 5, "total": 6, "score": 0.83, "failed_checks": ["azione per nuova partita"], "seconds": 91.135975, "tokens": 2151, "started_at": "2026-10-19T22:08:12.590792+00:00"}, {"file": "04_estrazione_json_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "estrazione_json", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["riferimento all'Introduzione"], "seconds": 729.793433, "tokens": 22230, "started_at": "2026-10-19T23:13:37.618868+00:00"}, {"file": "04_estrazione_json_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "estrazione_json", "status": "ok", "passed": 2, "total": 2, "score": 1.0, "failed_checks": [], "seconds": 815.430909, "tokens": 18795, "started_at": "2026-10-19T22:45:11.738008+00:00"}, {"file": "04_estrazione_json_phi3_mini.json", "model": "phi3:mini", "test_id": "estrazione_json", "status": "ok", "passed": 2, "total": 2, "score": 1.0, "failed_checks": [], "seconds": 1067.578719, "tokens": 17953, "started_at": "2026-10-19T21:31:35.128515+00:00"}, {"file": "04_estrazione_json_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "estrazione_json", "status": "error", "passed": 0, "total": 0, "score": null, "failed_checks": [], "seconds": 964.740109, "tokens": null, "started_at": "2026-10-19T22:09:43.729318+00:00"}, {"file": "05_sintesi_traduzione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 254.081937, "tokens": 10400, "started_at": "2026-10-19T23:25:47.415177+00:00"}, {"file": "05_sintesi_traduzione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["lunghezza minima della traduzione"], "seconds": 626.777244, "tokens": 13056, "started_at": "2026-10-19T22:58:47.171899+00:00"}, {"file": "05_sintesi_traduzione_phi3_mini.json", "model": "phi3:mini", "test_id": "sintesi_traduzione", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["lunghezza minima della traduzione"], "seconds": 902.863717, "tokens": 12699, "started_at": "2026-10-19T21:49:22.710674+00:00"}, {"file": "05_sintesi_traduzione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "sintesi_traduzione", "status": "error", "passed": 0, "total": 0, "score": null, "failed_checks": [], "seconds": 735.283859, "tokens": null, "started_at": "2026-10-19T22:25:48.474037+00:00"}], "comparison": {"baseline": "20261017_2", "summary": {"runs_prev": 35, "runs_curr": 20, "score_prev": 0.4377142857142857, "score_curr": 0.5922222222222222, "not_ok_prev": 0, "not_ok_curr": 2, "seconds_prev": 18625.339018, "seconds_curr": 6915.3475020000005}, "models": [{"model": "phi3:mini", "score_prev": 0.4, "score_curr": 0.7, "seconds_prev": 474.962052, "seconds_curr": 169.242709}, {"model": "llama3.2:3b", "score_prev": 0.466, "score_curr": 0.666, "seconds_prev": 144.715586, "seconds_curr": 126.485471}, {"model": "qwen2.5:1.5b", "score_prev": 0.5660000000000001, "score_curr": 0.61, "seconds_prev": 40.520284, "seconds_curr": 91.135975}, {"model": "llama3.2:1b", "score_prev": 0.166, "score_curr": 0.4, "seconds_prev": 84.23727, "seconds_curr": 33.909286}], "pairs": [{"file": "01_ragionamento_logico_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "ragionamento_logico", "prev_passed": 0, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 1.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 29.971515, "curr_seconds": 33.909286}, {"file": "01_ragionamento_logico_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 131.057499, "curr_seconds": 66.116294}, {"file": "01_ragionamento_logico_phi3_mini.json", "model": "phi3:mini", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 413.004987, "curr_seconds": 69.806911}, {"file": "01_ragionamento_logico_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 37.994348, "curr_seconds": 18.399777}, {"file": "02_matematica_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 60.542322, "curr_seconds": 28.279615}, {"file": "02_matematica_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 144.715586, "curr_seconds": 54.85403}, {"file": "02_matematica_phi3_mini.json", "model": "phi3:mini", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 474.962052, "curr_seconds": 111.550413}, {"file": "02_matematica_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 40.520284, "curr_seconds": 28.06399}, {"file": "03_programmazione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "programmazione", "prev_passed": 2, "prev_total": 6, "curr_passed": 3, "curr_total": 6, "delta": 0.16999999999999998, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 157.632339, "curr_seconds": 20.953104}, {"file": "03_programmazione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "programmazione", "prev_passed": 5, "prev_total": 6, "curr_passed": 5, "curr_total": 6, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 562.537692, "curr_seconds": 126.485471}, {"file": "03_programmazione_phi3_mini.json", "model": "phi3:mini", "test_id": "programmazione", "prev_passed": 6, "prev_total": 6, "curr_passed": 6, "curr_total": 6, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 386.920812, "curr_seconds": 169.242709}, {"file": "03_programmazione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "programmazione", "prev_passed": 5, "prev_total": 6, "curr_passed": 5, "curr_total": 6, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 1901.90466, "curr_seconds": 91.135975}, {"file": "04_estrazione_json_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 84.23727, "curr_seconds": 729.793433}, {"file": "04_estrazione_json_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 2, "curr_total": 2, "delta": 0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 45.395236, "curr_seconds": 815.430909}, {"file": "04_estrazione_json_phi3_mini.json", "model": "phi3:mini", "test_id": "estrazione_json", "prev_passed": 0, "prev_total": 2, "curr_passed": 2, "curr_total": 2, "delta": 1.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 2703.456199, "curr_seconds": 1067.578719}, {"file": "04_estrazione_json_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "estrazione_json", "prev_passed": 2, "prev_total": 2, "curr_passed": 0, "curr_total": 0, "delta": null, "prev_status": "ok", "curr_status": "error", "prev_seconds": 9.484264, "curr_seconds": 964.740109}, {"file": "05_sintesi_traduzione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "sintesi_traduzione", "prev_passed": 0, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 119.979068, "curr_seconds": 254.081937}, {"file": "05_sintesi_traduzione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "sintesi_traduzione", "prev_passed": 0, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 584.347238, "curr_seconds": 626.777244}, {"file": "05_sintesi_traduzione_phi3_mini.json", "model": "phi3:mini", "test_id": "sintesi_traduzione", "prev_passed": 0, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 817.248335, "curr_seconds": 902.863717}, {"file": "05_sintesi_traduzione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "sintesi_traduzione", "prev_passed": 0, "prev_total": 2, "curr_passed": 0, "curr_total": 0, "delta": null, "prev_status": "ok", "curr_status": "error", "prev_seconds": 1978.762141, "curr_seconds": 735.283859}], "unmatched_current": 0, "unmatched_previous": 15}}</script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const DATA = JSON.parse(document.getElementById('bench-data').textContent);
+const IT = d3.formatLocale({decimal: ',', thousands: '.', grouping: [3], currency: ['', ''], percent: '%'});
+const pct = d => IT.format('.0%')(d);
+const secs = s => IT.format(',.1f')(s) + ' s';
+const ACCENT = '#2f6fb0';
+const GRID = '#d9e2ec';
+const INK = '#1f2933';
+
+function svgFor(id, width, height, label) {
+  return d3.select('#' + id).append('svg')
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('role', 'img')
+    .attr('aria-label', label);
+}
+
+function contrastText(bg) {
+  const lum = c => {
+    const v = d3.rgb(c);
+    const f = x => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(v.r) + 0.7152 * f(v.g) + 0.0722 * f(v.b);
+  };
+  const L = lum(bg);
+  const white = 1.05 / (L + 0.05);
+  const ink = (L + 0.05) / (lum(INK) + 0.05);
+  return white >= ink ? '#ffffff' : INK;
+}
+
+function chartScore() {
+  const rows = DATA.models.filter(d => d.score_mean !== null);
+  const W = 760, rowH = 36, m = {top: 8, right: 170, bottom: 34, left: 170};
+  const ih = rows.length * rowH, iw = W - m.left - m.right;
+  const svg = svgFor('chart-score', W, ih + m.top + m.bottom, 'Barre: score medio per modello');
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+  const x = d3.scaleLinear().domain([0, 1]).range([0, iw]);
+  const y = d3.scaleBand().domain(rows.map(d => d.model)).range([0, ih]).padding(0.28);
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(pct).tickSize(-ih))
+    .call(a => { a.select('.domain').remove(); a.selectAll('.tick line').attr('stroke', GRID); });
+  g.append('g').call(d3.axisLeft(y).tickSize(0)).call(a => a.select('.domain').remove());
+
+  g.selectAll('rect.bar').data(rows).join('rect')
+    .attr('class', 'bar')
+    .attr('x', 0)
+    .attr('y', d => y(d.model))
+    .attr('width', d => x(d.score_mean))
+    .attr('height', y.bandwidth())
+    .attr('fill', ACCENT)
+    .append('title')
+    .text(d => `${d.model}: ${pct(d.score_mean)} (${d.passed}/${d.total} check), tempo mediano ${secs(d.seconds_median)}`);
+
+  g.selectAll('text.value').data(rows).join('text')
+    .attr('x', d => x(d.score_mean) + 6)
+    .attr('y', d => y(d.model) + y.bandwidth() / 2)
+    .attr('dominant-baseline', 'middle')
+    .text(d => `${pct(d.score_mean)} · ${d.passed}/${d.total} check`);
+}
+
+function chartHeatmap() {
+  const models = DATA.models.map(d => d.model);
+  const tests = DATA.tests;
+  const runs = new Map(DATA.runs.map(r => [r.model + '|' + r.test_id, r]));
+  const cw = 128, ch = 50, left = 150, top = 52, legendH = 90;
+  const W = left + tests.length * cw + 12, H = top + models.length * ch + legendH;
+  const svg = svgFor('chart-heatmap', W, H, 'Mappa di calore: check superati per modello e test');
+  const color = d3.scaleSequential(d3.interpolateViridis).domain([0, 1]);
+
+  svg.selectAll('text.col').data(tests).join('text')
+    .attr('x', (d, j) => left + j * cw + cw / 2)
+    .attr('y', top - 14)
+    .attr('text-anchor', 'middle')
+    .text(d => d.label);
+
+  svg.selectAll('text.row').data(models).join('text')
+    .attr('x', left - 10)
+    .attr('y', (d, i) => top + i * ch + ch / 2)
+    .attr('text-anchor', 'end')
+    .attr('dominant-baseline', 'middle')
+    .text(d => d);
+
+  const cells = models.flatMap((model, i) => tests.map((t, j) => ({
+    model, i, j, test: t.label, run: runs.get(model + '|' + t.id),
+  })));
+  const cell = svg.selectAll('g.cell').data(cells).join('g')
+    .attr('class', 'cell')
+    .attr('transform', d => `translate(${left + d.j * cw},${top + d.i * ch})`);
+
+  const fill = d => (d.run && d.run.score !== null) ? color(d.run.score) : '#e4e7eb';
+  cell.append('rect')
+    .attr('x', 2).attr('y', 2).attr('width', cw - 4).attr('height', ch - 4).attr('rx', 4)
+    .attr('fill', fill);
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 - 3).attr('text-anchor', 'middle')
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => d.run ? `${d.run.passed}/${d.run.total}` : 'n/d');
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 + 12).attr('text-anchor', 'middle').attr('font-size', 11)
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => d.run && d.run.status !== 'ok' ? d.run.status : '');
+  cell.append('title')
+    .text(d => d.run ? `${d.model} · ${d.test}: ${d.run.passed}/${d.run.total} check, ${secs(d.run.seconds)}, ${d.run.status}` : `${d.model} · ${d.test}: nessun dato`);
+
+  const grad = svg.append('defs').append('linearGradient').attr('id', 'heat-grad');
+  d3.range(0, 1.0001, 0.1).forEach(t => grad.append('stop')
+    .attr('offset', `${t * 100}%`).attr('stop-color', d3.interpolateViridis(t)));
+  const lx = left, lw = 260, ly = H - legendH + 30;
+  svg.append('rect').attr('x', lx).attr('y', ly).attr('width', lw).attr('height', 12)
+    .attr('fill', 'url(#heat-grad)');
+  [0, 0.5, 1].forEach(t => svg.append('text')
+    .attr('x', lx + t * lw).attr('y', ly + 28).attr('text-anchor', t === 0 ? 'start' : t === 1 ? 'end' : 'middle')
+    .text(pct(t)));
+  svg.append('text').attr('x', lx + lw + 12).attr('y', ly + 11).attr('dominant-baseline', 'middle')
+    .text('quota di check superati');
+  if (cells.some(c => !c.run)) {
+    svg.append('text').attr('x', lx).attr('y', ly - 10).attr('fill', INK)
+      .text('Grigio: nessun dato');
+  }
+}
+
+function chartScatter() {
+  const pts = DATA.models.filter(d => d.score_mean !== null);
+  const W = 760, H = 420, m = {top: 16, right: 36, bottom: 56, left: 64};
+  const iw = W - m.left - m.right, ih = H - m.top - m.bottom;
+  const svg = svgFor('chart-scatter', W, H, 'Dispersione: score medio contro tempo mediano per modello');
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+
+  const seconds = DATA.runs.map(r => r.seconds).filter(s => s > 0);
+  const lo = Math.pow(10, Math.floor(Math.log10(Math.min(...seconds))));
+  const hi = Math.pow(10, Math.ceil(Math.log10(Math.max(...seconds))));
+  const x = d3.scaleLog().domain([lo, hi]).range([0, iw]);
+  const y = d3.scaleLinear().domain([0, 1]).range([ih, 0]);
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).tickValues([10, 100, 1000, 10000].filter(v => v >= lo && v <= hi)).tickFormat(IT.format(',.0f')))
+    .call(a => a.select('.domain').attr('stroke', INK));
+  g.append('g')
+    .call(d3.axisLeft(y).ticks(5).tickFormat(pct).tickSize(-iw))
+    .call(a => { a.select('.domain').remove(); a.selectAll('.tick line').attr('stroke', GRID); });
+
+  g.append('text').attr('x', iw / 2).attr('y', ih + 44).attr('text-anchor', 'middle')
+    .attr('fill', '#52606d').text('Tempo mediano per run (secondi, scala logaritmica)');
+  g.append('text').attr('transform', 'rotate(-90)').attr('x', -ih / 2).attr('y', -46)
+    .attr('text-anchor', 'middle').attr('fill', '#52606d').text('Score medio');
+
+  const points = pts.map(d => ({d, px: x(d.seconds_median), py: y(d.score_mean)}))
+    .sort((a, b) => a.px - b.px);
+  const obstacles = points.map(p => ({x0: p.px - 7, x1: p.px + 7, y0: p.py - 7, y1: p.py + 7}));
+  const overlaps = (a, b) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+  const labels = points.map(p => {
+    const w = p.d.model.length * 7.2;
+    const lx = p.px + 9;
+    const boxAt = ly => ({x0: lx, x1: lx + w, y0: ly - 10, y1: ly + 3});
+    const ly = [p.py + 4, p.py + 18, p.py - 10, p.py + 32, p.py - 24]
+      .find(v => obstacles.every(o => !overlaps(boxAt(v), o))) ?? p.py + 4;
+    obstacles.push(boxAt(ly));
+    return {...p, w, lx, ly};
+  });
+
+  g.selectAll('line.leader').data(labels.filter(l => l.ly !== l.py + 4)).join('line')
+    .attr('x1', l => l.px).attr('y1', l => l.py).attr('x2', l => l.lx - 3).attr('y2', l => l.ly - 4)
+    .attr('stroke', '#52606d').attr('stroke-width', 0.8);
+
+  const point = g.selectAll('g.point').data(points).join('g')
+    .attr('class', 'point')
+    .attr('transform', p => `translate(${p.px},${p.py})`);
+  point.append('circle').attr('r', 6).attr('fill', ACCENT).attr('stroke', '#ffffff').attr('stroke-width', 1.5);
+  point.append('title')
+    .text(p => `${p.d.model}: ${pct(p.d.score_mean)}, tempo mediano ${secs(p.d.seconds_median)}, ${p.d.not_ok} non ok`);
+
+  g.selectAll('text.point-label').data(labels).join('text')
+    .attr('class', 'point-label')
+    .attr('x', l => l.lx).attr('y', l => l.ly)
+    .text(l => l.d.model);
+}
+
+const PREV = '#9aa5b1';
+
+function signedPp(v) {
+  if (v === null) return 'n/d';
+  const pts = Math.round(v * 100);
+  if (pts === 0) return '±0 pp';
+  return (pts > 0 ? '+' : '−') + Math.abs(pts) + ' pp';
+}
+
+function compareLegend(svg, x0, y0) {
+  [['precedente', PREV], ['attuale', ACCENT]].forEach(([label, color], i) => {
+    const gx = x0 + i * 130;
+    svg.append('circle').attr('cx', gx).attr('cy', y0).attr('r', 6).attr('fill', color);
+    svg.append('text').attr('x', gx + 12).attr('y', y0).attr('dominant-baseline', 'middle').text(label);
+  });
+}
+
+function chartCompareScore() {
+  const rows = DATA.comparison.models.filter(d => d.score_prev !== null && d.score_curr !== null);
+  const W = 760, rowH = 40, m = {top: 34, right: 190, bottom: 34, left: 170};
+  const ih = rows.length * rowH, iw = W - m.left - m.right;
+  const svg = svgFor('chart-compare-score', W, ih + m.top + m.bottom, 'Confronto: score medio per modello, precedente e attuale');
+  compareLegend(svg, m.left, 14);
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+  const x = d3.scaleLinear().domain([0, 1]).range([0, iw]);
+  const y = d3.scaleBand().domain(rows.map(d => d.model)).range([0, ih]).padding(0.35);
+  const cy = d => y(d.model) + y.bandwidth() / 2;
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(pct).tickSize(-ih))
+    .call(a => { a.select('.domain').remove(); a.selectAll('.tick line').attr('stroke', GRID); });
+  g.append('g').call(d3.axisLeft(y).tickSize(0)).call(a => a.select('.domain').remove());
+
+  g.selectAll('line.link').data(rows).join('line')
+    .attr('x1', d => x(d.score_prev)).attr('x2', d => x(d.score_curr))
+    .attr('y1', cy).attr('y2', cy).attr('stroke', '#b8c2cc').attr('stroke-width', 3);
+  g.selectAll('circle.prev').data(rows).join('circle')
+    .attr('cx', d => x(d.score_prev)).attr('cy', cy).attr('r', 6).attr('fill', PREV);
+  g.selectAll('circle.curr').data(rows).join('circle')
+    .attr('cx', d => x(d.score_curr)).attr('cy', cy).attr('r', 6).attr('fill', ACCENT);
+  g.selectAll('text.delta').data(rows).join('text')
+    .attr('x', iw + 12).attr('y', cy).attr('dominant-baseline', 'middle')
+    .text(d => `${pct(d.score_prev)} → ${pct(d.score_curr)} · ${signedPp(d.score_curr - d.score_prev)}`);
+}
+
+function chartCompareTime() {
+  const rows = DATA.comparison.models;
+  const all = rows.flatMap(d => [d.seconds_prev, d.seconds_curr]).filter(s => s > 0);
+  const W = 760, rowH = 40, m = {top: 34, right: 190, bottom: 56, left: 170};
+  const ih = rows.length * rowH, iw = W - m.left - m.right;
+  const svg = svgFor('chart-compare-time', W, ih + m.top + m.bottom, 'Confronto: tempo mediano per modello, precedente e attuale');
+  compareLegend(svg, m.left, 14);
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+  const lo = Math.pow(10, Math.floor(Math.log10(Math.min(...all))));
+  const hi = Math.pow(10, Math.ceil(Math.log10(Math.max(...all))));
+  const x = d3.scaleLog().domain([lo, hi]).range([0, iw]);
+  const y = d3.scaleBand().domain(rows.map(d => d.model)).range([0, ih]).padding(0.35);
+  const cy = d => y(d.model) + y.bandwidth() / 2;
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).tickValues([10, 100, 1000, 10000].filter(v => v >= lo && v <= hi)).tickFormat(IT.format(',.0f')))
+    .call(a => a.select('.domain').attr('stroke', INK));
+  g.append('g').call(d3.axisLeft(y).tickSize(0)).call(a => a.select('.domain').remove());
+  g.append('text').attr('x', iw / 2).attr('y', ih + 44).attr('text-anchor', 'middle')
+    .attr('fill', '#52606d').text('Tempo mediano per run (secondi, scala logaritmica)');
+
+  g.selectAll('line.link').data(rows).join('line')
+    .attr('x1', d => x(d.seconds_prev)).attr('x2', d => x(d.seconds_curr))
+    .attr('y1', cy).attr('y2', cy).attr('stroke', '#b8c2cc').attr('stroke-width', 3);
+  g.selectAll('circle.prev').data(rows).join('circle')
+    .attr('cx', d => x(d.seconds_prev)).attr('cy', cy).attr('r', 6).attr('fill', PREV);
+  g.selectAll('circle.curr').data(rows).join('circle')
+    .attr('cx', d => x(d.seconds_curr)).attr('cy', cy).attr('r', 6).attr('fill', ACCENT);
+  g.selectAll('text.delta').data(rows).join('text')
+    .attr('x', iw + 12).attr('y', cy).attr('dominant-baseline', 'middle')
+    .text(d => `${secs(d.seconds_prev)} → ${secs(d.seconds_curr)}`);
+}
+
+function chartDeltaHeatmap() {
+  const models = DATA.comparison.models.map(d => d.model);
+  const tests = DATA.tests;
+  const pairs = new Map(DATA.comparison.pairs.map(p => [p.model + '|' + p.test_id, p]));
+  const cw = 128, ch = 50, left = 150, top = 52, legendH = 90;
+  const W = left + tests.length * cw + 12, H = top + models.length * ch + legendH;
+  const svg = svgFor('chart-delta-heatmap', W, H, 'Mappa di calore: variazione del punteggio per modello e test');
+  const color = d3.scaleDiverging(d3.interpolateRdBu).domain([-1, 0, 1]);
+
+  svg.selectAll('text.col').data(tests).join('text')
+    .attr('x', (d, j) => left + j * cw + cw / 2)
+    .attr('y', top - 14)
+    .attr('text-anchor', 'middle')
+    .text(d => d.label);
+  svg.selectAll('text.row').data(models).join('text')
+    .attr('x', left - 10)
+    .attr('y', (d, i) => top + i * ch + ch / 2)
+    .attr('text-anchor', 'end')
+    .attr('dominant-baseline', 'middle')
+    .text(d => d);
+
+  const cells = models.flatMap((model, i) => tests.map((t, j) => ({
+    model, i, j, test: t.label, pair: pairs.get(model + '|' + t.id),
+  })));
+  const cell = svg.selectAll('g.cell').data(cells).join('g')
+    .attr('class', 'cell')
+    .attr('transform', d => `translate(${left + d.j * cw},${top + d.i * ch})`);
+
+  const hasDelta = d => d.pair && d.pair.delta !== null;
+  const fill = d => hasDelta(d) ? color(d.pair.delta) : '#e4e7eb';
+  cell.append('rect')
+    .attr('x', 2).attr('y', 2).attr('width', cw - 4).attr('height', ch - 4).attr('rx', 4)
+    .attr('fill', fill);
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 - 3).attr('text-anchor', 'middle')
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => hasDelta(d) ? signedPp(d.pair.delta) : 'n/d');
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 + 12).attr('text-anchor', 'middle').attr('font-size', 11)
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => d.pair ? `${d.pair.prev_passed}/${d.pair.prev_total} → ${d.pair.curr_passed}/${d.pair.curr_total}` : '');
+  cell.append('title')
+    .text(d => d.pair
+      ? `${d.model} · ${d.test}: ${d.pair.prev_passed}/${d.pair.prev_total} → ${d.pair.curr_passed}/${d.pair.curr_total} check, ${d.pair.prev_status} → ${d.pair.curr_status}`
+      : `${d.model} · ${d.test}: nessun dato`);
+
+  const grad = svg.append('defs').append('linearGradient').attr('id', 'delta-grad');
+  d3.range(0, 1.0001, 0.1).forEach(t => grad.append('stop')
+    .attr('offset', `${t * 100}%`).attr('stop-color', d3.interpolateRdBu(t)));
+  const lx = left, lw = 260, ly = H - legendH + 30;
+  svg.append('rect').attr('x', lx).attr('y', ly).attr('width', lw).attr('height', 12)
+    .attr('fill', 'url(#delta-grad)');
+  [['−100 pp', 0, 'start'], ['±0', 0.5, 'middle'], ['+100 pp', 1, 'end']].forEach(([label, t, anchor]) => svg.append('text')
+    .attr('x', lx + t * lw).attr('y', ly + 28).attr('text-anchor', anchor).text(label));
+  svg.append('text').attr('x', lx + lw + 12).attr('y', ly + 11).attr('dominant-baseline', 'middle')
+    .text('rosso: peggio · blu: meglio');
+  if (cells.some(c => !c.pair)) {
+    svg.append('text').attr('x', lx).attr('y', ly - 10).attr('fill', INK)
+      .text('Grigio: nessun dato');
+  }
+}
+
+chartScore();
+chartHeatmap();
+chartScatter();
+if (DATA.comparison) {
+  chartCompareScore();
+  chartDeltaHeatmap();
+  chartCompareTime();
+}
+</script>
+</body>
+</html>

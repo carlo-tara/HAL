@@ -1,0 +1,132 @@
+{
+  "prompts": [
+    {
+      "id": "ragionamento_logico",
+      "prompt": "Tre scatole sono etichettate Mele, Arance e Miste. Tutte le etichette sono sbagliate. Puoi estrarre un solo frutto da una sola scatola senza guardarne il contenuto. Spiega quale scatola scegli e come determini il contenuto di tutte e tre.",
+      "quality": [
+        {
+          "label": "menziona la scatola Miste",
+          "type": "contains_any",
+          "values": ["Miste"]
+        },
+        {
+          "label": "menziona Mele",
+          "type": "contains_any",
+          "values": ["Mele"]
+        },
+        {
+          "label": "menziona Arance",
+          "type": "contains_any",
+          "values": ["Arance"]
+        },
+        {
+          "label": "risposta argomentata",
+          "type": "min_chars",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "id": "matematica",
+      "prompt": "Un negozio acquista 120 articoli a 18 euro ciascuno. Ne vende 90 con un ricarico del 35% sul costo. I 30 articoli restanti sono venduti con uno sconto del 20% sul prezzo unitario applicato ai primi 90. Calcola ricavo totale, utile e margine percentuale sul ricavo. Mostra i passaggi e arrotonda i risultati monetari a due decimali.",
+      "quality": [
+        {
+          "label": "ricavo totale 2.770,20",
+          "type": "contains_any",
+          "values": ["2770,20", "2770.20", "2.770,20", "2,770.20"]
+        },
+        {
+          "label": "utile 610,20",
+          "type": "contains_any",
+          "values": ["610,20", "610.20"]
+        },
+        {
+          "label": "margine 22,03%",
+          "type": "contains_any",
+          "values": ["22,03", "22.03"]
+        }
+      ]
+    },
+    {
+      "id": "programmazione",
+      "prompt": "Scrivi un unico file HTML stand-alone che contenga un semplice gioco di Sudoku realizzato con HTML5, CSS e JavaScript vanilla. Il file deve essere completamente autonomo: CSS e JavaScript inline nello stesso file, nessuna dipendenza esterna, nessun CDN, nessuna richiesta di rete e nessun import di moduli, così da poter essere aperto direttamente nel browser con doppio clic (protocollo file://). Il gioco deve generare una griglia 9x9 con una soluzione valida e alcune celle precompilate, permettere di selezionare una cella e inserire cifre da 1 a 9 (anche da tastiera), cancellare il valore, evidenziare gli errori e mostrare un messaggio al completamento. Includi un pulsante per ricominciare con una nuova partita. Non usare localStorage, sessionStorage, cookie o altri meccanismi di salvataggio. Restituisci solo il codice del file HTML completo, senza spiegazioni.",
+      "quality": [
+        {
+          "label": "documento HTML completo",
+          "type": "html"
+        },
+        {
+          "label": "CSS e JavaScript inline",
+          "type": "contains_any",
+          "values": ["<style"]
+        },
+        {
+          "label": "gestione input da tastiera",
+          "type": "contains_any",
+          "values": ["keydown", "keyup", "keypress"]
+        },
+        {
+          "label": "azione per nuova partita",
+          "type": "contains_any",
+          "values": [
+            "nuova partita",
+            "ricomincia",
+            "nuovo gioco",
+            "new game",
+            "restart"
+          ]
+        },
+        {
+          "label": "nessun salvataggio persistente",
+          "type": "absent",
+          "values": ["localStorage", "sessionStorage", "document.cookie"]
+        },
+        {
+          "label": "nessuna dipendenza o risorsa remota",
+          "type": "absent",
+          "values": ["http://", "https://", "<script src", "<link "]
+        }
+      ]
+    },
+    {
+      "id": "estrazione_json",
+      "prompt": "Dalle prime 10 pagine del libro riportato sopra estrai il contenuto dei singoli capitoli e, per ogni capitolo, genera un riassunto sintetico. Presenta i risultati in formato JSON.",
+      "source": "docs/Pensieri_lenti_e_veloci.epub",
+      "arguments": {
+        "numero_pagine": 10
+      },
+      "quality": [
+        {
+          "label": "risposta in formato JSON",
+          "type": "json"
+        },
+        {
+          "label": "riferimento all'Introduzione",
+          "type": "contains_any",
+          "values": ["Introduzione"]
+        }
+      ]
+    },
+    {
+      "id": "sintesi_traduzione",
+      "prompt": "Traduci in spagnolo le prime 5 pagine del libro riportato sopra, mantenendo fedeltà al testo originale e la struttura dei paragrafi.",
+      "source": "docs/Pensieri_lenti_e_veloci.epub",
+      "arguments": {
+        "numero_pagine": 5,
+        "lingua_destinazione": "spagnolo"
+      },
+      "quality": [
+        {
+          "label": "presenza di lessico spagnolo",
+          "type": "contains_any",
+          "values": ["también", "porque", "pero"]
+        },
+        {
+          "label": "lunghezza minima della traduzione",
+          "type": "min_chars",
+          "value": 7500
+        }
+      ]
+    }
+  ]
+}

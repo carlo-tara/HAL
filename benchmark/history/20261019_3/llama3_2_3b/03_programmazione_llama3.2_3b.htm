@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sudoku</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        #grid {
+            border: 1px solid black;
+            display: grid;
+            grid-template-columns: repeat(9, 40px);
+            grid-template-rows: repeat(9, 40px);
+            gap: 1px;
+        }
+        
+        .cell {
+            background-color: #ccc;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cell input {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+        
+        .error {
+            background-color: red;
+        }
+        
+        #button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="button">Ricominciare</button>
+    <div id="grid"></div>
+
+    <script>
+        // Funzione per generare una soluzione valida
+        function generateSolution() {
+            let solution = [];
+            for (let i = 0; i < 9; i++) {
+                let row = [];
+                for (let j = 0; j < 9; j++) {
+                    row.push((i * 9 + j + Math.random() * 10) % 9 + 1);
+                }
+                solution.push(row);
+            }
+            return solution;
+        }
+
+        // Funzione per validare la soluzione
+        function isValidSolution(solution) {
+            for (let i = 0; i < 9; i++) {
+                let row = new Set();
+                let col = new Set();
+                for (let j = 0; j < 9; j++) {
+                    if (solution[i][j] !== 0) {
+                        if (row.has(solution[i][j]) || col.has(solution[i][j])) {
+                            return false;
+                        }
+                        row.add(solution[i][j]);
+                        col.add(solution[i][j]);
+                    }
+                }
+            }
+            for (let i = 0; i < 9; i++) {
+                let box = new Set();
+                for (let j = 0; j < 9; j++) {
+                    if (solution[i][j] !== 0) {
+                        if (box.has(solution[i][j])) {
+                            return false;
+                        }
+                        box.add(solution[i][j]);
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Funzione per generare la griglia
+        function generateGrid(solution) {
+            let grid = document.getElementById("grid");
+            for (let i = 0; i < 9; i++) {
+                let row = document.createElement("div");
+                row.className = "cell";
+                for (let j = 0; j < 9; j++) {
+                    let cell = document.createElement("div");
+                    cell.className = "cell";
+                    let input = document.createElement("input");
+                    input.type = "number";
+                    input.min = 1;
+                    input.max = 9;
+                    input.value = solution[i][j] === 0 ? "" : solution[i][j];
+                    input.onchange = function() {
+                        updateSolution(this);
+                    }
+                    cell.appendChild(input);
+                    row.appendChild(cell);
+                }
+                grid.appendChild(row);
+            }
+        }
+
+        // Funzione per aggiornare la soluzione
+        function updateSolution(cell) {
+            let solution = getSolution();
+            let value = parseInt(cell.value);
+            if (value === 0) {
+                cell.value = "";
+            } else if (value === undefined) {
+                return;
+            } else {
+                solution[parseInt(cell.parentNode.parentNode.dataset.row)][parseInt(cell.parentNode.dataset.col)] = value;
+                cell.value = value;
+                if (!isValidSolution(solution)) {
+                    for (let i = 0; i < 9; i++) {
+                        for (let j = 0; j < 9; j++) {
+                            let cell = document.querySelector(`.cell.dataset.row=${i}.dataset.col=${j} input`);
+                            if (cell.value !== solution[i][j]) {
+                                cell.style.background = "red";
+                                cell.value = "";
+                                break;
+                            } else {
+                                cell.style.background = "";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Funzione per ottenere la soluzione attuale
+        function getSolution() {
+            let solution = generateSolution();
+            let grid = document.getElementById("grid");
+            let inputValues = new Array(81).fill(undefined);
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    let cell = grid.children[i * 9 + j].children[j].children[0];
+                    inputValues[i * 9 + j] = parseInt(cell.value);
+                }
+            }
+            for (let i = 0; i < 81; i++) {
+                if (inputValues[i] !== undefined) {
+                    solution[i / 9][i % 9] = inputValues[i];
+                }
+            }
+            return solution;
+        }
+
+        // Funzione per generare una nuova soluzione
+        function newSolution() {
+            let solution = generateSolution();
+            document.getElementById("button").textContent = "Ricominciare";
+            document.getElementById("button").disabled = false;
+            document.getElementById("grid").innerHTML = "";
+            generateGrid(solution);
+            document.getElementById("button").textContent = "Ricominciare";
+            document.getElementById("button").disabled = true;
+        }
+
+        // Evento per il pulsante di ricominciare
+        document.getElementById("button").addEventListener("click", newSolution);
+
+        // Funzione per generare la griglia con una soluzione valida
+        newSolution();
+    </script>
+</body>
+</html>

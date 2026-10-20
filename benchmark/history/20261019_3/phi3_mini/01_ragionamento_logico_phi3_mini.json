@@ -1,0 +1,85 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-19T21:25:44.520623+00:00",
+  "quality": {
+    "passed": 4,
+    "total": 4,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "menziona la scatola Miste",
+        "passed": true
+      },
+      {
+        "label": "menziona Mele",
+        "passed": true
+      },
+      {
+        "label": "menziona Arance",
+        "passed": true
+      },
+      {
+        "label": "risposta argomentata",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 199,
+    "output": 598,
+    "reasoning": null,
+    "total": 797
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per risolvere questo rompicapo, nota che se una scatola è etichettata in modo errato, l'etichetta corretta deve essere l'una delle altre due scatole. Supponiamo di iniziare con la scatola etichettata 'Mele' ma etichettata erroneamente. Ci sono due possibilità:\n\n1. Se 'Mele' è effettivamente un contenuto diverso dalle mele, allora deve contenere frutti che non sono 'Mele' o 'Arance', perché se 'Mele' contiene solo mele, non ci sarebbe modo di etichettare correttamente le scatole con soli frutti. Quindi, 'Mele' deve contenere 'Arance'.\n\n2. Se 'Mele' contiene effettivamente mele, dobbiamo procedere con le informazioni che l'etichetta di una scatola non può riflettere il contenuto vero all'interno.\n\nSuccessivamente, selezioniamo la scatola etichettata 'Arance' ma etichettata erroneamente. Ci sono due possibilità:\n\n- Se 'Arance' contiene mele, allora 'Mele' deve contenere 'Miste' per un motivo simile come spiegato in precedenza.\n\n- Se 'Arance' contiene 'Miste', allora 'Mele' deve contenere mele, poichie 'Arance' è etichettata erroneamente.\n\nIn entrambi i casi, ci rimane la scatola etichettata 'Miste' che deve contenere il contenuto corrispondente all'etichetta vera.\n\nIn ogni scenario, possiamo determinare il contenuto di tutte e tre le scatole:\n\n\n- Se 'Mele' contiene 'Arance', e 'Arance' contiene 'Miste', allora 'Miste' deve contenere 'Mele'.\n\n- Se 'Mele' contiene 'Miste', e 'Arance' contiene 'Mele', allora 'Miste' deve contenere 'Arance'.\n\n\nQuindi, ad esempio, se 'Mele' ha 'Arance', 'Arance' ha 'Miste', e 'Miste' ha 'Mele', questo rompicapo è risolvibile. Se la risposta iniziale 'Mele' non ha 'Arance', la soluzione procede con 'Arance' che contiene 'Miste' e 'Miste' che contiene 'Mele'. Ricordiamo di non guardare il contenuto della scatola quando etichettiamo.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 199,
+        "output": 598,
+        "reasoning": null,
+        "total": 797
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 69.806911,
+  "result_file": "01_ragionamento_logico_phi3_mini.json",
+  "system1": {
+    "task_family": "reasoning",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "reasoning",
+      "required_strategy": "reasoning_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.7001,
+    "strategy": "reasoning_check",
+    "strategy_confidence": 0.2409,
+    "execution_confidence": 0.6528,
+    "confidence": 0.2409,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 12
+  }
+}

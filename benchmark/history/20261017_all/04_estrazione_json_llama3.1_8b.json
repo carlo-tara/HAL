@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T07:22:10.818340+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 956,
+    "reasoning": null,
+    "total": 3006
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco il contenuto dei primi 10 pagine del libro e i riassunti dei capitoli in formato JSON:\n\n```json\n{\n  \"capitoli\": [\n    {\n      \"titolo\": \"La fortuna e il successo\",\n      \"descrizione\": \"Il libro sottolinea l'importanza della fortuna nel successo di un progetto o di una ricerca scientifica. L'autore racconta la sua esperienza personale di collaborazione con Amos Tversky e come la loro combinazione di abilità e fortuna li portò a scoperte importanti.\"\n    },\n    {\n      \"titolo\": \"La reazione alla nostra ricerca\",\n      \"descrizione\": \"L'autore descrive la reazione della comunità scientifica alla loro ricerca sulla psicologia del giudizio e sulla teoria della scelta. Alcuni critici si lamentarono del fatto che l'autore e Tversky si fossero concentrati sui bias, suggerendo una visione negativa della mente.\"\n    },\n    {\n      \"titolo\": \"La nostra teoria della scelta\",\n      \"descrizione\": \"L'autore descrive la loro teoria della scelta, Prospect Theory, e come essa sia stata influente nel campo dell'economia comportamentale. La teoria spiega come le persone prendono decisioni in condizioni di incertezza e come le loro scelte siano influenzate da bias sistemici.\"\n    },\n    {\n      \"titolo\": \"La collaborazione con Amos Tversky\",\n      \"descrizione\": \"L'autore descrive la sua collaborazione con Amos Tversky e come la loro combinazione di abilità e fortuna li portò a scoperte importanti. L'autore sottolinea l'importanza della loro relazione e come essa abbia contribuito alla loro ricerca.\"\n    },\n    {\n      \"titolo\": \"Il mio obiettivo con questo libro\",\n      \"descrizione\": \"L'autore spiega il suo obiettivo con il libro, che è presentare una visione del funzionamento della mente basata sui recenti sviluppi della psicologia cognitiva e sociale.\"\n    },\n    {\n      \"titolo\": \"Le euristiche e le intuizioni\",\n      \"descrizione\": \"L'autore descrive le euristiche e le intuizioni e come esse siano importanti nel funzionamento della mente. L'autore spiega come le euristiche possano portare a errori sistematici, ma anche come esse possano essere utili in certe situazioni.\"\n    },\n    {\n      \"titolo\": \"La competenza e le euristiche\",\n      \"descrizione\": \"L'autore discute la relazione tra la competenza e le euristiche e come esse possano essere entrambe importanti nel funzionamento della mente. L'autore spiega come la competenza possa aiutare a prevenire gli errori sistemici causati dalle euristiche.\"\n    },\n    {\n      \"titolo\": \"L'intuizione esperta\",\n      \"descrizione\": \"L'autore descrive l'intuizione esperta e come essa sia diversa dalle euristiche. L'autore spiega come l'intuizione esperta sia basata sulla competenza e sulla capacità di riconoscere elementi familiari in situazioni nuove.\"\n    },\n    {\n      \"titolo\": \"Il riconoscimento e l'intuizione\",\n      \"descrizione\": \"L'autore discute il ruolo del riconoscimento nell'intuizione esperta e come esso sia importante per prendere decisioni in condizioni di incertezza.\"\n    },\n    {\n      \"titolo\": \"La mia esperienza personale\",\n      \"descrizione\": \"L'autore descrive la sua esperienza personale di collaborazione con Amos Tversky e come essa sia stata influente nella sua ricerca e nello sviluppo della teoria della scelta.\"\n    }\n  ]\n}\n```\n\nNota che i titoli e le descrizioni dei capitoli sono solo un riassunto e non rappresentano l'intero contenuto del libro. Il libro contiene molti altri argomenti e idee che non sono stati inclusi in questo riassunto.",
+  "seconds": 242.821566,
+  "result_file": "20261017_4/04_estrazione_json_llama3.1_8b.json"
+}

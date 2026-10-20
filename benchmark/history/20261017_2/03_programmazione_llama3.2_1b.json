@@ -1,0 +1,99 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T18:53:57.014774+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 6,
+    "score": 0.33,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": false
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": false
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 726,
+    "output": 4947,
+    "reasoning": null,
+    "total": 5673
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "# Gioco di Sudoku\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Sudoku</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <h1>Sudoku</h1>\n    <form id=\"sudoku-form\">\n        <div class=\"row\">\n            <div class=\"cell\" id=\"cell-0\">\n                <input type=\"number\" id=\"number-0\" oninput=\"checkNumber(this, 0)\">\n            </div>\n            <div class=\"cell\" id=\"cell-1\">\n                <input type=\"number\" id=\"number-1\" oninput=\"checkNumber(this, 1)\">\n            </div>\n            <div class=\"cell\" id=\"cell-2\">\n                <input type=\"number\" id=\"number-2\" oninput=\"checkNumber(this, 2)\">\n            </div>\n            <div class=\"cell\" id=\"cell-3\">\n                <input type=\"number\" id=\"number-3\" oninput=\"checkNumber(this, 3)\">\n            </div>\n            <div class=\"cell\" id=\"cell-4\">\n                <input type=\"number\" id=\"number-4\" oninput=\"checkNumber(this, 4)\">\n            </div>\n            <div class=\"cell\" id=\"cell-5\">\n                <input type=\"number\" id=\"number-5\" oninput=\"checkNumber(this, 5)\">\n            </div>\n            <div class=\"cell\" id=\"cell-6\">\n                <input type=\"number\" id=\"number-6\" oninput=\"checkNumber(this, 6)\">\n            </div>\n            <div class=\"cell\" id=\"cell-7\">\n                <input type=\"number\" id=\"number-7\" oninput=\"checkNumber(this, 7)\">\n            </div>\n            <div class=\"cell\" id=\"cell-8\">\n                <input type=\"number\" id=\"number-8\" oninput=\"checkNumber(this, 8)\">\n            </div>\n        </div>\n        <button id=\"reset-button\">Reset</button>\n        <button id=\"solve-button\">Solve</button>\n    </form>\n    <div id=\"result\"></div>\n    <script src=\"script.js\"></script>\n</body>\n</html>\n```\n\n```css\n@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');\n\nbody {\n    font-family: 'Open Sans', sans-serif;\n}\n\n.row {\n    display: flex;\n    flex-wrap: wrap;\n}\n\n.cell {\n    width: 20px;\n    height: 20px;\n    border: 1px solid #ccc;\n    border-radius: 50%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer;\n    font-size: 18px;\n    font-weight: bold;\n    padding: 5px;\n}\n\n.cell:hover {\n    background-color: #f0f0f0;\n}\n\n#result {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\nbutton {\n    margin: 10px;\n}\n```\n\n```javascript\nlet sudokuGrid = Array(9).fill(null).map(() => Array(9).fill(null));\nlet result = '';\nlet numbers = Array(9).fill(null).map(() => Array(9).fill(null));\n\nfunction checkNumber(numberInput, row) {\n    let isValid = true;\n    for (let i = 0; i < 9; i++) {\n        if (numberInput[row].indexOf(numberInput[row].indexOf(numberInput[row][i])) !== 0) {\n            isValid = false;\n        }\n    }\n    if (isValid) {\n        let index = 0;\n        for (let i = 0; i < 9; i++) {\n            if (numberInput[i][row] !== 0) {\n                numbers[i][index] = numberInput[i][row];\n                index++;\n            }\n        }\n    }\n}\n\nfunction resetForm() {\n    for (let i = 0; i < 9; i++) {\n        for (let j = 0; j < 9; j++) {\n            sudokuGrid[i][j] = 0;\n        }\n    }\n    result = '';\n    numbers = Array(9).fill(null).map(() => Array(9).fill(null));\n    document.getElementById('cell-0').value = '';\n    document.getElementById('cell-1').value = '';\n    document.getElementById('cell-2').value = '';\n    document.getElementById('cell-3').value = '';\n    document.getElementById('cell-4').value = '';\n    document.getElementById('cell-5').value = '';\n    document.getElementById('cell-6').value = '';\n    document.getElementById('cell-7').value = '';\n    document.getElementById('cell-8').value = '';\n}\n\nfunction solveForm() {\n    let solved = true;\n    for (let i = 0; i < 9; i++) {\n        for (let j = 0; j < 9; j++) {\n            if (sudokuGrid[i][j] === 0) {\n                let numbersInput = Array(9).fill(null).map(() => Array(9).fill(null));\n                for (let k = 0; k < 9; k++) {\n                    for (let l = 0; l < 9; l++) {\n                        if (k !== i || l !== j) {\n                            numbersInput[k][l] = Math.floor(Math.random() * 9);\n                        }\n                    }\n                }\n                let numberInput = Array(9).fill(null).map(() => Array(9).fill(null));\n                let isValid = true;\n                for (let m = 0; m < 9; m++) {\n                    for (let n = 0; n < 9; n++) {\n                        if (m !== i || n !== j) {\n                            if (numbersInput[m][n] !== Math.floor(Math.random() * 9)) {\n                                isValid = false;\n                            }\n                        }\n                    }\n                }\n                if (isValid) {\n                    sudokuGrid[i][j] = Math.floor(Math.random() * 9);\n                    numbers[i][j] = numbersInput[i][j];\n                    solved = false;\n                }\n            }\n        }\n    }\n    if (solved) {\n        document.getElementById('cell-0').value = sudokuGrid[0][0];\n        document.getElementById('cell-1').value = sudokuGrid[0][1];\n        document.getElementById('cell-2').value = sudokuGrid[0][2];\n        document.getElementById('cell-3').value = sudokuGrid[0][3];\n        document.getElementById('cell-4').value = sudokuGrid[0][4];\n        document.getElementById('cell-5').value = sudokuGrid[0][5];\n        document.getElementById('cell-6').value = sudokuGrid[0][6];\n        document.getElementById('cell-7').value = sudokuGrid[0][7];\n        document.getElementById('cell-8').value = sudokuGrid[0][8];\n        result = 'Sudoku solto!';\n    } else {\n        result = 'Sudoku non solto!';\n    }\n}\n\ndocument.getElementById('sudoku-form').addEventListener('submit', (e) => {\n    e.preventDefault();\n    let row = parseInt(document.getElementById('cell-0').value);\n    let col = parseInt(document.getElementById('cell-1').value);\n    let number = document.getElementById('number-0').value;\n    checkNumber(number, row);\n    checkNumber(number, col);\n    if (row !== 0 || col !== 0) {\n        let index = 0;\n        for (let i = 0; i < 9; i++) {\n            if (numberInput[i][row] === 0) {\n                numbers[i][index] = number;\n                index++;\n            }\n        }\n        checkNumber(numbers, row);\n        checkNumber(numbers, col);\n    }\n    resetForm();\n});\n\ndocument.getElementById('reset-button').addEventListener('click', resetForm);\ndocument.getElementById('solve-button').addEventListener('click', solveForm);\n```\n\nQuesto codice crea una versione isolata del gioco di Sudoku, con una griglia 9x9 e una soluzione valida per l'iniziale partita. La parte JavaScript gestisce l'azione dei pulsanti reset e solve, che apportano le modifiche necessarie per risolvere il gioco.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 342,
+        "output": 3152,
+        "reasoning": null,
+        "total": 3494
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.5462
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 384,
+        "output": 1795,
+        "reasoning": null,
+        "total": 2179
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.1946
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 2,
+    "system2_stages": 2,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 157.632339,
+  "result_file": "03_programmazione_llama3.2_1b.json",
+  "system1": {
+    "task_family": "coding",
+    "family_confidence": 0.9498,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5704,
+    "execution_mode": "single_pass",
+    "execution_confidence": 0.9268,
+    "confidence": 0.5704,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

@@ -64,3 +64,14 @@
 ### HAL
 
 - **La versione dei wrapper CLI generati non sopravvive al sync**: `link-workspace-skills.sh` scrive `version: 1.0.0` nei wrapper e può sovrascrivere un bump successivo; serve una sorgente unica e sync idempotente. → `ToDo.md` · P2 · `#version-sync`.
+
+## [2026-10-20] learn-2026-10-20-ci-tests-node24 — /learn !
+
+### Progetto
+
+- **I test gateway vivono in `tests/` e vanno lanciati dalla root con `PYTHONPATH=.`**: `python3 test_gateway_core.py` fallisce (`No such file or directory`), `python3 tests/test_gateway_core.py` fallisce con `ModuleNotFoundError: gateway_core`; il comando corretto è `PYTHONPATH=. python3 tests/test_gateway_core.py` (11 test OK). Gli step del workflow `ready-for-review.yml` hanno lo stesso problema → `ToDo.md` · P1 · `#infra`.
+- **Action GitHub su runtime Node 24**: `actions/checkout` portato a `@v5` e `actions/setup-python` a `@v6` in `.github/workflows/ready-for-review.yml`; `checkout` a `@v5` anche in `agents/.github/workflows/ready-for-review.yml`. Versioni non verificate contro i repo action; CI da rieseguire. (Fatto in sessione, nessuna voce ToDo.)
+
+### HAL
+
+- (nessuno)

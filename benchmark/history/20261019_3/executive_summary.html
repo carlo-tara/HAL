@@ -1,0 +1,131 @@
+<section>
+    <h2>Executive summary</h2>
+    <p class="lead">
+        Confronto tra tre benchmark sugli stessi test:
+        <b>20261017_all</b> (baseline senza middleware, 7 modelli),
+        <b>20261017_2</b> (middleware precedente) e <b>20261019_3</b> (questa
+        run: middleware nuovo, Laya su CPU, cooldown tra le run). Sui 4 modelli
+        comuni, un check di qualità vale 1/17 del punteggio; per
+        <code>qwen2.5:1.5b</code> la run 20261019_3 ha 13 check disponibili su
+        17 a causa dei timeout.
+    </p>
+
+    <h3>Decisioni proposte</h3>
+    <ol>
+        <li>
+            <b
+                >Il middleware nuovo è un miglioramento netto rispetto al
+                precedente</b
+            >
+            su phi3:mini, llama3.2:3b e llama3.2:1b; su qwen2.5:1.5b il
+            confronto non è diretto per i timeout. <i>Decisione:</i> adottarlo
+            come candidato al posto del precedente.
+        </li>
+        <li>
+            <b>Non è ancora pari alla baseline</b> su <code>phi3:mini</code> (13
+            vs 15) e <code>llama3.2:1b</code> (8 vs 11). Su
+            <code>llama3.2:3b</code> supera la baseline (12 vs 10).
+            <i>Decisione:</i> non promuoverlo come default per tutti i modelli;
+            valutarlo per modello.
+        </li>
+        <li>
+            <b>I tempi per chiamata sono cresciuti</b> su tre modelli su
+            quattro. <i>Decisione:</i> prima di accettare il costo in latenza,
+            isolare la causa (vedi sotto).
+        </li>
+        <li>
+            <b>Affidabilità invariata nel complesso</b>: la baseline aveva già 2
+            risultati non ok su <code>qwen2.5:1.5b</code> e 1 su
+            <code>llama3.2:3b</code>; la run 20261019_3 ha 2 timeout su
+            <code>qwen2.5:1.5b</code> (prompt lunghi).
+        </li>
+    </ol>
+
+    <h3>Confronto per modello</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Modello</th>
+                <th>Qualità baseline</th>
+                <th>Qualità middleware precedente</th>
+                <th>Qualità 20261019_3</th>
+                <th>Mediana tempo/chiamata (baseline → 20261019_3)</th>
+                <th>Non ok (baseline → 20261019_3)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>phi3:mini</td>
+                <td>15/17</td>
+                <td>10/17</td>
+                <td>13/17</td>
+                <td>87 s → 169 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>llama3.2:3b</td>
+                <td>10/17</td>
+                <td>10/17</td>
+                <td>12/17</td>
+                <td>45 s → 126 s</td>
+                <td>1 → 0</td>
+            </tr>
+            <tr>
+                <td>llama3.2:1b</td>
+                <td>11/17</td>
+                <td>3/17</td>
+                <td>8/17</td>
+                <td>44 s → 34 s</td>
+                <td>0 → 0</td>
+            </tr>
+            <tr>
+                <td>qwen2.5:1.5b</td>
+                <td>11/17</td>
+                <td>11/17</td>
+                <td>9/13 (su 13 check disponibili)</td>
+                <td>27 s → 91 s</td>
+                <td>2 → 2</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="note">
+        Token totali per modello: su phi3 e llama3.2:1b la run 20261019_3 ne usa
+        circa 3 volte di più della baseline (≈34k contro ≈11k); su llama3.2:3b
+        ne usa circa il 27% in meno; qwen2.5:1.5b non è confrontabile (3/5 ok).
+        Variazioni così ampie non sono spiegate dai dati disponibili: verificare
+        il percorso di prompt introdotto dal middleware.
+    </p>
+
+    <h3>Cosa non si può attribuire</h3>
+    <p>
+        Le tre variazioni (Laya su CPU, middleware nuovo, cooldown) sono
+        avvenute insieme: i delta sopra sono effetti combinati. Il cooldown tra
+        le run non dovrebbe incidere sul tempo di ogni singola chiamata
+        (inferenza, non verificata). Il rallentamento più probabile è legato a
+        Laya su CPU, ma va misurato.
+    </p>
+
+    <h3>Prossimi passi</h3>
+    <ol>
+        <li>
+            Run con middleware nuovo e Laya su GPU, stesse condizioni: separa
+            l'effetto CPU dal middleware.
+        </li>
+        <li>
+            Verificare il percorso dei token del middleware su phi3 e
+            llama3.2:1b, dove la differenza è più grande.
+        </li>
+        <li>
+            Rivedere i timeout di <code>qwen2.5:1.5b</code> su
+            <code>estrazione_json</code> e
+            <code>sintesi_traduzione</code> (timeout a 600 s).
+        </li>
+    </ol>
+
+    <p class="note">
+        Limiti: una sola ripetizione per test; la qualità è una rubrica
+        euristica (<code>status: ok</code> non implica risposta corretta); tempi
+        dipendenti dalla macchina e dal carico del momento. Con questi dati non
+        è possibile escludere variazioni casuali tra le run.
+    </p>
+</section>

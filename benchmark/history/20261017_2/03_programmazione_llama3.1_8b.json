@@ -1,0 +1,82 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T15:38:06.362144+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 327,
+    "output": 1970,
+    "reasoning": null,
+    "total": 2297
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Sudoku</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n        }\n        #grid {\n            display: grid;\n            grid-template-columns: repeat(9, 1fr);\n            grid-gap: 2px;\n            background-color: #f0f0f0;\n        }\n        .cell {\n            background-color: #fff;\n            padding: 10px;\n            text-align: center;\n            border: 1px solid #ddd;\n        }\n        .error {\n            background-color: #ff0000;\n            color: #fff;\n        }\n        #message {\n            background-color: #f0f0f0;\n            padding: 10px;\n            text-align: center;\n            border: 1px solid #ddd;\n            margin-top: 10px;\n        }\n        #new-game {\n            background-color: #4CAF50;\n            color: #fff;\n            padding: 10px;\n            text-align: center;\n            border: none;\n            border-radius: 10px;\n            cursor: pointer;\n        }\n    </style>\n</head>\n<body>\n    <h1>Sudoku</h1>\n    <div id=\"grid\">\n        <?php for ($i = 0; $i < 9; $i++) { ?>\n            <?php for ($j = 0; $j < 9; $j++) { ?>\n                <div class=\"cell\" id=\"cell_<?php echo $i; echo $j; ?>\"></div>\n            <?php } ?>\n        <?php } ?>\n    </div>\n    <div id=\"message\"></div>\n    <button id=\"new-game\">Nuova partita</button>\n\n    <script>\n        // Genera la griglia di Sudoku\n        let grid = [];\n        for (let i = 0; i < 9; i++) {\n            let row = [];\n            for (let j = 0; j < 9; j++) {\n                let cell = {\n                    value: '',\n                    error: false,\n                    row: i,\n                    col: j\n                };\n                row.push(cell);\n            }\n            grid.push(row);\n        }\n\n        // Precompila alcune celle\n        grid[2][2].value = '5';\n        grid[2][5].value = '3';\n        grid[6][0].value = '8';\n        grid[7][4].value = '9';\n\n        // Aggiorna la griglia\n        for (let i = 0; i < 9; i++) {\n            for (let j = 0; j < 9; j++) {\n                let cell = document.getElementById('cell_' + i + j);\n                if (grid[i][j].value !== '') {\n                    cell.innerHTML = grid[i][j].value;\n                }\n            }\n        }\n\n        // Funzione per selezionare una cella\n        function selectCell(row, col) {\n            let cell = document.getElementById('cell_' + row + col);\n            cell.classList.add('selected');\n        }\n\n        // Funzione per deseleziona una cella\n        function deselectCell(row, col) {\n            let cell = document.getElementById('cell_' + row + col);\n            cell.classList.remove('selected');\n        }\n\n        // Funzione per inserire un valore in una cella\n        function insertValue(row, col, value) {\n            let cell = document.getElementById('cell_' + row + col);\n            if (value !== '') {\n                grid[row][col].value = value;\n                cell.innerHTML = value;\n                if (isValid(grid)) {\n                    // Aggiorna il messaggio\n                    document.getElementById('message').innerHTML = 'Sudoku completato!';\n                    // Disabilita la possibilità di inserire altri valori\n                    for (let i = 0; i < 9; i++) {\n                        for (let j = 0; j < 9; j++) {\n                            let cell = document.getElementById('cell_' + i + j);\n                            cell.style.cursor = 'not-allowed';\n                        }\n                    }\n                } else {\n                    // Aggiorna il messaggio\n                    document.getElementById('message').innerHTML = 'Errore!';\n                }\n            }\n        }\n\n        // Funzione per cancellare un valore in una cella\n        function cancelValue(row, col) {\n            let cell = document.getElementById('cell_' + row + col);\n            grid[row][col].value = '';\n            cell.innerHTML = '';\n        }\n\n        // Funzione per evidenziare gli errori\n        function highlightErrors() {\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    let cell = document.getElementById('cell_' + i + j);\n                    if (grid[i][j].error) {\n                        cell.classList.add('error');\n                    } else {\n                        cell.classList.remove('error');\n                    }\n                }\n            }\n        }\n\n        // Funzione per generare una nuova griglia\n        function newGame() {\n            // Disabilita la possibilità di inserire altri valori\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    let cell = document.getElementById('cell_' + i + j);\n                    cell.style.cursor = 'not-allowed';\n                }\n            }\n            // Aggiorna la griglia\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    let cell = document.getElementById('cell_' + i + j);\n                    cell.innerHTML = '';\n                    grid[i][j].value = '';\n                }\n            }\n            // Aggiorna il messaggio\n            document.getElementById('message').innerHTML = '';\n            // Rimuovi il segno di errore\n            highlightErrors();\n        }\n\n        // Funzione per validare la griglia\n        function isValid(grid) {\n            // Verifica le righe\n            for (let i = 0; i < 9; i++) {\n                let values = [];\n                for (let j = 0; j < 9; j++) {\n                    values.push(grid[i][j].value);\n                }\n                if (!isValidRow(values)) {\n                    return false;\n                }\n            }\n            // Verifica le colonne\n            for (let j = 0; j < 9; j++) {\n                let values = [];\n                for (let i = 0; i < 9; i++) {\n                    values.push(grid[i][j].value);\n                }\n                if (!isValidRow(values)) {\n                    return false;\n                }\n            }\n            // Verifica i blocchi 3x3\n            for (let i = 0; i < 9; i += 3) {\n                for (let j = 0; j < 9; j += 3) {\n                    let values = [];\n                    for (let k = i; k < i + 3; k++) {\n                        for (let l = j; l < j + 3; l++) {\n                            values.push(grid[k][l].value);\n                        }\n                    }\n                    if (!isValidRow(values)) {\n                        return false;\n                    }\n                }\n            }\n            return true;\n        }\n\n        // Funzione per verificare una riga\n        function isValidRow(values) {\n            for (let i = 0; i < 9; i++) {\n                if (values[i] === '') {\n                    continue;\n                }\n                for (let j = i + 1; j < 9; j++) {\n                    if (values[j] === '') {\n                        continue;\n                    }\n                    if (values[i] === values[j]) {\n                        grid[values[i]].error = true;\n                        return false;\n                    }\n                }\n            }\n            return true;\n        }\n\n        // Aggiorna la griglia\n        for (let i = 0; i < 9; i++) {\n            for (let j = 0; j < 9; j++) {\n                let cell = document.getElementById('cell_' + i + j);\n                if (grid[i][j].value !== '') {\n                    cell.innerHTML = grid[i][j].value;\n                }\n            }\n        }\n\n        // Aggiungi evento al pulsante\n        document.getElementById('new-game').addEventListener('click', newGame);\n\n        // Aggiungi evento alle celle\n        for (let i = 0; i < 9; i++) {\n            for (let j = 0; j < 9; j++) {\n                let cell = document.getElementById('cell_' + i + j);\n                cell.addEventListener('click', function() {\n                    let row = i;\n                    let col = j;\n                    selectCell(row, col);\n                    let value = prompt('Inserisci un valore (1-9)');\n                    if (value !== null) {\n                        insertValue(row, col, value);\n                    }\n                    deselectCell(row, col);\n                });\n                cell.addEventListener('contextmenu', function(event) {\n                    event.preventDefault();\n                    let row = i;\n                    let col = j;\n                    cancelValue(row, col);\n                });\n            }\n        }\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 327,
+        "output": 1970,
+        "reasoning": null,
+        "total": 2297
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "accept",
+      "confidence": 0.2952
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 1,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 389.825138,
+  "result_file": "03_programmazione_llama3.1_8b.json",
+  "system1": {
+    "task_family": "coding",
+    "family_confidence": 0.9498,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5704,
+    "execution_mode": "single_pass",
+    "execution_confidence": 0.9268,
+    "confidence": 0.5704,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

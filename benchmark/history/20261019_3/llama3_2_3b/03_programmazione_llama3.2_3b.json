@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-19T22:43:05.247547+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 340,
+    "output": 1254,
+    "reasoning": null,
+    "total": 1594
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<!DOCTYPE html>\n<html>\n<head>\n    <title>Sudoku</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            text-align: center;\n        }\n        \n        #grid {\n            border: 1px solid black;\n            display: grid;\n            grid-template-columns: repeat(9, 40px);\n            grid-template-rows: repeat(9, 40px);\n            gap: 1px;\n        }\n        \n        .cell {\n            background-color: #ccc;\n            padding: 10px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n        }\n        \n        .cell input {\n            width: 30px;\n            height: 30px;\n            text-align: center;\n        }\n        \n        .error {\n            background-color: red;\n        }\n        \n        #button {\n            margin-top: 10px;\n        }\n    </style>\n</head>\n<body>\n    <button id=\"button\">Ricominciare</button>\n    <div id=\"grid\"></div>\n\n    <script>\n        // Funzione per generare una soluzione valida\n        function generateSolution() {\n            let solution = [];\n            for (let i = 0; i < 9; i++) {\n                let row = [];\n                for (let j = 0; j < 9; j++) {\n                    row.push((i * 9 + j + Math.random() * 10) % 9 + 1);\n                }\n                solution.push(row);\n            }\n            return solution;\n        }\n\n        // Funzione per validare la soluzione\n        function isValidSolution(solution) {\n            for (let i = 0; i < 9; i++) {\n                let row = new Set();\n                let col = new Set();\n                for (let j = 0; j < 9; j++) {\n                    if (solution[i][j] !== 0) {\n                        if (row.has(solution[i][j]) || col.has(solution[i][j])) {\n                            return false;\n                        }\n                        row.add(solution[i][j]);\n                        col.add(solution[i][j]);\n                    }\n                }\n            }\n            for (let i = 0; i < 9; i++) {\n                let box = new Set();\n                for (let j = 0; j < 9; j++) {\n                    if (solution[i][j] !== 0) {\n                        if (box.has(solution[i][j])) {\n                            return false;\n                        }\n                        box.add(solution[i][j]);\n                    }\n                }\n            }\n            return true;\n        }\n\n        // Funzione per generare la griglia\n        function generateGrid(solution) {\n            let grid = document.getElementById(\"grid\");\n            for (let i = 0; i < 9; i++) {\n                let row = document.createElement(\"div\");\n                row.className = \"cell\";\n                for (let j = 0; j < 9; j++) {\n                    let cell = document.createElement(\"div\");\n                    cell.className = \"cell\";\n                    let input = document.createElement(\"input\");\n                    input.type = \"number\";\n                    input.min = 1;\n                    input.max = 9;\n                    input.value = solution[i][j] === 0 ? \"\" : solution[i][j];\n                    input.onchange = function() {\n                        updateSolution(this);\n                    }\n                    cell.appendChild(input);\n                    row.appendChild(cell);\n                }\n                grid.appendChild(row);\n            }\n        }\n\n        // Funzione per aggiornare la soluzione\n        function updateSolution(cell) {\n            let solution = getSolution();\n            let value = parseInt(cell.value);\n            if (value === 0) {\n                cell.value = \"\";\n            } else if (value === undefined) {\n                return;\n            } else {\n                solution[parseInt(cell.parentNode.parentNode.dataset.row)][parseInt(cell.parentNode.dataset.col)] = value;\n                cell.value = value;\n                if (!isValidSolution(solution)) {\n                    for (let i = 0; i < 9; i++) {\n                        for (let j = 0; j < 9; j++) {\n                            let cell = document.querySelector(`.cell.dataset.row=${i}.dataset.col=${j} input`);\n                            if (cell.value !== solution[i][j]) {\n                                cell.style.background = \"red\";\n                                cell.value = \"\";\n                                break;\n                            } else {\n                                cell.style.background = \"\";\n                            }\n                        }\n                    }\n                }\n            }\n        }\n\n        // Funzione per ottenere la soluzione attuale\n        function getSolution() {\n            let solution = generateSolution();\n            let grid = document.getElementById(\"grid\");\n            let inputValues = new Array(81).fill(undefined);\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    let cell = grid.children[i * 9 + j].children[j].children[0];\n                    inputValues[i * 9 + j] = parseInt(cell.value);\n                }\n            }\n            for (let i = 0; i < 81; i++) {\n                if (inputValues[i] !== undefined) {\n                    solution[i / 9][i % 9] = inputValues[i];\n                }\n            }\n            return solution;\n        }\n\n        // Funzione per generare una nuova soluzione\n        function newSolution() {\n            let solution = generateSolution();\n            document.getElementById(\"button\").textContent = \"Ricominciare\";\n            document.getElementById(\"button\").disabled = false;\n            document.getElementById(\"grid\").innerHTML = \"\";\n            generateGrid(solution);\n            document.getElementById(\"button\").textContent = \"Ricominciare\";\n            document.getElementById(\"button\").disabled = true;\n        }\n\n        // Evento per il pulsante di ricominciare\n        document.getElementById(\"button\").addEventListener(\"click\", newSolution);\n\n        // Funzione per generare la griglia con una soluzione valida\n        newSolution();\n    </script>\n</body>\n</html>",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 340,
+        "output": 1254,
+        "reasoning": null,
+        "total": 1594
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 126.485471,
+  "result_file": "03_programmazione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 8
+  }
+}

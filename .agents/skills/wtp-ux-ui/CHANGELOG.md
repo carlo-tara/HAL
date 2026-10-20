@@ -3,6 +3,8 @@
 ## [Unreleased]
 
 ### Changed
+
+- 1.3.66 → **1.3.67** — Rimossi riferimenti a Cursor: `.cursor/brands/` → `brands/` in SKILL.md e design-system.md `[sync:safe]`
 - 1.3.64 → **1.3.65** — Appreso da sessione: URL tab Company/Customer da mappa condivisa, restore dopo render, query/history e lazy-load deduplicati; puntatori ai contratti e README `[sync:safe]`
 - 1.3.63 → **1.3.64** — Skill base a-uiux HAL Gateway collegata; `extends-version` 1.0.5→1.0.7 `[sync:safe]`
 - 1.3.62 → **1.3.63** — Appreso da sessione: Company tab Azienda|Dettaglio|Clienti MS|Rischi (Persone→Dettaglio dedupe); importi ` €`; PDF continuo = carta light intenzionale `[sync:safe]`

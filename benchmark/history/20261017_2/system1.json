@@ -1,0 +1,146 @@
+{
+  "ragionamento_logico": {
+    "task_family": "general",
+    "family_confidence": 0.2249,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2399,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.2159,
+    "confidence": 0.2159,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  },
+  "matematica": {
+    "task_family": "source",
+    "family_confidence": 0.2497,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2799,
+    "execution_mode": "plan_then_solve",
+    "execution_confidence": 0.6706,
+    "confidence": 0.2497,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  },
+  "programmazione": {
+    "task_family": "coding",
+    "family_confidence": 0.9498,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5704,
+    "execution_mode": "single_pass",
+    "execution_confidence": 0.9268,
+    "confidence": 0.5704,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  },
+  "estrazione_json": {
+    "task_family": "source",
+    "family_confidence": 0.913,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3693,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.9943,
+    "confidence": 0.3693,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/10",
+        "decision": "skip",
+        "confidence": 0.0003
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/10",
+        "decision": "skip",
+        "confidence": 0.7317
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/10",
+        "decision": "skip",
+        "confidence": 0.6041
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/10",
+        "decision": "skip",
+        "confidence": 0.5497
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/10",
+        "decision": "skip",
+        "confidence": 0.2951
+      },
+      {
+        "segment": 6,
+        "phase": "rilevanza segmento 6/10",
+        "decision": "skip",
+        "confidence": 0.1696
+      },
+      {
+        "segment": 7,
+        "phase": "rilevanza segmento 7/10",
+        "decision": "skip",
+        "confidence": 0.0005
+      },
+      {
+        "segment": 8,
+        "phase": "rilevanza segmento 8/10",
+        "decision": "skip",
+        "confidence": 0.6298
+      },
+      {
+        "segment": 9,
+        "phase": "rilevanza segmento 9/10",
+        "decision": "skip",
+        "confidence": 0.3067
+      },
+      {
+        "segment": 10,
+        "phase": "rilevanza segmento 10/10",
+        "decision": "skip",
+        "confidence": 0.6595
+      }
+    ]
+  },
+  "sintesi_traduzione": {
+    "task_family": "translation",
+    "family_confidence": 0.986,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.991,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.4364,
+    "confidence": 0.4364,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/5",
+        "decision": "process",
+        "confidence": 0.05
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/5",
+        "decision": "skip",
+        "confidence": 0.5
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/5",
+        "decision": "skip",
+        "confidence": 0.5402
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/5",
+        "decision": "process",
+        "confidence": 0.0282
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/5",
+        "decision": "process",
+        "confidence": 0.025
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T17:22:27.621594+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 1053,
+    "output": 1046,
+    "reasoning": null,
+    "total": 2099
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Il tuo piano è corretto e contiene tutti i requisiti necessari per risolvere la richiesta. Ecco la versione corretta del piano prodotto da System 2 e instradato da Laya:\n\n**Requisiti verificabili e passaggi ordinati:**\n\n1. **Calcola il costo totale del acquisto:**\n   - 120 articoli × 18 euro = 2160 euro\n\n2. **Calcola il ricarico sul costo:**\n   - 2160 euro × 0.35 = 756 euro\n\n3. **Calcola la rete di vendite con il ricarico:**\n   - 90 articoli × (18 + 756/100) = 90 × 18.78 = 1689.60 euro\n\n4. **Calcola la rete di vendite con lo sconto:**\n   - 30 articoli × (18 + 18 × 0.2) = 30 × 21.6 = 648 euro\n\n5. **Calcola il totale delle vendite:**\n   - 1689.60 euro + 648 euro = 2337.60 euro\n\n6. **Calcola il totale ricavo:**\n   - 2337.60 euro = 2337.60 euro\n\n7. **Calcola l'utile:**\n   - 2337.60 euro - 2160 euro = 177.60 euro\n\n8. **Calcola il margine percentuale sul ricavo:**\n   - (2337.60 euro - 2160 euro) / 2160 euro = 177.60 / 2160 = 8.25%\n\n**Arrotonda i risultati monetari a due decimali:**\n\n- Ricavo totale: 2337.60 euro\n- Utile: 177.60 euro\n- Margine percentuale sul ricavo: 8.25%\n\nQuesto piano è ben organizzato e contiene tutti i passaggi necessari per calcolare il ricavo totale, l'utile e il margine percentuale sul ricavo.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "piano_iniziale",
+      "status": "ok",
+      "tokens": {
+        "input": 274,
+        "output": 523,
+        "reasoning": null,
+        "total": 797
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "valutazione piano",
+      "decision": "proceed",
+      "confidence": 0.1361
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 779,
+        "output": 523,
+        "reasoning": null,
+        "total": 1302
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "accept",
+      "confidence": 0.5728
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 2,
+    "system2_stages": 2,
+    "execution_mode": "plan_then_solve"
+  },
+  "seconds": 40.520284,
+  "result_file": "02_matematica_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.2497,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2799,
+    "execution_mode": "plan_then_solve",
+    "execution_confidence": 0.6706,
+    "confidence": 0.2497,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

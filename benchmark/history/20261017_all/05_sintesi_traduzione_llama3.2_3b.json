@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-17T12:05:27.965667+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 1223,
+    "reasoning": null,
+    "total": 3273
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Encontramos un buen lugar para trabajar juntos. En la Universidad Ebraica de Jerusalén, invitamos a un colega a hablar como invitado en un seminario de psicología que yo daba. Amos Tversky era visto como un astro nacido en el campo de la investigación sobre el proceso de toma de decisiones, e de hecho era lo que todos pensaban. El hombre era inteligente, carismático y tenía el don de recoger mucho de anécdotas divertidas y usarlas para ilustrar un concepto. No se seca nunca con Amos. Tenía 32 años, mientras yo tenía 35.\n\nHablamos de un programa de investigación de la Universidad del Michigan que buscaba establecer si las personas humanas son buenas estadísticas intuitivas o no. Sabíamos ya que las personas humanas son buenas gramáticas intuitivas: a cuatro años, un niño se ajusta fácilmente, en el hablar, a las reglas de la gramática, pero ignora completamente su existencia. Tal vez tenemos una intuición instintiva también en los principios fundamentales de la estadística? Para Amos la respuesta era “sí con reserva”. Tuvimos una discusión viva en el seminario y al final nos dimos cuenta de que una “no con reserva” era una respuesta mejor.\n\nNos gustó mucho discutir y al final nos encontramos para almorzar en el Café Rimon, el lugar preferido de los bohémenes y profesores en Jerusalén, y proyectamos un estudio sobre las intuiciones estadísticas que iba a realizar un grupo de sofisticados investigadores. Durante el seminario habíamos concluido que nuestras intuiciones personales eran manchevolas. A pesar de años de enseñanza y uso de la estadística, no habíamos madurado un sentido intuitivo de la confiabilidad de los resultados estadísticos observados en muestras pequeñas. Nuestros juicios sujetivos estaban afectados por sesgos: en nuestra propia investigación, éramos demasiado dispuestos a creer en resultados de investigaciones basadas en pruebas insuficientes y demasiado inclinados a conformarnos con observaciones insuficientes. El objetivo de nuestro estudio era descubrir si otros investigadores manifestaban las mismas carencias.\n\nPreparamos un estudio que incluía escenarios realistas de algunos problemas estadísticos típicos de la actividad de investigación. Amos recaudó las respuestas de un grupo de sujetos expertos, incluyendo los autores de dos manuales de estadística. Como previsto, descubrimos que, al igual que nosotros, nuestros colegas exageraban demasiado la probabilidad de que el resultado original de un experimento fuera replicado con éxito con una muestra pequeña. También dieron un mal consejo a una alumna ficticia sobre el número de observaciones que había que recoger. Incluso los estadísticos no eran buenos estadísticos intuitivos.\n\nMientras escribimos el artículo que presentaba tales descubrimientos, descubrimos que nos gustaba trabajar juntos. Amos era un hombre muy espírituoso y en su compañía me convertí también, de modo que durante nuestras horas de duro trabajo nos divertimos siempre. El gusto que nos daba colaborar nos hizo muy pacientes; es mucho más fácil forzar el esfuerzo para lograr la perfección cuando no se seca nunca. Una particularidad importante de todos era que nos contábamos, de alguna manera, las armas críticas desde la puerta de casa. Ambos éramos críticos y polemicos, pero no nos rechazamos nunca nada de lo que el otro decía. Incluso una de las grandes alegrías que extraíamos del nuestro trabajo de equipo era que Amos a veces entendía mucho más claramente que yo el sentido de las ideas en mi mente aún confusas. De los dos, era el pensador más lógico, orientado hacia la teoría e infalible en cuanto a la dirección. Yo era más intuitivo, con estudios de psicología de la percepción, de la cual habíamos tomado prestado muchas ideas. Éramos bastante semejantes para darse cuenta fácilmente, pero bastante diferentes para sorprendernos mutuamente. Establecimos así nuestra rutina profesional, en la que pasábamos muchos días de trabajo juntos, y a veces nos concedíamos largas paseadas. Para los próximos catorce años esa colaboración fue el eje de nuestra vida y el trabajo que hicimos en ese período fue el mejor que habíamos hecho.\n\nPoco después adotamos una técnica que mantuvimos durante muchos años. Nuestra investigación consistía en un diálogo en el que inventábamos las preguntas y examinábamos juntos las respuestas intuitivas. Cada pregunta era un pequeño experimento, y hacíamos muchos experimentos al día. No buscábamos seriamente la respuesta correcta a las preguntas estadísticas que poniéamos. Nuestro objetivo era identificar y analizar la respuesta intuitiva, la primera que nos venía a la mente y a la que estábamos tentados de dar incluso cuando sabíamos que era incorrecta. Éramos convencidos (y nuestra convicción resultó exacta) que cualquier intuición que compartiéramos sería compartida también por muchas otras personas, y sería fácil demostrar sus efectos en los juicios.",
+  "seconds": 127.498067,
+  "result_file": "20261017_11/05_sintesi_traduzione_llama3.2_3b.json"
+}

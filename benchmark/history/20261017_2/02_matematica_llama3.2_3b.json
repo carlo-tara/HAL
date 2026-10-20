@@ -1,0 +1,104 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T18:30:09.422613+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 1394,
+    "output": 1643,
+    "reasoning": null,
+    "total": 3037
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Sembra ci sia stato un errore durante la classificazione della risposta precedente. Ecco la risposta completa nel formato richiesto:\n\n**Calcolo Ricavo Totale, Utile e Margine Percentuale**\n\n**Passaggi:**\n\n1. Calcolo ricavo totale: 120 articoli x 18 euro = 2160 euro\n2. Calcolo ricavo da vendita dei primi 90 articoli: 90 articoli x 18 euro = 1620 euro (con un ricarico del 35% sul costo)\n3. Calcolo ricavo da vendita dei 30 articoli restanti: 30 articoli x (18 euro - (18 euro x 0,35)) = 30 articoli x 13,8 euro = 414 euro (con uno sconto del 20% sul prezzo unitario applicato ai primi 90)\n4. Calcolo totale ricavo: 1620 euro + 414 euro = 2034 euro\n5. Calcolo utile: 2034 euro - 120 articoli x 18 euro (costo totale) = 2034 euro - 2160 euro = -126 euro\n6. Calcolo margine percentuale sul ricavo: ((2034 euro - 2160 euro) / 2160 euro) x 100% = -5,83%\n\n**Risultati:**\n\n- **Ricavo totale:** 2034 euro\n- **Utile:** -126 euro\n- **Margine percentuale sul ricavo:** -5,83%",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "piano_iniziale",
+      "status": "ok",
+      "tokens": {
+        "input": 262,
+        "output": 622,
+        "reasoning": null,
+        "total": 884
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "valutazione piano",
+      "decision": "proceed",
+      "confidence": 0.2878
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 866,
+        "output": 683,
+        "reasoning": null,
+        "total": 1549
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.6384
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 266,
+        "output": 338,
+        "reasoning": null,
+        "total": 604
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.3944
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 3,
+    "system2_stages": 3,
+    "execution_mode": "plan_then_solve"
+  },
+  "seconds": 144.715586,
+  "result_file": "02_matematica_llama3.2_3b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.2497,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2799,
+    "execution_mode": "plan_then_solve",
+    "execution_confidence": 0.6706,
+    "confidence": 0.2497,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

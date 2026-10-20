@@ -1,0 +1,36 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T06:19:15.616719+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 142,
+    "output": 778,
+    "reasoning": null,
+    "total": 920
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per risolvere questo problema, procederemo passo per passo:\n\n### 1. Calcolo del prezzo unitario con i rispettivi sconti e ricarichi\n\n- **Prezzo unitario originale:** 18 euro\n- **Ricarico sui primi 90 articoli:** 35%\n- **Sconto sui rimanenti 30 articoli:** 20%\n\n#### 1.1. Calcolo del prezzo unitario con ricarico sui primi 90 articoli\n\nIl ricarico del 35% viene applicato al prezzo originale di 18 euro:\n\n\\[\n\\text{Ricarico} = 18 \\times 0.35 = 6.30 \\text{ euro}\n\\]\n\n\\[\n\\text{Prezzo unitario con ricarico} = 18 + 6.30 = 24.30 \\text{ euro}\n\\]\n\n#### 1.2. Calcolo del prezzo unitario con sconto sui rimanenti 30 articoli\n\nIl sconto del 20% viene applicato al prezzo originale di 18 euro:\n\n\\[\n\\text{Sconto} = 18 \\times 0.20 = 3.60 \\text{ euro}\n\\]\n\n\\[\n\\text{Prezzo unitario con sconto} = 18 - 3.60 = 14.40 \\text{ euro}\n\\]\n\n### 2. Calcolo del ricavo totale\n\n- **Ricavo dai primi 90 articoli:**\n\\[\n\\text{Ricavo primi 90} = 90 \\times 24.30 = 2187 \\text{ euro}\n\\]\n\n- **Ricavo dai 30 articoli rimanenti:**\n\\[\n\\text{Ricavo 30 rimanenti} = 30 \\times 14.40 = 432 \\text{ euro}\n\\]\n\n- **Ricavo totale:**\n\\[\n\\text{Ricavo totale} = 2187 + 432 = 2619 \\text{ euro}\n\\]\n\n### 3. Calcolo dei costi\n\n- **Costo totale degli articoli:**\n\\[\n\\text{Costo totale} = 120 \\times 18 = 2160 \\text{ euro}\n\\]\n\n### 4. Calcolo dell'utile\n\n\\[\n\\text{Utile} = \\text{Ricavo totale} - \\text{Costo totale} = 2619 - 2160 = 459 \\text{ euro}\n\\]\n\n### 5. Calcolo del margine percentuale sul ricavo\n\n\\[\n\\text{Margine percentuale} = \\left( \\frac{\\text{Utile}}{\\text{Ricavo totale}} \\right) \\times 100 = \\left( \\frac{459}{2619} \\right) \\times 100 \\approx 17.53\\%\n\\]\n\n### Risultati finali:\n\n- **Ricavo totale:** 2619.00 euro\n- **Utile:** 459.00 euro\n- **Margine percentuale sul ricavo:** 17.53%\n\nQuesti risultati sono arrotondati a due decimali come richiesto.",
+  "seconds": 143.643643,
+  "result_file": "20261017_1/02_matematica_qwen2.5_7b.json"
+}

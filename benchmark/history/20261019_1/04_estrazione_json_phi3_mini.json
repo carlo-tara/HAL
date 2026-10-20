@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-19T09:13:14.309423+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 13221,
+    "output": 4708,
+    "reasoning": null,
+    "total": 17929
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<Risposta>\n\n```json\n{\n  \"rispostas\": [\n    {\n      \"segmento\": \"Segmento 5\",\n      \"risultato\": \"Through our daily walks, we initiated a dialogue of questions and answers that felt intuitive. Our technique involved asking questions that explored our immediate intuitions and reflecting on their impact on others. We discovered the alignment between our intuitive insights into teaching professionalism for children and their perceptions of their career choices. This led us to develop a theory on the influence of physical appearance in predicting professions, which we tested in various experiments, including the one presented in the question.\"\n    },\n    {\n      \"segmento\": \"Segmento 6\",\n      \"risultato\": \"Our task was to determine the likelihood of the letter 'K' being the first or third letter in a word within an English text. Intuitively, we believed 'K' would be more probable as the first letter, despite its higher occurrence in the third position of words. This misjudgment, influenced by the availability heuristic, stems from our ease in recalling words starting with 'K'. Subsequent studies have shown that our initial hunch was incorrect, with 'K' actually being more common in the third position, highlighting the bias and the importance of being aware of such heuristics.\"\n    },\n    {\n      \"segmento\": \"Segmento 7\",\n  \"risultato\": \"This chapter investigates the influence of media and authoritarian regimes on public thought, demonstrating how selective media and a focus on sensational events can skew public perception towards certain topics while neglecting others. This skewed attention is exemplified by media coverage of Michael Jackson's life, which overshadowed other critical discussions. The disproportionate media attention on ending-of-life issues, such as excessive medical intervention, is also analyzed, suggesting a minimized focus on equally pressing problems like education or healthcare. The chapter concludes by emphasizing the significant impact of media and regimes on public perception and the tendency to prioritize certain issues over others.\"\n    },\n    {\n      \"segmento\": \"Segmento 8\",\n      \"risultato\": \"In Chapter 8, the focus shifts to decision-making under uncertainty, aiming to develop a theory on the subject. The chapter explores methods to mitigate the influence of uncertainty on decisions, acknowledging the role of psychological pressures in human choice. It stresses the importance of a deep understanding of cognitive processes, biases, and expert practices in decision-making. The intention is to leverage insights from cognitive psychology and social studies to enhance human decision-making capabilities in complex and unpredictable situations.\"\n    },\n    {\n      \"segmento\": \"Segmento 9\",\n      \"risultato\": \"This work is not a retelling of early studies conducted with Amos Tversky. Instead, the goal is to interpret how the mind functions, now that we have more advanced knowledge from the field of cognitive psychology and social science. The book highlights the strengths and weaknesses of intuitive thinking, and while euristics, which are heuristic shortcuts, are generally helpful, they can also lead to systematic errors. The current understanding allows us to see that while intuition relies on euristics, it is also shaped by expertise and experience, not solely by heuristics.\"\n    },\n    {\n      \"segmento\": \"Segmento 1\",\n      \"risultato\": \"In this case, the 'Ipomoea del fuoco' refers to a scenario where firefighters faced an unexpected order to exit the burning home while the fire raged in the kitchen. Their expert intuition led them to the discovery that the fire was actually in the wine cellar above the kitchen, contrary to the usual location of the fire, demonstrating the valuable role of intuition based on professional experience and skill.\"\n    },\n    {\n      \"segmento\": \"Segmento 2\",\n      \"risultato\": \"This chapter discusses everyday intuitions such as recognizing others' emotions, sensing that someone is speaking about us, and reacting to subtle signs of danger. These daily intuitions are not lesser than the expert intuitions described in previous chapters; they are simply more accessible and commonly experienced by all.\"\n    },\n    {\n      \"segmento\": \"Segmento 3\",\n      \"risultato\": \"In the third chapter, the concept of 'intuition esatta' or precise intuition is explored through the experience of chess grandmaster Herbert Simon. With extensive practice, chess professionals start to perceive opponents' moves differently, a capability stemming from developed intuition that arises from learning to identify patterns and react appropriately in new situations.\"\n    }\n  ]\n}\n```\n</risposte>\n",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1183,
+        "output": 183,
+        "reasoning": null,
+        "total": 1366
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1128,
+        "output": 886,
+        "reasoning": null,
+        "total": 2014
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1115,
+        "output": 390,
+        "reasoning": null,
+        "total": 1505
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1108,
+        "output": 248,
+        "reasoning": null,
+        "total": 1356
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1102,
+        "output": 206,
+        "reasoning": null,
+        "total": 1308
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1116,
+        "output": 376,
+        "reasoning": null,
+        "total": 1492
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1105,
+        "output": 333,
+        "reasoning": null,
+        "total": 1438
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 275,
+        "reasoning": null,
+        "total": 1364
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 243,
+        "reasoning": null,
+        "total": 1332
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1136,
+        "output": 466,
+        "reasoning": null,
+        "total": 1602
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2050,
+        "output": 1102,
+        "reasoning": null,
+        "total": 3152
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 1077.046516,
+  "result_file": "04_estrazione_json_phi3_mini.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 10
+  }
+}

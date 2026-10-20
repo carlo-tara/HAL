@@ -1,0 +1,36 @@
+{
+  "provider": "ollama",
+  "model": "mistral:7b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T06:50:25.717100+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 124,
+    "output": 621,
+    "reasoning": null,
+    "total": 745
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": " Per calcolare il ricavo totale, utile e margine percentuale sul ricavo, si procederà come segue:\n\n1. Calcolo del prezzo di vendita per gli 90 articoli venduti con il ricarico:\n- Prezzo unitario di vendita: Prezzo di acquisto * (1 + ricarico%) = 18€ * (1 + 0.35) = 23.7€ (23,70€ arrotondato a due decimali)\n- Ricavo da questi 90 articoli: 90 articoli * 23.7€ = 2.133€ (2.133,00€)\n\n2. Calcolo del prezzo di vendita per gli 30 articoli venduti con lo sconto:\n- Prezzo unitario di vendita con sconto: Prezzo unitario di vendita iniziale * (1 - sconto%) = 23.7€ * (1 - 0.20) = 18.96€ (18,96€ arrotondato a due decimali)\n- Ricavo da questi 30 articoli: 30 articoli * 18.96€ = 568,80€ (568,80€)\n\n3. Calcolo del ricavo totale: Ricavo da 90 articoli + Ricavo da 30 articoli = 2.133€ + 568,80€ = 2.701,80€ (2.701,80€)\n\n4. Calcolo dell'utile: Ricavo totale - Costo dei 120 articoli = 2.701,80€ - 120 articoli * 18€ = 2.701,80€ - 2.160€ = 541,80€ (541,80€)\n\n5. Calcolo del margine percentuale sul ricavo: Utile / Ricavo totale * 100% = 541,80€ / 2.701,80€ * 100% = 19,65% (19,65%)\n\nLa spesa totale per gli 120 articoli è 120 articoli * 18€ = 2.160€.\nIl ricavo totale è 2.701,80€, l'utile è 541,80€ e il margine percentuale sul ricavo è 19,65%.",
+  "seconds": 111.653466,
+  "result_file": "20261017_3/02_matematica_mistral_7b.json"
+}

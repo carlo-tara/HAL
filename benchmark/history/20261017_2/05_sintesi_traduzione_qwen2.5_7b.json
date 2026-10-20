@@ -1,0 +1,252 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-17T14:13:02.431152+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 9383,
+    "output": 4867,
+    "reasoning": null,
+    "total": 14250
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Claro, traduciré en español las primeras 5 páginas del texto proporcionado, manteniendo la fielza al original y la estructura de los párrafos. Sin embargo, ya que no se proporciona el contenido de las primeras 5 páginas, solo podré ofrecerte el formato en el que se debe presentar la traducción una vez que tengas el texto original. Aquí está el formato solicitado:\n\n```markdown\n<strategia_system1_laya>\nGuida metodologica preliminare; non modifica il compito, i dati o il formato richiesto.\nCategoria: traducción.\nModalità: source_chunks.\nStrategia: La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\n</strategia_system1_laya>\n\n[Traducción en español de las primeras 5 páginas]\n\n[Contenido traducido en español]\n```\n\nPor favor, proporciona el texto en italiano de las primeras 5 páginas para que pueda realizarte la traducción.",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/5",
+      "decision": "process",
+      "confidence": 0.05,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_1_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 857,
+        "reasoning": null,
+        "total": 1946
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 1/5",
+      "decision": "retry",
+      "confidence": 0.7815
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_1_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1122,
+        "output": 795,
+        "reasoning": null,
+        "total": 1917
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 1/5",
+      "decision": "reject",
+      "confidence": 0.5342
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/5",
+      "decision": "skip",
+      "confidence": 0.5,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/5",
+      "decision": "skip",
+      "confidence": 0.5402,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/5",
+      "decision": "process",
+      "confidence": 0.0282,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1079,
+        "output": 352,
+        "reasoning": null,
+        "total": 1431
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 4/5",
+      "decision": "retry",
+      "confidence": 0.0454
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1112,
+        "output": 796,
+        "reasoning": null,
+        "total": 1908
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 4/5",
+      "decision": "accept",
+      "confidence": 0.0314
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/5",
+      "decision": "process",
+      "confidence": 0.025,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1054,
+        "output": 292,
+        "reasoning": null,
+        "total": 1346
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 5/5",
+      "decision": "retry",
+      "confidence": 0.5369
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1087,
+        "output": 736,
+        "reasoning": null,
+        "total": 1823
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 5/5",
+      "decision": "reject",
+      "confidence": 0.7626
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2636,
+        "output": 795,
+        "reasoning": null,
+        "total": 3431
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.1511
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 204,
+        "output": 244,
+        "reasoning": null,
+        "total": 448
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.0541
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 13,
+    "system2_stages": 8,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 1023.524842,
+  "result_file": "05_sintesi_traduzione_qwen2.5_7b.json",
+  "system1": {
+    "task_family": "translation",
+    "family_confidence": 0.986,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.991,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.4364,
+    "confidence": 0.4364,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/5",
+        "decision": "process",
+        "confidence": 0.05
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/5",
+        "decision": "skip",
+        "confidence": 0.5
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/5",
+        "decision": "skip",
+        "confidence": 0.5402
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/5",
+        "decision": "process",
+        "confidence": 0.0282
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/5",
+        "decision": "process",
+        "confidence": 0.025
+      }
+    ]
+  }
+}

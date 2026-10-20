@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu Sudoku</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .sudoku { display: grid; grid-template-columns: repeat(9, 50px); gap: 1px; }
+        .sudoku input { width: 100%; height: 100%; text-align: center; font-size: 1.5em; }
+        .sudoku .error { border: 2px solid red; }
+        .controls { margin-top: 20px; }
+        .controls button { padding: 10px; margin: 0 5px; }
+    </style>
+</head>
+<body>
+    <div class="sudoku" id="sudoku"></div>
+    <div class="controls">
+        <button onclick="newGame()">Nuova Partita</button>
+    </div>
+    <script>
+        const solution = [5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,7,8,6,1,2,9,1,9,8,3,6,4,2,5,7,9,2,1,5,4,3,6,7,8,7,6,3,4,1,2,5,9,4,4,6,2,9,5,3,1,8,2,1,4,7,8,6,5,3,9,5,8,9,6,3,1,4,7,2,8,3,7,2,1,5,4,9,6,1,6,1,7,9,2,8,3,4,7,9,4,8,3,6,1,5,2,2,5,8,7,4,1,6,9,3,3,2,6,4,5,9,8,1,7,9,7,1,8,6,2,4,5,3,6,1,4,9,3,7,5,2,8,5,3,2,8,6,4,7,9,1];
+        let grid = Array(81).fill(0);
+        let index = 0;
+
+        function generateBoard() {
+            for (let i = 0; i < 81; i++) {
+                if (Math.random() < 0.2) grid[i] = solution[i];
+            }
+            for (let i = 0; i < 81; i++) {
+                if (grid[i] === 0) {
+                    let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+                    while (values.length) {
+                        let value = values[Math.floor(Math.random() * values.length)];
+                        if (isValid(i, value)) {
+                            grid[i] = value;
+                            values = values.filter(v => v !== value);
+                        }
+                    }
+                }
+            }
+        }
+
+        function isValid(position, value) {
+            let row = position - (position % 9);
+            let col = position % 9;
+            let block = Math.floor(row / 3) * 3 + Math.floor(col / 3);
+            for (let i = 0; i < 9; i++) {
+                if (grid[row + i] === value || grid[col + i * 9] === value || grid[block + 3 * (Math.floor(i / 3)) + (i % 3)] === value) return false;
+            }
+            return true;
+        }
+
+        function drawBoard() {
+            document.getElementById('sudoku').innerHTML = '';
+            for (let i = 0; i < 81; i++) {
+                const cell = document.createElement('input');
+                cell.type = 'number';
+                cell.min = 1;
+                cell.max = 9;
+                cell.onchange = () => {
+                    if (parseInt(cell.value) > 0 && isValid(i, parseInt(cell.value))) {
+                        grid[i] = parseInt(cell.value);
+                    } else {
+                        cell.value = grid[i];
+                    }
+                };
+                cell.onfocus = () => cell.select();
+                cell.onkeydown = (e) => {
+                    if (e.key >= 1 && e.key <= 9 && isValid(i, parseInt(e.key))) {
+                        cell.value = e.key;
+                    }
+                };
+                if (grid[i] > 0) cell.value = grid[i];
+                if (grid[i] > 0 && solution[i] !== grid[i]) cell.classList.add('error');
+                document.getElementById('sudoku').appendChild(cell);
+                if ((i + 1) % 9 === 0) document.getElementById('sudoku').appendChild(document.createElement('br'));
+            }
+        }
+
+        function newGame() {
+            grid = Array(81).fill(0);
+            index = 0;
+            generateBoard();
+            drawBoard();
+        }
+
+        newGame();
+    </script>
+</body>
+</html>

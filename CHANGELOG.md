@@ -7,6 +7,9 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+- Passi di test del workflow `ready-for-review` da correggere: i test sono in `tests/` e vanno lanciati con `PYTHONPATH=.` `#infra` · P1 · Progetto
+- GitHub Actions portate a runtime Node 24: `actions/checkout@v5`, `actions/setup-python@v6` `#infra` · Progetto
+- Ripristinata versione `version/SKILL.md` a 1.2.1 (frontmatter era regredito a 1.0.0) `#infra` · HAL
 - Rafforzato `SystemEvaluationEngine`: promozione fail-closed su qualità per task, validazione semantica indipendente, latenza serving comparabile e rifiuto dei benchmark troncati; durata end-to-end separata dalla latenza. `#system2-gating` · P1 · HAL
 - Ottimizzazione prompt e progressive disclosure per skill ad alto carico (@learn, @sync, @slice, @cycle) `#techdebt` · P1 · HAL
 - Integrazione System 1 (Laya) per routing e scoring euristico (@learn, @version, @improve, @document) `#feature` · P1 · HAL

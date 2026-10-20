@@ -1,13 +1,13 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-10-18T14:04:11Z",
-  "flags": {"y": true},
-  "acceptance": "Shared triage/batch budgets with stricter operation ceilings and no inherited retries; source/request and output positions preserved on exhaustion.",
-  "files": "router.py,laya_service.py,system1_preflight.py,tests/test_laya_service.py",
-  "node_id": "cycle-budget",
-  "next": "cycle-coherence",
-  "summary": "Completed integration slice: phase=ready; ready=1; MAKE_EXIT=0; Gateway 75/75. Previous API slice covered global_config.py,laya_service.py,system1_preflight.py,tests/test_laya_service.py. Next coherence remains incomplete.",
-  "brief": "Completed budget slice; do not rerun RED. Resume graph at cycle-coherence with its own acceptance and file scope.",
+  "ts": "2026-10-18T15:04:03Z",
+  "flags": { "y": true },
+  "acceptance": "Check expected versus observed family/strategy/mode; default single_pass; plan_then_solve requires explicit decomposability and confidence >=0.8; abstention preserves source, format and every segment.",
+  "files": "system1_preflight.py,laya_service.py,global_config.py,tests/test_laya_service.py",
+  "node_id": "cycle-coherence",
+  "next": "cycle-telemetry",
+  "summary": "Completed: focused 42/42; Gateway 80/80; fresh Make ready-for-review exit 0. Resume at cycle-telemetry.",
+  "brief": "coherence gate complete; proceed to telemetry, do not close P1.",
   "token_budget": 200
 }

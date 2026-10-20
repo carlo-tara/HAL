@@ -1,0 +1,36 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T09:39:08.182936+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 3,
+    "score": 0.67,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": true
+      },
+      {
+        "label": "utile 610,20",
+        "passed": true
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 126,
+    "output": 855,
+    "reasoning": null,
+    "total": 981
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "\nPer risolvere questo problema, dobbiamo calcolare il ricavo per i primi 90 articoli venduti con un ricarico del 35% e per i restanti 30 articoli con uno sconto del 20%.\n\n\n1. Calcolo del prezzo di vendita con ricarico:\n\nCosto di ciascun articolo = €18\n\nPrezzo di vendita con ricarico = Costo di ciascun articolo + (35% di Costo di ciascun articolo)\n\nPrezzo di vendita con ricarico = €18 + (0,35 × €18)\n\nPrezzo di vendita con ricarico = €18 + €6,30\n\nPrezzo di vendita con ricarico = €24,30\n\n\n2. Ricavo totale dai primi 90 articoli:\n\nRicavo = Numero di articoli venduti × Prezzo di vendita con ricarico\n\nRicavo = 90 × €24,30\n\nRicavo = €2187\n\n\n3. Calcolo del prezzo di vendita con sconto:\n\nSconto = 20% del prezzo di vendita con ricarico\n\nSconto = 0,20 × €24,30\n\nSconto = €4,86\n\n\nPrezzo di vendita con sconto = Prezzo di vendita con ricarico - Sconto\n\nPrezzo di vendita con sconto = €24,30 - €4,86\n\nPrezzo di vendita con sconto = €19,44\n\n\n4. Ricavo totale dai restanti 30 articoli:\n\nRicavo = Numero di articoli venduti × Prezzo di vendita con sconto\n\nRicavo = 30 × €19,44\n\nRicavo = €583,20\n\n\n5. Ricavo totale complessivo:\n\nRicavo totale complessivo = Ricavo dai primi 90 articoli + Ricavo dai restanti 30 articoli\n\nRicavo totale complessivo = €2187 + €583,20\n\nRicavo totale complessivo = €2770,20\n\n\n6. Costo totale di acquisto:\n\nCosto totale di acquisto = Numero di articoli acquistati × Costo di ciascun articolo\n\nCosto totale di acquisto = 120 × €18\n\nCosto totale di acquisto = €2160\n\n\n7. Utile totale (profitto):\n\nUtile = Ricavo totale complessivo - Costo totale di acquisto\n\nUtile = €2770,20 - €2160\n\nUtile = €610,20\n\n\n8. Margine percentuale sul ricavo:\n\nMargine percentuale sul ricavo = (Utile / Ricavo totale complessivo) × 1soften a percentuale sul costo\n\nMargine percentuale sul ricavo = (€610,20 / €2770,20) × 100\n\nMargine percentuale sul ricavo = 22,07%\n\n\nRicavo totale complessivo: €2770.20\n\nUtile totale: €610.20\n\nMargine percentuale sul ricavo: 22.07%",
+  "seconds": 87.245245,
+  "result_file": "20261017_9/02_matematica_phi3_mini.json"
+}

@@ -1,0 +1,81 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "matematica",
+  "started_at": "2026-10-19T10:03:04.641886+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 233,
+    "output": 1204,
+    "reasoning": null,
+    "total": 1437
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Di seguito i passaggi e i calcoli per risolvere il problema:\n\n### 1. Calcolo del costo totale di acquisto\n- **Costo di acquisto di 120 articoli**\n  \\[\n  120 \\text{ articoli} \\times 18 \\text{ euro/oggetto} = 2160 \\text{ euro}\n  \\]\n\n### 2. Calcolo del costo retribuito\n- **Il costo retribuito è il 35% del costo totale**\n  \\[\n  35\\% \\times 2160 \\text{ euro} = 0.35 \\times 2160 = 756 \\text{ euro}\n  \\]\n\n### 3. Calcolo del totale retribuito\n- **Totale retribuito è la somma del costo retribuito e del costo di acquisto**\n  \\[\n  756 \\text{ euro} + 2160 \\text{ euro} = 2916 \\text{ euro}\n  \\]\n\n### 4. Calcolo del prezzo unitario di vendita dei primi 90 articoli\n- **Prezzo unitario di vendita dei primi 90 articoli**\n  \\[\n  \\frac{2916 \\text{ euro}}{90 \\text{ oggetti}} = 32.40 \\text{ euro/oggetto}\n  \\]\n\n### 5. Calcolo del costo retribuito dei primi 90 articoli\n- **Costo retribuito dei primi 90 articoli**\n  \\[\n  35\\% \\times 2916 \\text{ euro} = 0.35 \\times 2916 = 1025.40 \\text{ euro}\n  \\]\n\n### 6. Calcolo del totale retribuito dei primi 90 articoli\n- **Totale retribuito dei primi 90 articoli**\n  \\[\n  1025.40 \\text{ euro} + 2160 \\text{ euro} = 3185.40 \\text{ euro}\n  \\]\n\n### 7. Calcolo del costo retribuito dei 30 articoli restanti\n- **Costo retribuito dei 30 articoli restanti**\n  \\[\n  30\\% \\times 2916 \\text{ euro} = 0.30 \\times 2916 = 875.00 \\text{ euro}\n  \\]\n\n### 8. Calcolo del totale retribuito dei 30 articoli restanti\n- **Totale retribuito dei 30 articoli restanti**\n  \\[\n  875.00 \\text{ euro} + 0 \\text{ euro} = 875.00 \\text{ euro}\n  \\]\n\n### 9. Calcolo del totale retribuito\n- **Totale retribuito (ricavato)**\n  \\[\n  3185.40 \\text{ euro} + 875.00 \\text{ euro} = 4060.40 \\text{ euro}\n  \\]\n\n### 10. Calcolo del numero di vendite\n- **Numero di vendite**\n  \\[\n  90 \\text{ vendite} + 30 \\text{ vendite} = 120 \\text{ vendite}\n  \\]\n\n### 11. Calcolo del costo totale di vendita\n- **Costo totale di vendita**\n  \\[\n  120 \\text{ vendite} \\times 32.40 \\text{ euro/oggetto} = 3960 \\text{ euro}\n  \\]\n\n### 12. Calcolo del margine retribuito\n- **Margine retribuito**\n  \\[\n  \\text{Totale retribuito} - \\text{Costo totale di acquisto} = 4060.40 \\text{ euro} - 2160 \\text{ euro} = 1900.40 \\text{ euro}\n  \\]\n\n### 13. Calcolo del margine percentuale\n- **Margine percentuale**\n  \\[\n  \\frac{\\text{Margine retribuito}}{\\text{Totale retribuito}} \\times 100\\% = \\frac{1900.40}{4060.40} \\times 100\\% \\approx 46.80\\%\n  \\]\n\n### 14. Riscaldamento dei risultati\n- **Riscaldamento dei risultati monetari a due decimali**\n  \\[\n  \\text{Totale retribuito} = 4060.40 \\text{ euro}\n  \\]\n  \\[\n  \\text{Margine retribuito} = 1900.40 \\text{ euro}\n  \\]\n  \\[\n  \\text{Margine percentuale} = 46.80\\%\n  \\]\n\n### Conclusione\n- **Ricavo totale**: 4060.40 euro\n- **Utile**: 1900.40 euro\n- **Margine percentuale sul ricavo**: 46.80%",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 233,
+        "output": 1204,
+        "reasoning": null,
+        "total": 1437
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 78.232655,
+  "result_file": "02_matematica_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "math",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "math",
+      "required_strategy": "math_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.4791,
+    "strategy": "math_check",
+    "strategy_confidence": 0.814,
+    "execution_confidence": 0.062,
+    "confidence": 0.062,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 10
+  }
+}

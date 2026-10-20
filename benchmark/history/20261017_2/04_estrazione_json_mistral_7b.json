@@ -1,0 +1,215 @@
+{
+  "provider": "ollama",
+  "model": "mistral:7b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T14:52:58.381147+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 500,
+    "output": 2006,
+    "reasoning": null,
+    "total": 2506
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": " Per estrarre il contenuto dei singoli capitoli da una data pagina web, puoi usare diversi strumenti come Scrapy, Beautiful Soup o Selenium. Poiché non hai specificato quale strumento usare, prendo in considerazione Scrapy, che è uno dei più comuni strumenti per la scraping di dati da web.\n\nPer creare un riassunto sintetico dei singoli capitoli da un libro, devi prima avere il libro in formato digitale. Poiché non hai fornito il libro, non è possibile creare un riassunto sintetico dei singoli capitoli.\n\nTuttavia, come esempio, supponiamo di avere il libro \"1984\" di George Orwell in formato digitale. La seguente è una possible soluzione per estrarre il contenuto dei singoli capitoli e creare un riassunto sintetico:\n\n1. Installare Scrapy:\n\n```\npip install scrapy\n```\n\n2. Creare il project:\n\n```\nscrapy startproject myproject\n```\n\n3. Creare il spider:\n\n```\ncd myproject\nscrapy genspider 1984 1984.it\n```\n\n4. Scrivere il codice per l'estrazione dei capitoli:\n\naprire il file `1984.py` nel percorso `myproject/spiders/` e aggiungi il seguente codice:\n\n```python\nimport scrapy\nfrom scrapy.http import Request\nfrom myproject.items import MybookItem\n\nclass MySpider(scrapy.Spider):\n    name = \"1984\"\n    allowed_domains = [\"1984.it\"]\n    start_urls = [\"http://1984.it/libro/1984/\"]\n\n    def parse(self, response):\n        item = MybookItem()\n        chapters = response.xpath('//div[contains(@class, \"book-content\")]//div[contains(@class, \"chapter\")]')\n\n        for chapter in chapters:\n            chapter_title = chapter.xpath('.//h2/a/text()').get()\n            chapter_content = chapter.xpath('.//p').getall()\n\n            item['chapter_title'] = chapter_title\n            item['chapter_content'] = ' '.join(chapter_content)\n\n            yield item\n\n        next_page = response.xpath('//nav/ul/li[last()]/a/@href').get()\n        if next_page:\n            yield Request(url=response.urljoin(next_page), callback=self.parse)\n```\n\n5. Creare l'item:\n\naprire il file `items.py` nel percorso `myproject/items.py` e aggiungi il seguente codice:\n\n```python\nimport scrapy\n\nclass MybookItem(scrapy.Item):\n    chapter_title = scrapy.Field()\n    chapter_content = scrapy.Field()\n```\n\n6. Esecuzione dello spider:\n\n```\nscrapy crawl 1984\n```\n\n7. Creare il riassunto:\n\nuna volta avuto i dati dai capitoli, puoi creare il riassunto sintetico facendo riferimento alla `chapter_content`. Ad esempio:\n\n```python\nimport json\n\nresults = []\nfor item in MybookItem.from_output(response.body):\n    results.append({\n        'chapter_title': item['chapter_title'],\n        'chapter_summary': 'Riassunto del capitolo '.join(item['chapter_content'].split('\\n')[:10]),\n    })\n\nprint(json.dumps(results, indent=2))\n```",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/10",
+      "decision": "skip",
+      "confidence": 0.0003,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/10",
+      "decision": "skip",
+      "confidence": 0.7317,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/10",
+      "decision": "skip",
+      "confidence": 0.6041,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/10",
+      "decision": "skip",
+      "confidence": 0.5497,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/10",
+      "decision": "skip",
+      "confidence": 0.2951,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 6/10",
+      "decision": "skip",
+      "confidence": 0.1696,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 7/10",
+      "decision": "skip",
+      "confidence": 0.0005,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 8/10",
+      "decision": "skip",
+      "confidence": 0.6298,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 9/10",
+      "decision": "skip",
+      "confidence": 0.3067,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 10/10",
+      "decision": "skip",
+      "confidence": 0.6595,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 274,
+        "output": 1073,
+        "reasoning": null,
+        "total": 1347
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.6303
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 226,
+        "output": 933,
+        "reasoning": null,
+        "total": 1159
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.3603
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 12,
+    "system2_stages": 2,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 367.995315,
+  "result_file": "04_estrazione_json_mistral_7b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.913,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3693,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.9943,
+    "confidence": 0.3693,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/10",
+        "decision": "skip",
+        "confidence": 0.0003
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/10",
+        "decision": "skip",
+        "confidence": 0.7317
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/10",
+        "decision": "skip",
+        "confidence": 0.6041
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/10",
+        "decision": "skip",
+        "confidence": 0.5497
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/10",
+        "decision": "skip",
+        "confidence": 0.2951
+      },
+      {
+        "segment": 6,
+        "phase": "rilevanza segmento 6/10",
+        "decision": "skip",
+        "confidence": 0.1696
+      },
+      {
+        "segment": 7,
+        "phase": "rilevanza segmento 7/10",
+        "decision": "skip",
+        "confidence": 0.0005
+      },
+      {
+        "segment": 8,
+        "phase": "rilevanza segmento 8/10",
+        "decision": "skip",
+        "confidence": 0.6298
+      },
+      {
+        "segment": 9,
+        "phase": "rilevanza segmento 9/10",
+        "decision": "skip",
+        "confidence": 0.3067
+      },
+      {
+        "segment": 10,
+        "phase": "rilevanza segmento 10/10",
+        "decision": "skip",
+        "confidence": 0.6595
+      }
+    ]
+  }
+}

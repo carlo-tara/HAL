@@ -4,6 +4,7 @@
 
 ### Changed
 
+- 1.1.3 → **1.1.4** — Rimossi riferimenti a Cursor: `.cursor/product/` → `product/`, `.cursor/versioned-cursor-paths` → `config/versioned-agent-paths`, `.cursor/hooks*` → `config/hooks.json` + `scripts/hooks/`, `.cursor/rules/` → `docs/rules/`, `check-cursor-whitelist` → `check-agent-whitelist` `[sync:safe]`
 - 1.1.2 → **1.1.3** — Appreso da sessione: Cost control OpenAPI Risk; `/IT-negativita` strictly on-demand (includeNegativity: true, bottone UI); Company 360 lazy risk solo su tab #rischi (no prefetch su renderShell); fetch incrementale existingSources riutilizza Start/Advanced senza ri-addebiti `[sync:safe]`
 
 - 1.1.1 → **1.1.2** — Appreso da sessione: quiet test runner default per backend e Platform API con log esteso rotante settimanale in `logs/test-YYYY-WW.log` (in `.gitignore`), throttling 1h e lockfile PID per `test-e2e`; sync padre `extends-version: 1.7.4` `[sync:safe]`

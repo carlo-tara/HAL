@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T06:25:34.358904+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 489,
+    "reasoning": null,
+    "total": 2539
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```json\n{\n  \"capitoli\": [\n    {\n      \"titolo\": \"Introduzione\",\n      \"riassunto\": \"L'autore racconta di aver scelto di studiare la filosofia e l'economia per via del suo spirito divertito, e riconosce l'importanza della fortuna nel successo. Descrive come la loro ricerca sul giudizio ha avuto un impatto significativo sulle scienze sociali, in particolare con l'articolo su 'Science' che ha portato al premio Nobel nel 2002, con Amos Tversky come coinvolto nella ricerca.\"\n    },\n    {\n      \"titolo\": \"La nostra ricerca sul giudizio\",\n      \"riassunto\": \"L'autore e Amos Tversky si concentrano sulle euristiche del giudizio e i bias sistematici nella mente umana. Descrivono l'articolo su 'Science' e il lavoro successivo su Prospect Theory, che ha rivoluzionato l'economia comportamentale. Menzionano la fortuna nella formazione della loro collaborazione e la sfortuna con la morte di Tversky.\"\n    },\n    {\n      \"titolo\": \"Finché la lontananza geografica non ci rese difficile proseguire la collaborazione\",\n      \"riassunto\": \"Dopo la morte di Amos Tversky, l'autore e Tversky continuano a lavorare insieme tramite collaudo remoto. Descrivono la teoria Prospect Theory come una delle basi dell'economia comportamentale e il premio Nobel ricevuto nel 2002.\"\n    },\n    {\n      \"titolo\": \"A che punto siamo oggi\",\n      \"riassunto\": \"L'autore parla del progresso nella comprensione del pensiero intuitivo, distingue tra euristiche del giudizio e competenza esperta, e fornisce esempi di intuizione esperta. Menziona il lavoro di Gary Klein sul 'sesto senso del pericolo' e l'importanza del concetto di competenza intuitiva nel nostro quotidiano.\"\n    }\n  ]\n}\n```",
+  "seconds": 119.733484,
+  "result_file": "20261017_1/04_estrazione_json_qwen2.5_7b.json"
+}

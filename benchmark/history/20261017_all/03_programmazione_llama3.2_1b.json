@@ -1,0 +1,48 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T12:08:07.076940+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": true
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": false
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 249,
+    "output": 1460,
+    "reasoning": null,
+    "total": 1709
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n        }\n        #sudoku {\n            width: 400px;\n            height: 400px;\n            border: 1px solid #ccc;\n            margin: 40px auto;\n            text-align: center;\n        }\n        .error {\n            border-bottom: 2px solid #ccc;\n            padding-bottom: 5px;\n            background-color: #f9f9f9;\n        }\n        .correct {\n            border-bottom: 2px solid #ccc;\n            padding-bottom: 5px;\n            background-color: #b3b3b3;\n        }\n        #reset {\n            background-color: #4CAF50;\n            color: #fff;\n            padding: 10px 20px;\n            border: none;\n            border-radius: 5px;\n            cursor: pointer;\n        }\n        #reset:hover {\n            background-color: #3e8e41;\n        }\n    </style>\n</head>\n<body>\n    <div id=\"sudoku\">\n        <div class=\"error\" id=\"error\"></div>\n        <div class=\"correct\" id=\"correct\"></div>\n        <div id=\"solution\"></div>\n        <input type=\"text\" id=\"cella\" readonly>\n        <button id=\"reset\">Reset</button>\n        <p id=\"message\"></p>\n    </div>\n\n    <script>\n        let rows = 9;\n        let cols = 9;\n        let cellas = Array(9).fill(null).map(() => Array(9).fill(null));\n        let solution = Array(9).fill(null);\n        let error = Array(9).fill(null).map(() => Array(9).fill(null));\n        let correct = Array(9).fill(null).map(() => Array(9).fill(null));\n\n        const sudoku = () => {\n            let row = Math.floor(Math.random() * rows);\n            let col = Math.floor(Math.random() * cols);\n            let cella = Math.floor(Math.random() * rows) * cols + col;\n            let cellaValue = cella === row * cols + col ? cella : 0;\n\n            cellas[row][col] = cellaValue;\n            solution[row] = cellaValue;\n            correct[row][col] = 1;\n        };\n\n        const isComplete = () => {\n            for (let i = 0; i < rows; i++) {\n                for (let j = 0; j < cols; j++) {\n                    if (cellas[i][j] === 0) return false;\n                }\n            }\n            return true;\n        };\n\n        const getCellValue = (row, col) => {\n            if (correct[row][col] !== 1) return 0;\n            return solution[row][col];\n        };\n\n        const getPossibleValues = (row, col) => {\n            let possibleValues = [];\n            if (row === 0 || row === rows - 1) {\n                possibleValues.push(1);\n                possibleValues.push(2);\n                possibleValues.push(3);\n                possibleValues.push(4);\n                possibleValues.push(5);\n                possibleValues.push(6);\n                possibleValues.push(7);\n                possibleValues.push(8);\n            } else {\n                possibleValues.push(1);\n                possibleValues.push(2);\n                possibleValues.push(3);\n                possibleValues.push(4);\n                for (let i = 0; i < 9; i++) {\n                    if (correct[row - 1][i] === 1) possibleValues.push(i + 1);\n                    if (correct[row][i - 1] === 1) possibleValues.push(i + 1);\n                }\n                possibleValues.push(9);\n            }\n\n            if (col === 0 || col === cols - 1) {\n                possibleValues.push(1);\n                possibleValues.push(2);\n                possibleValues.push(3);\n                possibleValues.push(4);\n                possibleValues.push(5);\n                possibleValues.push(6);\n                possibleValues.push(7);\n                possibleValues.push(8);\n            } else {\n                possibleValues.push(1);\n                possibleValues.push(2);\n                possibleValues.push(3);\n                possibleValues.push(4);\n                for (let i = 0; i < 9; i++) {\n                    if (correct[i][row - 1] === 1) possibleValues.push(i + 1);\n                    if (correct[i][col - 1] === 1) possibleValues.push(i + 1);\n                }\n                possibleValues.push(9);\n            }\n            return possibleValues;\n        };\n\n        const handleCellClick = (row, col) => {\n            if (error[row][col] !== 0) {\n                alert(`Errore nella cella ${row},${col}`);\n                return;\n            }\n            const value = document.getElementById(\"cella\").value;\n            if (value === \"\") return;\n\n            if (correct[row][col] === 1) {\n                alert(\"La cella è già completa.\");\n                return;\n            }\n\n            cellas[row][col] = value;\n            solution[row] = value;\n            correct[row][col] = 1;\n\n            document.getElementById(\"error\").innerHTML = \"\";\n            document.getElementById(\"correct\").innerHTML = \"\";\n            document.getElementById(\"solution\").innerHTML = \"\";\n            document.getElementById(\"message\").innerHTML = \"\";\n\n            if (isComplete()) {\n                sudoku();\n                alert(\"Gioco completato!\");\n            } else {\n                const possibleValues = getPossibleValues(row, col);\n                if (possibleValues.length > 0) {\n                    alert(possibleValues.join(\", \"));\n                    document.getElementById(\"cella\").value = \"\";\n                    document.getElementById(\"cella\").readonly = true;\n                } else {\n                    alert(\"La cella è vuota.\");\n                }\n            }\n        };\n\n        const handleReset = () => {\n            sudoku();\n            document.getElementById(\"error\").innerHTML = \"\";\n            document.getElementById(\"correct\").innerHTML = \"\";\n            document.getElementById(\"solution\").innerHTML = \"\";\n            document.getElementById(\"message\").innerHTML = \"\";\n            document.getElementById(\"cella\").value = \"\";\n            document.getElementById(\"cella\").readonly = true;\n        };\n\n        const handleSolution = () => {\n            document.getElementById(\"message\").innerHTML = \"La soluzione è: \\n\" + solution.join(\"\\n\");\n            document.getElementById(\"cella\").readonly = false;\n        };\n\n        sudoku();\n\n        document.getElementById(\"reset\").addEventListener(\"click\", handleReset);\n        document.getElementById(\"cella\").addEventListener(\"keyup\", handleCellClick);\n        document.getElementById(\"cella\").addEventListener(\"blur\", handleSolution);\n        document.getElementById(\"solution\").addEventListener(\"blur\", handleSolution);\n    </script>\n</body>\n</html>\n```",
+  "seconds": 43.970619,
+  "result_file": "20261017_12/03_programmazione_llama3.2_1b.json"
+}

@@ -1,0 +1,36 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T12:07:47.746609+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 130,
+    "output": 613,
+    "reasoning": null,
+    "total": 743
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per calcolare il ricavo totale, utile e margine percentuale sul ricavo, dobbiamo seguire questi passaggi:\n\n1. Calcolare il prezzo totale degli articoli venduti al prezzo di ricarico:\nNel negozio vengono venduti 90 articoli a 18 euro ciascuno, quindi il prezzo totale è:\n90 articoli * 18 euro/articolo = 1620 euro\n\n2. Calcolare il prezzo unitario degli articoli venduti al prezzo di sconto:\nI 30 articoli restanti sono venduti con uno sconto del 20% sul prezzo unitario applicato ai primi 90. Per calcolare il prezzo unitario, dobbiamo considerare che 90 articoli vengono venduti a 18 euro ciascuno, quindi il prezzo unitario per gli articoli venduti al prezzo di sconto è:\n18 euro/articolo * (1 - 0,20) = 18 euro/articolo * 0,80 = 14,40 euro/articolo\n\n3. Calcolare il prezzo totale degli articoli venduti al prezzo di sconto:\nI 30 articoli restanti sono venduti con uno sconto del 20% sul prezzo unitario applicato ai primi 90. Per calcolare il prezzo totale, dobbiamo considerare che 30 articoli vengono venduti a 14,40 euro ciascuno, quindi il prezzo totale è:\n30 articoli * 14,40 euro/articolo = 439,20 euro\n\n4. Calcolare il ricavo totale:\nIl ricavo totale è la somma dei prezzi di ricarico e di sconto:\n1620 euro (prezzo di ricarico) + 439,20 euro (prezzo di sconto) = 2060,20 euro\n\n5. Calcolare il ricavo utile:\nIl ricavo utile è la differenza tra il ricavo totale e il prezzo di acquisto:\n2060,20 euro (ricavo totale) - 120 euro (prezzo di acquisto) = 1940,20 euro\n\n6. Calcolare il margine percentuale sul ricavo:\nIl margine percentuale sul ricavo è la percentuale di guadagno rispetto al prezzo di acquisto, calcolata come segue:\n(Margine percentuale sul ricavo) = (Ricavo utile / Prezzo di acquisto) * 100\n= (1940,20 euro / 120 euro) * 100\n= 1620,83%\n\n7. Arrotondare i risultati monetari a due decimali:\nMaggiore percentuale: 1620,83%",
+  "seconds": 19.322769,
+  "result_file": "20261017_12/02_matematica_llama3.2_1b.json"
+}

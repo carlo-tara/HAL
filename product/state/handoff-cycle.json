@@ -1,13 +1,13 @@
 {
   "kind": "cycle",
   "cmd": "/cycle",
-  "ts": "2026-10-18T14:04:11Z",
-  "flags": {"y": true},
-  "acceptance": "Bound actual Laya HTTP attempts, including shared triage/batch run scopes; operation ceilings cannot be enlarged by parent scopes; no retries in triage/batches; elsewhere at most one justified transient retry within total budget; preserve source/format on abstention and all output positions.",
-  "files": "router.py,laya_service.py,system1_preflight.py,tests/test_laya_service.py",
-  "node_id": "cycle-budget",
-  "next": "cycle-coherence",
-  "summary": "phase=ready; ready=1; MAKE_EXIT=0 observed after final source changes; Gateway 75/75; focused 29/29; diagnostics clean; review no blockers; requests advisory remains. Two sequential <=4-file slices; global_config preserved. Coherence stub incomplete, P1 open.",
-  "brief": "Budget complete. Next cycle-coherence needs a real family/strategy/mode gate, not the existing always-ok stub. Do not skip to telemetry. No skill changes.",
+  "ts": "2026-10-18T15:04:03Z",
+  "flags": { "y": true },
+  "acceptance": "Check expected versus observed family/strategy/mode conservatively; default single_pass. Permit plan_then_solve only when decomposable=true and confidence >=0.8. Incomplete/mismatched evidence or low confidence abstains to single_pass and preserves full source and every segment.",
+  "files": "system1_preflight.py,laya_service.py,global_config.py,tests/test_laya_service.py",
+  "node_id": "cycle-coherence",
+  "next": "cycle-telemetry",
+  "summary": "phase=ready; ready=1; MAKE_EXIT=0 observed after final source changes; focused 42/42; Gateway 80/80; four files in scope; diagnostics clean; requests advisory remains. Next cycle-telemetry; P1 open.",
+  "brief": "cycle-coherence ready. Next cycle-telemetry; cycle-compare and independent semantic benchmark evidence remain before P1 closure.",
   "token_budget": 200
 }

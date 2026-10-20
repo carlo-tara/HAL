@@ -4,6 +4,7 @@
 
 ### Changed
 
+- 1.2.2 → **1.2.3** — Rimossi riferimenti a Cursor: `.cursor/product/` → `product/`, `.cursor/rules/` → `docs/rules/`, `.cursorrules` rimosso da layout repo `[sync:safe]`
 - 1.2.1 → **1.2.2** — Appreso da sessione: riconciliazione alias Company Key / Customer 360, allineamento `primary_domain` al sito corporate verificato e clearing domini freemail/privacy (`simplelogin`, `gmx.us`, ecc.) `[sync:safe]`
 
 - 1.1.50 → **1.1.51** — Runtime B2B usa solo PostgreSQL di produzione (`PGDATABASE_URI_PROD`); DB locale confinato ai test `[sync:safe]`
@@ -86,7 +87,7 @@
 
 ### Added
 
-- Rule `.cursor/rules/b2b-enrichment-run.mdc` + README fasi: `--since` se manca corpmails; HS senza `--trigger`; doppie metriche post-`build:sqlite`. [sync:safe]
+- Rule `docs/rules/b2b-enrichment-run.mdc` + README fasi: `--since` se manca corpmails; HS senza `--trigger`; doppie metriche post-`build:sqlite`. [sync:safe]
 
 ## [1.1.27] — 2026-09-08
 
@@ -104,7 +105,7 @@
 
 ### Added
 
-- Appreso da sessione: ordine obbligatorio delta PRD (AC WB-42→24→26 prima di nuove JS; no nuove epiche; WB-43/44 riservate) + rule `.cursor/rules/b2b-prd-delta.mdc` su `01-requisiti/**`. [sync:safe]
+- Appreso da sessione: ordine obbligatorio delta PRD (AC WB-42→24→26 prima di nuove JS; no nuove epiche; WB-43/44 riservate) + rule `docs/rules/b2b-prd-delta.mdc` su `01-requisiti/**`. [sync:safe]
 
 ## [1.1.24] — 2026-09-08
 

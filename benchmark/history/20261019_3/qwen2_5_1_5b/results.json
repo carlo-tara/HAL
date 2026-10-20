@@ -1,0 +1,525 @@
+{
+  "started_at": "2026-10-19T22:07:26.112713+00:00",
+  "finished_at": "2026-10-19T22:38:03.760019+00:00",
+  "status": "completed",
+  "expected_results": 5,
+  "timing": "end_to_end_including_model_load",
+  "results": [
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "test_id": "ragionamento_logico",
+      "started_at": "2026-10-19T22:07:26.121546+00:00",
+      "quality": {
+        "passed": 4,
+        "total": 4,
+        "score": 1.0,
+        "checks": [
+          {
+            "label": "menziona la scatola Miste",
+            "passed": true
+          },
+          {
+            "label": "menziona Mele",
+            "passed": true
+          },
+          {
+            "label": "menziona Arance",
+            "passed": true
+          },
+          {
+            "label": "risposta argomentata",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 192,
+        "output": 330,
+        "reasoning": null,
+        "total": 522
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Ecco la soluzione:\n\n1. Consideriamo la lista di etichette: Mele, Arance e Miste.\n\n2. Riconosciamo che tutte le etichette sono sbagliate. Pertanto, non possiamo usarle per classificare le scatole.\n\n3. L'unica informazione che ci è proposta è la scatola in cui sono etichettate le scatole: Mele, Arance e Miste.\n\n4. Scriviamo il contratto locale: \"L'etichetta sulle scatole è sbagliata.\"\n\n5. Confrontiamo il contratto locale con la lista di etichette: Mele, Arance e Miste.\n\n6. Notiamo che tutte le etichette sono sbagliate e non presenti nel contratto locale.\n\n7. Concludemo che il contratto locale non ha informazioni valide che possano aiutare a classificare le scatole.\n\n8. Il problema è che non abbiamo informazioni affidabili sul contenuto delle scatole, poiché la etichetta che le indicate è falsa.\n\n9. Quindi, possiamo concludere che non possiamo estrarre una sola scatola senza controllare il contenuto, poiché non abbiamo alcuna informazione per classificarle.\n\nIl risultato è che non possiamo estrarre una sola scatola senza controllare il contenuto. Questo è dovuto al fatto che non abbiamo informazioni affidabili sul contenuto delle scatole.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 192,
+            "output": 330,
+            "reasoning": null,
+            "total": 522
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 18.399777,
+      "result_file": "01_ragionamento_logico_qwen2.5_1.5b.json",
+      "system1": {
+        "task_family": "reasoning",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "reasoning",
+          "required_strategy": "reasoning_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.7001,
+        "strategy": "reasoning_check",
+        "strategy_confidence": 0.2409,
+        "execution_confidence": 0.6528,
+        "confidence": 0.2409,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 12
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "test_id": "matematica",
+      "started_at": "2026-10-19T22:07:44.525052+00:00",
+      "quality": {
+        "passed": 0,
+        "total": 3,
+        "score": 0.0,
+        "checks": [
+          {
+            "label": "ricavo totale 2.770,20",
+            "passed": false
+          },
+          {
+            "label": "utile 610,20",
+            "passed": false
+          },
+          {
+            "label": "margine 22,03%",
+            "passed": false
+          }
+        ]
+      },
+      "tokens": {
+        "input": 233,
+        "output": 520,
+        "reasoning": null,
+        "total": 753
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "Per risolvere questo problema, seguiamo le seguenti stadi:\n\n1. Calcola il costo totale di acquisto:\n   120 articoli x 18 euro = 2160 euro\n\n2. Calcola il costo di ricarico:\n   90 articoli x 18 euro = 1620 euro\n   1620 euro x 35% = 567 euro\n   Ricavo totale = 2160 euro + 567 euro = 2727 euro\n\n3. Calcola il prezzo di vendita per i 90 articoli:\n   1620 euro (acquisto) x (1 + 35%) = 2148 euro\n   90 articoli x 2148 euro = 193,320 euro\n\n4. Calcola il costo di vendita per i 30 articoli:\n   30 articoli x 18 euro = 540 euro\n   540 euro x (1 - 20%) = 432 euro\n   30 articoli x 432 euro = 12,960 euro\n\n5. Calcola il totale di vendita:\n   193,320 euro (90 articoli) + 12,960 euro (30 articoli) = 206,280 euro\n\n6. Calcola il rendimento netto:\n   Rendimento netto = 206,280 euro / 2727 euro = 75,77%\n\n7. Calcola il margine percentuale sul ricavo:\n   Margine = (206,280 euro - 2160 euro) / 2160 euro = 84,62%\n\nRisultati:\n- Ricavo totale = 206,280 euro\n- Utile = 206,280 euro - 2160 euro = 185,120 euro\n- Margine percentuale sul ricavo = 84,62%\n\nQuindi, il rendimento del negozio è del 84,62% e il margine percentuale sul ricavo è del 84,62%.",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 233,
+            "output": 520,
+            "reasoning": null,
+            "total": 753
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 28.06399,
+      "result_file": "02_matematica_qwen2.5_1.5b.json",
+      "system1": {
+        "task_family": "math",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "math",
+          "required_strategy": "math_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.4791,
+        "strategy": "math_check",
+        "strategy_confidence": 0.814,
+        "execution_confidence": 0.062,
+        "confidence": 0.062,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "reasoning",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "test_id": "programmazione",
+      "started_at": "2026-10-19T22:08:12.590792+00:00",
+      "quality": {
+        "passed": 5,
+        "total": 6,
+        "score": 0.83,
+        "checks": [
+          {
+            "label": "documento HTML completo",
+            "passed": true
+          },
+          {
+            "label": "CSS e JavaScript inline",
+            "passed": true
+          },
+          {
+            "label": "gestione input da tastiera",
+            "passed": true
+          },
+          {
+            "label": "azione per nuova partita",
+            "passed": false
+          },
+          {
+            "label": "nessun salvataggio persistente",
+            "passed": true
+          },
+          {
+            "label": "nessuna dipendenza o risorsa remota",
+            "passed": true
+          }
+        ]
+      },
+      "tokens": {
+        "input": 344,
+        "output": 1807,
+        "reasoning": null,
+        "total": 2151
+      },
+      "status": "ok",
+      "finish_reason": "stop",
+      "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        /* CSS code here */\n    </style>\n</head>\n<body>\n    <input type=\"text\" id=\"sudokuGrid\" value=\"530019520 600079000 009500080\" readonly>\n    <button onclick=\"clearGrid()\">Ricompilare</button>\n    <div id=\"sudokuContainer\"></div>\n\n    <script>\n        function clearGrid() {\n            const grid = document.getElementById('sudokuGrid');\n            const container = document.getElementById('sudokuContainer');\n            container.innerHTML = '';\n            grid.value = '';\n        }\n\n        const rows = [];\n        const cols = [];\n        const cells = [];\n        const grid = document.getElementById('sudokuGrid');\n        const container = document.getElementById('sudokuContainer');\n\n        for (let i = 0; i < 9; i++) {\n            rows[i] = [];\n            cols[i] = [];\n            cells[i] = [];\n            const row = document.createElement('div');\n            row.className = 'row';\n            container.appendChild(row);\n\n            for (let j = 0; j < 9; j++) {\n                const cell = document.createElement('div');\n                cell.className = 'cell';\n                cell.id = `cell-${i * 9 + j}`;\n                row.appendChild(cell);\n\n                rows[i].push(cell);\n                cols[j].push(cell);\n                cells[i * 9 + j] = cell;\n            }\n        }\n\n        function init() {\n            const cellValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];\n            let cellValuesCopy = [...cellValues];\n\n            function validateCell(i, j) {\n                const value = grid.value;\n                const row = value.substring(0, 9);\n                const col = value.substring(9, 18);\n                const box = value.substring(18, 27);\n\n                if (row.indexOf(cellValuesCopy[i]) >= 0 || col.indexOf(cellValuesCopy[j]) >= 0 || box.indexOf(cellValuesCopy[(i * 3 + j) % 9]) >= 0) {\n                    return false;\n                }\n\n                return true;\n            }\n\n            function validateGrid() {\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        if (!validateCell(i, j)) {\n                            return false;\n                        }\n                    }\n                }\n\n                return true;\n            }\n\n            function solveGrid() {\n                const gridValue = grid.value;\n                const row = gridValue.substring(0, 9);\n                const col = gridValue.substring(9, 18);\n                const box = gridValue.substring(18, 27);\n\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        if (row[i] !== '0' || col[j] !== '0' || box[(i * 3 + j) % 9] !== '0') {\n                            continue;\n                        }\n\n                        const cellValuesCopy = [...cellValues];\n                        const value = gridValue.substring(0, 9);\n                        const rowValue = value.substring(0, 9);\n                        const colValue = value.substring(9, 18);\n                        const boxValue = value.substring(18, 27);\n\n                        if (validateCell(i, j)) {\n                            cellValuesCopy[i] = value.substring(0, 9);\n                            cellValuesCopy[j] = value.substring(9, 18);\n                            cellValuesCopy[(i * 3 + j) % 9] = value.substring(18, 27);\n                        }\n                    }\n                }\n\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        if (cellValuesCopy[i] === '0' || cellValuesCopy[j] === '0' || cellValuesCopy[(i * 3 + j) % 9] === '0') {\n                            continue;\n                        }\n\n                        for (let k = 1; k <= 9; k++) {\n                            const cell = document.getElementById(`cell-${i * 9 + j}`);\n                            if (cell.classList.contains('error')) {\n                                cell.classList.remove('error');\n                            }\n\n                            if (cell.value === '' || cell.value === cellValuesCopy[i] || cell.value === cellValuesCopy[j] || cell.value === cellValuesCopy[(i * 3 + j) % 9]) {\n                                cell.classList.add('correct');\n                            } else {\n                                cell.classList.add('incorrect');\n                            }\n                        }\n                    }\n                }\n            }\n\n            function solve() {\n                solveGrid();\n                validateGrid();\n                if (validateGrid()) {\n                    solveGrid();\n                    validateGrid();\n                    if (validateGrid()) {\n                        solveGrid();\n                        validateGrid();\n                        if (validateGrid()) {\n                            solveGrid();\n                            validateGrid();\n                            if (validateGrid()) {\n                                solveGrid();\n                                validateGrid();\n                                if (validateGrid()) {\n                                    solveGrid();\n                                    validateGrid();\n                                    if (validateGrid()) {\n                                        solveGrid();\n                                        validateGrid();\n                                        if (validateGrid()) {\n                                            solveGrid();\n                                            validateGrid();\n                                            if (validateGrid()) {\n                                                solveGrid();\n                                                validateGrid();\n                                                if (validateGrid()) {\n                                                    solveGrid();\n                                                    validateGrid();\n                                                    if (validateGrid()) {\n                                                        solveGrid();\n                                                        validateGrid();\n                                                        if (validateGrid()) {\n                                                            solveGrid();\n                                                            validateGrid();\n                                                            if (validateGrid()) {\n                                                                solveGrid();\n                                                            }\n                                                        }\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n\n            function fillGrid() {\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        const cell = document.getElementById(`cell-${i * 9 + j}`);\n                        const value = grid.value;\n                        const row = value.substring(0, 9);\n                        const col = value.substring(9, 18);\n                        const box = value.substring(18, 27);\n\n                        if (row[i] === '0' || col[j] === '0' || box[(i * 3 + j) % 9] === '0') {\n                            cell.value = row[i] || col[j] || box[(i * 3 + j) % 9];\n                        } else if (cell.value === '') {\n                            cell.value = '0';\n                        }\n                    }\n                }\n            }\n\n            function handleCellClick(i, j) {\n                const cell = document.getElementById(`cell-${i * 9 + j}`);\n                cell.value = '0';\n                cell.classList.add('error');\n                solve();\n            }\n\n            function handleCellChange(i, j) {\n                const cell = document.getElementById(`cell-${i * 9 + j}`);\n                cell.value = '';\n                cell.classList.remove('error');\n                cell.classList.add('correct');\n                solve();\n            }\n\n            function handleCellKeyDown(e) {\n                if (e.key === 'Escape') {\n                    clearGrid();\n                }\n            }\n\n            function handleCellFocus(i, j) {\n                const cell = document.getElementById(`cell-${i * 9 + j}`);\n                cell.value = '';\n                cell.classList.remove('error');\n                cell.classList.add('correct');\n                solve();\n            }\n\n            document.addEventListener('DOMContentLoaded', function () {\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        cells[i * 9 + j].addEventListener('click', handleCellClick);\n                        cells[i * 9 + j].addEventListener('keydown', handleCellKeyDown);\n                        cells[i * 9 + j].addEventListener('focus', handleCellFocus);\n                    }\n                }\n            });\n        }\n\n        function initGrid() {\n            grid.value = '530019520 600079000 009500080';\n        }\n\n        init();\n        initGrid();\n    </script>\n</body>\n</html>\n```",
+      "workflow": [
+        {
+          "system": "system2",
+          "stage": "risposta_finale",
+          "status": "ok",
+          "tokens": {
+            "input": 344,
+            "output": 1807,
+            "reasoning": null,
+            "total": 2151
+          }
+        }
+      ],
+      "workflow_summary": {
+        "system1_decisions": 0,
+        "system2_stages": 1,
+        "execution_mode": "single_pass"
+      },
+      "seconds": 91.135975,
+      "result_file": "03_programmazione_qwen2.5_1.5b.json",
+      "system1": {
+        "task_family": "coding",
+        "execution_mode": "single_pass",
+        "source_chars": 0,
+        "has_source": false,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "coding",
+          "required_strategy": "requirements_check",
+          "execution_mode": "single_pass",
+          "preserve_source_order": false,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.9999,
+        "strategy": "requirements_check",
+        "strategy_confidence": 0.3321,
+        "execution_confidence": 0.3415,
+        "confidence": 0.3321,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "coding",
+        "proposed_strategy": "grounded_extract",
+        "proposed_execution_mode": "single_pass",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "test_id": "estrazione_json",
+      "started_at": "2026-10-19T22:09:43.729318+00:00",
+      "quality": null,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "total": null
+      },
+      "status": "error",
+      "error": {
+        "type": "timeout"
+      },
+      "seconds": 964.740109,
+      "result_file": "04_estrazione_json_qwen2.5_1.5b.json",
+      "system1": {
+        "task_family": "source",
+        "execution_mode": "source_chunks",
+        "source_chars": 30000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "source",
+          "required_strategy": "grounded_extract",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": true
+        },
+        "family_confidence": 0.4826,
+        "strategy": "grounded_extract",
+        "strategy_confidence": 0.3731,
+        "execution_confidence": 0.1138,
+        "confidence": 0.1138,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "source",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "source_chunks",
+        "preflight_latency_ms": 9
+      }
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "test_id": "sintesi_traduzione",
+      "started_at": "2026-10-19T22:25:48.474037+00:00",
+      "quality": null,
+      "tokens": {
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "total": null
+      },
+      "status": "error",
+      "error": {
+        "type": "timeout"
+      },
+      "seconds": 735.283859,
+      "result_file": "05_sintesi_traduzione_qwen2.5_1.5b.json",
+      "system1": {
+        "task_family": "translation",
+        "execution_mode": "source_chunks",
+        "source_chars": 15000,
+        "has_source": true,
+        "explicit_plan": false,
+        "laya_recommended": true,
+        "task_contract": {
+          "family": "translation",
+          "required_strategy": "faithful_translate",
+          "execution_mode": "source_chunks",
+          "preserve_source_order": true,
+          "respect_output_format": false
+        },
+        "family_confidence": 0.9696,
+        "strategy": "faithful_translate",
+        "strategy_confidence": 0.9829,
+        "execution_confidence": 0.0329,
+        "confidence": 0.0329,
+        "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+        "laya_called": true,
+        "decision_source": "local_task_gate",
+        "proposed_task_family": "translation",
+        "proposed_strategy": "faithful_translate",
+        "proposed_execution_mode": "plan_then_solve",
+        "preflight_latency_ms": 12
+      }
+    }
+  ],
+  "result_directories": [
+    {
+      "provider": "ollama",
+      "model": "qwen2.5:1.5b",
+      "directory": "."
+    }
+  ],
+  "summary": {
+    "completed": 5,
+    "successful": 3,
+    "failed": 2,
+    "seconds": 1837.62371,
+    "total_tokens": null,
+    "known_total_tokens": 3426,
+    "usage_missing": 2
+  },
+  "system1": {
+    "ragionamento_logico": {
+      "task_family": "reasoning",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "reasoning",
+        "required_strategy": "reasoning_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.7001,
+      "strategy": "reasoning_check",
+      "strategy_confidence": 0.2409,
+      "execution_confidence": 0.6528,
+      "confidence": 0.2409,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 12
+    },
+    "matematica": {
+      "task_family": "math",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "math",
+        "required_strategy": "math_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.4791,
+      "strategy": "math_check",
+      "strategy_confidence": 0.814,
+      "execution_confidence": 0.062,
+      "confidence": 0.062,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "reasoning",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 9
+    },
+    "programmazione": {
+      "task_family": "coding",
+      "execution_mode": "single_pass",
+      "source_chars": 0,
+      "has_source": false,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "coding",
+        "required_strategy": "requirements_check",
+        "execution_mode": "single_pass",
+        "preserve_source_order": false,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.9999,
+      "strategy": "requirements_check",
+      "strategy_confidence": 0.3321,
+      "execution_confidence": 0.3415,
+      "confidence": 0.3321,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "coding",
+      "proposed_strategy": "grounded_extract",
+      "proposed_execution_mode": "single_pass",
+      "preflight_latency_ms": 9
+    },
+    "estrazione_json": {
+      "task_family": "source",
+      "execution_mode": "source_chunks",
+      "source_chars": 30000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "source",
+        "required_strategy": "grounded_extract",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": true
+      },
+      "family_confidence": 0.4826,
+      "strategy": "grounded_extract",
+      "strategy_confidence": 0.3731,
+      "execution_confidence": 0.1138,
+      "confidence": 0.1138,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "source",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "source_chunks",
+      "preflight_latency_ms": 9
+    },
+    "sintesi_traduzione": {
+      "task_family": "translation",
+      "execution_mode": "source_chunks",
+      "source_chars": 15000,
+      "has_source": true,
+      "explicit_plan": false,
+      "laya_recommended": true,
+      "task_contract": {
+        "family": "translation",
+        "required_strategy": "faithful_translate",
+        "execution_mode": "source_chunks",
+        "preserve_source_order": true,
+        "respect_output_format": false
+      },
+      "family_confidence": 0.9696,
+      "strategy": "faithful_translate",
+      "strategy_confidence": 0.9829,
+      "execution_confidence": 0.0329,
+      "confidence": 0.0329,
+      "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+      "laya_called": true,
+      "decision_source": "local_task_gate",
+      "proposed_task_family": "translation",
+      "proposed_strategy": "faithful_translate",
+      "proposed_execution_mode": "plan_then_solve",
+      "preflight_latency_ms": 12
+    }
+  },
+  "system2_metrics": {
+    "run_id": "577ac8f87f464ce59e91def9aaa02b1f",
+    "db_path": "/var/www/hal_system2/events/benchmarks/system2_metrics.sqlite3",
+    "summary": {
+      "events": 21,
+      "system1_events": 5,
+      "system2_events": 16,
+      "latency_ms": 1837658,
+      "tokens_total": 22239,
+      "errors": 2
+    }
+  }
+}

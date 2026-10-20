@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-19T23:25:47.415177+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 7775,
+    "output": 2625,
+    "reasoning": null,
+    "total": 10400
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Era un fine settimana di fine mese, la stella non era visibile nel cielo, le luci della città erano lente di rilascio, ma io avevo una preoccupazione: cosa avrei fatto domani. Avrei deciso di tornare al lavoro la mattina, senza alzarmi per le 8, dopo un lungo sonno, sarebbe stata una scelta sicura, ma sarebbe anche una scelta saggia, a cui il successo sarebbe stato garantito.\n\nLa struttura del testo è coerente e fedele al testo originale, con un solo paragrafo che copre l'argomento principale. L'uso di un'ampia gamma di espressioni e termini tecnici, come \"effetto alone\" e \"bias\", richiama la traduzione di testi scientifici e tecnologici. La lingua è molto fluida, con una buona coerenza grammaticale e sintattica.\n\nIn generale, la traduzione è fedele al testo originale e non presenta dubbi significativi. Tuttavia, potrebbe essere utile considerare la differenza linguistica tra l'italiano e l'espressione esplicita, nonché la differenza tra la struttura della traduzione e il testo originale. Inoltre, l'analisi dei temi e delle idee presenti nella struttura dell'introduzione potrebbe essere difficile, data la struttura semplice e concisa del testo.\n\nNon è stato possibile mantenere fedeltà al testo originale nella traduzione dei seguenti elementi:\n\n* Il concetto di \"effetto alone\" (no è presenti nei risultati)\n* Il termine \"bias\" (no è presenti nei risultati)\n* L'analisi dei temi e delle idee presenti nella struttura dell'introduzione (è stata difficile, data la struttura semplice e concisa del testo)\n* La traduzione della seconda parte del testo (no è stata possibile mantenere fedeltà al testo originale)\n\nNota che il primo paragrafo è stato mantenuto fedele al testo originale, con l'eccezione di alcune modifiche per migliorare la coerenza grammaticale e sintattica.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1068,
+        "output": 115,
+        "reasoning": null,
+        "total": 1183
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1078,
+        "output": 442,
+        "reasoning": null,
+        "total": 1520
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1055,
+        "output": 302,
+        "reasoning": null,
+        "total": 1357
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1071,
+        "output": 365,
+        "reasoning": null,
+        "total": 1436
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1049,
+        "output": 891,
+        "reasoning": null,
+        "total": 1940
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2454,
+        "output": 510,
+        "reasoning": null,
+        "total": 2964
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 6,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 254.081937,
+  "result_file": "05_sintesi_traduzione_llama3.2_1b.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 11
+  }
+}

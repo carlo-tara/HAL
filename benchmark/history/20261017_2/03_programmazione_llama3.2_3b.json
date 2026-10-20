@@ -1,0 +1,99 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T18:32:34.149211+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 726,
+    "output": 6479,
+    "reasoning": null,
+    "total": 7205
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<!DOCTYPE html>\n<html>\n<head>\n\t<title>Gioco di Sudoku</title>\n\t<style>\n\t\tbody {\n\t\t\tfont-family: Arial, sans-serif;\n\t\t}\n\n\t\t#griglia {\n\t\t\tborder-collapse: collapse;\n\t\t}\n\n\t\t#griglia th, #griglia td {\n\t\t\tborder: 1px solid #ccc;\n\t\t\tpadding: 10px;\n\t\t\ttext-align: center;\n\t\t}\n\n\t\t#griglia th {\n\t\t\tbackground-color: #f0f0f0;\n\t\t}\n\n\t\t#errogenere {\n\t\t\tbackground-color: #ffccff;\n\t\t\tcolor: #ff0000;\n\t\t\tpadding: 10px;\n\t\t\tborder-radius: 10px;\n\t\t}\n\n\t\t#messaggio {\n\t\t\tmargin-top: 20px;\n\t\t\tpadding: 10px;\n\t\t\tbackground-color: #f0f0f0;\n\t\t\tborder: 1px solid #ccc;\n\t\t}\n\n\t\t#ricomincia {\n\t\t\tbackground-color: #4CAF50;\n\t\t\tcolor: #fff;\n\t\t\tpadding: 10px 20px;\n\t\t\tborder-radius: 10px;\n\t\t\tcursor: pointer;\n\t\t}\n\t</style>\n</head>\n<body>\n\t<h1>Gioco di Sudoku</h1>\n\t<table id=\"griglia\">\n\t\t<tr>\n\t\t\t<th>1</th>\n\t\t\t<th>2</th>\n\t\t\t<th>3</th>\n\t\t\t<th>4</th>\n\t\t\t<th>5</th>\n\t\t\t<th>6</th>\n\t\t\t<th>7</th>\n\t\t\t<th>8</th>\n\t\t\t<th>9</th>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>4</td>\n\t\t\t<td>2</td>\n\t\t\t<td>6</td>\n\t\t\t<td>5</td>\n\t\t\t<td>3</td>\n\t\t\t<td>9</td>\n\t\t\t<td>8</td>\n\t\t\t<td>1</td>\n\t\t\t<td>7</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>7</td>\n\t\t\t<td>1</td>\n\t\t\t<td>8</td>\n\t\t\t<td>9</td>\n\t\t\t<td>6</td>\n\t\t\t<td>4</td>\n\t\t\t<td>5</td>\n\t\t\t<td>2</td>\n\t\t\t<td>3</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>2</td>\n\t\t\t<td>8</td>\n\t\t\t<td>3</td>\n\t\t\t<td>1</td>\n\t\t\t<td>4</td>\n\t\t\t<td>7</td>\n\t\t\t<td>9</td>\n\t\t\t<td>6</td>\n\t\t\t<td>5</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>5</td>\n\t\t\t<td>3</td>\n\t\t\t<td>1</td>\n\t\t\t<td>7</td>\n\t\t\t<td>9</td>\n\t\t\t<td>6</td>\n\t\t\t<td>4</td>\n\t\t\t<td>8</td>\n\t\t\t<td>2</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>9</td>\n\t\t\t<td>6</td>\n\t\t\t<td>5</td>\n\t\t\t<td>8</td>\n\t\t\t<td>2</td>\n\t\t\t<td>3</td>\n\t\t\t<td>1</td>\n\t\t\t<td>7</td>\n\t\t\t<td>4</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>1</td>\n\t\t\t<td>9</td>\n\t\t\t<td>4</td>\n\t\t\t<td>6</td>\n\t\t\t<td>5</td>\n\t\t\t<td>8</td>\n\t\t\t<td>3</td>\n\t\t\t<td>9</td>\n\t\t\t<td>7</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>8</td>\n\t\t\t<td>5</td>\n\t\t\t<td>9</td>\n\t\t\t<td>3</td>\n\t\t\t<td>7</td>\n\t\t\t<td>1</td>\n\t\t\t<td>6</td>\n\t\t\t<td>4</td>\n\t\t\t<td>2</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>3</td>\n\t\t\t<td>4</td>\n\t\t\t<td>2</td>\n\t\t\t<td>9</td>\n\t\t\t<td>1</td>\n\t\t\t<td>6</td>\n\t\t\t<td>5</td>\n\t\t\t<td>8</td>\n\t\t\t<td>7</td>\n\t\t</tr>\n\t</table>\n\t<button id=\"ricomincia\">Ricomincia</button>\n\t<div id=\"errogenere\"></div>\n\t<div id=\"messaggio\"></div>\n\n\t<script>\n\t\tlet griglia = [];\n\t\tlet valori = [4, 2, 6, 5, 3, 9, 8, 1, 7];\n\n\t\tfunction init() {\n\t\t\tfor (let i = 0; i < 9; i++) {\n\t\t\t\tgriglia[i] = [];\n\t\t\t\tfor (let j = 0; j < 9; j++) {\n\t\t\t\t\tgriglia[i][j] = valori[i * 9 + j];\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tdocument.getElementById('griglia').innerHTML = '';\n\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>';\n\t\t\tfor (let i = 0; i < 9; i++) {\n\t\t\t\tgriglia[i].forEach(function(v) {\n\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td>' + v + '</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t});\n\t\t\t}\n\t\t}\n\n\t\tfunction selezionaCella(x, y) {\n\t\t\tif (griglia[x][y] == '') {\n\t\t\t\tgriglia[x][y] = 1;\n\t\t\t\tdocument.getElementById('griglia').innerHTML = '';\n\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>';\n\t\t\t\tfor (let i = 0; i < 9; i++) {\n\t\t\t\t\tgriglia[i].forEach(function(v) {\n\t\t\t\t\t\tif (v == 1) {\n\t\t\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td id=\"cella-' + i + '-' + j + '\"><input type=\"number\" id=\"cella-' + i + '-' + j + '-input\" size=\"2\" value=\"\" style=\"width: 20px;\"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t\t\t} else if (v == '') {\n\t\t\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td id=\"cella-' + i + '-' + j + '\"><input type=\"number\" id=\"cella-' + i + '-' + j + '-input\" size=\"2\" value=\"\" style=\"width: 20px;\"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td id=\"cella-' + i + '-' + j + '\"><span id=\"cella-' + i + '-' + j + '-value\">' + v + '</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tfunction cancella() {\n\t\t\tgriglia = [];\n\t\t\tvalori = [4, 2, 6, 5, 3, 9, 8, 1, 7];\n\t\t\tinit();\n\t\t}\n\n\t\tfunction verifica() {\n\t\t\tif (verificaOrizzontale() && verificaVerticale() && verificaQuadrato() && verificaQuadrato2() && verificaQuadrato3() && verificaQuadrato4() && verificaQuadrato5() && verificaQuadrato6() && verificaQuadrato7()) {\n\t\t\t\tdocument.getElementById('messaggio').innerHTML = 'Hai vinto!';\n\t\t\t} else {\n\t\t\t\tdocument.getElementById('messaggio').innerHTML = 'Hai perso!';\n\t\t\t}\n\t\t}\n\n\t\tfunction verificaOrizzontale() {\n\t\t\tfor (let i = 0; i < 9; i++) {\n\t\t\t\tlet set = new Set();\n\t\t\t\tfor (let j = 0; j < 9; j++) {\n\t\t\t\t\tset.add(griglia[i][j]);\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaVerticale() {\n\t\t\tfor (let i = 0; i < 9; i++) {\n\t\t\t\tlet set = new Set();\n\t\t\t\tfor (let j = 0; j < 9; j++) {\n\t\t\t\t\tset.add(griglia[j][i]);\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato(x) {\n\t\t\tfor (let i = 0; i < 3; i++) {\n\t\t\t\tfor (let j = 0; j < 3; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + k][j * 3 + x]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato2() {\n\t\t\tfor (let i = 3; i < 9; i++) {\n\t\t\t\tfor (let j = 0; j < 3; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + k][j * 3 + x]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato3() {\n\t\t\tfor (let i = 0; i < 3; i++) {\n\t\t\t\tfor (let j = 3; j < 9; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + x][j * 3 + k]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato4() {\n\t\t\tfor (let i = 3; i < 9; i++) {\n\t\t\t\tfor (let j = 3; j < 9; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + k][j * 3 + x]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato5() {\n\t\t\tfor (let i = 0; i < 3; i++) {\n\t\t\t\tfor (let j = 0; j < 3; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + k][j * 3 + x + 3]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato6() {\n\t\t\tfor (let i = 0; i < 3; i++) {\n\t\t\t\tfor (let j = 3; j < 9; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + k][j * 3 + x + 3]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tfunction verificaQuadrato7() {\n\t\t\tfor (let i = 3; i < 9; i++) {\n\t\t\t\tfor (let j = 3; j < 9; j++) {\n\t\t\t\t\tlet set = new Set();\n\t\t\t\t\tfor (let k = 0; k < 3; k++) {\n\t\t\t\t\t\tset.add(griglia[i * 3 + k][j * 3 + x + 3]);\n\t\t\t\t\t}\n\t\t\t\t\tif (set.size > 1) {\n\t\t\t\t\t\treturn false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn true;\n\t\t}\n\n\t\tdocument.getElementById('ricomincia').addEventListener('click', cancella);\n\t\tdocument.getElementById('griglia').addEventListener('input', function(event) {\n\t\t\tlet cella = event.target.id;\n\t\t\tlet posizione = cella.split('-');\n\t\t\tlet x = parseInt(posizione[1]) - 1;\n\t\t\tlet y = parseInt(posizione[2]) - 1;\n\t\t\tif (griglia[x][y] == '') {\n\t\t\t\tgriglia[x][y] = 1;\n\t\t\t\tdocument.getElementById('griglia').innerHTML = '';\n\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>';\n\t\t\t\tfor (let i = 0; i < 9; i++) {\n\t\t\t\t\tgriglia[i].forEach(function(v) {\n\t\t\t\t\t\tif (v == 1) {\n\t\t\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td id=\"cella-' + i + '-' + j + '\"><input type=\"number\" id=\"cella-' + i + '-' + j + '-input\" size=\"2\" value=\"\" style=\"width: 20px;\"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t\t\t} else if (v == '') {\n\t\t\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td id=\"cella-' + i + '-' + j + '\"><input type=\"number\" id=\"cella-' + i + '-' + j + '-input\" size=\"2\" value=\"\" style=\"width: 20px;\"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tdocument.getElementById('griglia').innerHTML += '<tr><td id=\"cella-' + i + '-' + j + '\"><span id=\"cella-' + i + '-' + j + '-value\">' + v + '</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\n\t\tinit();\n\t</script>\n</body>\n</html>",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 342,
+        "output": 2984,
+        "reasoning": null,
+        "total": 3326
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.1138
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 384,
+        "output": 3495,
+        "reasoning": null,
+        "total": 3879
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.331
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 2,
+    "system2_stages": 2,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 562.537692,
+  "result_file": "03_programmazione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "coding",
+    "family_confidence": 0.9498,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5704,
+    "execution_mode": "single_pass",
+    "execution_confidence": 0.9268,
+    "confidence": 0.5704,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

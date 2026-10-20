@@ -1,0 +1,198 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T17:54:50.065482+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 255,
+    "output": 237,
+    "reasoning": null,
+    "total": 492
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```json\n{\n  \"risultati\": {\n    \"capitolo_1\": \"Capitolo 1: Introduzione\",\n    \"capitolo_2\": \"Capitolo 2: Obiettivi e Scopo\",\n    \"capitolo_3\": \"Capitolo 3: Struttura e Organizzazione\",\n    \"capitolo_4\": \"Capitolo 4: Strumenti di Valutazione\",\n    \"capitolo_5\": \"Capitolo 5: Misure di Valutazione\",\n    \"capitolo_6\": \"Capitolo 6: Analisi delle Confrontazioni\",\n    \"capitolo_7\": \"Capitolo 7: Analisi di Risultati\",\n    \"capitolo_8\": \"Capitolo 8: Analisi delle Implicazioni\",\n    \"capitolo_9\": \"Capitolo 9: Confronto e Riepilogo\",\n    \"capitolo_10\": \"Capitolo 10: Conclusione\"\n  }\n}\n```",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/10",
+      "decision": "skip",
+      "confidence": 0.0003,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/10",
+      "decision": "skip",
+      "confidence": 0.7317,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/10",
+      "decision": "skip",
+      "confidence": 0.6041,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/10",
+      "decision": "skip",
+      "confidence": 0.5497,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/10",
+      "decision": "skip",
+      "confidence": 0.2951,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 6/10",
+      "decision": "skip",
+      "confidence": 0.1696,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 7/10",
+      "decision": "skip",
+      "confidence": 0.0005,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 8/10",
+      "decision": "skip",
+      "confidence": 0.6298,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 9/10",
+      "decision": "skip",
+      "confidence": 0.3067,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 10/10",
+      "decision": "skip",
+      "confidence": 0.6595,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 255,
+        "output": 237,
+        "reasoning": null,
+        "total": 492
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "accept",
+      "confidence": 0.0316
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 11,
+    "system2_stages": 1,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 9.484264,
+  "result_file": "04_estrazione_json_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.913,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3693,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.9943,
+    "confidence": 0.3693,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/10",
+        "decision": "skip",
+        "confidence": 0.0003
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/10",
+        "decision": "skip",
+        "confidence": 0.7317
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/10",
+        "decision": "skip",
+        "confidence": 0.6041
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/10",
+        "decision": "skip",
+        "confidence": 0.5497
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/10",
+        "decision": "skip",
+        "confidence": 0.2951
+      },
+      {
+        "segment": 6,
+        "phase": "rilevanza segmento 6/10",
+        "decision": "skip",
+        "confidence": 0.1696
+      },
+      {
+        "segment": 7,
+        "phase": "rilevanza segmento 7/10",
+        "decision": "skip",
+        "confidence": 0.0005
+      },
+      {
+        "segment": 8,
+        "phase": "rilevanza segmento 8/10",
+        "decision": "skip",
+        "confidence": 0.6298
+      },
+      {
+        "segment": 9,
+        "phase": "rilevanza segmento 9/10",
+        "decision": "skip",
+        "confidence": 0.3067
+      },
+      {
+        "segment": 10,
+        "phase": "rilevanza segmento 10/10",
+        "decision": "skip",
+        "confidence": 0.6595
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T06:21:39.261969+00:00",
+  "quality": {
+    "passed": 6,
+    "total": 6,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": true
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 253,
+    "output": 1282,
+    "reasoning": null,
+    "total": 1535
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Jeu Sudoku</title>\n    <style>\n        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }\n        .sudoku { display: grid; grid-template-columns: repeat(9, 50px); gap: 1px; }\n        .sudoku input { width: 100%; height: 100%; text-align: center; font-size: 1.5em; }\n        .sudoku .error { border: 2px solid red; }\n        .controls { margin-top: 20px; }\n        .controls button { padding: 10px; margin: 0 5px; }\n    </style>\n</head>\n<body>\n    <div class=\"sudoku\" id=\"sudoku\"></div>\n    <div class=\"controls\">\n        <button onclick=\"newGame()\">Nuova Partita</button>\n    </div>\n    <script>\n        const solution = [5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,7,8,6,1,2,9,1,9,8,3,6,4,2,5,7,9,2,1,5,4,3,6,7,8,7,6,3,4,1,2,5,9,4,4,6,2,9,5,3,1,8,2,1,4,7,8,6,5,3,9,5,8,9,6,3,1,4,7,2,8,3,7,2,1,5,4,9,6,1,6,1,7,9,2,8,3,4,7,9,4,8,3,6,1,5,2,2,5,8,7,4,1,6,9,3,3,2,6,4,5,9,8,1,7,9,7,1,8,6,2,4,5,3,6,1,4,9,3,7,5,2,8,5,3,2,8,6,4,7,9,1];\n        let grid = Array(81).fill(0);\n        let index = 0;\n\n        function generateBoard() {\n            for (let i = 0; i < 81; i++) {\n                if (Math.random() < 0.2) grid[i] = solution[i];\n            }\n            for (let i = 0; i < 81; i++) {\n                if (grid[i] === 0) {\n                    let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];\n                    while (values.length) {\n                        let value = values[Math.floor(Math.random() * values.length)];\n                        if (isValid(i, value)) {\n                            grid[i] = value;\n                            values = values.filter(v => v !== value);\n                        }\n                    }\n                }\n            }\n        }\n\n        function isValid(position, value) {\n            let row = position - (position % 9);\n            let col = position % 9;\n            let block = Math.floor(row / 3) * 3 + Math.floor(col / 3);\n            for (let i = 0; i < 9; i++) {\n                if (grid[row + i] === value || grid[col + i * 9] === value || grid[block + 3 * (Math.floor(i / 3)) + (i % 3)] === value) return false;\n            }\n            return true;\n        }\n\n        function drawBoard() {\n            document.getElementById('sudoku').innerHTML = '';\n            for (let i = 0; i < 81; i++) {\n                const cell = document.createElement('input');\n                cell.type = 'number';\n                cell.min = 1;\n                cell.max = 9;\n                cell.onchange = () => {\n                    if (parseInt(cell.value) > 0 && isValid(i, parseInt(cell.value))) {\n                        grid[i] = parseInt(cell.value);\n                    } else {\n                        cell.value = grid[i];\n                    }\n                };\n                cell.onfocus = () => cell.select();\n                cell.onkeydown = (e) => {\n                    if (e.key >= 1 && e.key <= 9 && isValid(i, parseInt(e.key))) {\n                        cell.value = e.key;\n                    }\n                };\n                if (grid[i] > 0) cell.value = grid[i];\n                if (grid[i] > 0 && solution[i] !== grid[i]) cell.classList.add('error');\n                document.getElementById('sudoku').appendChild(cell);\n                if ((i + 1) % 9 === 0) document.getElementById('sudoku').appendChild(document.createElement('br'));\n            }\n        }\n\n        function newGame() {\n            grid = Array(81).fill(0);\n            index = 0;\n            generateBoard();\n            drawBoard();\n        }\n\n        newGame();\n    </script>\n</body>\n</html>\n```",
+  "seconds": 235.095156,
+  "result_file": "20261017_1/03_programmazione_qwen2.5_7b.json"
+}

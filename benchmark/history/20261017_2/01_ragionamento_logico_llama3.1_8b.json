@@ -1,0 +1,108 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-17T15:27:51.100975+00:00",
+  "quality": {
+    "passed": 4,
+    "total": 4,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "menziona la scatola Miste",
+        "passed": true
+      },
+      {
+        "label": "menziona Mele",
+        "passed": true
+      },
+      {
+        "label": "menziona Arance",
+        "passed": true
+      },
+      {
+        "label": "risposta argomentata",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 1009,
+    "output": 1065,
+    "reasoning": null,
+    "total": 2074
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "**Risposta completa:**\n\n**Categoria:** general\n**Modalità:** source_chunks\n**Strategia:** La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\n\n**Domanda:**\nTre scatole sono etichettate Mele, Arance e Miste. Tutte le etichette sono sbagliate. Puoi estrarre un solo frutto da una sola scatola senza guardarne il contenuto. Spiega quale scatola scegli e come determini il contenuto di tutte e tre.\n\n**Risposta:**\nLa scatola da scegliere è quella etichettata \"Miste\". Questa scelta è basata sulla logica che se le scatole sono etichettate in modo sbagliato, ciò significa che la scatola che è veramente contenente mele o arance è etichettata con il nome dell'altra frutta. Se quindi scegliamo la scatola etichettata \"Miste\", potremmo aspettarci di trovare una miscela di entrambe le frutta. \n\nPer determinare il contenuto di tutte e tre le scatole, potremmo utilizzare un processo di eliminazione. \n\n1.  Scegliamo la scatola etichettata \"Miste\" e la apriamo. Supponiamo che all'interno ci siano 2 mele e 1 arancia. \n2.  La scatola etichettata \"Mele\" contiene arance (in quanto la scatola etichettata \"Miste\" contiene mele e arance).\n3.  La scatola etichettata \"Arance\" contiene mele (in quanto la scatola etichettata \"Miste\" contiene mele e arance).\n\nCon questo metodo di eliminazione, possiamo determinare il contenuto di tutte e tre le scatole.\n\n**Formato risposta:** Risposta breve e comprensibile.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "piano_iniziale",
+      "status": "ok",
+      "tokens": {
+        "input": 213,
+        "output": 384,
+        "reasoning": null,
+        "total": 597
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "valutazione piano",
+      "decision": "proceed",
+      "confidence": 0.005
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 579,
+        "output": 231,
+        "reasoning": null,
+        "total": 810
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.2199
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 217,
+        "output": 450,
+        "reasoning": null,
+        "total": 667
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.0276
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 3,
+    "system2_stages": 3,
+    "execution_mode": "plan_then_solve"
+  },
+  "seconds": 221.694472,
+  "result_file": "01_ragionamento_logico_llama3.1_8b.json",
+  "system1": {
+    "task_family": "general",
+    "family_confidence": 0.2249,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2399,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.2159,
+    "confidence": 0.2159,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

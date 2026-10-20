@@ -1,0 +1,108 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-17T17:21:49.618043+00:00",
+  "quality": {
+    "passed": 4,
+    "total": 4,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "menziona la scatola Miste",
+        "passed": true
+      },
+      {
+        "label": "menziona Mele",
+        "passed": true
+      },
+      {
+        "label": "menziona Arance",
+        "passed": true
+      },
+      {
+        "label": "risposta argomentata",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 1307,
+    "output": 897,
+    "reasoning": null,
+    "total": 2204
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per risolvere questa situazione, possiamo procedere come segue:\n\n1. Identificare le etichette sbagliate: \"Mele, Arance e Miste\" sono tutte etichette sbagliate per tre scatole di frutta.\n\n2. Scegliere la scatola: L'etichetta \"Miste\" è la più generale e potrebbe indicare un tipo di frutto che non è specifico di alcuna delle altre due scatole.\n\n3. Determinare il contenuto di tutte le scatole:\n   - La scatola \"Arance\" contiene solo arance.\n   - La scatola \"Miste\" contiene solo miste.\n   - La scatola \"Mele\" contiene solo mele.\n\nRisposta completa:\nLa scatola \"Arance\" contiene solo arance.\nLa scatola \"Miste\" contiene solo miste.\nLa scatola \"Mele\" contiene solo mele.\n\nIn questo modo, la classe di etichette è corretta e rispetta i requisiti del prompt.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "piano_iniziale",
+      "status": "ok",
+      "tokens": {
+        "input": 232,
+        "output": 625,
+        "reasoning": null,
+        "total": 857
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "valutazione piano",
+      "decision": "proceed",
+      "confidence": 0.2665
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 839,
+        "output": 39,
+        "reasoning": null,
+        "total": 878
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.3874
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 236,
+        "output": 233,
+        "reasoning": null,
+        "total": 469
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.0555
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 3,
+    "system2_stages": 3,
+    "execution_mode": "plan_then_solve"
+  },
+  "seconds": 37.994348,
+  "result_file": "01_ragionamento_logico_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "general",
+    "family_confidence": 0.2249,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2399,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.2159,
+    "confidence": 0.2159,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

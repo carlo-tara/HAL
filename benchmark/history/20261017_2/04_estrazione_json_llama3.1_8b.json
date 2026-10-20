@@ -1,0 +1,215 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T15:44:36.194030+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 429,
+    "output": 477,
+    "reasoning": null,
+    "total": 906
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Sembra che tu abbia un compito di estrazione e analisi dei contenuti di un libro. La strategia System 1 suggerisce di individuare i requisiti direttamente nel prompt e di rispettare il formato richiesto. Ecco la mia risposta:\n\n**Risposta completa:**\n\n1. **Identificazione dei requisiti:**\n\t* Dalle prime 10 pagine del libro riportato sopra\n\t* Estrazione del contenuto dei singoli capitoli\n\t* Generazione di un riassunto sintetico per ogni capitolo\n\t* Presentazione dei risultati in formato JSON\n2. **Formato richiesto:**\n\t* Presentazione dei risultati in formato JSON\n3. **Strategia System 1:**\n\t* Individuare i requisiti direttamente nel prompt\n\t* Rispettare il formato richiesto\n\n**Risultati:**\n\nEcco un esempio di come potrebbe essere strutturato il contenuto dei singoli capitoli e i relativi riassunti sintetici in formato JSON:\n```json\n[\n  {\n    \"capitolo\": \"Capitolo 1\",\n    \"riassunto\": \"Introduzione al libro, argomenti trattati...\"\n  },\n  {\n    \"capitolo\": \"Capitolo 2\",\n    \"riassunto\": \"Spiegazione dei concetti fondamentali...\"\n  },\n  {\n    \"capitolo\": \"Capitolo 3\",\n    \"riassunto\": \"Applicazioni pratiche dei concetti...\"\n  },\n  {\n    \"capitolo\": \"Capitolo 4\",\n    \"riassunto\": \"Conclusioni e future prospettive...\"\n  },\n  ...\n]\n```\nSpero che ciò rispetti i requisiti richiesti. Se necessario, posso fornire ulteriori dettagli o chiarimenti.",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/10",
+      "decision": "skip",
+      "confidence": 0.0003,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/10",
+      "decision": "skip",
+      "confidence": 0.7317,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/10",
+      "decision": "skip",
+      "confidence": 0.6041,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/10",
+      "decision": "skip",
+      "confidence": 0.5497,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/10",
+      "decision": "skip",
+      "confidence": 0.2951,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 6/10",
+      "decision": "skip",
+      "confidence": 0.1696,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 7/10",
+      "decision": "skip",
+      "confidence": 0.0005,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 8/10",
+      "decision": "skip",
+      "confidence": 0.6298,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 9/10",
+      "decision": "skip",
+      "confidence": 0.3067,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 10/10",
+      "decision": "skip",
+      "confidence": 0.6595,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 235,
+        "output": 54,
+        "reasoning": null,
+        "total": 289
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.1366
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 194,
+        "output": 423,
+        "reasoning": null,
+        "total": 617
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.0407
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 12,
+    "system2_stages": 2,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 101.464629,
+  "result_file": "04_estrazione_json_llama3.1_8b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.913,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3693,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.9943,
+    "confidence": 0.3693,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/10",
+        "decision": "skip",
+        "confidence": 0.0003
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/10",
+        "decision": "skip",
+        "confidence": 0.7317
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/10",
+        "decision": "skip",
+        "confidence": 0.6041
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/10",
+        "decision": "skip",
+        "confidence": 0.5497
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/10",
+        "decision": "skip",
+        "confidence": 0.2951
+      },
+      {
+        "segment": 6,
+        "phase": "rilevanza segmento 6/10",
+        "decision": "skip",
+        "confidence": 0.1696
+      },
+      {
+        "segment": 7,
+        "phase": "rilevanza segmento 7/10",
+        "decision": "skip",
+        "confidence": 0.0005
+      },
+      {
+        "segment": 8,
+        "phase": "rilevanza segmento 8/10",
+        "decision": "skip",
+        "confidence": 0.6298
+      },
+      {
+        "segment": 9,
+        "phase": "rilevanza segmento 9/10",
+        "decision": "skip",
+        "confidence": 0.3067
+      },
+      {
+        "segment": 10,
+        "phase": "rilevanza segmento 10/10",
+        "decision": "skip",
+        "confidence": 0.6595
+      }
+    ]
+  }
+}

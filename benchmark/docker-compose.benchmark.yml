@@ -1,0 +1,18 @@
+services:
+  benchmark:
+    build: .
+    network_mode: host
+    user: "${BENCH_UID:-1000}:${BENCH_GID:-1000}"
+    env_file: .env
+    environment:
+      LAYA_URL: ${LAYA_URL:-http://127.0.0.1:8091}
+      LAYA_API_KEY: ${LAYA_API_KEY:-sk-local}
+      LAYA_TIMEOUT: ${LAYA_TIMEOUT:-120}
+      LAYA_MIN_CONFIDENCE: ${LAYA_MIN_CONFIDENCE:-0.7}
+      LAYA_MODEL: ${LAYA_MODEL:-multilingual}
+      SYSTEM2_METRICS_DB_PATH: ${SYSTEM2_METRICS_DB_PATH:-/app/events/benchmarks/system2_metrics.sqlite3}
+    volumes:
+      - ./config:/app/config:ro
+      - ./docs:/app/docs:ro
+      - ./events/benchmarks:/app/events/benchmarks
+    entrypoint: [python, -m, app.benchmark_models]

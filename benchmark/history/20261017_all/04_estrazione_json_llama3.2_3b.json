@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T12:04:58.706804+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 161,
+    "reasoning": null,
+    "total": 2211
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```\n{\n  \"capitolo_1\": \"La ricerca sul giudizio\",\n  \"capitolo_2\": \"Il metodo\",\n  \"capitolo_3\": \"La teoria della scelta\",\n  \"capitolo_4\": \"La psicologia dell'intuizione\",\n  \"capitolo_5\": \"La competenza e le euristiche\",\n  \"capitolo_6\": \"L'intuizione esperta\",\n  \"capitolo_7\": \"La comprensione della mente umana\"\n}\n```\n\nQuesto è un riassunto dei primi 7 capitoli del libro. I risultati sono stati estratti dai primi 10 pagine del libro e presentati in formato JSON.",
+  "seconds": 29.245587,
+  "result_file": "20261017_11/04_estrazione_json_llama3.2_3b.json"
+}

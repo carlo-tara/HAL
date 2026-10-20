@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Sudoku</h1>
+    <form id="sudoku-form">
+        <div class="row">
+            <div class="cell" id="cell-0">
+                <input type="number" id="number-0" oninput="checkNumber(this, 0)">
+            </div>
+            <div class="cell" id="cell-1">
+                <input type="number" id="number-1" oninput="checkNumber(this, 1)">
+            </div>
+            <div class="cell" id="cell-2">
+                <input type="number" id="number-2" oninput="checkNumber(this, 2)">
+            </div>
+            <div class="cell" id="cell-3">
+                <input type="number" id="number-3" oninput="checkNumber(this, 3)">
+            </div>
+            <div class="cell" id="cell-4">
+                <input type="number" id="number-4" oninput="checkNumber(this, 4)">
+            </div>
+            <div class="cell" id="cell-5">
+                <input type="number" id="number-5" oninput="checkNumber(this, 5)">
+            </div>
+            <div class="cell" id="cell-6">
+                <input type="number" id="number-6" oninput="checkNumber(this, 6)">
+            </div>
+            <div class="cell" id="cell-7">
+                <input type="number" id="number-7" oninput="checkNumber(this, 7)">
+            </div>
+            <div class="cell" id="cell-8">
+                <input type="number" id="number-8" oninput="checkNumber(this, 8)">
+            </div>
+        </div>
+        <button id="reset-button">Reset</button>
+        <button id="solve-button">Solve</button>
+    </form>
+    <div id="result"></div>
+    <script src="script.js"></script>
+</body>
+</html>

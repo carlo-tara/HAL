@@ -1,0 +1,252 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-17T18:42:42.107545+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 8964,
+    "output": 5854,
+    "reasoning": null,
+    "total": 14818
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Mi dispiace ma non sono in grado di tradurre pagine specifiche di un libro. Posso però aiutarti con la traduzione in spagnolo del libro. Se vuoi, posso traducere il libro di base. \n\nQuanto alla traduzione di una pagina, posso aiutarti con una pagina nel complesso. \n\nPer favore forniscimi il testo che vuoi tradurre e farò del mio meglio per tradurlo in spagnolo con fedeltà al testo originale e la struttura dei paragrafi.",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/5",
+      "decision": "process",
+      "confidence": 0.05,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_1_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1070,
+        "output": 580,
+        "reasoning": null,
+        "total": 1650
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 1/5",
+      "decision": "retry",
+      "confidence": 0.9131
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_1_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1103,
+        "output": 632,
+        "reasoning": null,
+        "total": 1735
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 1/5",
+      "decision": "reject",
+      "confidence": 0.6899
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/5",
+      "decision": "skip",
+      "confidence": 0.5,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/5",
+      "decision": "skip",
+      "confidence": 0.5402,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/5",
+      "decision": "process",
+      "confidence": 0.0282,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1073,
+        "output": 455,
+        "reasoning": null,
+        "total": 1528
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 4/5",
+      "decision": "retry",
+      "confidence": 0.2881
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1106,
+        "output": 638,
+        "reasoning": null,
+        "total": 1744
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 4/5",
+      "decision": "reject",
+      "confidence": 0.5002
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/5",
+      "decision": "process",
+      "confidence": 0.025,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1051,
+        "output": 757,
+        "reasoning": null,
+        "total": 1808
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 5/5",
+      "decision": "retry",
+      "confidence": 0.2411
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1084,
+        "output": 702,
+        "reasoning": null,
+        "total": 1786
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 5/5",
+      "decision": "reject",
+      "confidence": 0.9525
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2277,
+        "output": 1965,
+        "reasoning": null,
+        "total": 4242
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.3644
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 200,
+        "output": 125,
+        "reasoning": null,
+        "total": 325
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.3147
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 13,
+    "system2_stages": 8,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 584.347238,
+  "result_file": "05_sintesi_traduzione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "translation",
+    "family_confidence": 0.986,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.991,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.4364,
+    "confidence": 0.4364,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/5",
+        "decision": "process",
+        "confidence": 0.05
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/5",
+        "decision": "skip",
+        "confidence": 0.5
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/5",
+        "decision": "skip",
+        "confidence": 0.5402
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/5",
+        "decision": "process",
+        "confidence": 0.0282
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/5",
+        "decision": "process",
+        "confidence": 0.025
+      }
+    ]
+  }
+}

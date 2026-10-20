@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #sudoku {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            position: relative;
+        }
+        #cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            position: absolute;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="sudoku">
+        <div id="cell-1" class="cell"></div>
+        <div id="cell-2" class="cell"></div>
+        <div id="cell-3" class="cell"></div>
+        <div id="cell-4" class="cell"></div>
+        <div id="cell-5" class="cell"></div>
+        <div id="cell-6" class="cell"></div>
+        <div id="cell-7" class="cell"></div>
+        <div id="cell-8" class="cell"></div>
+        <div id="cell-9" class="cell"></div>
+    </div>
+
+    <button onclick="newGame()">Nuova Partita</button>
+    <script>
+        let grid = [];
+        let cells = document.querySelectorAll('#cell');
+        for (let i = 0; i < 9; i++) {
+            grid.push([]);
+            for (let j = 0; j < 9; j++) {
+                let cell = document.getElementById(`cell-${i * 9 + j + 1}`);
+                grid[i].push(cell);
+            }
+        }
+
+        function isValid(sudoku) {
+            let nums = new Set();
+            for (let i = 1; i <= 9; i++) {
+                nums.add(i);
+            }
+            for (let i = 0; i < 9; i++) {
+                let row = sudoku[i].map((cell) => cell.value);
+                let col = sudoku.map((row) => row[i]).map((cell) => cell.value);
+                let box = sudoku.map((row) => row.slice(i, i + 3)).map((row) => row.slice(3 * (i / 3), 3 * (i / 3 + 1)).map((cell) => cell.value).flat());
+                for (let j of row) {
+                    if (!nums.has(j)) {
+                        return false;
+                    }
+                }
+                for (let j of col) {
+                    if (!nums.has(j)) {
+                        return false;
+                    }
+                }
+                for (let j of box) {
+                    if (!nums.has(j)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function solve(sudoku) {
+            let empty = [];
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (sudoku[i][j].value === 0) {
+                        empty.push([i, j]);
+                    }
+                }
+            }
+            while (empty.length > 0) {
+                let [i, j] = empty[Math.floor(Math.random() * empty.length)];
+                if (isValid(sudoku)) {
+                    sudoku[i][j].value = 1;
+                } else {
+                    empty.shift();
+                }
+            }
+        }
+
+        function newGame() {
+            let grid = Array.from(document.querySelectorAll('#cell'));
+            let newSudoku = Array.from(document.querySelectorAll('#cell'));
+            let empty = [];
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (newSudoku[i][j].value === 0) {
+                        empty.push([i, j]);
+                    }
+                }
+            }
+            while (empty.length > 0) {
+                let [i, j] = empty[Math.floor(Math.random() * empty.length)];
+                if (isValid(newSudoku)) {
+                    newSudoku[i][j].value = 1;
+                } else {
+                    empty.shift();
+                }
+            }
+            solve(newSudoku);
+        }
+
+        document.querySelectorAll('#cell').forEach(cell => {
+            cell.addEventListener('click', () => {
+                if (cell.value === 0) {
+                    cell.value = 1;
+                } else {
+                    cell.value = 0;
+                }
+                let row = cell.id.split('cell-');
+                let column = row[0].split('-');
+                let rowIndex = parseInt(column[1]) - 1;
+                let columnIndex = parseInt(row[1]) - 1;
+                let row = grid[rowIndex];
+                let column = grid.map((row) => row[columnIndex]);
+                let box = grid.map((row) => row.slice(rowIndex, rowIndex + 3)).map((row) => row.slice(columnIndex * 3, columnIndex * 3 + 3).map((cell) => cell.value));
+                let cells = row.concat(column).concat(box).filter((cell) => cell.value === 0).map((cell) => cell.id);
+                for (let c of cells) {
+                    let cell = document.getElementById(c);
+                    if (cell) {
+                        cell.value = 1;
+                        newGame();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

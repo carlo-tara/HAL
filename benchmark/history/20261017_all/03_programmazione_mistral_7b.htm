@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .sudoku { display: grid; grid-template-columns: repeat(9, 1fr); gap: 1px; padding: 10px; border: 1px solid black; }
+        .sudoku input { width: 100%; border: none; text-align: center; font-size: 20px; }
+        .sudoku .error { background-color: red; }
+        .sudoku .correct { background-color: green; }
+        .button { margin-top: 20px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="sudoku" id="sudoku">
+        <!-- Sudoku grid goes here -->
+    </div>
+
+    <button class="button" onclick="newGame()">New Game</button>
+
+    <script>
+        const sudoku = document.getElementById('sudoku');
+        const numbers = Array.from(Array(9).keys()).map(n => String.fromCharCode(n + 48));
+
+        // Precompiled cells
+        const precompiled = [
+            [null, 3, 6, null, null, null, null, 9, null],
+            [5, 7, null, null, null, null, 4, null, null],
+            [null, null, null, 8, null, null, null, null, 1],
+            [null, null, 7, null, null, 5, null, null, null],
+            [null, 8, null, null, 3, null, null, null, null],
+            [null, null, 1, null, null, null, 2, 5, 9],
+            [null, null, null, 6, null, null, null, 7, 8],
+            [4, null, null, null, 9, 7, 5, null, null],
+            [null, 6, null, 2, null, 1, null, null, 3]
+        ];
+
+        // Initialize the Sudoku grid
+        precompiled.forEach((row, i) => {
+            const tr = document.createElement('tr');
+            row.forEach((value, j) => {
+                const td = document.createElement('td');
+                if (value === null) {
+                    td.appendChild(document.createElement('input'));
+                } else {
+                    td.textContent = value;
+                    td.classList.add('correct');
+                }
+                tr.appendChild(td);
+            });
+            sudoku.appendChild(tr);
+        });
+
+        // Check if the Sudoku is solved
+        function isSolved() {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const value = sudoku.rows[i].cells[j].firstChild.value || sudoku.rows[i].cells[j].textContent;
+                    if (value === null && sudoku.rows[i].cells[j].classList.contains('error')) {
+                        return false;
+                    }
+                    if (value && !numbers.includes(value) && !sudoku.rows[i].cells[j].classList.contains('error')) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Check if a number is valid for a cell
+        function isValidNumber(number, row, col) {
+            for (let i = 0; i < 9; i++) {
+                if (i !== col && sudoku.rows[i].cells[col].firstChild.value === number) {
+                    return false;
+                }
+                if (i === col && sudoku.rows[row].cells[i].firstChild.value === number) {
+                    return false;
+                }
+            }
+
+            const startRow = Math.floor(row / 3) * 3;
+            const startCol = Math.floor(col / 3) * 3;
+
+            for (let i = startRow; i < startRow + 3; i++) {
+                for (let j = startCol; j < startCol + 3; j++) {
+                    if (i !== row && j !== col && sudoku.rows[i].cells[j].firstChild.value === number) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        // Check if a number can be entered in a cell
+        function canEnterNumber(event) {
+            const { row, col } = getCellIndexes(event.target);
+            const number = event.target.valueAsNumber || event.target.textContent;
+            if (number === 0) return false;
+            if (!isValidNumber(number, row, col)) {
+                event.target.classList.add('error');
+                return false;
+            }
+            return true;
+        }
+
+        // Check if a key can be entered in a cell
+        function canEnterKey(event) {
+            const number = event.keyCode - 48;
+            if (number < 1 || number > 9) return false;
+            return canEnterNumber({ target: document.activeElement });
+        }
+
+        // Get cell indexes
+        function getCellIndexes(target) {
+            let row = 0;
+            let col = 0;
+            for (let i = 0; i < sudoku.rows.length; i++) {
+                for (let j = 0; j < sudoku.rows[i].cells.length; j++) {
+                    if (sudoku.rows[i].cells[j] === target) {
+                        row = i;
+                        col = j;
+                        break;
+                    }
+                }
+                if (row !== 0) break;
+            }
+            return { row, col };
+        }
+
+        // Handle input events
+        document.addEventListener('input', event => {
+            if (canEnterNumber(event)) {
+                event.target.classList.remove('error');
+            }
+        });
+
+        // Handle keydown events
+        document.addEventListener('keydown', event => {
+            if (canEnterKey(event)) {
+                const { row, col } = getCellIndexes(document.activeElement);
+                document.activeElement.value = event.keyCode - 48;
+            }
+        });
+
+        // New game
+        function newGame() {
+            Array.from(sudoku.getElementsByTagName('input')).forEach(input => input.value = null);
+            precompiled.forEach((row, i) => {
+                row.forEach((value, j) => {
+                    if (value === null) {
+                        const td = sudoku.rows[i].cells[j];
+                        td.classList.remove('error');
+                        td.firstChild.focus();
+                    }
+                });
+            });
+        }
+
+        // Initialize the Sudoku grid with precompiled values
+        for (let i = 0; i < precompiled.length; i++) {
+            for (let j = 0; j < precompiled[i].length; j++) {
+                const cell = sudoku.rows[i].cells[j];
+                if (precompiled[i][j] !== null) {
+                    cell.textContent = precompiled[i][j];
+                    cell.classList.add('correct');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

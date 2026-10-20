@@ -1,0 +1,36 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T09:51:47.062570+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 142,
+    "output": 365,
+    "reasoning": null,
+    "total": 507
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Per risolvere questo problema, procediamo in quattro passaggi:\n\n1. **Calcola il costo totale per l'acquisto**:\n   - 120 articoli × 18 euro = 2160 euro\n\n2. **Calcola il costo totale venduto con ricarico**:\n   - 90 articoli × (18 euro + (35% di 18 euro)) = 90 × (18 + 0.35 × 18) = 90 × 20.7 = 1863 euro\n\n3. **Calcola il costo totale venduto con sconto**:\n   - 30 articoli × (18 euro × (1 - 20%)) = 30 × (18 × 0.8) = 30 × 14.4 = 432 euro\n\n4. **Calcola il totale ricavo**:\n   - 1863 euro (ricarico) + 432 euro (sconto) = 2295 euro\n\n5. **Calcola l'utile**:\n   - 2295 euro (ricavo) - 2160 euro (costo) = 135 euro\n\n6. **Calcola il margine percentuale**:\n   - (135 euro ÷ 2160 euro) × 100 = 6.25%\n\nIn conclusione:\n- Ricavo totale: 2295 euro\n- Utile: 135 euro\n- Margine percentuale sul ricavo: 6.25%",
+  "seconds": 12.555521,
+  "result_file": "20261017_10/02_matematica_qwen2.5_1.5b.json"
+}

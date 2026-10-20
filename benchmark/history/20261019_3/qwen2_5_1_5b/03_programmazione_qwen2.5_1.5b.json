@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-19T22:08:12.590792+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": true
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": false
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 344,
+    "output": 1807,
+    "reasoning": null,
+    "total": 2151
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        /* CSS code here */\n    </style>\n</head>\n<body>\n    <input type=\"text\" id=\"sudokuGrid\" value=\"530019520 600079000 009500080\" readonly>\n    <button onclick=\"clearGrid()\">Ricompilare</button>\n    <div id=\"sudokuContainer\"></div>\n\n    <script>\n        function clearGrid() {\n            const grid = document.getElementById('sudokuGrid');\n            const container = document.getElementById('sudokuContainer');\n            container.innerHTML = '';\n            grid.value = '';\n        }\n\n        const rows = [];\n        const cols = [];\n        const cells = [];\n        const grid = document.getElementById('sudokuGrid');\n        const container = document.getElementById('sudokuContainer');\n\n        for (let i = 0; i < 9; i++) {\n            rows[i] = [];\n            cols[i] = [];\n            cells[i] = [];\n            const row = document.createElement('div');\n            row.className = 'row';\n            container.appendChild(row);\n\n            for (let j = 0; j < 9; j++) {\n                const cell = document.createElement('div');\n                cell.className = 'cell';\n                cell.id = `cell-${i * 9 + j}`;\n                row.appendChild(cell);\n\n                rows[i].push(cell);\n                cols[j].push(cell);\n                cells[i * 9 + j] = cell;\n            }\n        }\n\n        function init() {\n            const cellValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];\n            let cellValuesCopy = [...cellValues];\n\n            function validateCell(i, j) {\n                const value = grid.value;\n                const row = value.substring(0, 9);\n                const col = value.substring(9, 18);\n                const box = value.substring(18, 27);\n\n                if (row.indexOf(cellValuesCopy[i]) >= 0 || col.indexOf(cellValuesCopy[j]) >= 0 || box.indexOf(cellValuesCopy[(i * 3 + j) % 9]) >= 0) {\n                    return false;\n                }\n\n                return true;\n            }\n\n            function validateGrid() {\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        if (!validateCell(i, j)) {\n                            return false;\n                        }\n                    }\n                }\n\n                return true;\n            }\n\n            function solveGrid() {\n                const gridValue = grid.value;\n                const row = gridValue.substring(0, 9);\n                const col = gridValue.substring(9, 18);\n                const box = gridValue.substring(18, 27);\n\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        if (row[i] !== '0' || col[j] !== '0' || box[(i * 3 + j) % 9] !== '0') {\n                            continue;\n                        }\n\n                        const cellValuesCopy = [...cellValues];\n                        const value = gridValue.substring(0, 9);\n                        const rowValue = value.substring(0, 9);\n                        const colValue = value.substring(9, 18);\n                        const boxValue = value.substring(18, 27);\n\n                        if (validateCell(i, j)) {\n                            cellValuesCopy[i] = value.substring(0, 9);\n                            cellValuesCopy[j] = value.substring(9, 18);\n                            cellValuesCopy[(i * 3 + j) % 9] = value.substring(18, 27);\n                        }\n                    }\n                }\n\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        if (cellValuesCopy[i] === '0' || cellValuesCopy[j] === '0' || cellValuesCopy[(i * 3 + j) % 9] === '0') {\n                            continue;\n                        }\n\n                        for (let k = 1; k <= 9; k++) {\n                            const cell = document.getElementById(`cell-${i * 9 + j}`);\n                            if (cell.classList.contains('error')) {\n                                cell.classList.remove('error');\n                            }\n\n                            if (cell.value === '' || cell.value === cellValuesCopy[i] || cell.value === cellValuesCopy[j] || cell.value === cellValuesCopy[(i * 3 + j) % 9]) {\n                                cell.classList.add('correct');\n                            } else {\n                                cell.classList.add('incorrect');\n                            }\n                        }\n                    }\n                }\n            }\n\n            function solve() {\n                solveGrid();\n                validateGrid();\n                if (validateGrid()) {\n                    solveGrid();\n                    validateGrid();\n                    if (validateGrid()) {\n                        solveGrid();\n                        validateGrid();\n                        if (validateGrid()) {\n                            solveGrid();\n                            validateGrid();\n                            if (validateGrid()) {\n                                solveGrid();\n                                validateGrid();\n                                if (validateGrid()) {\n                                    solveGrid();\n                                    validateGrid();\n                                    if (validateGrid()) {\n                                        solveGrid();\n                                        validateGrid();\n                                        if (validateGrid()) {\n                                            solveGrid();\n                                            validateGrid();\n                                            if (validateGrid()) {\n                                                solveGrid();\n                                                validateGrid();\n                                                if (validateGrid()) {\n                                                    solveGrid();\n                                                    validateGrid();\n                                                    if (validateGrid()) {\n                                                        solveGrid();\n                                                        validateGrid();\n                                                        if (validateGrid()) {\n                                                            solveGrid();\n                                                            validateGrid();\n                                                            if (validateGrid()) {\n                                                                solveGrid();\n                                                            }\n                                                        }\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n\n            function fillGrid() {\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        const cell = document.getElementById(`cell-${i * 9 + j}`);\n                        const value = grid.value;\n                        const row = value.substring(0, 9);\n                        const col = value.substring(9, 18);\n                        const box = value.substring(18, 27);\n\n                        if (row[i] === '0' || col[j] === '0' || box[(i * 3 + j) % 9] === '0') {\n                            cell.value = row[i] || col[j] || box[(i * 3 + j) % 9];\n                        } else if (cell.value === '') {\n                            cell.value = '0';\n                        }\n                    }\n                }\n            }\n\n            function handleCellClick(i, j) {\n                const cell = document.getElementById(`cell-${i * 9 + j}`);\n                cell.value = '0';\n                cell.classList.add('error');\n                solve();\n            }\n\n            function handleCellChange(i, j) {\n                const cell = document.getElementById(`cell-${i * 9 + j}`);\n                cell.value = '';\n                cell.classList.remove('error');\n                cell.classList.add('correct');\n                solve();\n            }\n\n            function handleCellKeyDown(e) {\n                if (e.key === 'Escape') {\n                    clearGrid();\n                }\n            }\n\n            function handleCellFocus(i, j) {\n                const cell = document.getElementById(`cell-${i * 9 + j}`);\n                cell.value = '';\n                cell.classList.remove('error');\n                cell.classList.add('correct');\n                solve();\n            }\n\n            document.addEventListener('DOMContentLoaded', function () {\n                for (let i = 0; i < 9; i++) {\n                    for (let j = 0; j < 9; j++) {\n                        cells[i * 9 + j].addEventListener('click', handleCellClick);\n                        cells[i * 9 + j].addEventListener('keydown', handleCellKeyDown);\n                        cells[i * 9 + j].addEventListener('focus', handleCellFocus);\n                    }\n                }\n            });\n        }\n\n        function initGrid() {\n            grid.value = '530019520 600079000 009500080';\n        }\n\n        init();\n        initGrid();\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 344,
+        "output": 1807,
+        "reasoning": null,
+        "total": 2151
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 91.135975,
+  "result_file": "03_programmazione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

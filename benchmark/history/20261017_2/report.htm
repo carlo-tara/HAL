@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark 20261017_2</title>
+<style>
+  :root { --ink: #1f2933; --muted: #52606d; --line: #d9e2ec; --accent: #2f6fb0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink);
+         max-width: 960px; margin: 0 auto; padding: 24px; line-height: 1.5; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.2rem; margin: 40px 0 4px; }
+  .lead, .note, figcaption { color: var(--muted); font-size: .92rem; }
+  figure { margin: 0; }
+  figcaption { margin-bottom: 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  .card b { display: block; font-size: 1.3rem; }
+  .card span { color: var(--muted); font-size: .85rem; }
+  svg { width: 100%; height: auto; display: block; font-size: 13px; color: var(--ink); fill: var(--ink); }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #f5f7fa; }
+  details summary { cursor: pointer; color: var(--accent); }
+  details ul { margin: 6px 0 0; padding-left: 18px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Benchmark 20261017_2</h1>
+  <p class="lead">Run del 2026-10-17</p>
+</header>
+<div class="cards"><div class="card"><b>35</b><span>Run</span></div><div class="card"><b>7</b><span>Modelli</span></div><div class="card"><b>5</b><span>Test</span></div><div class="card"><b>0</b><span>Non ok (troncate o errore)</span></div><div class="card"><b>276.739</b><span>Token totali</span></div><div class="card"><b>5 h 10 min</b><span>Tempo totale</span></div></div>
+<section><h2>Confronto con 20261017_all</h2><p class="lead">Run abbinate per modello e test. Non abbinate: 0 nel report corrente, 0 nel precedente.</p><div class="cards"><div class="card"><b>62% → 44%</b><span>Score medio, tutte le run</span></div><div class="card"><b>3 → 0</b><span>Run non ok</span></div><div class="card"><b>3 h 32 min → 5 h 10 min</b><span>Tempo totale</span></div><div class="card"><b>35</b><span>Run abbinate</span></div></div></section><section><h2>Il punteggio è migliorato?</h2><figure><figcaption>Due pallini per modello: grigio il benchmark precedente, blu quello attuale. L&#x27;etichetta riporta la variazione in punti percentuali.</figcaption><div id="chart-compare-score"></div></figure></section><section><h2>Dove cambia il punteggio?</h2><figure><figcaption>Ogni cella confronta la stessa coppia modello-test. Blu: più check superati; rosso: meno. Sotto la variazione: check superati prima → adesso.</figcaption><div id="chart-delta-heatmap"></div></figure></section><section><h2>Il tempo è cambiato?</h2><figure><figcaption>Tempo mediano per modello, scala logaritmica. Grigio: precedente; blu: attuale.</figcaption><div id="chart-compare-time"></div></figure></section><section><h2>Run che cambiano</h2><p class="note">17 run invariate non elencate.</p><table><thead><tr><th scope="col">File</th><th scope="col">Modello</th><th scope="col">Test</th><th scope="col">Check superati</th><th scope="col">Variazione</th><th scope="col">Stato</th><th scope="col">Secondi</th></tr></thead><tbody><tr><td>01_ragionamento_logico_llama3.2_1b.json</td><td>llama3.2:1b</td><td>ragionamento_logico</td><td>4/4 → 0/4</td><td>−100 pp</td><td>ok → ok</td><td>12,3 → 30,0</td></tr><tr><td>01_ragionamento_logico_mistral_7b.json</td><td>mistral:7b</td><td>ragionamento_logico</td><td>3/4 → 4/4</td><td>+25 pp</td><td>ok → ok</td><td>57,8 → 150,0</td></tr><tr><td>02_matematica_llama3.1_8b.json</td><td>llama3.1:8b</td><td>matematica</td><td>0/3 → 2/3</td><td>+67 pp</td><td>ok → ok</td><td>135,7 → 393,6</td></tr><tr><td>02_matematica_phi3_mini.json</td><td>phi3:mini</td><td>matematica</td><td>2/3 → 0/3</td><td>−67 pp</td><td>ok → ok</td><td>87,2 → 475,0</td></tr><tr><td>03_programmazione_llama3.1_8b.json</td><td>llama3.1:8b</td><td>programmazione</td><td>6/6 → 5/6</td><td>−17 pp</td><td>ok → ok</td><td>474,5 → 389,8</td></tr><tr><td>03_programmazione_llama3.2_1b.json</td><td>llama3.2:1b</td><td>programmazione</td><td>5/6 → 2/6</td><td>−50 pp</td><td>ok → ok</td><td>44,0 → 157,6</td></tr><tr><td>03_programmazione_llama3.2_3b.json</td><td>llama3.2:3b</td><td>programmazione</td><td>4/6 → 5/6</td><td>+16 pp</td><td>truncated → ok</td><td>4.057,0 → 562,5</td></tr><tr><td>03_programmazione_mistral_7b.json</td><td>mistral:7b</td><td>programmazione</td><td>6/6 → 5/6</td><td>−17 pp</td><td>ok → ok</td><td>363,6 → 856,5</td></tr><tr><td>04_estrazione_json_mistral_7b.json</td><td>mistral:7b</td><td>estrazione_json</td><td>1/2 → 0/2</td><td>−50 pp</td><td>ok → ok</td><td>291,3 → 368,0</td></tr><tr><td>04_estrazione_json_phi3_mini.json</td><td>phi3:mini</td><td>estrazione_json</td><td>2/2 → 0/2</td><td>−100 pp</td><td>ok → ok</td><td>78,5 → 2.703,5</td></tr><tr><td>04_estrazione_json_qwen2.5_1.5b.json</td><td>qwen2.5:1.5b</td><td>estrazione_json</td><td>1/2 → 2/2</td><td>+50 pp</td><td>truncated → ok</td><td>1.924,9 → 9,5</td></tr><tr><td>04_estrazione_json_qwen2.5_7b.json</td><td>qwen2.5:7b</td><td>estrazione_json</td><td>2/2 → 0/2</td><td>−100 pp</td><td>ok → ok</td><td>119,7 → 60,1</td></tr><tr><td>05_sintesi_traduzione_llama3.1_8b.json</td><td>llama3.1:8b</td><td>sintesi_traduzione</td><td>1/2 → 0/2</td><td>−50 pp</td><td>ok → ok</td><td>295,4 → 936,3</td></tr><tr><td>05_sintesi_traduzione_llama3.2_1b.json</td><td>llama3.2:1b</td><td>sintesi_traduzione</td><td>1/2 → 0/2</td><td>−50 pp</td><td>ok → ok</td><td>131,3 → 120,0</td></tr><tr><td>05_sintesi_traduzione_llama3.2_3b.json</td><td>llama3.2:3b</td><td>sintesi_traduzione</td><td>1/2 → 0/2</td><td>−50 pp</td><td>ok → ok</td><td>127,5 → 584,3</td></tr><tr><td>05_sintesi_traduzione_phi3_mini.json</td><td>phi3:mini</td><td>sintesi_traduzione</td><td>1/2 → 0/2</td><td>−50 pp</td><td>ok → ok</td><td>243,8 → 817,2</td></tr><tr><td>05_sintesi_traduzione_qwen2.5_1.5b.json</td><td>qwen2.5:1.5b</td><td>sintesi_traduzione</td><td>1/2 → 0/2</td><td>−50 pp</td><td>truncated → ok</td><td>1.882,2 → 1.978,8</td></tr><tr><td>05_sintesi_traduzione_qwen2.5_7b.json</td><td>qwen2.5:7b</td><td>sintesi_traduzione</td><td>1/2 → 0/2</td><td>−50 pp</td><td>ok → ok</td><td>397,5 → 1.023,5</td></tr></tbody></table></section>
+<section>
+  <h2>Quale modello è più accurato?</h2>
+  <figure>
+    <figcaption>Score medio per modello: media dei punteggi dei test, ciascuno con lo stesso peso. Accanto a ogni barra, i check superati sul totale.</figcaption>
+    <div id="chart-score"></div>
+  </figure>
+</section>
+<section>
+  <h2>Dove falliscono i modelli?</h2>
+  <figure>
+    <figcaption>Check superati per run. «truncated» indica una risposta interrotta al limite di generazione: il punteggio si riferisce al testo parziale.</figcaption>
+    <div id="chart-heatmap"></div>
+  </figure>
+</section>
+<section>
+  <h2>Qualità contro tempo</h2>
+  <figure>
+    <figcaption>Un punto per modello: in alto a sinistra = più accurato e più veloce. Tempo mediano per run, scala logaritmica.</figcaption>
+    <div id="chart-scatter"></div>
+  </figure>
+</section>
+<section>
+  <h2>Dettaglio run</h2>
+  <p class="note">Tempi end-to-end della chiamata, incluso il caricamento del modello (timing del runner).</p>
+  <table><thead><tr><th scope="col">File</th><th scope="col">Modello</th><th scope="col">Test</th><th scope="col">Stato</th><th scope="col">Check superati</th><th scope="col">Secondi</th><th scope="col">Token</th><th scope="col">Check non superati</th></tr></thead><tbody><tr><td><a href="01_ragionamento_logico_llama3.1_8b.json">01_ragionamento_logico_llama3.1_8b.json</a></td><td>llama3.1:8b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>221,7</td><td>2.074</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_llama3.2_1b.json">01_ragionamento_logico_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>ragionamento_logico</td><td>ok</td><td>0/4</td><td>30,0</td><td>1.437</td><td><details><summary>4 non superati</summary><ul><li>menziona la scatola Miste</li><li>menziona Mele</li><li>menziona Arance</li><li>risposta argomentata</li></ul></details></td></tr><tr><td><a href="01_ragionamento_logico_llama3.2_3b.json">01_ragionamento_logico_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>131,1</td><td>2.735</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_mistral_7b.json">01_ragionamento_logico_mistral_7b.json</a></td><td>mistral:7b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>150,0</td><td>1.755</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_phi3_mini.json">01_ragionamento_logico_phi3_mini.json</a></td><td>phi3:mini</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>413,0</td><td>5.346</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_qwen2.5_1.5b.json">01_ragionamento_logico_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>38,0</td><td>2.204</td><td>—</td></tr><tr><td><a href="01_ragionamento_logico_qwen2.5_7b.json">01_ragionamento_logico_qwen2.5_7b.json</a></td><td>qwen2.5:7b</td><td>ragionamento_logico</td><td>ok</td><td>4/4</td><td>519,6</td><td>4.263</td><td>—</td></tr><tr><td><a href="02_matematica_llama3.1_8b.json">02_matematica_llama3.1_8b.json</a></td><td>llama3.1:8b</td><td>matematica</td><td>ok</td><td>2/3</td><td>393,6</td><td>3.394</td><td><details><summary>1 non superati</summary><ul><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_llama3.2_1b.json">02_matematica_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>matematica</td><td>ok</td><td>0/3</td><td>60,5</td><td>3.053</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_llama3.2_3b.json">02_matematica_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>matematica</td><td>ok</td><td>0/3</td><td>144,7</td><td>3.037</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_mistral_7b.json">02_matematica_mistral_7b.json</a></td><td>mistral:7b</td><td>matematica</td><td>ok</td><td>0/3</td><td>365,9</td><td>3.547</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_phi3_mini.json">02_matematica_phi3_mini.json</a></td><td>phi3:mini</td><td>matematica</td><td>ok</td><td>0/3</td><td>475,0</td><td>6.163</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_qwen2.5_1.5b.json">02_matematica_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>matematica</td><td>ok</td><td>0/3</td><td>40,5</td><td>2.099</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="02_matematica_qwen2.5_7b.json">02_matematica_qwen2.5_7b.json</a></td><td>qwen2.5:7b</td><td>matematica</td><td>ok</td><td>0/3</td><td>426,5</td><td>3.797</td><td><details><summary>3 non superati</summary><ul><li>ricavo totale 2.770,20</li><li>utile 610,20</li><li>margine 22,03%</li></ul></details></td></tr><tr><td><a href="03_programmazione_llama3.1_8b.json">03_programmazione_llama3.1_8b.json</a></td><td>llama3.1:8b</td><td>programmazione</td><td>ok</td><td>5/6</td><td>389,8</td><td>2.297</td><td><details><summary>1 non superati</summary><ul><li>gestione input da tastiera</li></ul></details></td></tr><tr><td><a href="03_programmazione_llama3.2_1b.json">03_programmazione_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>programmazione</td><td>ok</td><td>2/6</td><td>157,6</td><td>5.673</td><td><details><summary>4 non superati</summary><ul><li>CSS e JavaScript inline</li><li>gestione input da tastiera</li><li>azione per nuova partita</li><li>nessuna dipendenza o risorsa remota</li></ul></details></td></tr><tr><td><a href="03_programmazione_llama3.2_3b.json">03_programmazione_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>programmazione</td><td>ok</td><td>5/6</td><td>562,5</td><td>7.205</td><td><details><summary>1 non superati</summary><ul><li>gestione input da tastiera</li></ul></details></td></tr><tr><td><a href="03_programmazione_mistral_7b.json">03_programmazione_mistral_7b.json</a></td><td>mistral:7b</td><td>programmazione</td><td>ok</td><td>5/6</td><td>856,5</td><td>5.220</td><td><details><summary>1 non superati</summary><ul><li>azione per nuova partita</li></ul></details></td></tr><tr><td><a href="03_programmazione_phi3_mini.json">03_programmazione_phi3_mini.json</a></td><td>phi3:mini</td><td>programmazione</td><td>ok</td><td>6/6</td><td>386,9</td><td>4.087</td><td>—</td></tr><tr><td><a href="03_programmazione_qwen2.5_1.5b.json">03_programmazione_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>programmazione</td><td>ok</td><td>5/6</td><td>1.901,9</td><td>42.934</td><td><details><summary>1 non superati</summary><ul><li>gestione input da tastiera</li></ul></details></td></tr><tr><td><a href="03_programmazione_qwen2.5_7b.json">03_programmazione_qwen2.5_7b.json</a></td><td>qwen2.5:7b</td><td>programmazione</td><td>ok</td><td>6/6</td><td>402,9</td><td>2.919</td><td>—</td></tr><tr><td><a href="04_estrazione_json_llama3.1_8b.json">04_estrazione_json_llama3.1_8b.json</a></td><td>llama3.1:8b</td><td>estrazione_json</td><td>ok</td><td>1/2</td><td>101,5</td><td>906</td><td><details><summary>1 non superati</summary><ul><li>risposta in formato JSON</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_llama3.2_1b.json">04_estrazione_json_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>estrazione_json</td><td>ok</td><td>1/2</td><td>84,2</td><td>3.183</td><td><details><summary>1 non superati</summary><ul><li>riferimento all&#x27;Introduzione</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_llama3.2_3b.json">04_estrazione_json_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>estrazione_json</td><td>ok</td><td>1/2</td><td>45,4</td><td>950</td><td><details><summary>1 non superati</summary><ul><li>riferimento all&#x27;Introduzione</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_mistral_7b.json">04_estrazione_json_mistral_7b.json</a></td><td>mistral:7b</td><td>estrazione_json</td><td>ok</td><td>0/2</td><td>368,0</td><td>2.506</td><td><details><summary>2 non superati</summary><ul><li>risposta in formato JSON</li><li>riferimento all&#x27;Introduzione</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_phi3_mini.json">04_estrazione_json_phi3_mini.json</a></td><td>phi3:mini</td><td>estrazione_json</td><td>ok</td><td>0/2</td><td>2.703,5</td><td>17.473</td><td><details><summary>2 non superati</summary><ul><li>risposta in formato JSON</li><li>riferimento all&#x27;Introduzione</li></ul></details></td></tr><tr><td><a href="04_estrazione_json_qwen2.5_1.5b.json">04_estrazione_json_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>estrazione_json</td><td>ok</td><td>2/2</td><td>9,5</td><td>492</td><td>—</td></tr><tr><td><a href="04_estrazione_json_qwen2.5_7b.json">04_estrazione_json_qwen2.5_7b.json</a></td><td>qwen2.5:7b</td><td>estrazione_json</td><td>ok</td><td>0/2</td><td>60,1</td><td>586</td><td><details><summary>2 non superati</summary><ul><li>risposta in formato JSON</li><li>riferimento all&#x27;Introduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_llama3.1_8b.json">05_sintesi_traduzione_llama3.1_8b.json</a></td><td>llama3.1:8b</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>936,3</td><td>12.131</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_llama3.2_1b.json">05_sintesi_traduzione_llama3.2_1b.json</a></td><td>llama3.2:1b</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>120,0</td><td>10.051</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_llama3.2_3b.json">05_sintesi_traduzione_llama3.2_3b.json</a></td><td>llama3.2:3b</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>584,3</td><td>14.818</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_mistral_7b.json">05_sintesi_traduzione_mistral_7b.json</a></td><td>mistral:7b</td><td>sintesi_traduzione</td><td>ok</td><td>1/2</td><td>1.724,7</td><td>18.557</td><td><details><summary>1 non superati</summary><ul><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_phi3_mini.json">05_sintesi_traduzione_phi3_mini.json</a></td><td>phi3:mini</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>817,2</td><td>14.938</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_qwen2.5_1.5b.json">05_sintesi_traduzione_qwen2.5_1.5b.json</a></td><td>qwen2.5:1.5b</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>1.978,8</td><td>50.659</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr><tr><td><a href="05_sintesi_traduzione_qwen2.5_7b.json">05_sintesi_traduzione_qwen2.5_7b.json</a></td><td>qwen2.5:7b</td><td>sintesi_traduzione</td><td>ok</td><td>0/2</td><td>1.023,5</td><td>14.250</td><td><details><summary>2 non superati</summary><ul><li>presenza di lessico spagnolo</li><li>lunghezza minima della traduzione</li></ul></details></td></tr></tbody></table>
+</section>
+<script type="application/json" id="bench-data">{"folder": "20261017_2", "generated_at": "2026-10-17T23:38:56+00:00", "summary": {"runs": 35, "models": 7, "tests": 5, "ok": 35, "not_ok": 0, "truncated": 0, "seconds": 18625.339018, "tokens": 276739, "first_started": "2026-10-17T13:49:33.208634+00:00", "last_started": "2026-10-17T18:57:58.910082+00:00"}, "models": [{"model": "llama3.1:8b", "runs": 5, "score_mean": 0.6, "passed": 12, "total": 17, "seconds_median": 389.825138, "not_ok": 0}, {"model": "qwen2.5:1.5b", "runs": 5, "score_mean": 0.5660000000000001, "passed": 11, "total": 17, "seconds_median": 40.520284, "not_ok": 0}, {"model": "llama3.2:3b", "runs": 5, "score_mean": 0.466, "passed": 10, "total": 17, "seconds_median": 144.715586, "not_ok": 0}, {"model": "mistral:7b", "runs": 5, "score_mean": 0.466, "passed": 10, "total": 17, "seconds_median": 367.995315, "not_ok": 0}, {"model": "qwen2.5:7b", "runs": 5, "score_mean": 0.4, "passed": 10, "total": 17, "seconds_median": 426.525745, "not_ok": 0}, {"model": "phi3:mini", "runs": 5, "score_mean": 0.4, "passed": 10, "total": 17, "seconds_median": 474.962052, "not_ok": 0}, {"model": "llama3.2:1b", "runs": 5, "score_mean": 0.166, "passed": 3, "total": 17, "seconds_median": 84.23727, "not_ok": 0}], "tests": [{"id": "ragionamento_logico", "label": "ragionamento logico"}, {"id": "matematica", "label": "matematica"}, {"id": "programmazione", "label": "programmazione"}, {"id": "estrazione_json", "label": "estrazione json"}, {"id": "sintesi_traduzione", "label": "sintesi traduzione"}], "runs": [{"file": "01_ragionamento_logico_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 221.694472, "tokens": 2074, "started_at": "2026-10-17T15:27:51.100975+00:00"}, {"file": "01_ragionamento_logico_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "ragionamento_logico", "status": "ok", "passed": 0, "total": 4, "score": 0.0, "failed_checks": ["menziona la scatola Miste", "menziona Mele", "menziona Arance", "risposta argomentata"], "seconds": 29.971515, "tokens": 1437, "started_at": "2026-10-17T18:52:26.476909+00:00"}, {"file": "01_ragionamento_logico_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 131.057499, "tokens": 2735, "started_at": "2026-10-17T18:27:58.341665+00:00"}, {"file": "01_ragionamento_logico_mistral_7b.json", "model": "mistral:7b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 150.015704, "tokens": 1755, "started_at": "2026-10-17T14:30:05.961520+00:00"}, {"file": "01_ragionamento_logico_phi3_mini.json", "model": "phi3:mini", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 413.004987, "tokens": 5346, "started_at": "2026-10-17T16:01:53.959472+00:00"}, {"file": "01_ragionamento_logico_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 37.994348, "tokens": 2204, "started_at": "2026-10-17T17:21:49.618043+00:00"}, {"file": "01_ragionamento_logico_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "ragionamento_logico", "status": "ok", "passed": 4, "total": 4, "score": 1.0, "failed_checks": [], "seconds": 519.643191, "tokens": 4263, "started_at": "2026-10-17T13:49:33.208634+00:00"}, {"file": "02_matematica_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "matematica", "status": "ok", "passed": 2, "total": 3, "score": 0.67, "failed_checks": ["margine 22,03%"], "seconds": 393.556033, "tokens": 3394, "started_at": "2026-10-17T15:31:32.800299+00:00"}, {"file": "02_matematica_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 60.542322, "tokens": 3053, "started_at": "2026-10-17T18:52:56.460366+00:00"}, {"file": "02_matematica_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 144.715586, "tokens": 3037, "started_at": "2026-10-17T18:30:09.422613+00:00"}, {"file": "02_matematica_mistral_7b.json", "model": "mistral:7b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 365.850119, "tokens": 3547, "started_at": "2026-10-17T14:32:35.980753+00:00"}, {"file": "02_matematica_phi3_mini.json", "model": "phi3:mini", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 474.962052, "tokens": 6163, "started_at": "2026-10-17T16:08:46.971643+00:00"}, {"file": "02_matematica_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 40.520284, "tokens": 2099, "started_at": "2026-10-17T17:22:27.621594+00:00"}, {"file": "02_matematica_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "matematica", "status": "ok", "passed": 0, "total": 3, "score": 0.0, "failed_checks": ["ricavo totale 2.770,20", "utile 610,20", "margine 22,03%"], "seconds": 426.525745, "tokens": 3797, "started_at": "2026-10-17T13:58:12.855118+00:00"}, {"file": "03_programmazione_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "programmazione", "status": "ok", "passed": 5, "total": 6, "score": 0.83, "failed_checks": ["gestione input da tastiera"], "seconds": 389.825138, "tokens": 2297, "started_at": "2026-10-17T15:38:06.362144+00:00"}, {"file": "03_programmazione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "programmazione", "status": "ok", "passed": 2, "total": 6, "score": 0.33, "failed_checks": ["CSS e JavaScript inline", "gestione input da tastiera", "azione per nuova partita", "nessuna dipendenza o risorsa remota"], "seconds": 157.632339, "tokens": 5673, "started_at": "2026-10-17T18:53:57.014774+00:00"}, {"file": "03_programmazione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "programmazione", "status": "ok", "passed": 5, "total": 6, "score": 0.83, "failed_checks": ["gestione input da tastiera"], "seconds": 562.537692, "tokens": 7205, "started_at": "2026-10-17T18:32:34.149211+00:00"}, {"file": "03_programmazione_mistral_7b.json", "model": "mistral:7b", "test_id": "programmazione", "status": "ok", "passed": 5, "total": 6, "score": 0.83, "failed_checks": ["azione per nuova partita"], "seconds": 856.5428, "tokens": 5220, "started_at": "2026-10-17T14:38:41.834259+00:00"}, {"file": "03_programmazione_phi3_mini.json", "model": "phi3:mini", "test_id": "programmazione", "status": "ok", "passed": 6, "total": 6, "score": 1.0, "failed_checks": [], "seconds": 386.920812, "tokens": 4087, "started_at": "2026-10-17T16:16:41.941218+00:00"}, {"file": "03_programmazione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "programmazione", "status": "ok", "passed": 5, "total": 6, "score": 0.83, "failed_checks": ["gestione input da tastiera"], "seconds": 1901.90466, "tokens": 42934, "started_at": "2026-10-17T17:23:08.151145+00:00"}, {"file": "03_programmazione_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "programmazione", "status": "ok", "passed": 6, "total": 6, "score": 1.0, "failed_checks": [], "seconds": 402.930413, "tokens": 2919, "started_at": "2026-10-17T14:05:19.383117+00:00"}, {"file": "04_estrazione_json_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "estrazione_json", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["risposta in formato JSON"], "seconds": 101.464629, "tokens": 906, "started_at": "2026-10-17T15:44:36.194030+00:00"}, {"file": "04_estrazione_json_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "estrazione_json", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["riferimento all'Introduzione"], "seconds": 84.23727, "tokens": 3183, "started_at": "2026-10-17T18:56:34.661023+00:00"}, {"file": "04_estrazione_json_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "estrazione_json", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["riferimento all'Introduzione"], "seconds": 45.395236, "tokens": 950, "started_at": "2026-10-17T18:41:56.699685+00:00"}, {"file": "04_estrazione_json_mistral_7b.json", "model": "mistral:7b", "test_id": "estrazione_json", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["risposta in formato JSON", "riferimento all'Introduzione"], "seconds": 367.995315, "tokens": 2506, "started_at": "2026-10-17T14:52:58.381147+00:00"}, {"file": "04_estrazione_json_phi3_mini.json", "model": "phi3:mini", "test_id": "estrazione_json", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["risposta in formato JSON", "riferimento all'Introduzione"], "seconds": 2703.456199, "tokens": 17473, "started_at": "2026-10-17T16:23:08.869338+00:00"}, {"file": "04_estrazione_json_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "estrazione_json", "status": "ok", "passed": 2, "total": 2, "score": 1.0, "failed_checks": [], "seconds": 9.484264, "tokens": 492, "started_at": "2026-10-17T17:54:50.065482+00:00"}, {"file": "04_estrazione_json_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "estrazione_json", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["risposta in formato JSON", "riferimento all'Introduzione"], "seconds": 60.111578, "tokens": 586, "started_at": "2026-10-17T14:12:02.316333+00:00"}, {"file": "05_sintesi_traduzione_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 936.274575, "tokens": 12131, "started_at": "2026-10-17T15:46:17.672727+00:00"}, {"file": "05_sintesi_traduzione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 119.979068, "tokens": 10051, "started_at": "2026-10-17T18:57:58.910082+00:00"}, {"file": "05_sintesi_traduzione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 584.347238, "tokens": 14818, "started_at": "2026-10-17T18:42:42.107545+00:00"}, {"file": "05_sintesi_traduzione_mistral_7b.json", "model": "mistral:7b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 1, "total": 2, "score": 0.5, "failed_checks": ["lunghezza minima della traduzione"], "seconds": 1724.710617, "tokens": 18557, "started_at": "2026-10-17T14:59:06.381553+00:00"}, {"file": "05_sintesi_traduzione_phi3_mini.json", "model": "phi3:mini", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 817.248335, "tokens": 14938, "started_at": "2026-10-17T17:08:12.336124+00:00"}, {"file": "05_sintesi_traduzione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 1978.762141, "tokens": 50659, "started_at": "2026-10-17T17:54:59.559328+00:00"}, {"file": "05_sintesi_traduzione_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "sintesi_traduzione", "status": "ok", "passed": 0, "total": 2, "score": 0.0, "failed_checks": ["presenza di lessico spagnolo", "lunghezza minima della traduzione"], "seconds": 1023.524842, "tokens": 14250, "started_at": "2026-10-17T14:13:02.431152+00:00"}], "comparison": {"baseline": "20261017_all", "summary": {"runs_prev": 35, "runs_curr": 35, "score_prev": 0.6214285714285714, "score_curr": 0.4377142857142857, "not_ok_prev": 3, "not_ok_curr": 0, "seconds_prev": 12706.687314, "seconds_curr": 18625.339018}, "models": [{"model": "llama3.1:8b", "score_prev": 0.6, "score_curr": 0.6, "seconds_prev": 242.821566, "seconds_curr": 389.825138}, {"model": "qwen2.5:1.5b", "score_prev": 0.5660000000000001, "score_curr": 0.5660000000000001, "seconds_prev": 26.904897, "seconds_curr": 40.520284}, {"model": "llama3.2:3b", "score_prev": 0.534, "score_curr": 0.466, "seconds_prev": 44.911946, "seconds_curr": 144.715586}, {"model": "mistral:7b", "score_prev": 0.55, "score_curr": 0.466, "seconds_prev": 291.342863, "seconds_curr": 367.995315}, {"model": "qwen2.5:7b", "score_prev": 0.7, "score_curr": 0.4, "seconds_prev": 143.643643, "seconds_curr": 426.525745}, {"model": "phi3:mini", "score_prev": 0.834, "score_curr": 0.4, "seconds_prev": 87.245245, "seconds_curr": 474.962052}, {"model": "llama3.2:1b", "score_prev": 0.5660000000000001, "score_curr": 0.166, "seconds_prev": 43.970619, "seconds_curr": 84.23727}], "pairs": [{"file": "01_ragionamento_logico_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 63.743161, "curr_seconds": 221.694472}, {"file": "01_ragionamento_logico_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 0, "curr_total": 4, "delta": -1.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 12.254082, "curr_seconds": 29.971515}, {"file": "01_ragionamento_logico_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 43.022818, "curr_seconds": 131.057499}, {"file": "01_ragionamento_logico_mistral_7b.json", "model": "mistral:7b", "test_id": "ragionamento_logico", "prev_passed": 3, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.25, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 57.817781, "curr_seconds": 150.015704}, {"file": "01_ragionamento_logico_phi3_mini.json", "model": "phi3:mini", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 66.770117, "curr_seconds": 413.004987}, {"file": "01_ragionamento_logico_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 18.068158, "curr_seconds": 37.994348}, {"file": "01_ragionamento_logico_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "ragionamento_logico", "prev_passed": 4, "prev_total": 4, "curr_passed": 4, "curr_total": 4, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 70.2779, "curr_seconds": 519.643191}, {"file": "02_matematica_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 2, "curr_total": 3, "delta": 0.67, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 135.653566, "curr_seconds": 393.556033}, {"file": "02_matematica_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 19.322769, "curr_seconds": 60.542322}, {"file": "02_matematica_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 44.911946, "curr_seconds": 144.715586}, {"file": "02_matematica_mistral_7b.json", "model": "mistral:7b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 111.653466, "curr_seconds": 365.850119}, {"file": "02_matematica_phi3_mini.json", "model": "phi3:mini", "test_id": "matematica", "prev_passed": 2, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": -0.67, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 87.245245, "curr_seconds": 474.962052}, {"file": "02_matematica_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 12.555521, "curr_seconds": 40.520284}, {"file": "02_matematica_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "matematica", "prev_passed": 0, "prev_total": 3, "curr_passed": 0, "curr_total": 3, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 143.643643, "curr_seconds": 426.525745}, {"file": "03_programmazione_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "programmazione", "prev_passed": 6, "prev_total": 6, "curr_passed": 5, "curr_total": 6, "delta": -0.17000000000000004, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 474.48801, "curr_seconds": 389.825138}, {"file": "03_programmazione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "programmazione", "prev_passed": 5, "prev_total": 6, "curr_passed": 2, "curr_total": 6, "delta": -0.49999999999999994, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 43.970619, "curr_seconds": 157.632339}, {"file": "03_programmazione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "programmazione", "prev_passed": 4, "prev_total": 6, "curr_passed": 5, "curr_total": 6, "delta": 0.15999999999999992, "prev_status": "truncated", "curr_status": "ok", "prev_seconds": 4057.049732, "curr_seconds": 562.537692}, {"file": "03_programmazione_mistral_7b.json", "model": "mistral:7b", "test_id": "programmazione", "prev_passed": 6, "prev_total": 6, "curr_passed": 5, "curr_total": 6, "delta": -0.17000000000000004, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 363.614849, "curr_seconds": 856.5428}, {"file": "03_programmazione_phi3_mini.json", "model": "phi3:mini", "test_id": "programmazione", "prev_passed": 6, "prev_total": 6, "curr_passed": 6, "curr_total": 6, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 331.271042, "curr_seconds": 386.920812}, {"file": "03_programmazione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "programmazione", "prev_passed": 5, "prev_total": 6, "curr_passed": 5, "curr_total": 6, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 26.904897, "curr_seconds": 1901.90466}, {"file": "03_programmazione_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "programmazione", "prev_passed": 6, "prev_total": 6, "curr_passed": 6, "curr_total": 6, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 235.095156, "curr_seconds": 402.930413}, {"file": "04_estrazione_json_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 242.821566, "curr_seconds": 101.464629}, {"file": "04_estrazione_json_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 58.535858, "curr_seconds": 84.23727}, {"file": "04_estrazione_json_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 29.245587, "curr_seconds": 45.395236}, {"file": "04_estrazione_json_mistral_7b.json", "model": "mistral:7b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 291.342863, "curr_seconds": 367.995315}, {"file": "04_estrazione_json_phi3_mini.json", "model": "phi3:mini", "test_id": "estrazione_json", "prev_passed": 2, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -1.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 78.474073, "curr_seconds": 2703.456199}, {"file": "04_estrazione_json_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "estrazione_json", "prev_passed": 1, "prev_total": 2, "curr_passed": 2, "curr_total": 2, "delta": 0.5, "prev_status": "truncated", "curr_status": "ok", "prev_seconds": 1924.941438, "curr_seconds": 9.484264}, {"file": "04_estrazione_json_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "estrazione_json", "prev_passed": 2, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -1.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 119.733484, "curr_seconds": 60.111578}, {"file": "05_sintesi_traduzione_llama3.1_8b.json", "model": "llama3.1:8b", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 295.441311, "curr_seconds": 936.274575}, {"file": "05_sintesi_traduzione_llama3.2_1b.json", "model": "llama3.2:1b", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 131.285667, "curr_seconds": 119.979068}, {"file": "05_sintesi_traduzione_llama3.2_3b.json", "model": "llama3.2:3b", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 127.498067, "curr_seconds": 584.347238}, {"file": "05_sintesi_traduzione_mistral_7b.json", "model": "mistral:7b", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 1, "curr_total": 2, "delta": 0.0, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 464.578073, "curr_seconds": 1724.710617}, {"file": "05_sintesi_traduzione_phi3_mini.json", "model": "phi3:mini", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 243.797558, "curr_seconds": 817.248335}, {"file": "05_sintesi_traduzione_qwen2.5_1.5b.json", "model": "qwen2.5:1.5b", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "truncated", "curr_status": "ok", "prev_seconds": 1882.185006, "curr_seconds": 1978.762141}, {"file": "05_sintesi_traduzione_qwen2.5_7b.json", "model": "qwen2.5:7b", "test_id": "sintesi_traduzione", "prev_passed": 1, "prev_total": 2, "curr_passed": 0, "curr_total": 2, "delta": -0.5, "prev_status": "ok", "curr_status": "ok", "prev_seconds": 397.472285, "curr_seconds": 1023.524842}], "unmatched_current": 0, "unmatched_previous": 0}}</script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const DATA = JSON.parse(document.getElementById('bench-data').textContent);
+const IT = d3.formatLocale({decimal: ',', thousands: '.', grouping: [3], currency: ['', ''], percent: '%'});
+const pct = d => IT.format('.0%')(d);
+const secs = s => IT.format(',.1f')(s) + ' s';
+const ACCENT = '#2f6fb0';
+const GRID = '#d9e2ec';
+const INK = '#1f2933';
+
+function svgFor(id, width, height, label) {
+  return d3.select('#' + id).append('svg')
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('role', 'img')
+    .attr('aria-label', label);
+}
+
+function contrastText(bg) {
+  const lum = c => {
+    const v = d3.rgb(c);
+    const f = x => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(v.r) + 0.7152 * f(v.g) + 0.0722 * f(v.b);
+  };
+  const L = lum(bg);
+  const white = 1.05 / (L + 0.05);
+  const ink = (L + 0.05) / (lum(INK) + 0.05);
+  return white >= ink ? '#ffffff' : INK;
+}
+
+function chartScore() {
+  const rows = DATA.models.filter(d => d.score_mean !== null);
+  const W = 760, rowH = 36, m = {top: 8, right: 170, bottom: 34, left: 170};
+  const ih = rows.length * rowH, iw = W - m.left - m.right;
+  const svg = svgFor('chart-score', W, ih + m.top + m.bottom, 'Barre: score medio per modello');
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+  const x = d3.scaleLinear().domain([0, 1]).range([0, iw]);
+  const y = d3.scaleBand().domain(rows.map(d => d.model)).range([0, ih]).padding(0.28);
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(pct).tickSize(-ih))
+    .call(a => { a.select('.domain').remove(); a.selectAll('.tick line').attr('stroke', GRID); });
+  g.append('g').call(d3.axisLeft(y).tickSize(0)).call(a => a.select('.domain').remove());
+
+  g.selectAll('rect.bar').data(rows).join('rect')
+    .attr('class', 'bar')
+    .attr('x', 0)
+    .attr('y', d => y(d.model))
+    .attr('width', d => x(d.score_mean))
+    .attr('height', y.bandwidth())
+    .attr('fill', ACCENT)
+    .append('title')
+    .text(d => `${d.model}: ${pct(d.score_mean)} (${d.passed}/${d.total} check), tempo mediano ${secs(d.seconds_median)}`);
+
+  g.selectAll('text.value').data(rows).join('text')
+    .attr('x', d => x(d.score_mean) + 6)
+    .attr('y', d => y(d.model) + y.bandwidth() / 2)
+    .attr('dominant-baseline', 'middle')
+    .text(d => `${pct(d.score_mean)} · ${d.passed}/${d.total} check`);
+}
+
+function chartHeatmap() {
+  const models = DATA.models.map(d => d.model);
+  const tests = DATA.tests;
+  const runs = new Map(DATA.runs.map(r => [r.model + '|' + r.test_id, r]));
+  const cw = 128, ch = 50, left = 150, top = 52, legendH = 90;
+  const W = left + tests.length * cw + 12, H = top + models.length * ch + legendH;
+  const svg = svgFor('chart-heatmap', W, H, 'Mappa di calore: check superati per modello e test');
+  const color = d3.scaleSequential(d3.interpolateViridis).domain([0, 1]);
+
+  svg.selectAll('text.col').data(tests).join('text')
+    .attr('x', (d, j) => left + j * cw + cw / 2)
+    .attr('y', top - 14)
+    .attr('text-anchor', 'middle')
+    .text(d => d.label);
+
+  svg.selectAll('text.row').data(models).join('text')
+    .attr('x', left - 10)
+    .attr('y', (d, i) => top + i * ch + ch / 2)
+    .attr('text-anchor', 'end')
+    .attr('dominant-baseline', 'middle')
+    .text(d => d);
+
+  const cells = models.flatMap((model, i) => tests.map((t, j) => ({
+    model, i, j, test: t.label, run: runs.get(model + '|' + t.id),
+  })));
+  const cell = svg.selectAll('g.cell').data(cells).join('g')
+    .attr('class', 'cell')
+    .attr('transform', d => `translate(${left + d.j * cw},${top + d.i * ch})`);
+
+  const fill = d => (d.run && d.run.score !== null) ? color(d.run.score) : '#e4e7eb';
+  cell.append('rect')
+    .attr('x', 2).attr('y', 2).attr('width', cw - 4).attr('height', ch - 4).attr('rx', 4)
+    .attr('fill', fill);
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 - 3).attr('text-anchor', 'middle')
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => d.run ? `${d.run.passed}/${d.run.total}` : 'n/d');
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 + 12).attr('text-anchor', 'middle').attr('font-size', 11)
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => d.run && d.run.status !== 'ok' ? d.run.status : '');
+  cell.append('title')
+    .text(d => d.run ? `${d.model} · ${d.test}: ${d.run.passed}/${d.run.total} check, ${secs(d.run.seconds)}, ${d.run.status}` : `${d.model} · ${d.test}: nessun dato`);
+
+  const grad = svg.append('defs').append('linearGradient').attr('id', 'heat-grad');
+  d3.range(0, 1.0001, 0.1).forEach(t => grad.append('stop')
+    .attr('offset', `${t * 100}%`).attr('stop-color', d3.interpolateViridis(t)));
+  const lx = left, lw = 260, ly = H - legendH + 30;
+  svg.append('rect').attr('x', lx).attr('y', ly).attr('width', lw).attr('height', 12)
+    .attr('fill', 'url(#heat-grad)');
+  [0, 0.5, 1].forEach(t => svg.append('text')
+    .attr('x', lx + t * lw).attr('y', ly + 28).attr('text-anchor', t === 0 ? 'start' : t === 1 ? 'end' : 'middle')
+    .text(pct(t)));
+  svg.append('text').attr('x', lx + lw + 12).attr('y', ly + 11).attr('dominant-baseline', 'middle')
+    .text('quota di check superati');
+  if (cells.some(c => !c.run)) {
+    svg.append('text').attr('x', lx).attr('y', ly - 10).attr('fill', INK)
+      .text('Grigio: nessun dato');
+  }
+}
+
+function chartScatter() {
+  const pts = DATA.models.filter(d => d.score_mean !== null);
+  const W = 760, H = 420, m = {top: 16, right: 36, bottom: 56, left: 64};
+  const iw = W - m.left - m.right, ih = H - m.top - m.bottom;
+  const svg = svgFor('chart-scatter', W, H, 'Dispersione: score medio contro tempo mediano per modello');
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+
+  const seconds = DATA.runs.map(r => r.seconds).filter(s => s > 0);
+  const lo = Math.pow(10, Math.floor(Math.log10(Math.min(...seconds))));
+  const hi = Math.pow(10, Math.ceil(Math.log10(Math.max(...seconds))));
+  const x = d3.scaleLog().domain([lo, hi]).range([0, iw]);
+  const y = d3.scaleLinear().domain([0, 1]).range([ih, 0]);
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).tickValues([10, 100, 1000, 10000].filter(v => v >= lo && v <= hi)).tickFormat(IT.format(',.0f')))
+    .call(a => a.select('.domain').attr('stroke', INK));
+  g.append('g')
+    .call(d3.axisLeft(y).ticks(5).tickFormat(pct).tickSize(-iw))
+    .call(a => { a.select('.domain').remove(); a.selectAll('.tick line').attr('stroke', GRID); });
+
+  g.append('text').attr('x', iw / 2).attr('y', ih + 44).attr('text-anchor', 'middle')
+    .attr('fill', '#52606d').text('Tempo mediano per run (secondi, scala logaritmica)');
+  g.append('text').attr('transform', 'rotate(-90)').attr('x', -ih / 2).attr('y', -46)
+    .attr('text-anchor', 'middle').attr('fill', '#52606d').text('Score medio');
+
+  const points = pts.map(d => ({d, px: x(d.seconds_median), py: y(d.score_mean)}))
+    .sort((a, b) => a.px - b.px);
+  const obstacles = points.map(p => ({x0: p.px - 7, x1: p.px + 7, y0: p.py - 7, y1: p.py + 7}));
+  const overlaps = (a, b) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+  const labels = points.map(p => {
+    const w = p.d.model.length * 7.2;
+    const lx = p.px + 9;
+    const boxAt = ly => ({x0: lx, x1: lx + w, y0: ly - 10, y1: ly + 3});
+    const ly = [p.py + 4, p.py + 18, p.py - 10, p.py + 32, p.py - 24]
+      .find(v => obstacles.every(o => !overlaps(boxAt(v), o))) ?? p.py + 4;
+    obstacles.push(boxAt(ly));
+    return {...p, w, lx, ly};
+  });
+
+  g.selectAll('line.leader').data(labels.filter(l => l.ly !== l.py + 4)).join('line')
+    .attr('x1', l => l.px).attr('y1', l => l.py).attr('x2', l => l.lx - 3).attr('y2', l => l.ly - 4)
+    .attr('stroke', '#52606d').attr('stroke-width', 0.8);
+
+  const point = g.selectAll('g.point').data(points).join('g')
+    .attr('class', 'point')
+    .attr('transform', p => `translate(${p.px},${p.py})`);
+  point.append('circle').attr('r', 6).attr('fill', ACCENT).attr('stroke', '#ffffff').attr('stroke-width', 1.5);
+  point.append('title')
+    .text(p => `${p.d.model}: ${pct(p.d.score_mean)}, tempo mediano ${secs(p.d.seconds_median)}, ${p.d.not_ok} non ok`);
+
+  g.selectAll('text.point-label').data(labels).join('text')
+    .attr('class', 'point-label')
+    .attr('x', l => l.lx).attr('y', l => l.ly)
+    .text(l => l.d.model);
+}
+
+const PREV = '#9aa5b1';
+
+function signedPp(v) {
+  if (v === null) return 'n/d';
+  const pts = Math.round(v * 100);
+  if (pts === 0) return '±0 pp';
+  return (pts > 0 ? '+' : '−') + Math.abs(pts) + ' pp';
+}
+
+function compareLegend(svg, x0, y0) {
+  [['precedente', PREV], ['attuale', ACCENT]].forEach(([label, color], i) => {
+    const gx = x0 + i * 130;
+    svg.append('circle').attr('cx', gx).attr('cy', y0).attr('r', 6).attr('fill', color);
+    svg.append('text').attr('x', gx + 12).attr('y', y0).attr('dominant-baseline', 'middle').text(label);
+  });
+}
+
+function chartCompareScore() {
+  const rows = DATA.comparison.models.filter(d => d.score_prev !== null && d.score_curr !== null);
+  const W = 760, rowH = 40, m = {top: 34, right: 190, bottom: 34, left: 170};
+  const ih = rows.length * rowH, iw = W - m.left - m.right;
+  const svg = svgFor('chart-compare-score', W, ih + m.top + m.bottom, 'Confronto: score medio per modello, precedente e attuale');
+  compareLegend(svg, m.left, 14);
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+  const x = d3.scaleLinear().domain([0, 1]).range([0, iw]);
+  const y = d3.scaleBand().domain(rows.map(d => d.model)).range([0, ih]).padding(0.35);
+  const cy = d => y(d.model) + y.bandwidth() / 2;
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(pct).tickSize(-ih))
+    .call(a => { a.select('.domain').remove(); a.selectAll('.tick line').attr('stroke', GRID); });
+  g.append('g').call(d3.axisLeft(y).tickSize(0)).call(a => a.select('.domain').remove());
+
+  g.selectAll('line.link').data(rows).join('line')
+    .attr('x1', d => x(d.score_prev)).attr('x2', d => x(d.score_curr))
+    .attr('y1', cy).attr('y2', cy).attr('stroke', '#b8c2cc').attr('stroke-width', 3);
+  g.selectAll('circle.prev').data(rows).join('circle')
+    .attr('cx', d => x(d.score_prev)).attr('cy', cy).attr('r', 6).attr('fill', PREV);
+  g.selectAll('circle.curr').data(rows).join('circle')
+    .attr('cx', d => x(d.score_curr)).attr('cy', cy).attr('r', 6).attr('fill', ACCENT);
+  g.selectAll('text.delta').data(rows).join('text')
+    .attr('x', iw + 12).attr('y', cy).attr('dominant-baseline', 'middle')
+    .text(d => `${pct(d.score_prev)} → ${pct(d.score_curr)} · ${signedPp(d.score_curr - d.score_prev)}`);
+}
+
+function chartCompareTime() {
+  const rows = DATA.comparison.models;
+  const all = rows.flatMap(d => [d.seconds_prev, d.seconds_curr]).filter(s => s > 0);
+  const W = 760, rowH = 40, m = {top: 34, right: 190, bottom: 56, left: 170};
+  const ih = rows.length * rowH, iw = W - m.left - m.right;
+  const svg = svgFor('chart-compare-time', W, ih + m.top + m.bottom, 'Confronto: tempo mediano per modello, precedente e attuale');
+  compareLegend(svg, m.left, 14);
+  const g = svg.append('g').attr('transform', `translate(${m.left},${m.top})`);
+  const lo = Math.pow(10, Math.floor(Math.log10(Math.min(...all))));
+  const hi = Math.pow(10, Math.ceil(Math.log10(Math.max(...all))));
+  const x = d3.scaleLog().domain([lo, hi]).range([0, iw]);
+  const y = d3.scaleBand().domain(rows.map(d => d.model)).range([0, ih]).padding(0.35);
+  const cy = d => y(d.model) + y.bandwidth() / 2;
+
+  g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).tickValues([10, 100, 1000, 10000].filter(v => v >= lo && v <= hi)).tickFormat(IT.format(',.0f')))
+    .call(a => a.select('.domain').attr('stroke', INK));
+  g.append('g').call(d3.axisLeft(y).tickSize(0)).call(a => a.select('.domain').remove());
+  g.append('text').attr('x', iw / 2).attr('y', ih + 44).attr('text-anchor', 'middle')
+    .attr('fill', '#52606d').text('Tempo mediano per run (secondi, scala logaritmica)');
+
+  g.selectAll('line.link').data(rows).join('line')
+    .attr('x1', d => x(d.seconds_prev)).attr('x2', d => x(d.seconds_curr))
+    .attr('y1', cy).attr('y2', cy).attr('stroke', '#b8c2cc').attr('stroke-width', 3);
+  g.selectAll('circle.prev').data(rows).join('circle')
+    .attr('cx', d => x(d.seconds_prev)).attr('cy', cy).attr('r', 6).attr('fill', PREV);
+  g.selectAll('circle.curr').data(rows).join('circle')
+    .attr('cx', d => x(d.seconds_curr)).attr('cy', cy).attr('r', 6).attr('fill', ACCENT);
+  g.selectAll('text.delta').data(rows).join('text')
+    .attr('x', iw + 12).attr('y', cy).attr('dominant-baseline', 'middle')
+    .text(d => `${secs(d.seconds_prev)} → ${secs(d.seconds_curr)}`);
+}
+
+function chartDeltaHeatmap() {
+  const models = DATA.comparison.models.map(d => d.model);
+  const tests = DATA.tests;
+  const pairs = new Map(DATA.comparison.pairs.map(p => [p.model + '|' + p.test_id, p]));
+  const cw = 128, ch = 50, left = 150, top = 52, legendH = 90;
+  const W = left + tests.length * cw + 12, H = top + models.length * ch + legendH;
+  const svg = svgFor('chart-delta-heatmap', W, H, 'Mappa di calore: variazione del punteggio per modello e test');
+  const color = d3.scaleDiverging(d3.interpolateRdBu).domain([-1, 0, 1]);
+
+  svg.selectAll('text.col').data(tests).join('text')
+    .attr('x', (d, j) => left + j * cw + cw / 2)
+    .attr('y', top - 14)
+    .attr('text-anchor', 'middle')
+    .text(d => d.label);
+  svg.selectAll('text.row').data(models).join('text')
+    .attr('x', left - 10)
+    .attr('y', (d, i) => top + i * ch + ch / 2)
+    .attr('text-anchor', 'end')
+    .attr('dominant-baseline', 'middle')
+    .text(d => d);
+
+  const cells = models.flatMap((model, i) => tests.map((t, j) => ({
+    model, i, j, test: t.label, pair: pairs.get(model + '|' + t.id),
+  })));
+  const cell = svg.selectAll('g.cell').data(cells).join('g')
+    .attr('class', 'cell')
+    .attr('transform', d => `translate(${left + d.j * cw},${top + d.i * ch})`);
+
+  const hasDelta = d => d.pair && d.pair.delta !== null;
+  const fill = d => hasDelta(d) ? color(d.pair.delta) : '#e4e7eb';
+  cell.append('rect')
+    .attr('x', 2).attr('y', 2).attr('width', cw - 4).attr('height', ch - 4).attr('rx', 4)
+    .attr('fill', fill);
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 - 3).attr('text-anchor', 'middle')
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => hasDelta(d) ? signedPp(d.pair.delta) : 'n/d');
+  cell.append('text')
+    .attr('x', cw / 2).attr('y', ch / 2 + 12).attr('text-anchor', 'middle').attr('font-size', 11)
+    .attr('fill', d => contrastText(fill(d)))
+    .text(d => d.pair ? `${d.pair.prev_passed}/${d.pair.prev_total} → ${d.pair.curr_passed}/${d.pair.curr_total}` : '');
+  cell.append('title')
+    .text(d => d.pair
+      ? `${d.model} · ${d.test}: ${d.pair.prev_passed}/${d.pair.prev_total} → ${d.pair.curr_passed}/${d.pair.curr_total} check, ${d.pair.prev_status} → ${d.pair.curr_status}`
+      : `${d.model} · ${d.test}: nessun dato`);
+
+  const grad = svg.append('defs').append('linearGradient').attr('id', 'delta-grad');
+  d3.range(0, 1.0001, 0.1).forEach(t => grad.append('stop')
+    .attr('offset', `${t * 100}%`).attr('stop-color', d3.interpolateRdBu(t)));
+  const lx = left, lw = 260, ly = H - legendH + 30;
+  svg.append('rect').attr('x', lx).attr('y', ly).attr('width', lw).attr('height', 12)
+    .attr('fill', 'url(#delta-grad)');
+  [['−100 pp', 0, 'start'], ['±0', 0.5, 'middle'], ['+100 pp', 1, 'end']].forEach(([label, t, anchor]) => svg.append('text')
+    .attr('x', lx + t * lw).attr('y', ly + 28).attr('text-anchor', anchor).text(label));
+  svg.append('text').attr('x', lx + lw + 12).attr('y', ly + 11).attr('dominant-baseline', 'middle')
+    .text('rosso: peggio · blu: meglio');
+  if (cells.some(c => !c.pair)) {
+    svg.append('text').attr('x', lx).attr('y', ly - 10).attr('fill', INK)
+      .text('Grigio: nessun dato');
+  }
+}
+
+chartScore();
+chartHeatmap();
+chartScatter();
+if (DATA.comparison) {
+  chartCompareScore();
+  chartDeltaHeatmap();
+  chartCompareTime();
+}
+</script>
+</body>
+</html>

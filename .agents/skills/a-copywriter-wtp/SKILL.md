@@ -1,7 +1,7 @@
 ---
 name: a-copywriter-wtp
 extends: a-copywriter
-version: 1.0.11
+version: 1.0.12
 extends-version: 1.6.1
 description: >-
   Estensione locale di a-copywriter per Sales Coach (WTP App): perimetro repo, voce
@@ -14,9 +14,9 @@ disable-model-invocation: true
 
 Estensione **locale** di `a-copywriter` per questo monorepo. Contiene tutto ciò che era in `wtp-brand-voice` (fonte unica convergente).
 
-**Base obbligatoria:** `~/.cursor/skills/a-copywriter/SKILL.md` (AgentFactory / `/sync`).
+**Base obbligatoria:** `~/.agents/skills/a-copywriter/SKILL.md` (AgentFactory / `/sync`).
 
-**Brand:** `.cursor/brands/wtp-app.md`.
+**Brand:** `brands/wtp-app.md`.
 
 ---
 
@@ -31,7 +31,7 @@ Estensione **locale** di `a-copywriter` per questo monorepo. Contiene tutto ciò
 | Messaggi errore, empty state, label MUI, tooltip glossario      |                                                |
 | `data/acronyms.json`, copy editoriale liste                     |                                                |
 
-Se il task è copy fuori da questi path, segnala: in questo repo c'è un solo brand (`.cursor/brands/wtp-app.md`).
+Se il task è copy fuori da questi path, segnala: in questo repo c'è un solo brand (`brands/wtp-app.md`).
 
 ---
 
@@ -49,7 +49,7 @@ Se il task è copy fuori da questi path, segnala: in questo repo c'è un solo br
 | Priorità | Fonte                              | Governa                                             |
 | -------- | ---------------------------------- | --------------------------------------------------- |
 | 1        | **a-copywriter-wtp** (questo file) | Perimetro repo, tono finanza consapevole, path file |
-| 2        | `.cursor/brands/wtp-app.md`        | Identità, esempi, anti-pattern                      |
+| 2        | `brands/wtp-app.md`                | Identità, esempi, anti-pattern                      |
 | 3        | **a-copywriter** (base)            | Workflow Humanizer, anti-AI, purismo, checklist     |
 | 4        | Reference base `references/`       | Audit, humanizer, editing (on-demand)               |
 
@@ -121,6 +121,6 @@ Aggiungere solo in `references/` di questa cartella (non duplicare la base Agent
 
 ## Invocazione
 
-- Agente locale: `.cursor/agents/a-copywriter.md` (carica base + questa estensione)
-- Rule: `.cursor/rules/a-copywriter-wtp.mdc`
-- Alias legacy: `.cursor/skills/wtp-brand-voice/SKILL.md` → rimanda qui
+- Agente locale: `agents/a-copywriter.md` (carica base + questa estensione)
+- Rule: `docs/rules/a-copywriter-wtp.mdc`
+- Alias legacy: `.agents/skills/wtp-brand-voice/SKILL.md` → rimanda qui

@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-17T07:26:13.643258+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 1196,
+    "reasoning": null,
+    "total": 3246
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "**Capítulo 1**\n\nAunque los conceptos fundamentales se remontan a ese fortuito día de 1969 en que invité a un colega a hablar como invitado a un seminario que yo impartía en la Facultad de Psicología de la Universidad Hebrea de Jerusalén. Amos Tversky era considerado un astro emergente en el campo de la investigación sobre el proceso de toma de decisiones, y efectivamente lo era en cualquier campo, de modo que sabía que diría cosas interesantes. Muchos de sus amigos y conocidos lo consideraban la persona más inteligente que habían conocido. Hombre brillante, desinvolto y carismático, poseía también el don de recordar una gran cantidad de anécdotas divertidas, y la singularidad de usarlas para ilustrar mejor un concepto. No se aburría nunca, con Amos. Tenía entonces treinta y dos años, mientras que yo tenía treinta y cinco.\n\nHabló a la clase de un programa de investigación de la Universidad de Michigan, destinado a determinar si los seres humanos eran buenos o malos estadísticos intuitivos. Ya sabíamos que los seres humanos son buenos gramáticos intuitivos: a cuatro años, un niño se ajusta fácilmente, en su lenguaje, a las reglas de la gramática, aunque ignore su existencia total. ¿Tiene quizás una intuición instintiva semejante también en relación con los principios fundamentales de la estadística? Para Amos, la respuesta era \"sí con reservas\". Tuvimos una viva discusión en el transcurso del seminario y, al final, convinimos que una \"no con reservas\" era una respuesta mejor.\n\nDado que nos había gustado debatir, concluimos que el tema de la estadística intuitiva era interesante, y que sería divertido analizarlo juntos. Ese viernes nos encontramos para comer en el Café Rimon, el lugar de encuentro preferido de bohemios y profesores de Jerusalén, y diseñamos una investigación sobre las intuiciones estadísticas que se llevaría a cabo sobre un grupo de investigadores sofisticados. En el transcurso del seminario habíamos concluido que nuestras intuiciones personales fallaban. A pesar de años de enseñanza y uso de la estadística, no habíamos adquirido un sentido intuitivo de la confiabilidad de los resultados estadísticos observados en muestras pequeñas. Nuestros juicios subjetivos estaban afectados por sesgos: en nuestra investigación personal, éramos demasiado dispuestos a creer a resultados de investigaciones basadas en pruebas insuficientes y demasiado inclinados a conformarnos con observaciones insuficientes.1 El objetivo de nuestro estudio era descubrir si otros investigadores manifestaban las mismas debilidades.\n\nPreparamos una investigación que incluía escenarios realistas de algunos problemas estadísticos típicos de la actividad investigadora. En un congreso de la Sociedad de Psicología Matemática, Amos recogió las respuestas de un grupo de sujetos expertos, entre los que se encontraban los autores de dos manuales de estadística. Como estaba previsto, descubrimos que, al igual que nosotros, nuestros colegas exageraban mucho la probabilidad de que el resultado original de un experimento fuese replicado con éxito con una muestra pequeña. También dieron malos consejos a una supuesta candidata a doctorado sobre el número de observaciones que tenía que recoger. Ni siquiera los estadísticos eran buenos estadísticos intuitivos.\n\nMientras escribíamos el artículo que reportaba tales descubrimientos, descubrimos que nos gustaba trabajar juntos. Amos era un hombre muy divertido y en su compañía también lo fui yo, de modo que en las horas de duro trabajo nos divertimos siempre. El placer que nos daba colaborar nos hizo excepcionalmente pacientes; es mucho más fácil esforzarse por alcanzar la perfección cuando no se se aburre nunca. Particularidad quizás más importante de todas, nos controlábamos, si se puede decir así, las armas críticas desde casa. Ambos éramos críticos y polemistas, él más que yo, pero en los años de nuestra colaboración ninguno de los dos rechazó nunca lo que decía el otro. Incluso una de las grandes alegrías que obtenía de nuestro trabajo de equipo era que Amos a menudo entendía mucho mejor de mí el sentido de ideas que aún estaban confusas. De los dos, era el pensador más lógico, orientado hacia la teoría e infalible en la dirección. Yo era más intuitivo, con estudios de psicología de la percepción, de la cual tomamos prestados muchas ideas. Éramos lo suficientemente semejantes para entendernos fácilmente, y lo suficientemente diferentes para sorprendernos mutuamente. Establecimos así nuestra rutina profesional, según la cual pasábamos muchos días laborables juntos, y a menudo nos concedíamos largas paseatas. Por los siguientes catorce años, esa colaboración fue el eje de nuestra vida y el trabajo que realizamos en ese período fue el mejor que hubiéramos hecho.",
+  "seconds": 295.441311,
+  "result_file": "20261017_4/05_sintesi_traduzione_llama3.1_8b.json"
+}

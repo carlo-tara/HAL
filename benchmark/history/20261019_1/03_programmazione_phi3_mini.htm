@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Sudoku Game</title>
+    <style>
+        body { text-align: center; padding-top: 20px; }
+        table { border-collapse: collapse; width: 500px; margin: auto; }
+        td { width: 80px; height: 80px; text-align: center; font-size: 24px; }
+        .error { color: red; }
+        #restartButton { margin-top: 20px; }
+    end style>
+    <script>
+        const grid = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 2, 0, 0],
+            [4, 0, 0, 8, 0, 3, 0, 0, 7],
+            [0, 0, 0, 0, 6, 0, 0, 0, 9],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 3, 2],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+
+        let gridCopy = [...grid];
+
+        function createGrid() {
+            const table = document.getElementById('sudokuGrid');
+            table.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.createElement('td');
+                    cell.textContent = gridCopy[i][j] || '';
+                    cell.onclick = () => { insertOrRemove(i, j, gridCopy[i][j]); };
+                    cell.contentEditable = 'true';
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+        }
+
+        function insertOrRemove(row, col, num) {
+            gridCopy[row][col] = num;
+            document.getElementById(row + col).textContent = num;
+        }
+
+        function validateCell() {
+            const cell = document.getElementById(row + col);
+            if (cell.textContent === '') {
+                cell.contentEditable = 'true';
+                return false;
+            } else if (isValid(row, col, parseInt(cell.textContent))) {
+                cell.contentEditable = 'false';
+                return true;
+            } else {
+                cell.classList.add('error');
+                cell.textContent = '';
+                return false;
+            }
+        }
+
+        function isValid(row, col, num) {
+            // Check row, column, and 3x3 box
+            for (let i = 0; i < 9; i++) {
+                const m = 3 * Math.floor(row / 3) + Math.floor(i / 3);
+                const n = 3 * Math.floor(col / 3) + i % 3;
+                if (gridCopy[row][i] === num || gridCopy[i][col] === num || gridCopy[m][n] === num) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function clearGrid() {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.getElementById(row + col);
+                    if (cell.textContent !== '') {
+                        cell.textContent = '';
+                    }
+                }
+                createGrid();
+            }
+        }
+
+        window.onload = createGrid;
+
+        function handleKeyboard(e) {
+            if (e.keyCode < 48 || e.keyCode > 57) return;
+            const row = Math.floor(e.target.dataset.row / 9) * 9 + Math.floor((e.target.dataset.col - 1) / 9);
+            const col = e.target.dataset.col - 1;
+            insertOrRemove(row, col, e.keyCode - 48);
+        }
+
+        function handleRestart() {
+            clearGrid();
+            createGrid();
+        }
+
+        document.getElementById('restartButton').onclick = handleRestart;
+
+        document.addEventListener('keydown', handleKeyboard);
+
+    end script>
+    <body>
+        <table id="sudokuGrid"></table>
+        <button id="restartButton" onclick="handleRestart()">Restart Game</button>
+    </body>
+</html>

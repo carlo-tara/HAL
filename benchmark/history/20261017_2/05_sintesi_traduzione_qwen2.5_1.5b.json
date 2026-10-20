@@ -1,0 +1,252 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-17T17:54:59.559328+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 7292,
+    "output": 43367,
+    "reasoning": null,
+    "total": 50659
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "La classificazione della risposta precedente è da rifare. Controlla i requisiti, correggi omissioni e restituisci la risposta completa nel formato richiesto.",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/5",
+      "decision": "process",
+      "confidence": 0.05,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_1_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 649,
+        "reasoning": null,
+        "total": 1738
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 1/5",
+      "decision": "retry",
+      "confidence": 0.9426
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_1_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1122,
+        "output": 45,
+        "reasoning": null,
+        "total": 1167
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 1/5",
+      "decision": "reject",
+      "confidence": 0.7372
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/5",
+      "decision": "skip",
+      "confidence": 0.5,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/5",
+      "decision": "skip",
+      "confidence": 0.5402,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/5",
+      "decision": "process",
+      "confidence": 0.0282,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1079,
+        "output": 566,
+        "reasoning": null,
+        "total": 1645
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 4/5",
+      "decision": "retry",
+      "confidence": 0.8248
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1112,
+        "output": 121,
+        "reasoning": null,
+        "total": 1233
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 4/5",
+      "decision": "accept",
+      "confidence": 0.0011
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/5",
+      "decision": "process",
+      "confidence": 0.025,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5_prima",
+      "status": "ok",
+      "tokens": {
+        "input": 1054,
+        "output": 914,
+        "reasoning": null,
+        "total": 1968
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica segmento 5/5",
+      "decision": "retry",
+      "confidence": 0.611
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 1087,
+        "output": 71,
+        "reasoning": null,
+        "total": 1158
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica retry segmento 5/5",
+      "decision": "reject",
+      "confidence": 0.1505
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "truncated",
+      "tokens": {
+        "input": 545,
+        "output": 40960,
+        "reasoning": null,
+        "total": 41505
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.9598
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 204,
+        "output": 41,
+        "reasoning": null,
+        "total": 245
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.0027
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 13,
+    "system2_stages": 8,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 1978.762141,
+  "result_file": "05_sintesi_traduzione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "translation",
+    "family_confidence": 0.986,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.991,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.4364,
+    "confidence": 0.4364,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/5",
+        "decision": "process",
+        "confidence": 0.05
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/5",
+        "decision": "skip",
+        "confidence": 0.5
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/5",
+        "decision": "skip",
+        "confidence": 0.5402
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/5",
+        "decision": "process",
+        "confidence": 0.0282
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/5",
+        "decision": "process",
+        "confidence": 0.025
+      }
+    ]
+  }
+}

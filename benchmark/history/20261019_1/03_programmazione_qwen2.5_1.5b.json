@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-19T10:04:22.883741+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 344,
+    "output": 1757,
+    "reasoning": null,
+    "total": 2101
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        body {\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            justify-content: center;\n            height: 100vh;\n            margin: 0;\n            font-family: Arial, sans-serif;\n        }\n        .sudoku {\n            display: grid;\n            grid-template-columns: repeat(3, 1fr);\n            grid-template-rows: repeat(3, 1fr);\n            gap: 2px;\n            margin-bottom: 10px;\n        }\n        .cell {\n            width: 25px;\n            height: 25px;\n            border: 1px solid #ccc;\n            border-radius: 50%;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n        }\n        .solution, .error {\n            background-color: red;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"sudoku\">\n        <div class=\"cell\" id=\"cell-1\"></div>\n        <div class=\"cell\" id=\"cell-2\"></div>\n        <div class=\"cell\" id=\"cell-3\"></div>\n        <div class=\"cell\" id=\"cell-4\"></div>\n        <div class=\"cell\" id=\"cell-5\"></div>\n        <div class=\"cell\" id=\"cell-6\"></div>\n        <div class=\"cell\" id=\"cell-7\"></div>\n        <div class=\"cell\" id=\"cell-8\"></div>\n        <div class=\"cell\" id=\"cell-9\"></div>\n    </div>\n    <button onclick=\"reset()\">Nuova Partita</button>\n    <script>\n        // Solution is predefined in a global variable\n        const solution = [\n            [5, 3, 0, 0, 0, 0, 0, 0, 0],\n            [6, 0, 0, 1, 4, 0, 0, 0, 0],\n            [0, 0, 2, 5, 0, 0, 0, 0, 0],\n            [0, 0, 0, 3, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 9, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0]\n        ];\n\n        // Temporary solution for demonstration\n        const tempSolution = [\n            [5, 3, 0, 0, 7, 0, 0, 0, 0],\n            [6, 0, 0, 1, 4, 0, 0, 0, 0],\n            [0, 0, 2, 5, 0, 0, 0, 0, 0],\n            [0, 0, 0, 3, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 9, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0, 0, 0]\n        ];\n\n        function reset() {\n            const cells = document.querySelectorAll('.cell');\n            cells.forEach(cell => {\n                cell.textContent = '';\n                cell.style.backgroundColor = '';\n            });\n        }\n\n        function validateCell(cellId, value) {\n            const cell = document.getElementById(cellId);\n            if (cell) {\n                cell.textContent = value;\n                if (cell.textContent === '') {\n                    return;\n                }\n                const row = cell.parentElement.rowIndex;\n                const col = cell.parentElement.columnIndex;\n                let isValid = true;\n                for (let i = 0; i < 9; i++) {\n                    if (solution[row][i] === value || solution[i][col] === value) {\n                        isValid = false;\n                        break;\n                    }\n                    if (solution[row * 3 + Math.floor(i / 3)][col * 3 + Math.floor(i % 3]] === value) {\n                        isValid = false;\n                        break;\n                    }\n                }\n                if (isValid) {\n                    cell.style.backgroundColor = 'green';\n                } else {\n                    cell.style.backgroundColor = 'red';\n                }\n            }\n        }\n\n        function checkSudoku() {\n            const cells = document.querySelectorAll('.cell');\n            cells.forEach(cell => {\n                const value = cell.textContent || cell.value;\n                if (value === '') {\n                    return;\n                }\n                const row = cell.parentElement.rowIndex;\n                const col = cell.parentElement.columnIndex;\n                let isValid = true;\n                for (let i = 0; i < 9; i++) {\n                    if (solution[row][i] === value || solution[i][col] === value) {\n                        isValid = false;\n                        break;\n                    }\n                    if (solution[row * 3 + Math.floor(i / 3)][col * 3 + Math.floor(i % 3]] === value) {\n                        isValid = false;\n                        break;\n                    }\n                }\n                if (isValid) {\n                    cell.style.backgroundColor = 'green';\n                } else {\n                    cell.style.backgroundColor = 'red';\n                }\n            });\n        }\n\n        function solveSudoku() {\n            const cells = document.querySelectorAll('.cell');\n            cells.forEach(cell => {\n                const row = cell.parentElement.rowIndex;\n                const col = cell.parentElement.columnIndex;\n                let value = '';\n                for (let i = 1; i <= 9; i++) {\n                    if (solution[row][col] === i) {\n                        value = i.toString();\n                        break;\n                    }\n                }\n                if (value) {\n                    cell.textContent = value;\n                    cell.style.backgroundColor = 'green';\n                }\n            });\n        }\n\n        function checkSolution() {\n            const cells = document.querySelectorAll('.cell');\n            cells.forEach(cell => {\n                const value = cell.textContent || cell.value;\n                if (value === '') {\n                    return;\n                }\n                const row = cell.parentElement.rowIndex;\n                const col = cell.parentElement.columnIndex;\n                let isValid = true;\n                for (let i = 0; i < 9; i++) {\n                    if (solution[row][i] === value || solution[i][col] === value) {\n                        isValid = false;\n                        break;\n                    }\n                    if (solution[row * 3 + Math.floor(i / 3)][col * 3 + Math.floor(i % 3]] === value) {\n                        isValid = false;\n                        break;\n                    }\n                }\n                if (isValid) {\n                    cell.style.backgroundColor = 'green';\n                } else {\n                    cell.style.backgroundColor = 'red';\n                }\n            });\n        }\n\n        window.onload = function() {\n            const cells = document.querySelectorAll('.cell');\n            cells.forEach(cell => {\n                cell.addEventListener('click', () => {\n                    const value = cell.textContent || cell.value;\n                    if (value) {\n                        cell.style.backgroundColor = 'red';\n                    } else {\n                        cell.textContent = value;\n                        cell.style.backgroundColor = 'green';\n                    }\n                });\n            });\n        };\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 344,
+        "output": 1757,
+        "reasoning": null,
+        "total": 2101
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 114.713792,
+  "result_file": "03_programmazione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

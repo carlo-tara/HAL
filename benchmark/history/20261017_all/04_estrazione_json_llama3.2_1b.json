@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T12:08:51.056270+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 2050,
+    "output": 1527,
+    "reasoning": null,
+    "total": 3577
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati dei singoli capitoli del libro:\n\n**Capitolo 1: \"La mente 'collettiva' degli Amos e dell'Amos\"**\n\n* Introduzione: l'autore spiega la storia di come Amos e lui hanno collaborato sulla ricerca del giudizio e del processo decisionale.\n* Analisi del giudizio: l'autore esplora i risultati delle ricerche eseguite sul giudizio e presenta i bias sistematici nella mente.\n* Presentazione dell'obiettivo della ricerca: l'autore spiega che l'obiettivo era presentare una visione del funzionamento della mente basata sul recente sviluppo della psicologia cognitiva e sociale.\n* Conclusione: l'autore spiega che la mente non è un sistema perfetto e che ci sono errori sistematici che possono influenzare le nostre decisioni.\n\n**Capitolo 2: \"Lo studio del giudizio\"**\n\n* Introduzione: l'autore spiega che la scienza della mente ha sviluppato diverse teorie sulla mente, tra cui la teoria del giudizio.\n* Presentazione dell'analisi del giudizio: l'autore esplora i risultati delle ricerche eseguite sul giudizio e presenta i bias sistematici nella mente.\n* Analisi dei risultati: l'autore analizza i risultati delle ricerche e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la mente non è un sistema perfetto e che ci sono errori sistematici che possono influenzare le nostre decisioni.\n\n**Capitolo 3: \"Il processo decisionale in condizioni di incertezza\"**\n\n* Introduzione: l'autore spiega che la scienza della mente ha sviluppato diverse teorie sulla mente, tra cui il processo decisionale in condizioni di incertezza.\n* Presentazione dell'analisi del processo decisionale: l'autore esplora i risultati delle ricerche eseguite sul processo decisionale e presenta i bias sistematici nella mente.\n* Analisi dei risultati: l'autore analizza i risultati delle ricerche e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la mente non è un sistema perfetto e che ci sono errori sistematici che possono influenzare le nostre decisioni.\n\n**Capitolo 4: \"La psicologia dell'intuizione esatta\"**\n\n* Introduzione: l'autore spiega che l'intuizione esatta è una capacità umana che può essere sviluppata con l'allenamento e la pratica.\n* Presentazione dell'analisi della psicologia dell'intuizione: l'autore esplora i risultati delle ricerche eseguite sulla psicologia dell'intuizione esatta e presenta i bias sistematici nella mente.\n* Analisi dei risultati: l'autore analizza i risultati delle ricerche e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la psicologia dell'intuizione esatta non ha niente a che vedere con la magia e che è solo una capacità umana che può essere sviluppata con l'allenamento e la pratica.\n\n**Capitolo 5: \"La mente 'collettiva' degli Amos e dell'Amos\" (continuazione del Capitolo 4)**\n\n* Presentazione del risultato del Capitolo 4: l'autore analizza i risultati della ricerca e presenta i bias sistematici nella mente.\n* Analisi dei risultati: l'autore analizza i risultati della ricerca e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la mente non è un sistema perfetto e che ci sono errori sistematici che possono influenzare le nostre decisioni.\n\n**Capitolo 6: \"La scienza della mente oggi\"**\n\n* Presentazione delle novità nella scienza della mente: l'autore spiega i risultati delle ricerche eseguite sulla psicologia cognitiva e sociale.\n* Analisi dei risultati: l'autore analizza i risultati delle ricerche e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la scienza della mente è diventata più complessa e che ci sono molte nuove teorie e risultati.\n\n**Capitolo 7: \"Lo psicologo Gary Klein\"**\n\n* Presentazione dell'autore: l'autore spiega la storia di lo psicologo Gary Klein e le sue scoperte sulla psicologia cognitiva e sociale.\n* Presentazione delle sue teorie: l'autore spiega le sue teorie sulla psicologia cognitiva e sociale.\n* Analisi dei risultati: l'autore analizza i risultati delle ricerche di Klein e presenta una visione del funzionamento della mente.\n\n**Capitolo 8: \"La collaborazione Amos e Amos\"**\n\n* Presentazione dell'autore: l'autore spiega la storia di come Amos e lui hanno collaborato sulla ricerca del giudizio e del processo decisionale.\n* Analisi dei risultati: l'autore analizza i risultati della ricerca e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la mente non è un sistema perfetto e che ci sono errori sistematici che possono influenzare le nostre decisioni.\n\n**Capitolo 9: \"La mente 'collettiva' degli Amos e dell'Amos (continuazione del Capitolo 8)\"**\n\n* Presentazione del risultato del Capitolo 8: l'autore analizza i risultati della collaborazione Amos e Amos e presenta i bias sistematici nella mente.\n* Analisi dei risultati: l'autore analizza i risultati della collaborazione e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la mente non è un sistema perfetto e che ci sono errori sistematici che possono influenzare le nostre decisioni.\n\n**Capitolo 10: \"Il futuro della scienza della mente\"**\n\n* Presentazione delle prospettive sulla scienza della mente: l'autore spiega le prospettive sulla scienza della mente e le nuove teorie e risultati.\n* Analisi dei risultati: l'autore analizza i risultati delle ricerche e presenta una visione del funzionamento della mente.\n* Conclusione: l'autore spiega che la scienza della mente è diventata più complessa e che ci sono molte nuove teorie e risultati.",
+  "seconds": 58.535858,
+  "result_file": "20261017_12/04_estrazione_json_llama3.2_1b.json"
+}

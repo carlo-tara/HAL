@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center; end;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .sudoku-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            gap: 1px;
+            border: 2px solid #000;
+        }
+        .sudoku-cell {
+            background-color: #fff;
+            text-align: center;
+            font-size: 20px;
+            border: 1px solid #000;
+            user-select: none;
+        }
+        .error {
+            color: red;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sudoku-grid" class="sudoku-grid"></div>
+    <button id="new-game">New Game</button>
+
+    <script>
+        const sudokuGrid = document.getElementById('sudoku-grid');
+        const newGameButton = document.getElementById('new-game');
+        const cells = Array.from(sudokuGrid.children);
+        let sudokuBoard = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null));
+        const solutions = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 2, 0, 0],
+            [4, 0, 0, 8, 0, 3, 0, 0, 7],
+            [0, 0, 0, 0, 6, 0, 0, 2, 8],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 0, 9]
+        ];
+
+        const cellsToFill = 81;
+        let filledCells = 0;
+
+        function printSolution() {
+            let solutionHtml = solutions.map(row => row.map(val => val === 0 ? '' : val).join('')).join('<br>');
+            sudokuGrid.innerHTML = cellsToFill - filledCells > 0 ? '' : solutionHtml;
+       0;
+        }
+
+        function handleCellInput(e) {
+            const cell = cells[e.target.dataset.row - 1][e.target.dataset.col - 1];
+            if (cell.value !== '') {
+                cell.classList.remove('error');
+                cell.value = '';
+                cell.focus();
+            } else {
+                cell.classList.add('error');
+                e.preventDefault();
+                alert('Please fill the cell.');
+            }
+        }
+
+        function handleKeypress(e) {
+            if (e.key >= '1' && e.key <= '9' && e.shiftKey === false && e.key !== 'Enter') {
+                const row = Number(e.target.dataset.row);
+                const col = Number(e.target.dataset.col);
+                const cell = cells[row - 1][col - 1];
+                if (cell.value === null && cells.flat(Infinity).filter(Boolean).length < 61) {
+                    cell.value = e.key;
+                    if (++filledCells === cellsToFill) {
+                        printSolution();
+                    }
+                }
+            }
+        }
+
+        function handleCellClick(e) {
+            const cell = cells[e.target.dataset.row - 1][e.target.dataset.col - 1];
+            if (cell.value === null) {
+                cell.value = solutions[e.target.dataset.row - 1][e.target.dataset.col - 1];
+                cell.classList.remove('error');
+                printSolution();
+            }
+        }
+
+        function newGame() {
+            cells.forEach(row => row.forEach(cell => cell.value = null));
+            filledCells = 0;
+            printSolution();
+        }
+
+        sudokuGrid.innerHTML = solutions.map(row =>
+            row.map(val =>
+                `<input type="text" maxlength="1" value="${val}" data-row="${row}" data-col="${solutions.indexOf(row) + 1}" class="sudoku-cell" oninput="${cell => handleCellInput(cell)}" onkeypress="${handleKeypress.bind(null, cell)}" onkeydown="${handleKeypress.bind(null, cell)}">`
+            ).join('')
+        ).join('');
+
+        cells = Array.from(sudokuGrid.children);
+        newGameButton.addEventListener('click', newGame);
+
+        printSolution();
+    </script>
+</body>
+</html>

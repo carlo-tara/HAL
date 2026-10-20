@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-19T09:31:11.358962+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 7681,
+    "output": 10394,
+    "reasoning": null,
+    "total": 18075
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "<html lang=\"es\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Segmento 4 - Traducción al Español</title>\n</head>\n<body>\n\n<p>\n  \"¡Estoy muy contento de haber sido invitado al seminario de la Universidad Estrasburgo!\", comenté con orgullo. Uno de los sueños del psicólogo: enseñar a las personas a mejorar su inteligencia y tomar decisiones más racionales. Pero lo que esperaba encontrar una forma de enseñar no fue lo que encontré. \"¿Qué le dijimos a ellos?\" me pregunté mientras recuerdo cómo Amos y yo presentamos nuestras ideas y cómo aparentemente, no tenían efecto en su forma de pensar.\n  <br>\n  He estado utilizando un método desde 1972, aprendido de Bernard Goldberg, para ayudar a las personas a tomar decisiones, que era el mismo que Amos y yo utilizábamos en nuestro proyecto de Michigan. \"Aunque utilicen nuestro método, sus formas tradicionales de pensar no cambiarán\", dijo Amos con una mirada interrogante.\n  <br>\n  Este hallazgo me sorprendió. No estaba acostumbrado a que, incluso con un método diseñado para ayudar a identificar y comprender los errores, la gente no alteraría su comportamiento. \"Es sorprendente\", reflexioné, \"que las personas, incluso con ayuda, sigan haciendo los mismos errores.\"\n  <br>\n  Amos y yo siempre hemos afirmado que existen personas que no saben cuándo está haciendo un error. \"Aprender a ser más inteligente es lo que necesitamos en la sociedad\", insistí. No fue lo que uno espera de un psicólogo, pero ese es nuestro objetivo.\n</p>\n\n<p>\n  \"Aprender a ser más inteligente es algo que todo el mundo debe hacer\", dije, con la esperanza de encontrar un método para enseñarles a ser más reflexivos. \"Es algo que normalmente no se enseña en las escuelas\".\n</p>\n\n<p>\n  A pesar de nuestro esfuerzo por reducir los errores en gran medida, encontramos que la gente seguía haciendo decisiones de la misma manera. \"A pesar de utilizar nuestro método, eso no significa que aprendan\", expresé con una mezcla de frustración y desconcierto.\n</p>\n\n</body>\n</html>\n\n\n</risultato_segmento_4>\n\n---\n\n<risultato_segmento_5>\n<segmento_destinazione>\nNosotros, Amos y yo, compartimos un gusto por debatir y, tras una vivaz discusión en seminario, acordamos que una respuesta con reserva era mejor. Por ello, decimos que la estadística intuitiva era un tema interesante y divertido de analizar juntos. El viernes encontramos a comer en el Café Rimon, lugar preciado de bohemios y académicos en Jerusalén, y planificamos una investigación sobre las intuiciones estadísticas de algunos especialistas. Durante el seminario, concluimos que nuestras intuiciones estadísticas personales son insuficientes, a pesar de años de enseñanza y uso de la estadística. Nuestros juicios se ven afectados por sesgos: estamos demasiado dispuestos a creer en resultados de investigaciones basadas en evidencia insuficiente y demasiado inclinados a aceptar resultados insuficientes. El objetivo de nuestra investigación era determinar si otros expertos enfrentaban problemas similares.\n\nPreparamos una investigación que incluye escenarios del mundo real de problemas estadísticos típicos en la investigación. Amos recogió respuestas a un grupo de expertos en un congreso de psicología matemática, incluyendo autores manuales de estadística. Como esperábamos, descubrimos que, al igual que nosotros, los expertos también exageraban mucho la probabilidad de replicación exitosa de un experimento con un pequeño grupo de participantes. También dieron un mau\n</segmento_destinazione>\n</risultato_segmento_5>\n\n---\n\n<risultato_segmento_6>\n\n<segmento_destinazione>\nEncontramos que la respuesta intuitiva que primero se nos ocurre no siempre es la correcta. En nuestro experimento, encontramos que aunque Steve tiene características que podrían asociarse con un bibliotecario, en realidad es más probable que sea un agricultor debido al alto número de hombres agrícolas en comparación con los bibliotecarios en los Estados Unidos. Este caso nos enseña la importancia de considerar datos estadísticos junto con nuestras intuiciones personales.\n\nAsumamos que Steve fue seleccionado de manera aleatoria a partir de un grupo representativo y le describimos: \"Steve es muy tímido y reservado. Siempre disponible, pero le falta interés en las personas o el mundo de la realidad. Esa es una personalidad mía y mía solamente, ya que le gusta la orquesta y el orden. Necesita estructura, y tiene una pasión por los detalles\". La similitud de su personalidad con el estereotipo de un bibliotecario es evidente para todos, pero a menudo ignoramos consideraciones estadísticas igualmente pertinentes. ¿Alguna vez has pensado que en los Estados Unidos hay más de veinte agricultores masculinos por cada bibliotecario masculino? Dado que los agricultores son mucho más numerosos, es casi seguro que encontrarás más agricultores \"mitos y ordenados\" trabajando en los trens que estudiando información en una biblioteca. Sin embargo, como descubrimos, los participantes a menudo ignoran los datos estadísticos.\n</segmento_destinazione>\n\n</risultato_segmento_6>\n</risultati_parziali>\n</html>\n\n\n",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1182,
+        "output": 905,
+        "reasoning": null,
+        "total": 2087
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1127,
+        "output": 869,
+        "reasoning": null,
+        "total": 1996
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1114,
+        "output": 6363,
+        "reasoning": null,
+        "total": 7477
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1107,
+        "output": 389,
+        "reasoning": null,
+        "total": 1496
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1101,
+        "output": 382,
+        "reasoning": null,
+        "total": 1483
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2050,
+        "output": 1486,
+        "reasoning": null,
+        "total": 3536
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 6,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 1902.375723,
+  "result_file": "05_sintesi_traduzione_phi3_mini.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 11
+  }
+}

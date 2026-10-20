@@ -1,0 +1,104 @@
+{
+  "provider": "ollama",
+  "model": "llama3.1:8b",
+  "test_id": "matematica",
+  "started_at": "2026-10-17T15:31:32.800299+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 3,
+    "score": 0.67,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": true
+      },
+      {
+        "label": "utile 610,20",
+        "passed": true
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 1454,
+    "output": 1940,
+    "reasoning": null,
+    "total": 3394
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Mi dispiace, ma non sono in grado di fornire la risposta esatta alla tua richiesta. Tuttavia, posso aiutarti a capire le fasi e i passaggi per risolvere il problema.\n\nLa tua richiesta è già stata risolta nel piano prodotto da System 2 e instradato da Laya. Ecco una breve sintesi dei passaggi e dei risultati:\n\n1.  Calcolare il costo totale degli articoli acquistati:\n    *   Costo di un articolo: 18 euro\n    *   Numero di articoli acquistati: 120\n    *   Costo totale: 120 x 18 = 2160 euro\n2.  Calcolare il prezzo di vendita dei primi 90 articoli con ricarico del 35%:\n    *   Costo di un articolo: 18 euro\n    *   Ricarico del 35%: 18 x 0,35 = 6,30 euro\n    *   Prezzo di vendita dei primi 90 articoli: 18 + 6,30 = 24,30 euro\n    *   Totale ricavo dai primi 90 articoli: 90 x 24,30 = 2187 euro\n3.  Calcolare il prezzo di vendita degli ultimi 30 articoli con uno sconto del 20%:\n    *   Prezzo di vendita dei primi 90 articoli: 24,30 euro\n    *   Sconto del 20%: 24,30 x 0,20 = 4,86 euro\n    *   Prezzo di vendita degli ultimi 30 articoli: 24,30 - 4,86 = 19,44 euro\n    *   Totale ricavo dagli ultimi 30 articoli: 30 x 19,44 = 583,20 euro\n4.  Calcolare il ricavo totale:\n    *   Totale ricavo dai primi 90 articoli: 2187 euro\n    *   Totale ricavo dagli ultimi 30 articoli: 583,20 euro\n    *   Ricavo totale: 2187 + 583,20 = 2770,20 euro\n5.  Calcolare l'utile:\n    *   Ricavo totale: 2770,20 euro\n    *   Costo totale: 2160 euro\n    *   Utile: 2770,20 - 2160 = 610,20 euro\n6.  Calcolare il margine percentuale sul ricavo:\n    *   Ricavo totale: 2770,20 euro\n    *   Costo totale: 2160 euro\n    *   Margine percentuale: (610,20 / 2770,20) x 100 = 22,01%\n\nSpero che questi passaggi ti siano stati utili. Se hai altre domande o hai bisogno di ulteriore aiuto, non esitare a chiedere!",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "piano_iniziale",
+      "status": "ok",
+      "tokens": {
+        "input": 247,
+        "output": 569,
+        "reasoning": null,
+        "total": 816
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "valutazione piano",
+      "decision": "revise",
+      "confidence": 0.0057
+    },
+    {
+      "system": "system2",
+      "stage": "piano_revisionato",
+      "status": "ok",
+      "tokens": {
+        "input": 273,
+        "output": 705,
+        "reasoning": null,
+        "total": 978
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica piano revisionato",
+      "decision": "incomplete",
+      "confidence": 0.562
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 934,
+        "output": 666,
+        "reasoning": null,
+        "total": 1600
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "accept",
+      "confidence": 0.892
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 3,
+    "system2_stages": 3,
+    "execution_mode": "plan_then_solve"
+  },
+  "seconds": 393.556033,
+  "result_file": "02_matematica_llama3.1_8b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.2497,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.2799,
+    "execution_mode": "plan_then_solve",
+    "execution_confidence": 0.6706,
+    "confidence": 0.2497,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

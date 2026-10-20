@@ -20,6 +20,10 @@ _(nessuna)_
     7. Registrare in SQLite eventi per run/fase/sistema/modello/task: modalità, stato, latenza, caratteri, token disponibili, scelta, confidenza, fallback ed errori; aggregare per run/task/modello. Non salvare contenuti di prompt o risposte; distinguere token misurati da quelli non disponibili.
   - Acceptance: ispezionare prima middleware, configurazione e test nativi di hal_gateway; implementare i gate applicabili senza copiare il runtime di hal_system2 né crearne uno alternativo; aggiungere test per coerenza task-strategia, skip del preflight semplice, fallback low-confidence, preservazione dei segmenti e limite chiamate/retry; confrontare baseline e nuova run per coppia (modello, test), includendo overhead Laya in latenza/token e separando status tecnico, rubriche euristiche e validazione semantica indipendente; richiedere latenza serving comparabile, distinguere la durata end-to-end che include il caricamento modello e bloccare la promozione con output troncati o evidenza mancante; eseguire i test pertinenti.
 
+- [ ] Correggere i passi di test in `.github/workflows/ready-for-review.yml`: i file `test_*.py` sono in `tests/`, quindi `python3 test_gateway_core.py` fallisce con `No such file or directory`; usare `PYTHONPATH=. python3 tests/test_*.py` #infra · P1
+  - Perché utile: tutti gli step di test del workflow puntano alla root, ma i file sono in `tests/`; in locale il comando corretto è `PYTHONPATH=. python3 tests/test_gateway_core.py` (eseguito con successo, 11 test).
+  - Acceptance: tutti gli step test del workflow passano in CI; verificare lanciando i comandi del workflow dalla root del repo.
+
 ## P2
 
 - [ ] Allineare la versione dei wrapper CLI generati con la sorgente canonica #version-sync · P2

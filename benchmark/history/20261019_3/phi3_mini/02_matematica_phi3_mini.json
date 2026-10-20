@@ -1,0 +1,81 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "matematica",
+  "started_at": "2026-10-19T21:26:54.331377+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 238,
+    "output": 956,
+    "reasoning": null,
+    "total": 1194
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "\nPassaggio 1: Calcolo del costo totale degli articoli acquistati.\n\nCosto unitario: 18 €\n\nQuantità: 120 articoli\n\nCosto totale = 120 articoli * 18 €/articolo = 2160 €\n\n\nPassaggio 2: Calcolo del prezzo di vendita per i primi 90 articoli con il ricarico del 35%.\n\nCosto del primo lotto: 90 articoli * 18 €/articolo = 1620 €\n\nRicarico del 35% = 1620 € * 0.35 = 567 €\n\nPrezzo di vendita per il primo lotto = 1620 € + 567 € = 2187 €\n\n\nPassaggio 3: Calcolo del prezzo di vendita per i restanti 30 articoli con uno sconto del 20%.\n\nCosto del secondo lotto: 30 articoli * 18 €/articolo = 540 €\n\nSconto del 20% = 540 € * 0.20 = 108 €\n\nPrezzo di vendita per il secondo lotto = 540 € - 108 € = 432 €\n\n\nPassaggio 4: Calcolo del ricavo totale dalla vendita di tutti gli articoli.\n\nRicavo totale = Ricavo del primo lotto + Ricavo del secondo lotto\n\nRicavo totale = 2187 € + 432 € = 2619 €\n\n\nPassaggio 5: Calcolo dell'utile dalla vendita di tutti gli articoli.\n\nUtile totale = Ricavo totale - Costo totale\n\nUtile totale = 2619 € - 2160 € = 459 €\n\n\nPassaggio 6: Calcolo del margine percentuale sull'utile sul ricavo.\n\nMargine percentuale = (Utile totale / Ricavo totale) * 100%\n\nMargine percentuale = (459 € / 2619 €) * 100% ≈ 17.55%\n\n\nRicavi Totali: 2619,00 €\n\nUtile Totale: 459,00 €\n\nMargine Percentuale sul Ricavo: 17,55%\n\n\n\n<strategia_system1_laya>\nGuida metodologica completa; non modifica il compito, i dati o il formato richiesto.\nCategoria: business_economics.\nModalità: multi_pass.\nStrategia: Classificazione Laya, analisi complessa, considerazione dei costi variabili e fiscali, e applicazione delle strategie di pricing dinamico.\n</strategia_system1_laya>\n\nUn negozio acquista 120 articoli a 18 euro ciascuno. Ne vende 90 con un ricarico del 35% sul costo, ma il ricaro deve essere ridotto del 5% a causa di una promozione. I restanti 30 articoli vengono venduti con uno sconto del 20% sul prezzo unitario, ma solo se il ricavato di ogni articolo supera il costo unitario di 2 euro. I costi di spedizione per il negozio sono pari al 3% del costo totale degli articoli acquistati. Il negozio ha anche bisogno di pagare le imposte sul reddito al 15% sul ricavo. Calcola ricavo totale, utile dopo i costi di spedizione e imposte, e margine percentuale sull'utile dopo i costi di imposte e spedizione. Mostra i passaggi e arrotonda i risultati monetari a due decimali.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 238,
+        "output": 956,
+        "reasoning": null,
+        "total": 1194
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 111.550413,
+  "result_file": "02_matematica_phi3_mini.json",
+  "system1": {
+    "task_family": "math",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "math",
+      "required_strategy": "math_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.4791,
+    "strategy": "math_check",
+    "strategy_confidence": 0.814,
+    "execution_confidence": 0.062,
+    "confidence": 0.062,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 9
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T09:51:59.621067+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 253,
+    "output": 816,
+    "reasoning": null,
+    "total": 1069
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku</title>\n    <style>\n        body {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 100vh;\n            margin: 0;\n            background-color: #f0f0f0;\n        }\n        table {\n            border-collapse: collapse;\n            width: 90%;\n            margin: 0 auto;\n            text-align: center;\n        }\n        td, th {\n            border: 1px solid #000;\n            padding: 8px;\n            width: 50px;\n            height: 50px;\n            margin: 2px;\n        }\n        input[type=\"number\"] {\n            width: 50px;\n            height: 50px;\n        }\n    </style>\n</head>\n<body>\n    <table id=\"sudokuGrid\">\n        <tr>\n            <td><input type=\"number\" value=\"1\"></td>\n            <td><input type=\"number\" value=\"2\"></td>\n            <td><input type=\"number\" value=\"3\"></td>\n        </tr>\n        <tr>\n            <td><input type=\"number\" value=\"4\"></td>\n            <td><input type=\"number\" value=\"5\"></td>\n            <td><input type=\"number\" value=\"6\"></td>\n        </tr>\n        <tr>\n            <td><input type=\"number\" value=\"7\"></td>\n            <td><input type=\"number\" value=\"8\"></td>\n            <td><input type=\"number\" value=\"9\"></td>\n        </tr>\n    </table>\n    <button onclick=\"resetGrid()\">Nuova Partita</button>\n    <script>\n        function isNumberKey(evt) {\n            const charCode = evt.which ? evt.which : evt.keyCode;\n            if (charCode < 48 || charCode > 57) return false;\n            return true;\n        }\n        function checkValidity() {\n            const grid = document.getElementById(\"sudokuGrid\").cells;\n            const isValid = grid.every(cell => cell.value && cell.value.length === 1 && isNumberKey(cell.value.charCodeAt(0)));\n            if (isValid) {\n                alert(\"Parabene! Hai completato la soluzione.\");\n                document.getElementById(\"sudokuGrid\").style.backgroundColor = \"green\";\n            } else {\n                alert(\"Completati tutti i valori!\");\n                document.getElementById(\"sudokuGrid\").style.backgroundColor = \"red\";\n            }\n        }\n        function cellClicked() {\n            const grid = document.getElementById(\"sudokuGrid\").cells;\n            const selectedCell = event.target;\n            if (selectedCell.value || selectedCell.value === \"0\") {\n                selectedCell.value = \"\";\n            }\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    const cell = document.getElementById(`${i + 1} ${j + 1}`);\n                    if (cell.value && cell.value.length === 1 && isNumberKey(cell.value.charCodeAt(0))) {\n                        cell.value = \"\";\n                    }\n                }\n            }\n        }\n        function resetGrid() {\n            const grid = document.getElementById(\"sudokuGrid\").cells;\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    const cell = document.getElementById(`${i + 1} ${j + 1}`);\n                    cell.value = \"\";\n                }\n            }\n            document.getElementById(\"sudokuGrid\").style.backgroundColor = \"white\";\n        }\n    </script>\n</body>\n</html>\n```",
+  "seconds": 26.904897,
+  "result_file": "20261017_10/03_programmazione_qwen2.5_1.5b.json"
+}

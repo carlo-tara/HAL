@@ -14,15 +14,16 @@ La fonte canonica di agenti e skill è `agents/`. Il repository AgentFactory è 
   - `choice`: selezione rapida tra alternative discrete o strategie operative determinate (`python3 router.py choice "<prompt>" --options ...`);
   - `score`: valutazione euristica di priorità, rischio o aderenza rispetto a criteri (`python3 router.py score "<testo>" --criteria ...`);
   - `noul`: elaborazione o pre-filtro rapido di primo livello (`python3 router.py noul "<testo>"`).
-  *Regola per l'agente*: Prima di procedere con decisioni discrezionali di classificazione, triage o scelta tra alternative operative, l'agente deve consultare Laya System 1 tramite CLI (`python3 router.py ...` o modulo Python `router`).
+    _Regola per l'agente_: Prima di procedere con decisioni discrezionali di classificazione, triage o scelta tra alternative operative, l'agente deve consultare Laya System 1 tramite CLI (`python3 router.py ...` o modulo Python `router`).
 
 - **System 2 (Agente / Active Model)**: Riservato al ragionamento complesso: pianificazione approfondita, generazione e modifica del codice, refactoring, esecuzione e analisi dei test, verifica semantica e decisioni architetturali vincolanti.
 
 ## Feature Flag Modelli Esterni (OrcaRouter)
 
 L'utilizzo di OrcaRouter per ciascun agente è condizionato tramite tre parametri:
+
 - `LLM_EXTERNAL_MODE`: flag numerico (`0` = disabilitato/off, `1` = abilitato/on).
-- `LLM_EXTERNAL_URI`: endpoint del router esterno (default: `https://api.orcarouter.com/v1`).
+- `LLM_EXTERNAL_URI`: endpoint del router esterno (default: `https://api.orcarouter.ai/v1`).
 - `LLM_EXTERNAL_MODEL`: modello OrcaRouter specifico per ciascun agente.
 
 **Stato attuale**: `LLM_EXTERNAL_MODE = 0` per ogni agente. L'esecuzione di tutti gli agenti ricade sul default System 2 (`SystemTwoEngine.ACTIVE_MODEL_NAME`).
@@ -30,5 +31,6 @@ L'utilizzo di OrcaRouter per ciascun agente è condizionato tramite tre parametr
 ## Integrazione Zed Editor
 
 La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzato Zed (`.zed/prompts`, `.agents/skills`):
+
 - Eseguire sempre `bash agents/scripts/link-workspace-skills.sh` dopo aver aggiunto o modificato comandi o skill.
 - Lo script crea i link simbolici verso `.zed/prompts/`.

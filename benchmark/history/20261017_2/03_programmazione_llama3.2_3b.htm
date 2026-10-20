@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gioco di Sudoku</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		#griglia {
+			border-collapse: collapse;
+		}
+
+		#griglia th, #griglia td {
+			border: 1px solid #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+
+		#griglia th {
+			background-color: #f0f0f0;
+		}
+
+		#errogenere {
+			background-color: #ffccff;
+			color: #ff0000;
+			padding: 10px;
+			border-radius: 10px;
+		}
+
+		#messaggio {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #f0f0f0;
+			border: 1px solid #ccc;
+		}
+
+		#ricomincia {
+			background-color: #4CAF50;
+			color: #fff;
+			padding: 10px 20px;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>Gioco di Sudoku</h1>
+	<table id="griglia">
+		<tr>
+			<th>1</th>
+			<th>2</th>
+			<th>3</th>
+			<th>4</th>
+			<th>5</th>
+			<th>6</th>
+			<th>7</th>
+			<th>8</th>
+			<th>9</th>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>2</td>
+			<td>6</td>
+			<td>5</td>
+			<td>3</td>
+			<td>9</td>
+			<td>8</td>
+			<td>1</td>
+			<td>7</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>1</td>
+			<td>8</td>
+			<td>9</td>
+			<td>6</td>
+			<td>4</td>
+			<td>5</td>
+			<td>2</td>
+			<td>3</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>8</td>
+			<td>3</td>
+			<td>1</td>
+			<td>4</td>
+			<td>7</td>
+			<td>9</td>
+			<td>6</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>3</td>
+			<td>1</td>
+			<td>7</td>
+			<td>9</td>
+			<td>6</td>
+			<td>4</td>
+			<td>8</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>6</td>
+			<td>5</td>
+			<td>8</td>
+			<td>2</td>
+			<td>3</td>
+			<td>1</td>
+			<td>7</td>
+			<td>4</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>9</td>
+			<td>4</td>
+			<td>6</td>
+			<td>5</td>
+			<td>8</td>
+			<td>3</td>
+			<td>9</td>
+			<td>7</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>5</td>
+			<td>9</td>
+			<td>3</td>
+			<td>7</td>
+			<td>1</td>
+			<td>6</td>
+			<td>4</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>4</td>
+			<td>2</td>
+			<td>9</td>
+			<td>1</td>
+			<td>6</td>
+			<td>5</td>
+			<td>8</td>
+			<td>7</td>
+		</tr>
+	</table>
+	<button id="ricomincia">Ricomincia</button>
+	<div id="errogenere"></div>
+	<div id="messaggio"></div>
+
+	<script>
+		let griglia = [];
+		let valori = [4, 2, 6, 5, 3, 9, 8, 1, 7];
+
+		function init() {
+			for (let i = 0; i < 9; i++) {
+				griglia[i] = [];
+				for (let j = 0; j < 9; j++) {
+					griglia[i][j] = valori[i * 9 + j];
+				}
+			}
+
+			document.getElementById('griglia').innerHTML = '';
+			document.getElementById('griglia').innerHTML += '<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>';
+			for (let i = 0; i < 9; i++) {
+				griglia[i].forEach(function(v) {
+					document.getElementById('griglia').innerHTML += '<tr><td>' + v + '</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+				});
+			}
+		}
+
+		function selezionaCella(x, y) {
+			if (griglia[x][y] == '') {
+				griglia[x][y] = 1;
+				document.getElementById('griglia').innerHTML = '';
+				document.getElementById('griglia').innerHTML += '<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>';
+				for (let i = 0; i < 9; i++) {
+					griglia[i].forEach(function(v) {
+						if (v == 1) {
+							document.getElementById('griglia').innerHTML += '<tr><td id="cella-' + i + '-' + j + '"><input type="number" id="cella-' + i + '-' + j + '-input" size="2" value="" style="width: 20px;"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+						} else if (v == '') {
+							document.getElementById('griglia').innerHTML += '<tr><td id="cella-' + i + '-' + j + '"><input type="number" id="cella-' + i + '-' + j + '-input" size="2" value="" style="width: 20px;"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+						} else {
+							document.getElementById('griglia').innerHTML += '<tr><td id="cella-' + i + '-' + j + '"><span id="cella-' + i + '-' + j + '-value">' + v + '</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+						}
+					});
+				}
+			}
+		}
+
+		function cancella() {
+			griglia = [];
+			valori = [4, 2, 6, 5, 3, 9, 8, 1, 7];
+			init();
+		}
+
+		function verifica() {
+			if (verificaOrizzontale() && verificaVerticale() && verificaQuadrato() && verificaQuadrato2() && verificaQuadrato3() && verificaQuadrato4() && verificaQuadrato5() && verificaQuadrato6() && verificaQuadrato7()) {
+				document.getElementById('messaggio').innerHTML = 'Hai vinto!';
+			} else {
+				document.getElementById('messaggio').innerHTML = 'Hai perso!';
+			}
+		}
+
+		function verificaOrizzontale() {
+			for (let i = 0; i < 9; i++) {
+				let set = new Set();
+				for (let j = 0; j < 9; j++) {
+					set.add(griglia[i][j]);
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaVerticale() {
+			for (let i = 0; i < 9; i++) {
+				let set = new Set();
+				for (let j = 0; j < 9; j++) {
+					set.add(griglia[j][i]);
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato(x) {
+			for (let i = 0; i < 3; i++) {
+				for (let j = 0; j < 3; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + k][j * 3 + x]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato2() {
+			for (let i = 3; i < 9; i++) {
+				for (let j = 0; j < 3; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + k][j * 3 + x]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato3() {
+			for (let i = 0; i < 3; i++) {
+				for (let j = 3; j < 9; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + x][j * 3 + k]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato4() {
+			for (let i = 3; i < 9; i++) {
+				for (let j = 3; j < 9; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + k][j * 3 + x]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato5() {
+			for (let i = 0; i < 3; i++) {
+				for (let j = 0; j < 3; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + k][j * 3 + x + 3]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato6() {
+			for (let i = 0; i < 3; i++) {
+				for (let j = 3; j < 9; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + k][j * 3 + x + 3]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		function verificaQuadrato7() {
+			for (let i = 3; i < 9; i++) {
+				for (let j = 3; j < 9; j++) {
+					let set = new Set();
+					for (let k = 0; k < 3; k++) {
+						set.add(griglia[i * 3 + k][j * 3 + x + 3]);
+					}
+					if (set.size > 1) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		document.getElementById('ricomincia').addEventListener('click', cancella);
+		document.getElementById('griglia').addEventListener('input', function(event) {
+			let cella = event.target.id;
+			let posizione = cella.split('-');
+			let x = parseInt(posizione[1]) - 1;
+			let y = parseInt(posizione[2]) - 1;
+			if (griglia[x][y] == '') {
+				griglia[x][y] = 1;
+				document.getElementById('griglia').innerHTML = '';
+				document.getElementById('griglia').innerHTML += '<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>';
+				for (let i = 0; i < 9; i++) {
+					griglia[i].forEach(function(v) {
+						if (v == 1) {
+							document.getElementById('griglia').innerHTML += '<tr><td id="cella-' + i + '-' + j + '"><input type="number" id="cella-' + i + '-' + j + '-input" size="2" value="" style="width: 20px;"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+						} else if (v == '') {
+							document.getElementById('griglia').innerHTML += '<tr><td id="cella-' + i + '-' + j + '"><input type="number" id="cella-' + i + '-' + j + '-input" size="2" value="" style="width: 20px;"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+						} else {
+							document.getElementById('griglia').innerHTML += '<tr><td id="cella-' + i + '-' + j + '"><span id="cella-' + i + '-' + j + '-value">' + v + '</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+						}
+					});
+				}
+			}
+		});
+
+		init();
+	</script>
+</body>
+</html>

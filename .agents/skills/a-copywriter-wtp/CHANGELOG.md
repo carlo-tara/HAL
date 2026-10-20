@@ -4,6 +4,7 @@
 
 ### Changed
 
+- 1.0.11 → **1.0.12** — Rimossi riferimenti a Cursor: path `.cursor/brands/` → `brands/`, `.cursor/agents/` → `agents/`, `.cursor/rules/` → `docs/rules/`, `.cursor/skills/` → `.agents/skills/` `[sync:safe]`
 - 1.0.9 → **1.0.10** — Sync padre: extends-version a-copywriter 1.6.0 → 1.6.1 `[sync:safe]`
 - 1.0.8 → **1.0.9** — Skill base a-copywriter HAL Gateway collegata; `extends-version` 1.5.5→1.6.0 `[sync:safe]`
 - 1.0.7 → **1.0.8** — Appreso da sessione: CTA fetch senza jargon provider («Recupera dati mancanti») `[sync:safe]`
@@ -20,7 +21,7 @@
 ### Changed
 
 - Catena L2 esplicita verso `a-copywriter` @ 1.5.1 (prima solo prosa «Base obbligatoria»)
-- Whitelist git: `.cursor/skills/a-copywriter-wtp/` in `.gitignore` + `versioned-cursor-paths`
+- Whitelist git: `.agents/skills/a-copywriter-wtp/` in the agent path registry
 
 ## [1.0.0] - 2026-08-17
 

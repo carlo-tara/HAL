@@ -1,0 +1,99 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-17T17:23:08.151145+00:00",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 734,
+    "output": 42200,
+    "reasoning": null,
+    "total": 42934
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku Game</title>\n    <style>\n        body {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 100vh;\n            margin: 0;\n            font-family: Arial, sans-serif;\n        }\n        #sudoku {\n            width: 200px;\n            height: 200px;\n            border: 1px solid #000;\n            position: relative;\n        }\n        #cell {\n            width: 40px;\n            height: 40px;\n            border: 1px solid #000;\n            position: absolute;\n        }\n        .highlight {\n            background-color: yellow;\n        }\n    </style>\n</head>\n<body>\n    <div id=\"sudoku\">\n        <div id=\"cell-1\" class=\"cell\"></div>\n        <div id=\"cell-2\" class=\"cell\"></div>\n        <div id=\"cell-3\" class=\"cell\"></div>\n        <div id=\"cell-4\" class=\"cell\"></div>\n        <div id=\"cell-5\" class=\"cell\"></div>\n        <div id=\"cell-6\" class=\"cell\"></div>\n        <div id=\"cell-7\" class=\"cell\"></div>\n        <div id=\"cell-8\" class=\"cell\"></div>\n        <div id=\"cell-9\" class=\"cell\"></div>\n    </div>\n\n    <button onclick=\"newGame()\">Nuova Partita</button>\n    <script>\n        let grid = [];\n        let cells = document.querySelectorAll('#cell');\n        for (let i = 0; i < 9; i++) {\n            grid.push([]);\n            for (let j = 0; j < 9; j++) {\n                let cell = document.getElementById(`cell-${i * 9 + j + 1}`);\n                grid[i].push(cell);\n            }\n        }\n\n        function isValid(sudoku) {\n            let nums = new Set();\n            for (let i = 1; i <= 9; i++) {\n                nums.add(i);\n            }\n            for (let i = 0; i < 9; i++) {\n                let row = sudoku[i].map((cell) => cell.value);\n                let col = sudoku.map((row) => row[i]).map((cell) => cell.value);\n                let box = sudoku.map((row) => row.slice(i, i + 3)).map((row) => row.slice(3 * (i / 3), 3 * (i / 3 + 1)).map((cell) => cell.value).flat());\n                for (let j of row) {\n                    if (!nums.has(j)) {\n                        return false;\n                    }\n                }\n                for (let j of col) {\n                    if (!nums.has(j)) {\n                        return false;\n                    }\n                }\n                for (let j of box) {\n                    if (!nums.has(j)) {\n                        return false;\n                    }\n                }\n            }\n            return true;\n        }\n\n        function solve(sudoku) {\n            let empty = [];\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    if (sudoku[i][j].value === 0) {\n                        empty.push([i, j]);\n                    }\n                }\n            }\n            while (empty.length > 0) {\n                let [i, j] = empty[Math.floor(Math.random() * empty.length)];\n                if (isValid(sudoku)) {\n                    sudoku[i][j].value = 1;\n                } else {\n                    empty.shift();\n                }\n            }\n        }\n\n        function newGame() {\n            let grid = Array.from(document.querySelectorAll('#cell'));\n            let newSudoku = Array.from(document.querySelectorAll('#cell'));\n            let empty = [];\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    if (newSudoku[i][j].value === 0) {\n                        empty.push([i, j]);\n                    }\n                }\n            }\n            while (empty.length > 0) {\n                let [i, j] = empty[Math.floor(Math.random() * empty.length)];\n                if (isValid(newSudoku)) {\n                    newSudoku[i][j].value = 1;\n                } else {\n                    empty.shift();\n                }\n            }\n            solve(newSudoku);\n        }\n\n        document.querySelectorAll('#cell').forEach(cell => {\n            cell.addEventListener('click', () => {\n                if (cell.value === 0) {\n                    cell.value = 1;\n                } else {\n                    cell.value = 0;\n                }\n                let row = cell.id.split('cell-');\n                let column = row[0].split('-');\n                let rowIndex = parseInt(column[1]) - 1;\n                let columnIndex = parseInt(row[1]) - 1;\n                let row = grid[rowIndex];\n                let column = grid.map((row) => row[columnIndex]);\n                let box = grid.map((row) => row.slice(rowIndex, rowIndex + 3)).map((row) => row.slice(columnIndex * 3, columnIndex * 3 + 3).map((cell) => cell.value));\n                let cells = row.concat(column).concat(box).filter((cell) => cell.value === 0).map((cell) => cell.id);\n                for (let c of cells) {\n                    let cell = document.getElementById(c);\n                    if (cell) {\n                        cell.value = 1;\n                        newGame();\n                    }\n                }\n            });\n        });\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "truncated",
+      "tokens": {
+        "input": 346,
+        "output": 40960,
+        "reasoning": null,
+        "total": 41306
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.0005
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 388,
+        "output": 1240,
+        "reasoning": null,
+        "total": 1628
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "accept",
+      "confidence": 0.0234
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 2,
+    "system2_stages": 2,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 1901.90466,
+  "result_file": "03_programmazione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "coding",
+    "family_confidence": 0.9498,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5704,
+    "execution_mode": "single_pass",
+    "execution_confidence": 0.9268,
+    "confidence": 0.5704,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta."
+  }
+}

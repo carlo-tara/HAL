@@ -1,0 +1,215 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-17T18:56:34.661023+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 459,
+    "output": 2724,
+    "reasoning": null,
+    "total": 3183
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati della classificazione dei contenuti dei singoli capitoli del libro:\n\n```\n{\n  \"source_chunks\": [\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    }\n  ]\n}\n```\n\nPer restituire i risultati in formato JSON, aggiungo la codifica JSON al fine di rappresentare in modo coerente i contenuti:\n\n```\n{\n  \"source_chunks\": [\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    },\n    {\n      \"category\": \"source\",\n      \"modality\": \"source_chunks\",\n      \"strategia\": \"La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.\"\n    }\n  ]\n}\n```\n\nQuesto codice JSON rappresenta il contenuto dei singoli capitoli del libro, con i metadati necessari per la classificazione dei contenuti.",
+  "workflow": [
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 1/10",
+      "decision": "skip",
+      "confidence": 0.0003,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 2/10",
+      "decision": "skip",
+      "confidence": 0.7317,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 3/10",
+      "decision": "skip",
+      "confidence": 0.6041,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 4/10",
+      "decision": "skip",
+      "confidence": 0.5497,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 5/10",
+      "decision": "skip",
+      "confidence": 0.2951,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 6/10",
+      "decision": "skip",
+      "confidence": 0.1696,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 7/10",
+      "decision": "skip",
+      "confidence": 0.0005,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 8/10",
+      "decision": "skip",
+      "confidence": 0.6298,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 9/10",
+      "decision": "skip",
+      "confidence": 0.3067,
+      "shared_preflight": true
+    },
+    {
+      "system": "system1_laya",
+      "phase": "rilevanza segmento 10/10",
+      "decision": "skip",
+      "confidence": 0.6595,
+      "shared_preflight": true
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 250,
+        "output": 1222,
+        "reasoning": null,
+        "total": 1472
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta finale",
+      "decision": "retry",
+      "confidence": 0.1126
+    },
+    {
+      "system": "system2",
+      "stage": "risposta_retry",
+      "status": "ok",
+      "tokens": {
+        "input": 209,
+        "output": 1502,
+        "reasoning": null,
+        "total": 1711
+      }
+    },
+    {
+      "system": "system1_laya",
+      "phase": "verifica risposta retry",
+      "decision": "reject",
+      "confidence": 0.6993
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 12,
+    "system2_stages": 2,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 84.23727,
+  "result_file": "04_estrazione_json_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "family_confidence": 0.913,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3693,
+    "execution_mode": "source_chunks",
+    "execution_confidence": 0.9943,
+    "confidence": 0.3693,
+    "guidance": "La classificazione System 1 è incerta: individua i requisiti direttamente nel prompt, rispetta il formato richiesto e verifica la risposta.",
+    "source_chunk_decisions": [
+      {
+        "segment": 1,
+        "phase": "rilevanza segmento 1/10",
+        "decision": "skip",
+        "confidence": 0.0003
+      },
+      {
+        "segment": 2,
+        "phase": "rilevanza segmento 2/10",
+        "decision": "skip",
+        "confidence": 0.7317
+      },
+      {
+        "segment": 3,
+        "phase": "rilevanza segmento 3/10",
+        "decision": "skip",
+        "confidence": 0.6041
+      },
+      {
+        "segment": 4,
+        "phase": "rilevanza segmento 4/10",
+        "decision": "skip",
+        "confidence": 0.5497
+      },
+      {
+        "segment": 5,
+        "phase": "rilevanza segmento 5/10",
+        "decision": "skip",
+        "confidence": 0.2951
+      },
+      {
+        "segment": 6,
+        "phase": "rilevanza segmento 6/10",
+        "decision": "skip",
+        "confidence": 0.1696
+      },
+      {
+        "segment": 7,
+        "phase": "rilevanza segmento 7/10",
+        "decision": "skip",
+        "confidence": 0.0005
+      },
+      {
+        "segment": 8,
+        "phase": "rilevanza segmento 8/10",
+        "decision": "skip",
+        "confidence": 0.6298
+      },
+      {
+        "segment": 9,
+        "phase": "rilevanza segmento 9/10",
+        "decision": "skip",
+        "confidence": 0.3067
+      },
+      {
+        "segment": 10,
+        "phase": "rilevanza segmento 10/10",
+        "decision": "skip",
+        "confidence": 0.6595
+      }
+    ]
+  }
+}

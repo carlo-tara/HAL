@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+        th {
+            background-color: gray;
+        }
+        .error {
+            background-color: red;
+            color: white;
+        }
+        .solution {
+            background-color: green;
+            color: white;
+        }
+        .active {
+            background-color: lightblue;
+        }
+        input[type='text'] {
+            width: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku</h1>
+    <button id="new-game">New game</button>
+    <table id="sudoku">
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+        </tr>
+        <tr>
+            <td><input type='text' id='c11' maxlength='1'></td>
+            <td><input type='text' id='c12' maxlength='1'></td>
+            <td><input type='text' id='c13' maxlength='1'></td>
+        </tr>
+        <tr>
+            <td><input type='text' id='c21' maxlength='1'></td>
+            <td><input type='text' id='c22' maxlength='1'></td>
+            <td><input type='text' id='c23' maxlength='1'></td>
+        </tr>
+        <tr>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+        </tr>
+        <tr>
+            <td><input type='text' id='c31' maxlength='1'></td>
+            <td><input type='text' id='c32' maxlength='1'></td>
+            <td><input type='text' id='c33' maxlength='1'></td>
+        </tr>
+        <tr>
+            <td><input type='text' id='c41' maxlength='1'></td>
+            <td><input type='text' id='c42' maxlength='1'></td>
+            <td><input type='text' id='c43' maxlength='1'></td>
+        </tr>
+        <tr>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+        </tr>
+        <tr>
+            <td><input type='text' id='c51' maxlength='1'></td>
+            <td><input type='text' id='c52' maxlength='1'></td>
+            <td><input type='text' id='c53' maxlength='1'></td>
+        </tr>
+        <tr>
+            <td><input type='text' id='c61' maxlength='1'></td>
+            <td><input type='text' id='c62' maxlength='1'></td>
+            <td><input type='text' id='c63' maxlength='1'></td>
+        </tr>
+    </table>
+    <script>
+        let solution = [
+            [5,3,4,6,7,8,9,1,2],
+            [6,7,2,1,9,5,3,4,8],
+            [1,9,8,3,4,2,5,6,7],
+            [8,5,9,7,6,1,4,2,3],
+            [4,2,6,8,5,3,7,9,1],
+            [7,1,3,9,2,4,8,5,6],
+            [9,6,1,5,3,7,2,8,4],
+            [2,8,7,4,1,9,6,3,5],
+            [3,4,5,2,8,6,1,7,9]
+        ];
+        let grid = [];
+        let errorCount = 0;
+        let isSolved = false;
+        let isGameStarted = false;
+
+        for (let i = 0; i < 9; i++) {
+            grid[i] = [];
+            for (let j = 0; j < 9; j++) {
+                grid[i][j] = solution[i][j];
+                const cell = document.getElementById(`c${i+1}${j+1}`);
+                cell.value = grid[i][j];
+                cell.style.background = solution[i][j] === 0 ? '' : 'green';
+            }
+        }
+
+        function newGame() {
+            isSolved = false;
+            errorCount = 0;
+            isGameStarted = true;
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.getElementById(`c${i+1}${j+1}`);
+                    cell.value = '';
+                    cell.style.background = '';
+                    grid[i][j] = 0;
+                }
+            }
+            generateRandomValues();
+        }
+
+        function generateRandomValues() {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (grid[i][j] === 0) {
+                        const numbers = Array.from({length: 9}, (_, k) => k + 1);
+                        shuffle(numbers);
+                        for (const num of numbers) {
+                            if (isValid(i, j, num)) {
+                                grid[i][j] = num;
+                                const cell = document.getElementById(`c${i+1}${j+1}`);
+                                cell.value = num;
+                                cell.style.background = 'green';
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function isValid(i, j, num) {
+            for (let x = 0; x < 9; x++) {
+                if (grid[i][x] === num) return false;
+                if (grid[x][j] === num) return false;
+            }
+            const boxSize = 3;
+            const boxI = Math.floor(i / boxSize) * boxSize;
+            const boxJ = Math.floor(j / boxSize) * boxSize;
+            for (let x = 0; x < boxSize; x++) {
+                for (let y = 0; y < boxSize; y++) {
+                    if (grid[boxI+x][boxJ+y] === num) return false;
+                }
+            }
+            return true;
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'INPUT') {
+                const cell = e.target;
+                const i = parseInt(cell.id.substring(1, 2)) - 1;
+                const j = parseInt(cell.id.substring(3, 4)) - 1;
+                if (isGameStarted) {
+                    if (cell.value.length > 1) return;
+                    if (grid[i][j] === 0) {
+                        cell.select();
+                        cell.focus();
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('keypress', (e) => {
+            if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                const cell = document.activeElement;
+                if (cell.tagName === 'INPUT') {
+                    const i = parseInt(cell.id.substring(1, 2)) - 1;
+                    const j = parseInt(cell.id.substring(3, 4)) - 1;
+                    if (isGameStarted) {
+                        if (e.key === 'Backspace') {
+                            cell.value = '';
+                            grid[i][j] = 0;
+                        } else if (e.key.match(/[1-9]/)) {
+                            const num = parseInt(e.key);
+                            if (num > 0 && num < 10) {
+                                if (isValid(i, j, num)) {
+                                    cell.value = num;
+                                    grid[i][j] = num;
+                                    cell.style.background = 'green';
+                                    errorCount = 0;
+                                } else {
+                                    errorCount++;
+                                    cell.style.background = 'red';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('blur', (e) => {
+            if (e.target.tagName === 'INPUT') {
+                const cell = e.target;
+                const i = parseInt(cell.id.substring(1, 2)) - 1;
+                const j = parseInt(cell.id.substring(3, 4)) - 1;
+                if (isGameStarted) {
+                    if (cell.value.length > 1) return;
+                    if (grid[i][j] === 0) {
+                        cell.value = '';
+                        grid[i][j] = 0;
+                    }
+                }
+            }
+        });
+
+        document.getElementById('new-game').addEventListener('click', newGame);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+                const cell = e.target;
+                const i = parseInt(cell.id.substring(1, 2)) - 1;
+                const j = parseInt(cell.id.substring(3, 4)) - 1;
+                if (isGameStarted) {
+                    if (cell.value.length > 1) return;
+                    if (grid[i][j] === 0) {
+                        cell.select();
+                        cell.focus();
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'Escape' && isGameStarted) {
+                newGame();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isGameStarted) {
+                newGame();
+            }
+        });
+
+        document.addEventListener('click', () => {
+            if (isGameStarted && errorCount === 0) {
+                let isValid = true;
+                for (let i = 0; i < 9; i++) {
+                    for (let j = 0; j < 9; j++) {
+                        const num = parseInt(document.getElementById(`c${i+1}${j+1}`).value);
+                        if (num > 0 && num < 10) {
+                            if (!isValid(i, j, num)) {
+                                isValid = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (!isValid) break;
+                }
+                if (isValid) {
+                    isSolved = true;
+                    document.getElementById('sudoku').style.background = 'lightgreen';
+                    document.getElementById('sudoku').style.color = 'black';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

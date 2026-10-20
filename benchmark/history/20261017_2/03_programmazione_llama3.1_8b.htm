@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sudoku</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-gap: 2px;
+            background-color: #f0f0f0;
+        }
+        .cell {
+            background-color: #fff;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .error {
+            background-color: #ff0000;
+            color: #fff;
+        }
+        #message {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        #new-game {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku</h1>
+    <div id="grid">
+        <?php for ($i = 0; $i < 9; $i++) { ?>
+            <?php for ($j = 0; $j < 9; $j++) { ?>
+                <div class="cell" id="cell_<?php echo $i; echo $j; ?>"></div>
+            <?php } ?>
+        <?php } ?>
+    </div>
+    <div id="message"></div>
+    <button id="new-game">Nuova partita</button>
+
+    <script>
+        // Genera la griglia di Sudoku
+        let grid = [];
+        for (let i = 0; i < 9; i++) {
+            let row = [];
+            for (let j = 0; j < 9; j++) {
+                let cell = {
+                    value: '',
+                    error: false,
+                    row: i,
+                    col: j
+                };
+                row.push(cell);
+            }
+            grid.push(row);
+        }
+
+        // Precompila alcune celle
+        grid[2][2].value = '5';
+        grid[2][5].value = '3';
+        grid[6][0].value = '8';
+        grid[7][4].value = '9';
+
+        // Aggiorna la griglia
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                let cell = document.getElementById('cell_' + i + j);
+                if (grid[i][j].value !== '') {
+                    cell.innerHTML = grid[i][j].value;
+                }
+            }
+        }
+
+        // Funzione per selezionare una cella
+        function selectCell(row, col) {
+            let cell = document.getElementById('cell_' + row + col);
+            cell.classList.add('selected');
+        }
+
+        // Funzione per deseleziona una cella
+        function deselectCell(row, col) {
+            let cell = document.getElementById('cell_' + row + col);
+            cell.classList.remove('selected');
+        }
+
+        // Funzione per inserire un valore in una cella
+        function insertValue(row, col, value) {
+            let cell = document.getElementById('cell_' + row + col);
+            if (value !== '') {
+                grid[row][col].value = value;
+                cell.innerHTML = value;
+                if (isValid(grid)) {
+                    // Aggiorna il messaggio
+                    document.getElementById('message').innerHTML = 'Sudoku completato!';
+                    // Disabilita la possibilità di inserire altri valori
+                    for (let i = 0; i < 9; i++) {
+                        for (let j = 0; j < 9; j++) {
+                            let cell = document.getElementById('cell_' + i + j);
+                            cell.style.cursor = 'not-allowed';
+                        }
+                    }
+                } else {
+                    // Aggiorna il messaggio
+                    document.getElementById('message').innerHTML = 'Errore!';
+                }
+            }
+        }
+
+        // Funzione per cancellare un valore in una cella
+        function cancelValue(row, col) {
+            let cell = document.getElementById('cell_' + row + col);
+            grid[row][col].value = '';
+            cell.innerHTML = '';
+        }
+
+        // Funzione per evidenziare gli errori
+        function highlightErrors() {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    let cell = document.getElementById('cell_' + i + j);
+                    if (grid[i][j].error) {
+                        cell.classList.add('error');
+                    } else {
+                        cell.classList.remove('error');
+                    }
+                }
+            }
+        }
+
+        // Funzione per generare una nuova griglia
+        function newGame() {
+            // Disabilita la possibilità di inserire altri valori
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    let cell = document.getElementById('cell_' + i + j);
+                    cell.style.cursor = 'not-allowed';
+                }
+            }
+            // Aggiorna la griglia
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    let cell = document.getElementById('cell_' + i + j);
+                    cell.innerHTML = '';
+                    grid[i][j].value = '';
+                }
+            }
+            // Aggiorna il messaggio
+            document.getElementById('message').innerHTML = '';
+            // Rimuovi il segno di errore
+            highlightErrors();
+        }
+
+        // Funzione per validare la griglia
+        function isValid(grid) {
+            // Verifica le righe
+            for (let i = 0; i < 9; i++) {
+                let values = [];
+                for (let j = 0; j < 9; j++) {
+                    values.push(grid[i][j].value);
+                }
+                if (!isValidRow(values)) {
+                    return false;
+                }
+            }
+            // Verifica le colonne
+            for (let j = 0; j < 9; j++) {
+                let values = [];
+                for (let i = 0; i < 9; i++) {
+                    values.push(grid[i][j].value);
+                }
+                if (!isValidRow(values)) {
+                    return false;
+                }
+            }
+            // Verifica i blocchi 3x3
+            for (let i = 0; i < 9; i += 3) {
+                for (let j = 0; j < 9; j += 3) {
+                    let values = [];
+                    for (let k = i; k < i + 3; k++) {
+                        for (let l = j; l < j + 3; l++) {
+                            values.push(grid[k][l].value);
+                        }
+                    }
+                    if (!isValidRow(values)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Funzione per verificare una riga
+        function isValidRow(values) {
+            for (let i = 0; i < 9; i++) {
+                if (values[i] === '') {
+                    continue;
+                }
+                for (let j = i + 1; j < 9; j++) {
+                    if (values[j] === '') {
+                        continue;
+                    }
+                    if (values[i] === values[j]) {
+                        grid[values[i]].error = true;
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Aggiorna la griglia
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                let cell = document.getElementById('cell_' + i + j);
+                if (grid[i][j].value !== '') {
+                    cell.innerHTML = grid[i][j].value;
+                }
+            }
+        }
+
+        // Aggiungi evento al pulsante
+        document.getElementById('new-game').addEventListener('click', newGame);
+
+        // Aggiungi evento alle celle
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                let cell = document.getElementById('cell_' + i + j);
+                cell.addEventListener('click', function() {
+                    let row = i;
+                    let col = j;
+                    selectCell(row, col);
+                    let value = prompt('Inserisci un valore (1-9)');
+                    if (value !== null) {
+                        insertValue(row, col, value);
+                    }
+                    deselectCell(row, col);
+                });
+                cell.addEventListener('contextmenu', function(event) {
+                    event.preventDefault();
+                    let row = i;
+                    let col = j;
+                    cancelValue(row, col);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
