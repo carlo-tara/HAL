@@ -1,9 +1,9 @@
 ---
 name: a-design
 extends: a-agentzero
-version: 1.1.3
+version: 1.1.4
 model: orcarouter/qwen/qwen3.8-flash
-extends-version: 1.8.5
+extends-version: 1.10.1
 description: >-
   Reason why: senza coerenza tra interfaccia, infografica e identità visiva, l'esperienza utente risulta frammentata. Agente L1 Design & Visual Experience: unifica layout e accessibilità (uiux), grafici e data visualization (charts) e asset illustrativi (illustrator). Eredita da a-agentzero. Usare per UI, layout statici, WCAG, grafici, dashboard e illustrazioni di brand.
 ---

@@ -1,9 +1,9 @@
 ---
 name: a-wordpress
 extends: a-agentzero
-version: 1.3.2
+version: 1.3.3
 model: orcarouter/z-ai/glm-5.3-flash
-extends-version: 1.8.5
+extends-version: 1.10.1
 description: >-
   Reason why: senza un metodo condiviso per analizzare siti e consegnare plugin ordinati, ogni intervento WordPress diventa un pezzo isolato e fragile.
   Analizza installazioni WordPress specifiche e sviluppa, mantiene e revisiona plugin
