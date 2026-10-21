@@ -1,6 +1,6 @@
 ---
 name: improve
-version: 1.2.0
+version: 1.2.1
 description: Command improve for HAL workspace.
 ---
 
@@ -17,31 +17,24 @@ Analizzare e proporre (o applicare con approvazione) miglioramenti mirati al cod
    - Escludi lockfile, file autogenerati o vendor.
    - Leggi il diff completo solo se <= 150 righe, altrimenti leggi `git diff` limitato ai soli path rilevanti.
    - Traccia: `python3 scripts/token_budget.py log diff_read <lines>`.
-
 2. **Chunk-based Scoring (System 1):**
    - Frammenta l'input in chunk <= 80 righe prima di valutare.
    - Per ogni chunk: `python3 router.py score "<chunk>" --criteria "Opportunità di refactoring a basso rischio e alto impatto"`.
    - Se lo score è sotto threshold (0.5): scarta il chunk senza System 2.
    - Solo i chunk con score alto passano a System 2.
    - Traccia: `python3 scripts/token_budget.py log chunk_score <score> <threshold>`.
-
 3. **Lazy-load:**
    - Prima di `read_file`: stimare la dimensione del file.
    - Se > 100 righe, usare `start_line` / `end_line` per leggere solo le sezioni rilevanti.
    - Mai leggere file interi se non strettamente necessario.
    - Traccia: `python3 scripts/token_budget.py log lazy_load <path> <lines_read> <total_lines>`.
-
 4. **Qualità** (solo per le aree con score System 1 positivo):
    - Duplicazioni evitabili, nomi chiari, percorsi d'errore gestiti
    - Coerenza con convenzioni del repo (`README`, linter, skill L2)
    - Performance o DX solo se evidenti e a basso rischio
-
 5. **Sicurezza**: niente segreti in codice; credenziali solo da `.env` del progetto.
-
 6. Dopo modifiche sostanziali: eseguire le verifiche tipiche del repo (test, build, lint) se disponibili.
-
 7. Evitare di "pulire" file non toccati dal task.
-
 8. Se si modificano skill agenti: bump `version` + CHANGELOG e, se serve, `/sync` / `/version`.
 
 ## Checklist
@@ -61,25 +54,13 @@ Analizzare e proporre (o applicare con approvazione) miglioramenti mirati al cod
 
 ## Telemetria
 
-Tutte le operazioni sono tracciate automaticamente:
-
 ```bash
-# Inizia sessione (una volta all'avvio)
-python3 scripts/token_budget.py init
-
-# Durante il lavoro
-python3 scripts/token_budget.py log s1_call          # Ogni chiamata Laya
-python3 scripts/token_budget.py log s2_call          # Ogni reasoning System 2
-python3 scripts/token_budget.py log diff_read 120    # Diff processato
-python3 scripts/token_budget.py log chunk_score 0.7 0.5  # Chunk valutato
-python3 scripts/token_budget.py log lazy_load app/main.py 50 200  # Lazy load
-python3 scripts/token_budget.py log output 350       # Output generato
-
-# Alla fine
-python3 scripts/token_budget.py report               # Report finale
+python3 scripts/token_budget.py init            # una volta all'avvio
+python3 scripts/token_budget.py log s1_call     # ogni chiamata Laya
+python3 scripts/token_budget.py log s2_call     # ogni reasoning System 2
+python3 scripts/token_budget.py log output 350  # output generato
+python3 scripts/token_budget.py report          # report finale (JSONL: events/token-budget.jsonl)
 ```
-
-Output JSONL: `events/token-budget.jsonl`
 
 ## Usage
 

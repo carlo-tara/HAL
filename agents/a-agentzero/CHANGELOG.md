@@ -1,12 +1,15 @@
 # Changelog — a-agentzero
 
-## [Unreleased]
+## [1.10.1] - 2026-10-21
 
 ### Added
 
 - Protocollo Token Budget (L0): 13 strategie per ridurre l'output token senza perdere informazioni o qualità. Riferimento: [references/token-budget.md](references/token-budget.md).
 - Modulo telemetria `scripts/token_budget.py`: traccia tokens in/out, chiamate System1 vs System2, file letti, diff size, violazioni regole. Output JSONL in `events/token-budget.jsonl`.
 - Regole globali di budget: max 500 token output/sessione, lazy-load per file >100 righe, attachment filtering per liste lunghe, skip preamble enforced.
+- `scripts/context_compress.py`: compressione semantic-aware per skill/instruction file (classifica per tipo di contenuto, regole deterministiche per livello, deduplicazione cross-file, stima token, validazione marker comportamentali); derivato da vidanov/context-compress. Test in `tests/test_context_compress.py` (24 test).
+- `token_budget.py`: nuovi eventi telemetrici `skill_compress` e `dedup_found` per tracciare risparmio da compressione e deduplicazione skill files.
+- Riferimento `references/token-budget.md`: strategie 14-17 integrate (semantic compression, dedup, stats, validation).
 
 ## [1.8.7] - 2026-10-21
 

@@ -1,6 +1,6 @@
 ---
 name: review
-version: 1.2.0
+version: 1.2.1
 description: Command review for HAL workspace.
 ---
 
@@ -17,19 +17,16 @@ Revisione manuale (checklist) del diff o dell'area indicata nel **repository cor
    - Seleziona solo i file modificati di logica o testo (salta lock, map, minified).
    - Se il diff totale > 150 righe, ispeziona un path alla volta. Non riversare mai il diff totale nel contesto.
    - Traccia: `python3 scripts/token_budget.py log diff_read <lines>`.
-
 2. **Chunk-based Scoring (System 1):**
    - Frammenta il diff in chunk <= 80 righe.
    - Per ogni chunk: `python3 router.py score "<chunk>" --criteria "Rischio di regressione o bug"`.
    - Se score < 0.5: skip del chunk (nessun finding significativo).
    - Solo chunk con score alto → System 2 per analisi approfondita.
    - Traccia: `python3 scripts/token_budget.py log chunk_score <score> <threshold>`.
-
 3. **Lazy-load:**
    - Se devi leggere file non modificati per contesto: usa `start_line`/`end_line`.
    - Mai leggere file interi se > 100 righe.
    - Traccia: `python3 scripts/token_budget.py log lazy_load <path> <lines_read> <total_lines>`.
-
 4. **Funzionalità**: il comportamento corrisponde al task? Edge case evidenti?
 5. **Qualità**: chiarezza, gestioni errore, duplicazioni evitabili nel solo scope del diff.
 6. **Test**: copertura adeguata o gap da segnalare; non richiedere suite assenti dal repo.
@@ -54,8 +51,6 @@ Revisione manuale (checklist) del diff o dell'area indicata nel **repository cor
 - Max 500 token output. Se necessario, scrivere dettagli in file esterni.
 
 ## Telemetria
-
-Tutte le operazioni sono tracciate:
 
 ```bash
 python3 scripts/token_budget.py init

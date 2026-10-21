@@ -48,6 +48,15 @@ Ridurre l'output token degli agenti HAL senza perdere informazioni né qualità,
 | 12 | **Multi-question anchoring** | `laya/SKILL.md` Strategy A | `anchored_decisions` |
 | 13 | **Attachment filtering** | `a-agentzero/SKILL.md` | `attachments_summarized` |
 
+### Integrate da vidanov/context-compress (4 nuove)
+
+| # | Strategia | Dove | Telemetria |
+|---|-----------|------|------------|
+| 14 | **Semantic-aware compression** — classifica sezioni per tipo (safety/light, code/none, reference/max, personality/heavy, procedure/medium); regole regex deterministiche senza dipendenze esterne | `scripts/context_compress.py` | `skill_compressions` |
+| 15 | **Cross-file deduplication** — trova blocchi duplicati tra file skill; hash normalizzato, soglia 60 chars | `scripts/context_compress.py` | `dedup_blocks` |
+| 16 | **Token stats** — stima token per file/directory (chars/4), report totale stack skill | `scripts/context_compress.py` | `stats_scan` |
+| 17 | **Behavioral marker validation** — verifica che frasi di sicurezza (must/never/sempre) sopravvivano alla compressione; strip emphasis prima del confronto | `scripts/context_compress.py` | `validation_checks` |
+
 ---
 
 ## Flusso operativo
@@ -99,6 +108,7 @@ Il modulo traccia automaticamente:
 - File letti e dimensioni
 - Dimensione diff processati
 - Violazioni regole (preamboli, dump contesti)
+- Compressione skill (skill_compress) e deduplicazione (dedup_found)
 
 **Esecuzione:**
 ```bash
@@ -109,6 +119,8 @@ python3 scripts/token_budget.log file_read path lines
 python3 scripts/token_budget.log diff_read lines
 python3 scripts/token_budget.log output tokens
 python3 scripts/token_budget.log violation type
+python3 scripts/token_budget.log skill_compress <orig_bytes> <comp_bytes>
+python3 scripts/token_budget.log dedup_found <blocks> <bytes_saved>
 python3 scripts/token_budget report         # Report finale
 ```
 
@@ -122,6 +134,30 @@ python3 scripts/token_budget report         # Report finale
 - Gli eventi storici non vanno mai cancellati
 - Il tree può essere modificato in parallelo: leggere da HEAD prima di modificare
 - `.env` non tracciato, solo nomi variabili e stato valorizzato/non
+
+---
+
+## Strumento di compressione skill files
+
+**File:** `a-agentzero/scripts/context_compress.py`
+
+Derivato da [vidanov/context-compress](https://github.com/vidanov/context-compress): compressione semantic-aware per file di istruzioni skill.
+
+```bash
+python3 scripts/context_compress.py stats <file|dir...>     # Stima token
+python3 scripts/context_compress.py dedup <dir>             # Trova duplicati
+python3 scripts/context_compress.py compress <file|dir> [-o] # Comprimi
+python3 scripts/context_compress.py validate <orig> <comp>   # Verifica marker
+```
+
+Livelli di compressione per tipo di contenuto:
+- **code**: none (protezione completa)
+- **safety**: light (solo formattazione, mai parole)
+- **reference**: max (collassa liste, rimuove separatori)
+- **personality**: heavy (rimuove filler phrases)
+- **procedure**: medium (formattazione + separatori)
+
+**Test:** `tests/test_context_compress.py` (24 test).
 
 ---
 

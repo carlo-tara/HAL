@@ -1,6 +1,6 @@
 ---
 name: a-agentzero
-version: 1.10.0
+version: 1.10.1
 model: orcarouter/deepseek/deepseek-v4-flash-free
 description: >-
   Reason why: senza L0 comune ogni dominio reinventa protocollo, sync e sicurezza.

@@ -7,6 +7,16 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+- Agent L0: `scripts/context_compress.py` compressione semantic-aware per skill/instruction file (classifica per tipo, regole deterministiche, dedup cross-file, stima token, validazione marker sicurezza); derivato da vidanov/context-compress. Nuovi eventi telemetrici `skill_compress` e `dedup_found` in `token_budget.py`. Riferimento `references/token-budget.md` aggiornato con strategie 14-17. Test in `tests/test_context_compress.py` (24 test). `a-agentzero` 1.10.1 · HAL
+- Benchmark: `benchmark/scripts/compare_tokens.py` confronta per (modello, test) i token di baseline e middleware (token `n/d` non sommati, flag `baseline_input_sospetto`, costo del blocco strategia dal delta di input); test in `tests/test_compare_tokens.py` e in CI `#benchmark` · P1 · Progetto
+
+- Correggere i passi di test in `.github/workflows/ready-for-review.yml`: i file `test_*.py` sono in `tests/`, quindi `python3 test_gateway_core.py` fallisce con `No such file or directory`; usare `PYTHONPATH=. python3 tests/test_*.py` #infra · P1
+- Aggiungere un cooldown configurabile tra i modelli nel runner benchmark, o rendere il generatore ricorsivo #benchmark · P1
+- Sincronizzare automaticamente `generate_benchmark_report.py` tra `hal_gateway/benchmark/scripts/` e `hal_system2/scripts/` #benchmark · P2
+- Allineare la versione dei wrapper CLI generati con la sorgente canonica #version-sync · P2
+
+- Benchmark: run `20261021_1` (middleware, Laya su GPU, pausa 180 s via `--cooldown`), storico in `benchmark/history/20261021_1/` con report e executive summary; confronto con `20261020_1` e tabella cross-run delle run completate (esclusa `20261019_1`, incompleta). Timeout `qwen2.5:1.5b` su `sintesi_traduzione` presente in 3 run su 3 con middleware, aggiornato in `ToDo.md` `#benchmark` · P1 · Progetto
+- Benchmark: run `20261021_2`, prova mirata su `qwen2.5:1.5b` / `sintesi_traduzione` con `--timeout 1200` (una chiamata, esito ok in 211,8 s, 8.919 token, qualità 1/2). Storico in `benchmark/history/20261021_2/` con report, executive summary che confronta le sette run complete e aggiornamento di `ToDo.md` `#benchmark` · P1 · Progetto
 - Versione: comando canonico `agents/a-agentzero/commands/version.md` (e wrapper `.agents/skills/version/SKILL.md`) 1.2.1 → 1.3.0 (minor: il wrapper ora deriva la versione dal frontmatter canonico); `a-agentzero` non bumpato (modifica confinata al comando) `#version-sync` · HAL
 - README: preflight saltato per richieste atomiche, test in CI, sorgente della versione dei wrapper e `sync_hal_system2.sh check` `#docs` · Progetto
 - `link-workspace-skills.sh`: la versione dei wrapper `SKILL.md` generati deriva da `version:` nel frontmatter del comando canonico (non più `1.0.0` fisso), così un bump sopravvive ai sync; `command_version` e script sourceable; `version.md` con `version:` nel frontmatter; test in `tests/test_link_workspace_skills.py` `#version-sync` · P2 · Progetto
