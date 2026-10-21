@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 1.2.1
+version: 1.4.0
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py o modulo Python router.
 ---
@@ -78,13 +78,66 @@ python3 router.py noul "<testo>"
 
 Per massimizzare la confidenza e l'efficacia di Laya, la skill `smart_choice` implementa automaticamente le seguenti strategie:
 
-1.  **Multi-question Anchoring (Strategy A)**: Le decisioni complesse vengono ancorate a una domanda di categorizzazione preliminare nello stesso payload.
-2.  **Semantic Pacing (Strategy B)**: Evitare più di 5 opzioni e usare descrizioni di criteri con alta distanza semantica.
-3.  **Confidence-Based Routing (Strategy C)**:
-    - `Confidence > 0.8`: Esecuzione veloce.
-    - `Confidence 0.3-0.8`: Retry automatico con istruzioni di sfida.
-    - `Confidence < 0.3`: Escalation automatica a System 2 (LLM).
-4.  **Attachment Filtering (Strategy D)**: Liste lunghe di allegati o file vengono riassunte (es. "15x .JPG") per ridurre il rumore testuale.
+### Strategy A — Multi-question Anchoring
+
+Le decisioni complesse vengono ancorate a una domanda di categorizzazione preliminare nello stesso payload.
+
+**Pattern:**
+
+```bash
+python3 router.py routing "<testo>" --routes "<rotta1>, <rotta2>"
+# Prima di System 2, verificare:
+python3 router.py confidence "<testo categorizzato>"
+```
+
+**Telemetria:** `python3 scripts/token_budget.py log s1_call` dopo ogni routing.
+
+### Strategy B — Semantic Pacing
+
+Evitare più di 5 opzioni e usare descrizioni di criteri con alta distanza semantica.
+
+**Regole:**
+
+- Max 5 opzioni per chiamata `choice` / `routing`.
+- Se le opzioni sono > 5, raggrupparle semanticamente prima di chiamare Laya.
+- Usare etichette brevi (< 30 caratteri) per ogni opzione.
+
+**Telemetria:** `python3 scripts/token_budget.py log attachment_filter <original_count> <summary_length>` quando si troncano liste.
+
+### Strategy C — Confidence-Based Routing
+
+- `Confidence > 0.8`: Esecuzione veloce (System 1 diretto).
+- `Confidence 0.3-0.8`: Retry automatico con istruzioni di sfida.
+- `Confidence < 0.3`: Escalation automatica a System 2 (LLM).
+
+**Pattern:**
+
+```bash
+conf=$(python3 router.py confidence "<testo>" | grep -oP '"confidence":\s*\K[0-9.]+')
+if (( $(echo "$conf > 0.8" | bc -l) )); then
+    # Esecuzione veloce
+elif (( $(echo "$conf > 0.3" | bc -l) )); then
+    # Retry con sfida
+else
+    # Escalation System 2
+fi
+```
+
+**Telemetria:** `python3 scripts/token_budget.py log s1_call` o `s2_call` in base al branch.
+
+### Strategy D — Attachment Filtering
+
+Liste lunghe di allegati o file vengono riassunte (es. "15x .JPG") per ridurre il rumore testuale.
+
+**Regole:**
+
+- Non elencare mai più di 5 elementi nello stesso payload.
+- Riassumere: "N x .estensione" per gruppi omogenei.
+- Mantenire solo i nomi rilevanti per la decisione corrente.
+
+**Telemetria:** `python3 scripts/token_budget.py log attachment_filter <original_count> <summary_length>`.
+
+---
 
 ### Middleware di sistema
 

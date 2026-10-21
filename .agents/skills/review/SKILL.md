@@ -1,6 +1,6 @@
 ---
 name: review
-version: 1.0.0
+version: 1.2.0
 description: Command review for HAL workspace.
 ---
 
@@ -16,13 +16,27 @@ Revisione manuale (checklist) del diff o dell'area indicata nel **repository cor
    - Inizia con `git status -s` e `git diff --stat`.
    - Seleziona solo i file modificati di logica o testo (salta lock, map, minified).
    - Se il diff totale > 150 righe, ispeziona un path alla volta. Non riversare mai il diff totale nel contesto.
-2. **Funzionalità**: il comportamento corrisponde al task? Edge case evidenti?
-3. **Qualità**: chiarezza, gestioni errore, duplicazioni evitabili nel solo scope del diff.
-4. **Test**: copertura adeguata o gap da segnalare; non richiedere suite assenti dal repo.
-5. **Documentazione**: contratti pubblici / README / docs aggiornati se il diff li richiede.
-6. **Sicurezza**: niente segreti hardcoded; `.env` non tracciato; input esterni validati dove pertinente.
-7. Se presenti skill HAL nel diff: frontmatter `version` / `extends-version`, protocollo, niente indebolimento sicurezza L0.
-8. Output: report in chat; file review persistente **solo se** l'utente lo chiede (es. `docs/reviews/`).
+   - Traccia: `python3 scripts/token_budget.py log diff_read <lines>`.
+
+2. **Chunk-based Scoring (System 1):**
+   - Frammenta il diff in chunk <= 80 righe.
+   - Per ogni chunk: `python3 router.py score "<chunk>" --criteria "Rischio di regressione o bug"`.
+   - Se score < 0.5: skip del chunk (nessun finding significativo).
+   - Solo chunk con score alto → System 2 per analisi approfondita.
+   - Traccia: `python3 scripts/token_budget.py log chunk_score <score> <threshold>`.
+
+3. **Lazy-load:**
+   - Se devi leggere file non modificati per contesto: usa `start_line`/`end_line`.
+   - Mai leggere file interi se > 100 righe.
+   - Traccia: `python3 scripts/token_budget.py log lazy_load <path> <lines_read> <total_lines>`.
+
+4. **Funzionalità**: il comportamento corrisponde al task? Edge case evidenti?
+5. **Qualità**: chiarezza, gestioni errore, duplicazioni evitabili nel solo scope del diff.
+6. **Test**: copertura adeguata o gap da segnalare; non richiedere suite assenti dal repo.
+7. **Documentazione**: contratti pubblici / README / docs aggiornati se il diff li richiede.
+8. **Sicurezza**: niente segreti hardcoded; `.env` non tracciato; input esterni validati dove pertinente.
+9. Se presenti skill HAL nel diff: frontmatter `version` / `extends-version`, protocollo, niente indebolimento sicurezza L0.
+10. Output: report in chat; file review persistente **solo se** l'utente lo chiede (es. `docs/reviews/`).
 
 ## Checklist
 
@@ -37,6 +51,20 @@ Revisione manuale (checklist) del diff o dell'area indicata nel **repository cor
 - **Nessun preambolo narrativo o convenevoli.**
 - Lista finding compatta (severità, file:riga, suggerimento).
 - Se il diff è perfetto, rispondi solo "Nessun finding (OK)." senza spiegazioni aggiuntive.
+- Max 500 token output. Se necessario, scrivere dettagli in file esterni.
+
+## Telemetria
+
+Tutte le operazioni sono tracciate:
+
+```bash
+python3 scripts/token_budget.py init
+python3 scripts/token_budget.py log s1_call
+python3 scripts/token_budget.py log diff_read 120
+python3 scripts/token_budget.py log chunk_score 0.6 0.5
+python3 scripts/token_budget.py log output 200
+python3 scripts/token_budget.py report
+```
 
 ## Usage
 

@@ -1,5 +1,13 @@
 # Changelog — a-agentzero
 
+## [Unreleased]
+
+### Added
+
+- Protocollo Token Budget (L0): 13 strategie per ridurre l'output token senza perdere informazioni o qualità. Riferimento: [references/token-budget.md](references/token-budget.md).
+- Modulo telemetria `scripts/token_budget.py`: traccia tokens in/out, chiamate System1 vs System2, file letti, diff size, violazioni regole. Output JSONL in `events/token-budget.jsonl`.
+- Regole globali di budget: max 500 token output/sessione, lazy-load per file >100 righe, attachment filtering per liste lunghe, skip preamble enforced.
+
 ## [1.8.7] - 2026-10-21
 
 ### Fixed
