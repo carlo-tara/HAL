@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.8.7] - 2026-10-21
+
+### Fixed
+
+- `scripts/agent-todo.py flush`: rimuove le voci `[x]` insieme alle loro sotto-voci (prima restavano orfane sotto la voce precedente) e scrive nel CHANGELOG in formato Keep a Changelog: sezione dal tag (`#bug` → Fixed, `#feature` → Added, altri → Changed), `### Added/Changed/Fixed/Removed` di «Già fatto» rispettati, tag e priorità tolti, righe `Esito:` accodate al titolo, deduplica e ordine standard delle sezioni. Test in `tests/test_agent_todo.py`.
+
 ## [1.8.6] - 2026-10-20
 
 ### Changed

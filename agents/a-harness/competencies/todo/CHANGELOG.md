@@ -4,6 +4,11 @@ Formato Keep a Changelog + Semantic Versioning. Tag sync sul padre `a-harness`.
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-10-21
+
+### Changed
+- Flush CLI: il CHANGELOG riceve le voci in formato Keep a Changelog (sezione dal tag) e le sotto-voci seguono il titolo; «Già fatto» usa le sezioni `### Added/Changed/Fixed/Removed` [sync:safe]
+
 ## [1.2.0] - 2026-09-18
 
 ### Added
