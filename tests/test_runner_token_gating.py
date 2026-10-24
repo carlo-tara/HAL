@@ -69,10 +69,51 @@ class TestLocalAssembly(unittest.TestCase):
         self.assertEqual(result["response"], "out-1\n\nout-2\n\nout-3")
         self.assertEqual(result["tokens"]["total"], 45)
 
-    def test_non_mechanical_extraction_still_assembles_with_model(self) -> None:
+    def test_single_pass_source_prompt_includes_source_and_language(self) -> None:
+        prompt = {
+            "id": "t",
+            "prompt": "Traduci il libro.",
+            "source": "x.epub",
+            "arguments": {
+                "numero_pagine": 2,
+                "lingua_destinazione": "spagnolo",
+            },
+        }
+        guide = _guide("translation", "faithful_translate")
+        guide["execution_mode"] = "single_pass"
+
+        result, messages = _run(prompt, guide)
+
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Lingua di destinazione: spagnolo.", messages[0])
+        self.assertIn("<fonte>", messages[0])
+        self.assertIn("a" * 3000, messages[0])
+        self.assertIn("b" * 3000, messages[0])
+        self.assertNotIn("c" * 1000, messages[0])
+        self.assertEqual(result["response"], "out-1")
+
+    def test_generic_extraction_is_concatenated_with_tags(self) -> None:
         prompt = {"id": "e", "prompt": "Riassumi il libro.", "source": "x.epub"}
 
         result, messages = _run(prompt, _guide("source", "grounded_extract"))
+
+        self.assertEqual(len(messages), 3)
+        self.assertFalse(any("Assembla i risultati parziali" in m for m in messages))
+        self.assertEqual(
+            result["response"],
+            "<risultato_segmento_1>\nout-1\n</risultato_segmento_1>\n\n---\n\n"
+            "<risultato_segmento_2>\nout-2\n</risultato_segmento_2>\n\n---\n\n"
+            "<risultato_segmento_3>\nout-3\n</risultato_segmento_3>",
+        )
+
+    def test_json_extraction_with_invalid_segment_falls_back_to_model(self) -> None:
+        prompt = {"id": "e", "prompt": "Estrai in JSON.", "source": "x.epub"}
+
+        result, messages = _run(
+            prompt,
+            _guide("source", "grounded_extract"),
+            answers=["[1]", "non json", "[3]", "out-4"],
+        )
 
         self.assertEqual(len(messages), 4)
         self.assertIn("Assembla i risultati parziali", messages[-1])
@@ -97,7 +138,11 @@ class TestLocalAssembly(unittest.TestCase):
         self.assertEqual(assemble("source", "x", ["solo"]), "solo")
         self.assertEqual(assemble("translation", "x", [" a ", "b"]), "a\n\nb")
         self.assertIsNone(assemble("source", "estrai json", ["[1]", "non json"]))
-        self.assertIsNone(assemble("source", "riassumi", ["uno", "due"]))
+        self.assertEqual(
+            assemble("source", "riassumi", ["uno", "due"]),
+            "<risultato_segmento_1>\nuno\n</risultato_segmento_1>\n\n---\n\n"
+            "<risultato_segmento_2>\ndue\n</risultato_segmento_2>",
+        )
 
 
 class TestCooldown(unittest.TestCase):

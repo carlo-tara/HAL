@@ -1,13 +1,17 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-10-18T15:04:03Z",
+  "ts": "2026-10-23T00:00:00Z",
   "flags": { "y": true },
-  "acceptance": "Check expected versus observed family/strategy/mode; default single_pass; plan_then_solve requires explicit decomposability and confidence >=0.8; abstention preserves source, format and every segment.",
-  "files": "system1_preflight.py,laya_service.py,global_config.py,tests/test_laya_service.py",
-  "node_id": "cycle-coherence",
-  "next": "cycle-telemetry",
-  "summary": "Completed: focused 42/42; Gateway 80/80; fresh Make ready-for-review exit 0. Resume at cycle-telemetry.",
-  "brief": "coherence gate complete; proceed to telemetry, do not close P1.",
-  "token_budget": 200
+  "title": "P1: migratione SQLite error_message su DB storici",
+  "acceptance": "In _initialize, verificare se la colonna error_message esiste nella tabella system2_workflow_events; se manca, eseguire ALTER TABLE ... ADD COLUMN error_message TEXT. Test che crea un DB con schema pre-G7 (senza error_message), chiama record_event con error_message='test', e verifica che l'inserimento vada a buon fine senza OperationalError. sync_hal_system2.sh check esce 0.",
+  "files": [
+    "benchmark/runner/system2_metrics.py",
+    "tests/test_gate7_sqlite.py"
+  ],
+  "waiver": null,
+  "node_id": "",
+  "next": "",
+  "summary": "Migratione SQLite implementata e testata; gate sync_hal_system2.sh fallisce (exit 1).",
+  "brief": "RED: test pre-G7 riproduce OperationalError. GREEN: _initialize aggiunge error_message via ALTER TABLE se manca; test migration passa. Sync gate fallisce per divergenze non gestite."
 }

@@ -32,6 +32,11 @@ ROOT = Path(__file__).resolve().parent.parent
 # Media indicativa di caratteri per pagina A4 a interlinea singola, spazi inclusi.
 CHARS_PER_A4_PAGE = 3000
 
+# Tetti massimi per i payload System 1 / System 2. Mantenuti centralizzati
+# affinché ogni chiamata passi attraverso la stessa logica di troncamento.
+MAX_ARTIFACT_SNAPSHOT = 1200  # caratteri max nell'artifact passato a Laya (decision)
+MAX_PROMPT_EXCERPT = 1200  # caratteri max per estratto fonte nei prompt
+
 
 @dataclass(frozen=True)
 class Settings:
@@ -50,6 +55,7 @@ class Settings:
     laya_timeout: float = 120
     laya_min_confidence: float = 0.7
     laya_model: str = "multilingual"
+    laya_excerpt_max_chars: int = 1200
     # Opt-in cap on output tokens per source segment; None keeps requests unlimited.
     segment_max_output_tokens: int | None = None
 
@@ -96,6 +102,12 @@ class Settings:
             laya_timeout=float(env.get("LAYA_TIMEOUT", "120")),
             laya_min_confidence=float(env.get("LAYA_MIN_CONFIDENCE", "0.7")),
             laya_model=env.get("LAYA_MODEL", "multilingual"),
+            laya_excerpt_max_chars=int(
+                env.get(
+                    "LAYA_EXCERPT_MAX_CHARS",
+                    env.get("LAYA_EXTRACT_MAX_CHARS", "1200"),
+                )
+            ),
             segment_max_output_tokens=(
                 int(env["BENCHMARK_SEGMENT_MAX_TOKENS"])
                 if env.get("BENCHMARK_SEGMENT_MAX_TOKENS")
@@ -205,6 +217,8 @@ def prompt_message(prompt: dict) -> str:
     book = epub_text(ROOT / prompt["source"])
     if "numero_pagine" in arguments:
         book = book[: arguments["numero_pagine"] * CHARS_PER_A4_PAGE]
+    # Tetto massimo per evitare che un libro intero consumi il contesto.
+    book = book[:MAX_PROMPT_EXCERPT]
     return f"<libro>\n{book}\n</libro>\n\n{instructions}"
 
 
@@ -231,11 +245,14 @@ SYSTEM1_STRATEGIES = {
         "Formalizza dati e unità, mostra i calcoli essenziali e controlla il risultato numericamente."
     ),
     "requirements_check": (
-        "Estrai i requisiti espliciti, produci un artefatto completo e controlla vincoli e casi limite."
+        "Estrai i requisiti espliciti, produci un artefatto completo e controlla vincoli e casi limite. "
+        "Output essenziale: codice funzionante senza spiegazioni verbose a meno che non siano richieste. "
+        "Usa nomi significativi, evita boilerplate non necessario."
     ),
     "grounded_extract": (
         "Usa solo la fonte fornita, rispetta esattamente formato e intervallo richiesti, "
-        "non inventare dettagli."
+        "non inventare dettagli. Output compatto: elenchi strutturati, valori essenziali, "
+        "senza introduzioni o commenti ridondanti. Preserva solo le informazioni necessarie."
     ),
     "faithful_translate": (
         "Traduci solo il testo richiesto, preservando significato, completezza e ordine; "
@@ -243,6 +260,25 @@ SYSTEM1_STRATEGIES = {
     ),
     "direct_answer": "Rispondi direttamente alla richiesta e verifica che ogni vincolo esplicito sia rispettato.",
 }
+
+# Gate 3: modalità ammesse per ciascuna famiglia task.
+# Alcune combinazioni sono semanticamente incompatibili (es. traduzione + chunking).
+TASK_FAMILY_ALLOWED_MODES: dict[str, list[str]] = {
+    "translation": ["single_pass", "source_chunks"],
+    "source": ["single_pass", "source_chunks"],
+    "reasoning": ["single_pass", "plan_then_solve"],
+    "math": ["single_pass", "plan_then_solve"],
+    "coding": ["single_pass", "plan_then_solve"],
+    "general": ["single_pass", "plan_then_solve", "source_chunks"],
+}
+
+
+def _mode_allowed_for_family(family: str, mode: str) -> bool:
+    """Verifica se una modalit\u00e0 di esecuzione \u00e8 ammessa per una famiglia task."""
+    allowed = TASK_FAMILY_ALLOWED_MODES.get(family)
+    if allowed is None:
+        return True  # famiglie sconosciute non bloccano
+    return mode in allowed
 
 
 def analyze_prompt(prompt: dict, *, source_chars: int = 0) -> dict:
@@ -337,14 +373,41 @@ def analyze_prompt(prompt: dict, *, source_chars: int = 0) -> dict:
 def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
     """Gate and align Laya's routing against a local, task-specific contract."""
     source = ""
+    arguments = prompt.get("arguments", {})
     if "source" in prompt:
         source = epub_text(ROOT / prompt["source"])
-        arguments = prompt.get("arguments", {})
         if "numero_pagine" in arguments:
             source = source[: arguments["numero_pagine"] * CHARS_PER_A4_PAGE]
     analysis = analyze_prompt(prompt, source_chars=len(source))
     expected_family = analysis["task_family"]
     required_strategy = analysis["task_contract"]["required_strategy"]
+
+    # Complessità e formato per il contratto compatto (Gate 2).
+    text = prompt["prompt"].lower()
+    if analysis["execution_mode"] == "source_chunks":
+        complexity = "high"
+    elif analysis["explicit_plan"]:
+        complexity = "medium"
+    else:
+        complexity = "atomic"
+
+    # Align laya_recommended with gateway's is_atomic_short_low_risk.
+    # The gateway skips Laya for atomic, low-risk, short prompts.
+    # Benchmark defaults risk_level to "low" (no explicit risk assessment).
+    instruction = prompt.get("prompt", "")
+    _gateway_skip = complexity == "atomic" and len(instruction) + len(source) < 400
+    if _gateway_skip:
+        analysis["laya_recommended"] = False
+
+    output_format = arguments.get("output_format", "")
+    if not output_format:
+        for fmt in ("json", "html", "xml", "csv"):
+            if fmt in text:
+                output_format = fmt
+                break
+    if not output_format:
+        output_format = "text"
+
     if not analysis["laya_recommended"]:
         return {
             **analysis,
@@ -359,17 +422,33 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
             "laya_called": False,
             "decision_source": "local_task_gate",
             "preflight_latency_ms": 0,
+            "complexity": complexity,
+            "format": output_format,
+            "source": prompt.get("source"),
+            "output_format": output_format,
         }
 
-    context = prompt["prompt"]
+    # Gate 2: il payload verso Laya deve contenere solo contratto compatto.
+    # "notes" trasmette solo le istruzioni (prompt); la fonte viene inviata
+    # come estratto numerato (source_chars) e blocco excerpt con tetto
+    # configurabile (config.laya_excerpt_max_chars, default 1200).
+    laya_excerpt_max_chars = getattr(config, "laya_excerpt_max_chars", 1200)
+    notes = prompt["prompt"]
+    state = {
+        "notes": notes,
+        "language": "italian",
+        "task_contract": analysis["task_contract"],
+        "complexity": complexity,
+        "format": output_format,
+    }
     if source:
-        context += f"\nFonte {prompt['source']} (estratto iniziale):\n{source[:1200]}"
+        state["source"] = prompt["source"]
+        state["source_chars"] = len(source)
+        state["excerpt"] = source[:laya_excerpt_max_chars]
+    else:
+        state["source_chars"] = 0
     payload = {
-        "state": {
-            "notes": context,
-            "language": "italian",
-            "task_contract": analysis["task_contract"],
-        },
+        "state": state,
         "questions": {
             "task_family": {
                 "type": "choice",
@@ -451,6 +530,9 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
             and confidence >= config.laya_min_confidence
             else "single_pass"
         )
+    # Gate 3: blocca modalit\u00e0 incompatibili con la famiglia task.
+    if not _mode_allowed_for_family(expected_family, execution_mode):
+        execution_mode = "single_pass"
     guidance = SYSTEM1_STRATEGIES[strategy]
     if confidence < config.laya_min_confidence:
         guidance = (
@@ -474,6 +556,9 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
         "proposed_strategy": proposed_strategy,
         "proposed_execution_mode": proposed_mode,
         "preflight_latency_ms": preflight_latency_ms,
+        "complexity": complexity,
+        "source": prompt.get("source"),
+        "output_format": output_format,
     }
 
 
@@ -491,7 +576,7 @@ def system1_decision(
         "state": {
             "notes": (
                 f"Richiesta: {prompt['prompt']}\nFase: {phase}\n"
-                f"Output System 2 da valutare:\n{artifact[:12000]}"
+                f"Output System 2 da valutare:\n{artifact[:MAX_ARTIFACT_SNAPSHOT]}"
             ),
             "language": "italian",
         },
@@ -1031,9 +1116,16 @@ def system2_workflow_call(
                 "response": local_text,
             }
         else:
+            # Troncare ogni risultato parziale per evitare che l'assemblaggio
+            # superi il tetto configurabile; il modello System 2 può integrare
+            # i bordi con contesto locale.
+            _max_artifact = getattr(
+                config, "laya_excerpt_max_chars", MAX_PROMPT_EXCERPT
+            )
+            truncated = [artifact[:_max_artifact] for artifact in artifacts]
             assembled = "\n\n---\n\n".join(
                 f"<risultato_segmento_{index}>\n{artifact}\n</risultato_segmento_{index}>"
-                for index, artifact in enumerate(artifacts, start=1)
+                for index, artifact in enumerate(truncated, start=1)
             )
             final_prompt = user_prompt(
                 f"{instructions}\n\nAssembla i risultati parziali seguenti in un'unica risposta completa. "
@@ -1077,6 +1169,19 @@ def system2_workflow_call(
                 f"Richiesta originale:\n{prompt['prompt']}\n\n"
                 f"Piano prodotto da System 2 e instradato da Laya:\n{plan.get('response', '')}"
             )
+        elif "source" in prompt:
+            # Un task con fonte eseguito in single pass senza la fonte produrrebbe
+            # una risposta non ancorata al documento (misurato in 20261023_6:
+            # risposte da 651/639 caratteri e min_chars 7500 fallito su entrambi
+            # i modelli): la fonte segue la richiesta come nella baseline.
+            arguments = prompt.get("arguments", {})
+            source = epub_text(ROOT / prompt["source"])
+            if "numero_pagine" in arguments:
+                source = source[: arguments["numero_pagine"] * CHARS_PER_A4_PAGE]
+            language = arguments.get("lingua_destinazione")
+            if language:
+                source = f"Lingua di destinazione: {language}.\n{source}"
+            final_text = f"{prompt['prompt']}\n\n<fonte>\n{source}\n</fonte>"
         final = run_stage(user_prompt(final_text), "risposta_finale")
 
     system2_tokens = [
@@ -1188,6 +1293,18 @@ def assemble_segments_locally(
                 return None
             merged.extend(value if isinstance(value, list) else [value])
         return json.dumps(merged, ensure_ascii=False, indent=2)
+    # Generic text: every segment is self-contained (non-overlapping source
+    # chunks). Concatenate with numbered tags so the consumer can still
+    # distinguish boundaries when needed.
+    parts: list[str] = []
+    for index, artifact in enumerate(artifacts, start=1):
+        stripped = artifact.strip()
+        if stripped:
+            parts.append(
+                f"<risultato_segmento_{index}>\n{stripped}\n</risultato_segmento_{index}>"
+            )
+    if parts:
+        return "\n\n---\n\n".join(parts)
     return None
 
 

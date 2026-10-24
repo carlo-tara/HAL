@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-20T20:15:41Z",
+  "ts": "2026-10-24T05:01:37Z",
   "flags": {"y": true},
-  "acceptance": "",
-  "files": "",
-  "node_id": "g7-cpu-gpu",
-  "next": "g7-cpu-gpu",
-  "summary": "HARD STOP: g7 richiede Laya su CPU (hardware); g8 richiede run lunga. g1-g6 completati: 97 test gateway, 190 hal_system2, CI 20/20.",
-  "brief": "Attendere l utente per g7; poi g8 dopo run con 300s di pausa (--cooldown 300).",
+  "acceptance": "registrazioni valide",
+  "files": ".zed/prompts/knowledge.md",
+  "node_id": "N4",
+  "next": "\"\"",
+  "summary": "Graph completo: N1✓ N2✓ N3✓ N4✓. Backlog ToDo.md chiuso.",
+  "brief": "N4 COMPLETATA: .zed/prompts/knowledge.md creato con check|extract|distill|query|update. Pipeline book-to-skill registrata come slash command L0.",
   "token_budget": 200
 }

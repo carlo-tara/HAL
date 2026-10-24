@@ -84,3 +84,9 @@ jobs:
 
       - name: Test workspace skill wrapper versioning
         run: python3 -m unittest tests.test_link_workspace_skills
+
+      - name: Test benchmark token comparison script
+        run: python3 -m unittest tests.test_compare_tokens
+
+      - name: Test full-context baseline launcher
+        run: python3 -m unittest tests.test_run_baseline_fullctx

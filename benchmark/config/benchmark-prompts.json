@@ -48,52 +48,11 @@
       ]
     },
     {
-      "id": "programmazione",
-      "prompt": "Scrivi un unico file HTML stand-alone che contenga un semplice gioco di Sudoku realizzato con HTML5, CSS e JavaScript vanilla. Il file deve essere completamente autonomo: CSS e JavaScript inline nello stesso file, nessuna dipendenza esterna, nessun CDN, nessuna richiesta di rete e nessun import di moduli, così da poter essere aperto direttamente nel browser con doppio clic (protocollo file://). Il gioco deve generare una griglia 9x9 con una soluzione valida e alcune celle precompilate, permettere di selezionare una cella e inserire cifre da 1 a 9 (anche da tastiera), cancellare il valore, evidenziare gli errori e mostrare un messaggio al completamento. Includi un pulsante per ricominciare con una nuova partita. Non usare localStorage, sessionStorage, cookie o altri meccanismi di salvataggio. Restituisci solo il codice del file HTML completo, senza spiegazioni.",
-      "quality": [
-        {
-          "label": "documento HTML completo",
-          "type": "html"
-        },
-        {
-          "label": "CSS e JavaScript inline",
-          "type": "contains_any",
-          "values": ["<style"]
-        },
-        {
-          "label": "gestione input da tastiera",
-          "type": "contains_any",
-          "values": ["keydown", "keyup", "keypress"]
-        },
-        {
-          "label": "azione per nuova partita",
-          "type": "contains_any",
-          "values": [
-            "nuova partita",
-            "ricomincia",
-            "nuovo gioco",
-            "new game",
-            "restart"
-          ]
-        },
-        {
-          "label": "nessun salvataggio persistente",
-          "type": "absent",
-          "values": ["localStorage", "sessionStorage", "document.cookie"]
-        },
-        {
-          "label": "nessuna dipendenza o risorsa remota",
-          "type": "absent",
-          "values": ["http://", "https://", "<script src", "<link "]
-        }
-      ]
-    },
-    {
       "id": "estrazione_json",
-      "prompt": "Dalle prime 10 pagine del libro riportato sopra estrai il contenuto dei singoli capitoli e, per ogni capitolo, genera un riassunto sintetico. Presenta i risultati in formato JSON.",
+      "prompt": "Dalle prime 5 pagine del libro riportato sopra estrai il contenuto dei singoli capitoli e, per ogni capitolo, genera un riassunto sintetico. Presenta i risultati in formato JSON.",
       "source": "docs/Pensieri_lenti_e_veloci.epub",
       "arguments": {
-        "numero_pagine": 10
+        "numero_pagine": 5
       },
       "quality": [
         {
@@ -109,10 +68,10 @@
     },
     {
       "id": "sintesi_traduzione",
-      "prompt": "Traduci in spagnolo le prime 5 pagine del libro riportato sopra, mantenendo fedeltà al testo originale e la struttura dei paragrafi.",
+      "prompt": "Traduci in spagnolo le prime 3 pagine del libro riportato sopra, mantenendo fedeltà al testo originale e la struttura dei paragrafi.",
       "source": "docs/Pensieri_lenti_e_veloci.epub",
       "arguments": {
-        "numero_pagine": 5,
+        "numero_pagine": 3,
         "lingua_destinazione": "spagnolo"
       },
       "quality": [
@@ -125,6 +84,25 @@
           "label": "lunghezza minima della traduzione",
           "type": "min_chars",
           "value": 7500
+        }
+      ]
+    },
+    {
+      "id": "estrazione_json_semplificato",
+      "prompt": "Dalle prime 5 pagine del libro estrai i capitoli e genera un riassunto di una frase per ciascuno. Restituisci SOLO un array JSON: [{\"capitolo\": \"nome\", \"riassunto\": \"frase\"}]. Non aggiungere testo fuori dal JSON.",
+      "source": "docs/Pensieri_lenti_e_veloci.epub",
+      "arguments": {
+        "numero_pagine": 5
+      },
+      "quality": [
+        {
+          "label": "risposta in formato JSON",
+          "type": "json"
+        },
+        {
+          "label": "lunghezza minima riassunto",
+          "type": "min_chars",
+          "value": 50
         }
       ]
     }

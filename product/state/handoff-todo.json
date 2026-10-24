@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-10-18T23:01:09Z",
+  "ts": "2026-10-24T05:04:54Z",
   "flags": {"y": false},
   "acceptance": "",
   "files": "",
   "node_id": "",
   "next": "",
-  "summary": "2 aperte: P1 #system1-gating resta bloccato su benchmark comparabili, validator indipendente e token Laya; P2 #version-sync mantiene acceptance valida. 0 flushate; Laya ha abstained.",
-  "brief": "P1: misure complete e abbinate prima di promozione/chiusura. P2: unica sorgente versione, due sync idempotenti e test.",
+  "summary": "Igiene completata: tutti gli item segnati [x]. P0 vuota, P1 benchmark chiuso (N1-N2), P2 a-knowledge chiuso (N3-N4). Pruned heading vuoto System1/metriche SQLite, rimossa sezione P2 duplicata.",
+  "brief": "",
   "token_budget": 200
 }

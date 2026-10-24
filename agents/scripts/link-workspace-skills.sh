@@ -99,6 +99,8 @@ for skill in learn sync; do
   link_path "${AGENTS_ROOT}/a-agentzero/${skill}" "../../agents/a-agentzero/${skill}" "${WORKSPACE_ROOT}/.agents/skills/${skill}"
 done
 
+link_path "${AGENTS_ROOT}/gdrive-sync-safe" "../../agents/gdrive-sync-safe" "${WORKSPACE_ROOT}/.agents/skills/gdrive-sync-safe"
+
 link_path "${AGENTS_ROOT}/a-b2b/enrichment" "../../agents/a-b2b/enrichment" "${WORKSPACE_ROOT}/.agents/skills/enrichment"
 
 for skill in personas jtbd gherkin; do

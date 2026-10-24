@@ -285,7 +285,7 @@ def build(report: dict) -> str:
     # Build token summary table rows (one row per model+path combo with data)
     token_summary_rows = []
     for m in models:
-        for p in PATH_LABEL:
+        for p, label in PATH_LABEL.items():
             key = (m, p)
             e = token_agg.get(key)
             if not e or e["count"] == 0:
@@ -293,7 +293,7 @@ def build(report: dict) -> str:
             avg = e["total"] / e["count"] if e["count"] else 0
             out_ratio = (e["completion"] / e["prompt"] * 100) if e["prompt"] else 0
             token_summary_rows.append(
-                f"<tr><td>{esc(short(m))}</td><td>{esc(PATH_LABEL[p])}</td>"
+                f"<tr><td>{esc(short(m))}</td><td>{esc(label)}</td>"
                 f"<td class='num'>{e['count']}</td>"
                 f"<td class='num'>{fmt(e['prompt'], 0)}</td>"
                 f"<td class='num'>{fmt(e['completion'], 0)}</td>"
@@ -305,14 +305,14 @@ def build(report: dict) -> str:
     # Per-prompt breakdown table
     prompt_breakdown_rows = []
     for m in models:
-        for p in PATH_LABEL:
+        for p, label in PATH_LABEL.items():
             key = (m, p)
             e = token_agg.get(key)
             if not e or not e["per_prompt"]:
                 continue
             prompt_breakdown_rows.append(
-                f"<tr><th rowspan='{len(e['per_prompt'])}'>{esc(short(m))}</th>"
-                f"<th rowspan='{len(e['per_prompt'])}'>{esc(PATH_LABEL[p])}</th>"
+                f"<th rowspan='{len(e['per_prompt'])}'>{esc(short(m))}</th>"
+                f"<th rowspan='{len(e['per_prompt'])}'>{esc(label)}</th>"
                 f"<td class='num'>{esc(e['per_prompt'][0][0])}</td>"
                 f"<td class='num'>{fmt(e['per_prompt'][0][1], 0)}</td>"
                 f"<td class='num'>{fmt(e['per_prompt'][0][2], 0)}</td>"
@@ -330,7 +330,7 @@ def build(report: dict) -> str:
     cache_rows = []
     reasoning_rows = []
     for m in models:
-        for p in PATH_LABEL:
+        for p, label in PATH_LABEL.items():
             key = (m, p)
             e = token_agg.get(key)
             if not e or e["count"] == 0:
@@ -339,7 +339,7 @@ def build(report: dict) -> str:
             if "anthropic" in m:
                 cache_pct = (e["cache_text"] / e["prompt"] * 100) if e["prompt"] else 0
                 cache_rows.append(
-                    f"<tr><td>{esc(short(m))}</td><td>{esc(PATH_LABEL[p])}</td>"
+                    f"<tr><td>{esc(short(m))}</td><td>{esc(label)}</td>"
                     f"<td class='num'>{fmt(e['cache_text'], 0)}</td>"
                     f"<td class='num'>{fmt(cache_pct, 0)} %</td>"
                     f"<td class='num'>{fmt(e['cache_creation_5m'], 0)}</td>"
@@ -352,7 +352,7 @@ def build(report: dict) -> str:
                     e["reasoning"] / e["completion"] * 100 if e["completion"] else 0
                 )
                 reasoning_rows.append(
-                    f"<tr><td>{esc(short(m))}</td><td>{esc(PATH_LABEL[p])}</td>"
+                    f"<tr><td>{esc(short(m))}</td><td>{esc(label)}</td>"
                     f"<td class='num'>{fmt(e['reasoning'], 0)}</td>"
                     f"<td class='num'>{fmt(reason_pct, 0)} %</td></tr>"
                 )
@@ -360,7 +360,7 @@ def build(report: dict) -> str:
     # Efficiency metrics
     eff_rows = []
     for m in models:
-        for p in PATH_LABEL:
+        for p, label in PATH_LABEL.items():
             key = (m, p)
             e = token_agg.get(key)
             if not e or not e["efficiency"]:
@@ -369,7 +369,7 @@ def build(report: dict) -> str:
             max_eff = max(e["efficiency"])
             min_eff = min(e["efficiency"])
             eff_rows.append(
-                f"<tr><td>{esc(short(m))}</td><td>{esc(PATH_LABEL[p])}</td>"
+                f"<tr><td>{esc(short(m))}</td><td>{esc(label)}</td>"
                 f"<td class='num'>{fmt(avg_eff, 0)}</td>"
                 f"<td class='num'>{fmt(max_eff, 0)}</td>"
                 f"<td class='num'>{fmt(min_eff, 0)}</td>"
@@ -379,7 +379,7 @@ def build(report: dict) -> str:
     # Tables
     coverage_rows = []
     for m in models:
-        for p in PATH_LABEL:
+        for p, path_label in PATH_LABEL.items():
             tds = []
             for pr in prompts:
                 r = cell(results, m, p, pr)
@@ -395,12 +395,12 @@ def build(report: dict) -> str:
                     tip += f" (HTTP {r['http_status']})"
                 tds.append(f'<td class="{cls}" title="{esc(tip)}">{label}</td>')
             coverage_rows.append(
-                f"<tr><th>{esc(short(m))}</th><td>{esc(PATH_LABEL[p])}</td>{''.join(tds)}</tr>"
+                f"<tr><th>{esc(short(m))}</th><td>{esc(path_label)}</td>{''.join(tds)}</tr>"
             )
 
     detail_rows = []
     for m in (sonnet, opus):
-        for p in PATH_LABEL:
+        for p, label in PATH_LABEL.items():
             for pr in prompts:
                 r = cell(results, m, p, pr)
                 if not ok(r):
@@ -408,7 +408,7 @@ def build(report: dict) -> str:
                 u = r.get("usage") or {}
                 q = r.get("quality") or {}
                 detail_rows.append(
-                    f"<tr><td>{esc(short(m))}</td><td>{esc(PATH_LABEL[p])}</td><td>{esc(pr)}</td>"
+                    f"<tr><td>{esc(short(m))}</td><td>{esc(label)}</td><td>{esc(pr)}</td>"
                     f'<td class="num">{fmt(r["seconds"])}</td>'
                     f'<td class="num">{u.get("prompt_tokens", "—")}</td>'
                     f'<td class="num">{u.get("completion_tokens", "—")}</td>'

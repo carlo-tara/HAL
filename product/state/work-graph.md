@@ -1,53 +1,54 @@
-# Work Graph — Backlog ToDo (gateway + benchmark)
+# Work Graph — Backlog corrente (ToDo.md)
 
-- **Source:** file (`ToDo.md`, tutte le voci aperte P1/P2)
-- **Goal:** chiudere ciò che è chiudibile senza decisioni umane né run di benchmark da ore; documentare i blocchi residui.
-- **BC:** HAL Gateway (infra CI, routing S1/S2) e benchmark (runner, generatore, telemetria)
-- **Auto-accept:** true (`-y`)
-- **Multi-cycle:** true, sequenziale
-- **Mode:** loop
-- **Why mode:** nessun parallelismo sicuro (le due copie del runner e `ToDo.md` sono file condivisi tra i nodi); un solo owner operativo. Un DAG sarebbe graph-trap.
-- **Next:** `g7-cpu-gpu` — **hard stop umano** (g1–g6 completati)
-- **Verified:** 97 test gateway, 190 test `hal_system2`, 20 comandi CI da root exit 0, `sync_hal_system2.sh check` exit 0. Non verificato: esito su GitHub Actions; `make -C agents version-chains` fallisce per STALE preesistente (nuova voce ToDo `#version-sync`).
-
-## Stato ereditato (`#system1-gating`)
-
-- Fatti: `cycle-baseline`, `cycle-preflight` (gate 1 anche in `is_atomic_short_low_risk`), `cycle-budget` (gate 5/6 lato gateway).
-- Telemetria (gate 7): già implementata nel runner (`System2Metrics`, 311 eventi su 11 run); non c'è un equivalente nel gateway e non serve copiare il runtime.
-- **Discrepanza aperta:** `handoff-graph.json` (2026-10-18) dà `cycle-coherence` completato, ma `LayaSystemOneService.coherence` è ancora uno stub (`coherence_ok` sempre). Il gate 3/4 effettivo vive in `system1_guide` del runner. Non avanzare su questo senza una decisione sul dove implementarlo.
-
-## Esito nodi
-
-- g1 CI: completato.
-- g2: il canonico `hal_system2` conteneva già un superset; il gateway è stato riallineato (`diff` vuoto) e la mia implementazione parallela ritirata.
-- g3: `--cooldown` nel canonico + mirror, 3 test nuovi (suite 190 verdi, non committata in `hal_system2`).
-- g4: `sync_hal_system2.sh check|apply`, 6 test.
-- g5: causa del tempo >600 s documentata; limite-vs-modello resta aperto (serve run).
-- g6: versione wrapper da frontmatter canonico, idempotente, 6 test.
-- g7/g8: **non eseguiti** (hard stop).
+- source: file
+- auto_accept: true
+- multi_cycle: true
+- mode: loop
+- why_mode: Due item indipendenti ma con owner/risorsa comune (agent `/cycle`, GPU Quadro M2200). Serialità per la run benchmark; a-knowledge è solo codice locale (nessuna GPU). Path lineare RGR → Loop, non grafo (anti graph-trap).
+- goal: risolvere timeout phi3 sintesi_traduzione + consegnare wrapper a-knowledge + registrazione comandi
+- bc: benchmark, knowledge
+- next: DONE — multi-cycle (-y) completo
 
 ## Loop Spec
 
-| id                    | owner                         | output                                                                                                                                         | stop                                                                  | next                  |
-| --------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------- |
-| `g1-ci-workflow`      | `/slice` · `#infra`           | step test di `.github/workflows/ready-for-review.yml` corretti (`PYTHONPATH=. python3 -m unittest tests.<modulo>`), aggiunti i moduli mancanti | ogni comando del workflow lanciato dalla root esce 0                  | `g2-port-runner`      |
-| `g2-port-runner`      | `/slice` · `#benchmark`       | assemblaggio locale `translation` + blocco strategia ridotto portati in `hal_system2/app/benchmark_models.py`; test `source_chunks` aggiornato | `diff` tra le copie vuoto; test `hal_system2` verdi                   | `g3-cooldown`         |
-| `g3-cooldown`         | `/slice` · `#benchmark`       | `--cooldown SECONDI` tra i modelli nel runner (due copie) + test                                                                               | test verdi; `diff` copie vuoto                                        | `g4-sync-copies`      |
-| `g4-sync-copies`      | `/slice` · `#benchmark` P2    | script `benchmark/scripts/sync_hal_system2.sh check\|apply` per generatore e runner                                                            | `check` esce 0 dopo `apply`, ≠0 se divergono                          | `g5-timeout-analysis` ✅ |
-| `g5-timeout-analysis` | `/cycle` doc-only             | causa dei timeout documentata dalla telemetria                                                                                                 | `ToDo.md` aggiornato con evidenza                                     | `g6-version-sync`     |
-| `g6-version-sync`     | `/slice` · `#version-sync` P2 | una sola sorgente della versione dei wrapper in `link-workspace-skills.sh`                                                                     | due sync consecutivi idempotenti; test di regressione                 | `g7-cpu-gpu`          |
-| `g7-cpu-gpu`          | `human`                       | run con Laya su CPU, stessa pausa, per isolare l'effetto                                                                                       | **hard stop**: richiede cambio hardware/servizio di Laya              | `g8-compare`          |
-| `g8-compare`          | `/cycle`                      | run baseline/candidato con modello e test per coppia                                                                                           | **hard stop**: richiede run da ore (4 modelli, pausa 300 s) dopo `g2` | `—`                   |
+**Context pack (≤4 file + evidence):**
 
-**Hard stop:** `stuck@3`, gate Make non recuperabile, scelta umana, run lunghe. Ogni slice ≤4 file salvo waiver.
+- `benchmark/runner/benchmark_models.py` (runner, CLI `--model/--prompt/--timeout/--cooldown`)
+- `benchmark/history/20261023_8/` (run timeout phi3 sintesi_traduzione)
+- `a-knowledge/scripts/extract.py` (estrattore da wrapperizzare)
+- `agents/skills/a-knowledge/SKILL.md` (comandi da registrare)
+
+**Error triage:**
+
+- Recuperabile: timeout singolo → retry con `--timeout` più alto o chunking input; errore script → fix locale.
+- Hard blocker (ferma il loop): GPU OOM, modello mancante, `stuck@3` sullo stesso approccio.
+
+**Termination:** tutti gli item `[x]` con evidenza scritta, oppure hard stop.
+
+**Mapping AF:** ogni step = `/cycle` (R→G→Rf dove applicabile; per spike di sola misura: run → registra → conclusione).
+
+## Steps (ordine deterministico)
+
+| id  | type  | owner | in                                   | out                                                                       | stop                                    | next    |
+| --- | ----- | ----- | ------------------------------------ | ------------------------------------------------------------------------- | --------------------------------------- | ------- |
+| N1  | cycle | agent | P1: timeout phi3 sintesi_traduzione  | diagnostica causa timeout (chunking? prompt? memoria?) + run confermata   | root cause identificata + run/debug log | ✅ DONE |
+| N2  | cycle | agent | P1: fix timeout + run validata       | run phi3 sintesi_traduzione completa < 3600s; token/min_chars riportati   | run ok + durata/token registrati        | ✅ DONE |
+| N3  | cycle | agent | P2: wrapper extract.py cost-aware    | script wrapper con --check + selezione estrattore + routing capitolo Laya | script eseguibile + test base           | ✅ DONE |
+| N4  | cycle | agent | P2: registrazione comandi /knowledge | doc + hook per check\|extract\|distill\|query\|update                     | registrazioni valide                    | ✅ DONE |
 
 ```mermaid
 flowchart TD
-  g1[g1 ci-workflow] --> g2[g2 port-runner]
-  g2 --> g3[g3 cooldown]
-  g3 --> g4[g4 sync-copies]
-  g4 --> g5[g5 timeout-analysis]
-  g5 --> g6[g6 version-sync]
-  g6 --> g7[g7 cpu-gpu: human]
-  g7 --> g8[g8 compare: run lunga]
+  N1[N1: diagnostica timeout phi3] --> N2[N2: fix + run validata]
+  N2 --> N3[N3: wrapper extract.py]
+  N3 --> N4[N4: registrazione comandi]
+  N4 --> DONE([fine backlog ✅])
 ```
+
+## Esecuzione `-y` completata
+
+| Nodo | Stato | Risultato                                                                                                                                     |
+| ---- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| N1   | ✅    | Root cause: `TASK_FAMILY_ALLOWED_MODES[translation] = [single_pass]` → nessun chunking possibile; phi3 ~26× più lento di llama su single_pass |
+| N2   | ✅    | Fix gate applied (`source_chunks` aggiunto); phi3:mini OK in 167.8s (prima 3600s timeout). Token: 2661 tot (in 2050/out 611)                  |
+| N3   | ✅    | `scripts/extract.py` creato con `--check`, selezione estrattore cost-aware, cache sha256, routing Laya                                        |
+| N4   | ✅    | `.zed/prompts/knowledge.md` registrato con check\|extract\|distill\|query\|update                                                             |

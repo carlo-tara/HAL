@@ -7,40 +7,34 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
-- Agent L0: `scripts/context_compress.py` compressione semantic-aware per skill/instruction file (classifica per tipo, regole deterministiche, dedup cross-file, stima token, validazione marker sicurezza); derivato da vidanov/context-compress. Nuovi eventi telemetrici `skill_compress` e `dedup_found` in `token_budget.py`. Riferimento `references/token-budget.md` aggiornato con strategie 14-17. Test in `tests/test_context_compress.py` (24 test). `a-agentzero` 1.10.1 · HAL
-- Benchmark: `benchmark/scripts/compare_tokens.py` confronta per (modello, test) i token di baseline e middleware (token `n/d` non sommati, flag `baseline_input_sospetto`, costo del blocco strategia dal delta di input); test in `tests/test_compare_tokens.py` e in CI `#benchmark` · P1 · Progetto
+### Changed
 
-- Correggere i passi di test in `.github/workflows/ready-for-review.yml`: i file `test_*.py` sono in `tests/`, quindi `python3 test_gateway_core.py` fallisce con `No such file or directory`; usare `PYTHONPATH=. python3 tests/test_*.py` #infra · P1
-- Aggiungere un cooldown configurabile tra i modelli nel runner benchmark, o rendere il generatore ricorsivo #benchmark · P1
-- Sincronizzare automaticamente `generate_benchmark_report.py` tra `hal_gateway/benchmark/scripts/` e `hal_system2/scripts/` #benchmark · P2
-- Allineare la versione dei wrapper CLI generati con la sorgente canonica #version-sync · P2
-
-- Benchmark: run `20261021_1` (middleware, Laya su GPU, pausa 180 s via `--cooldown`), storico in `benchmark/history/20261021_1/` con report e executive summary; confronto con `20261020_1` e tabella cross-run delle run completate (esclusa `20261019_1`, incompleta). Timeout `qwen2.5:1.5b` su `sintesi_traduzione` presente in 3 run su 3 con middleware, aggiornato in `ToDo.md` `#benchmark` · P1 · Progetto
-- Benchmark: run `20261021_2`, prova mirata su `qwen2.5:1.5b` / `sintesi_traduzione` con `--timeout 1200` (una chiamata, esito ok in 211,8 s, 8.919 token, qualità 1/2). Storico in `benchmark/history/20261021_2/` con report, executive summary che confronta le sette run complete e aggiornamento di `ToDo.md` `#benchmark` · P1 · Progetto
-- Versione: comando canonico `agents/a-agentzero/commands/version.md` (e wrapper `.agents/skills/version/SKILL.md`) 1.2.1 → 1.3.0 (minor: il wrapper ora deriva la versione dal frontmatter canonico); `a-agentzero` non bumpato (modifica confinata al comando) `#version-sync` · HAL
-- README: preflight saltato per richieste atomiche, test in CI, sorgente della versione dei wrapper e `sync_hal_system2.sh check` `#docs` · Progetto
-- `link-workspace-skills.sh`: la versione dei wrapper `SKILL.md` generati deriva da `version:` nel frontmatter del comando canonico (non più `1.0.0` fisso), così un bump sopravvive ai sync; `command_version` e script sourceable; `version.md` con `version:` nel frontmatter; test in `tests/test_link_workspace_skills.py` `#version-sync` · P2 · Progetto
-- Benchmark: `benchmark/scripts/sync_hal_system2.sh check|apply` per tenere allineati generatore, runner e metriche del gateway con la sorgente `hal_system2`; test in `tests/test_sync_hal_system2.py` e in CI `#benchmark` · P2 · Progetto
-- Runner benchmark: `--cooldown SECONDI` tra i modelli (canonico `hal_system2/app/`, mirror nel gateway); test in `hal_system2/tests/test_benchmark_models.py` e `tests/test_runner_token_gating.py` `#benchmark` · P1 · Progetto
-- Runner benchmark: copia del gateway riallineata a `hal_system2/app/` (assemblaggio locale dei segmenti, `--segment-max-tokens`, stop su troncamento, `get_token_breakdown`); mirror verificato con `diff`; test di guardia in `tests/test_runner_token_gating.py` `#benchmark` · P1 · Progetto
-- CI: i passi test di `ready-for-review.yml` usano `PYTHONPATH=. python3 -m unittest tests.<modulo>` dalla root, con installazione di `requirements-dev.txt` (nuovo: `httpx`, `python-dotenv`) e passi per `test_router_score`, `test_runner_token_gating`, `test_benchmarks` `#infra` · P1 · Progetto
-- Gateway: il preflight Laya viene saltato per richieste atomiche, a basso rischio e brevi (`istruzione + fonte < PREFLIGHT_SHORT_MAX_CHARS = 400`); `LayaSystemOneService.preflight` restituisce `abstain` con `reason=preflight_skipped_atomic`, senza consumare il budget e preservando `source`/`output_format`; test in `tests/test_laya_service.py` `#system1-gating` · P1 · Progetto
-- Benchmark: ripetizione `20261020_2` di `phi3:mini` e `llama3.2:3b` (Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_2/` con report, executive summary e confronto con `20261020_1`; timeout `phi3:mini` su `estrazione_json` aperto in `ToDo.md` `#benchmark` · P1 · Progetto
-- Benchmark: run `20261020_1` (middleware nuovo, Laya su GPU, pausa 300 s), storico in `benchmark/history/20261020_1/` con report e executive summary; confronto con `20261019_3` e residui aggiornati in `ToDo.md` `#benchmark` · P1 · Progetto
-- Versionati a 1.0.1 i documenti L0 `AGENT-PROTOCOL.md`, `references/agent-versioning.md`, `references/extension-scaffold.md`; modulo `a-agentzero` a 1.8.6 `#docs` · Progetto
-- Benchmark: sezione "Vincoli operativi" nel README (`--output` dentro `--run-dir`, nessun cooldown nel runner, `setsid`, copie del generatore), storico `20261019_3` e residui in `ToDo.md` `#benchmark` · P1 · Progetto
-- GitHub Actions portate a runtime Node 24: `actions/checkout@v5`, `actions/setup-python@v6` `#infra` · Progetto
-- Ripristinata versione `version/SKILL.md` a 1.2.1 (frontmatter era regredito a 1.0.0) `#infra` · HAL
-- Aggiunto `.gitignore` per escludere `.env` e `.env.*` (mantiene `.env.example`) `#infra` · Progetto
-- Rafforzato `SystemEvaluationEngine`: promozione fail-closed su qualità per task, validazione semantica indipendente, latenza serving comparabile e rifiuto dei benchmark troncati; durata end-to-end separata dalla latenza. `#system2-gating` · P1 · HAL
-- Ottimizzazione prompt e progressive disclosure per skill ad alto carico (@learn, @sync, @slice, @cycle) `#techdebt` · P1 · HAL
-- Integrazione System 1 (Laya) per routing e scoring euristico (@learn, @version, @improve, @document) `#feature` · P1 · HAL
-- Diff-tiering e pre-filtraggio contestuale working tree (@commit, @review, @improve) `#infra` · P1 · HAL
-- Pipeline CLI deterministica per igiene backlog e flush changelog (@todo) `#infra` · P1 · HAL
-- Script deterministico per bump semver e aggiornamento frontmatter (@version) `#infra` · P1 · HAL
-- Standardizzazione contratti di output compatti e rimozione boilerplate (Tutti i 10 skill) `#techdebt` · P2 · HAL
-- Modalità silenziosa diff-only e analizzatore CLI per sincronizzazione e generalizzazione (@sync) `#infra` · P2 · HAL
-- Filtraggio e troncamento log per runner di test e gate Make (@cycle) `#infra` · P2 · HAL
+- Allineare al gate 1 il gate `laya_recommended` del runner benchmark `#system1-gating #benchmark`
+- Gate 2: passare a Laya un contratto compatto del task invece dell'intera fonte `#system1-gating #feature`
+- Gate 3: verificare la coerenza tra famiglia task, strategia e modalità scelte da Laya `#system1-gating #feature`
+- Gate 4: single-pass come default, plan-then-solve e segmentazione solo se giustificati `#system1-gating #feature`
+- Gate 5: fallback conservativi sotto soglia e retry limitati `#system1-gating #feature`
+- Gate 6: ridurre le chiamate Laya alle sole decisioni utili `#system1-gating #techdebt`
+- Gate 7: verificare e completare gli eventi SQLite per run/fase/sistema/modello/task `#system1-gating #feature`
+- Confronto baseline vs nuova run per coppia (modello, test) con overhead Laya `#system1-gating #benchmark`
+- Chiudere il gate `ready-for-review` e risincronizzare i link Zed `#version-sync #infra`
+- Registrare durata e token stimati degli stage andati in timeout o errore `#benchmark #feature`
+- Misurare il costo reale del blocco `<strategia_system1_laya>` e la sua ripetizione in output `#benchmark #spike`
+- Prova mirata `qwen2.5:1.5b` su `sintesi_traduzione` con `--timeout` più alto `#benchmark #spike`
+- Prova mirata sullo stage fallito di phi3:mini `estrazione_json` `#benchmark #spike`
+- Baseline a contesto pieno (phi3:mini, llama3.2:1b) per verificare se la fonte della baseline `20261017_all` era tagliata `#benchmark #spike`
+- Ridurre il blocco `<strategia_system1_laya>` ripetuto in ogni stage, se la misura lo giustifica `#benchmark #techdebt`
+- Verificare se i cambi 1.8.6 di `a-agentzero` richiedono adeguamenti ai L1 o solo il pin `#version-sync #spike`
+- Aggiornare `extends-version` a 1.8.6 nei sette L1 con bump e voce CHANGELOG `#version-sync #infra`
+- Aggiornare `extends-version` di `harness-agentfactory` a 1.8.6 `#version-sync #infra`
+- Migrare lo schema di `system2_metrics.sqlite3` esistenti aggiungendo la colonna `error_message` `#system1-gating #bug`
+- Risolvere timeout phi3:mini `sintesi_traduzione`: abilitare `source_chunks` per translation nel gate (`TASK_FAMILY_ALLOWED_MODES`); run validata in 167.8s (prima 3600s timeout) `#benchmark #fix`
+- Generare Work Graph deterministico con `/graph -y` e multi-cycle sequenziale (N1 diagnostica → N2 fix → N3 wrapper → N4 registrazione) `#harness #graph`
+- Registrare comando L0 `/knowledge` con subcomandi check|extract|distill|query|update per pipeline book-to-skill `#knowledge #feature`
+- Creare skill `gdrive-sync-safe` per gestione mirror Google Drive locali e prevenzione freeze IDE `#infra #skill`
+- Wrapper `extract.py` cost-aware per a-knowledge: `--check`, selezione estrattore per formato, cache sha256, routing capitolo Laya `#knowledge #feature`
+- Eseguiire igiene ToDo.md con `/todo`: prune heading vuoti, chiusura item completati, rimozione sezioni duplicate `#chore`
+- Bump versione skill modificate: `improve` 1.0.0→1.0.1, `review` 1.0.0→1.0.1 `#version-sync`
 
 ## [2.3.0] - 2026-10-09
 

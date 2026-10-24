@@ -1,13 +1,17 @@
 {
   "kind": "cycle",
   "cmd": "/cycle",
-  "ts": "2026-10-18T15:04:03Z",
-  "flags": { "y": true },
-  "acceptance": "Check expected versus observed family/strategy/mode conservatively; default single_pass. Permit plan_then_solve only when decomposable=true and confidence >=0.8. Incomplete/mismatched evidence or low confidence abstains to single_pass and preserves full source and every segment.",
-  "files": "system1_preflight.py,laya_service.py,global_config.py,tests/test_laya_service.py",
-  "node_id": "cycle-coherence",
-  "next": "cycle-telemetry",
-  "summary": "phase=ready; ready=1; MAKE_EXIT=0 observed after final source changes; focused 42/42; Gateway 80/80; four files in scope; diagnostics clean; requests advisory remains. Next cycle-telemetry; P1 open.",
-  "brief": "cycle-coherence ready. Next cycle-telemetry; cycle-compare and independent semantic benchmark evidence remain before P1 closure.",
-  "token_budget": 200
+  "ts": "2026-10-23T00:00:00Z",
+  "title": "P1: SQLite error_message migration",
+  "acceptance": "In _initialize, migrazione ALTER TABLE ... ADD COLUMN error_message TEXT quando la colonna manca; test su DB pre-G7 verifica record_event; sync_hal_system2.sh check exit 0.",
+  "files": [
+    "benchmark/runner/system2_metrics.py",
+    "tests/test_gate7_sqlite.py"
+  ],
+  "waiver": null,
+  "node_id": "",
+  "next": "",
+  "summary": "Migrazione DB storici implementata e testata; test specifici passano. Gate sync_hal_system2.sh fallisce.",
+  "brief": "RED: test pre-G7 riproduce OperationalError. GREEN: _initialize aggiunge error_message via ALTER TABLE se manca; test migration e record_event passano. Refactor: rimossi indici duplicati. Ready: test passati, sync gate fallisce (exit 1).",
+  "make_exit": 0
 }

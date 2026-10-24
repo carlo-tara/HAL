@@ -1,6 +1,6 @@
 ---
 name: review
-version: 1.2.1
+version: 1.0.1
 description: Command review for HAL workspace.
 ---
 
