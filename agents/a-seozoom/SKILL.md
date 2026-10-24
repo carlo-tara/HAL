@@ -1,9 +1,8 @@
 ---
 name: a-seozoom
 extends: a-agentzero
-version: 1.9.5
-model: orcarouter/deepseek/deepseek-v4-flash-free
-extends-version: 1.10.1
+version: 1.10.0
+extends-version: 1.11.0
 competencies:
   - seo-import
   - metriche-analisi

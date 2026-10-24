@@ -1,9 +1,8 @@
 ---
 name: a-copywriter
 extends: a-agentzero
-version: 1.6.5
-model: orcarouter/openai/gpt-4o-mini
-extends-version: 1.10.1
+version: 1.7.0
+extends-version: 1.11.0
 competencies:
   - tono-di-voce
   - humanizer

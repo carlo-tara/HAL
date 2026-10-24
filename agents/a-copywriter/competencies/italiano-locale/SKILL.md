@@ -1,8 +1,7 @@
 ---
 name: italiano-locale
 kind: competency
-version: 1.0.1
-model: orcarouter/openai/gpt-4o-mini
+version: 1.1.0
 description: >-
   Elimina calchi sintattici inglesi, anglicismi inutili, passivi burocratici
   e strutture innaturali dall'italiano generato da LLM (es. "Sblocca il potere",

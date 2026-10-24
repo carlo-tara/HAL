@@ -1,9 +1,8 @@
 ---
 name: a-b2b
 extends: a-agentzero
-version: 2.2.5
-model: orcarouter/z-ai/glm-5.3-flash
-extends-version: 1.10.1
+version: 2.3.0
+extends-version: 1.11.0
 description: >-
   Reason why: senza un ingresso B2B stabile, discovery e go-to-market si disallineano.
   Agente L1 per piloti B2B e contact/account research: orchestra il profilo B2B e include la skill enrichment per ricerca ICP, CRM cascade e lead validation.

@@ -1,8 +1,7 @@
 ---
 name: seo-import
 kind: competency
-version: 1.0.1
-model: orcarouter/deepseek/deepseek-v4-flash-free
+version: 1.1.0
 description: >-
   Gestisce l'importazione, il parsing e la pulizia dei dataset massivi da
   SeoZoom, GSC e GA4 usando Playwright/scripts per aggirare API limits.
@@ -14,11 +13,13 @@ description: >-
 Data Engineering / ETL per dataset SEO e metriche organiche.
 
 ## Diff-Tiering e Context Limit
+
 - Non riversare mai i CSV grezzi nel contesto LLM.
 - Usa script Python per aggregare, filtrare (es. eliminazione keyword < 10 volume) o scrivere su un DB SQLite locale a zero token.
 - Passa all'LLM solo statistiche, top N e schema di output (metadata).
 
 ## Output (Contratto)
+
 - **Zero verbosità narrativa.**
 - Output: Fornisci lo script di scraping/parsing, o lo schema DB SQLite validato, e nient'altro.
 

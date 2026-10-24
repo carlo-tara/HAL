@@ -4,6 +4,8 @@ version: 1.0.0
 description: Command document for HAL workspace.
 ---
 
+---
+
 # Documentazione (L0)
 
 ## Objective

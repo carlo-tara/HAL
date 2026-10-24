@@ -1,5 +1,4 @@
 ---
-model: orcarouter/deepseek/deepseek-v4-flash-free
 version: 1.3.0
 ---
 

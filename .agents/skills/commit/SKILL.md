@@ -4,6 +4,8 @@ version: 1.0.0
 description: Command commit for HAL workspace.
 ---
 
+---
+
 # Pre-commit (L0)
 
 ## Objective

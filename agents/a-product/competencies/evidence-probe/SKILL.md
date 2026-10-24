@@ -1,8 +1,7 @@
 ---
 name: evidence-probe
 kind: competency
-version: 1.0.1
-model: orcarouter/deepseek/deepseek-v4-flash-free
+version: 1.1.0
 description: >-
   Costruisce e analizza test di validazione (pretotyping, smoke test, fake door,
   concierge, wizard of oz) per ottenere Skin in the Game o YODA evidence da

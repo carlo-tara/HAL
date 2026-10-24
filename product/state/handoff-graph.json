@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-24T05:01:37Z",
+  "ts": "2026-10-24T06:04:47Z",
   "flags": {"y": true},
-  "acceptance": "registrazioni valide",
-  "files": ".zed/prompts/knowledge.md",
-  "node_id": "N4",
-  "next": "\"\"",
-  "summary": "Graph completo: N1✓ N2✓ N3✓ N4✓. Backlog ToDo.md chiuso.",
-  "brief": "N4 COMPLETATA: .zed/prompts/knowledge.md creato con check|extract|distill|query|update. Pipeline book-to-skill registrata come slash command L0.",
+  "acceptance": "conteggio token input prima invio; oltre budget → trim messaggi più vecchi → reject strutturato; evento context_trim con token recuperati; outcome non peggiore",
+  "files": "app/usage_estimator.py,app/main.py",
+  "node_id": "p1-context-budget",
+  "next": "p1-token-accounting",
+  "summary": "N1 benchmark esplorativo: 2 run a freddo qwen2.5:1.5b/programmazione (63.1s e 39.9s), output lunghezze diverse → dati esplorativi. P1 context-budget enforcement implementato e testato.",
+  "brief": "P1 context-budget enforcement completato: count_messages_tokens() via tiktoken in usage_estimator.py; enforcement in main.py legge max_context_tokens dai use-case YAML, trim messaggi più vecchi se oltre budget, evento context_trim con token recuperati. Test estimate_tokens_and_cost passato.",
   "token_budget": 200
 }

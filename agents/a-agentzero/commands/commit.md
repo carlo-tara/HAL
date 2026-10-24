@@ -1,6 +1,4 @@
 ---
-model: orcarouter/openai/gpt-4o-mini
----
 
 # Pre-commit (L0)
 

@@ -1,6 +1,4 @@
 ---
-model: orcarouter/deepseek/deepseek-v4-flash
----
 
 # Miglioramenti (L0)
 

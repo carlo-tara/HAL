@@ -1,7 +1,9 @@
 ---
 name: improve
-version: 1.0.1
+version: 1.0.0
 description: Command improve for HAL workspace.
+---
+
 ---
 
 # Miglioramenti (L0)

@@ -1,6 +1,4 @@
 ---
-model: orcarouter/deepseek/deepseek-v4-flash
----
 
 # Code review (L0)
 

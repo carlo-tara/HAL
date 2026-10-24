@@ -4,6 +4,8 @@ version: 1.0.0
 description: Command slice for HAL workspace.
 ---
 
+---
+
 # Slice (L0)
 
 ## Objective
@@ -29,5 +31,4 @@ Aprire uno **slice** Plan: acceptance falsificabile, perimetro ≤4 file (o waiv
 
 - Canone operativo: **a-harness** (non ridocumentare qui il ciclo RGR).
 - Tool: `scripts/harness-prompt-builder.sh` + `handoff-slice.json`.
-- Modello preferito: `orcarouter/deepseek/deepseek-v4-flash`; fallback default editor.
 - Baseline: `a-agentzero/commands/slice.md`.

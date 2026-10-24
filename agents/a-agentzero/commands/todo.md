@@ -1,6 +1,4 @@
 ---
-model: orcarouter/deepseek/deepseek-v4-flash-free
----
 
 # Mappa residui (L0)
 
@@ -35,5 +33,4 @@ Eseguire l'igiene di **`./ToDo.md`** (root del repo attivo): inventario, prune, 
 - Baseline L0: `a-agentzero/commands/todo.md`.
 - Override progetto: `{repo}/.agents/commands/todo.md` se presente.
 - Tool: `scripts/harness-prompt-builder.sh` + `handoff-todo.json`.
-- Modello preferito OrcaRouter: `deepseek-v4-flash-free`; se non raggiungibile → default editor.
 - Canone operativo: competenza `todo` sotto **a-harness** (non ridocumentare la pipeline in questo file).

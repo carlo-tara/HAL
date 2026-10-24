@@ -1,6 +1,4 @@
 ---
-model: orcarouter/deepseek/deepseek-v4-flash
----
 
 # Graph (L0)
 
@@ -29,5 +27,4 @@ Generare Loop o Work Graph in `product/state/work-graph.md` (Plan-only di defaul
 
 - Canone operativo: competenza `graph` sotto **a-harness**.
 - Tool: `scripts/harness-prompt-builder.sh` (token budget 200, handoff-graph.json).
-- Modello preferito: `orcarouter/deepseek/deepseek-v4-flash`; fallback default editor.
 - Baseline: `a-agentzero/commands/graph.md`.

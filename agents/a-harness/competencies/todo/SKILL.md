@@ -1,8 +1,7 @@
 ---
 name: todo
 kind: competency
-version: 1.2.2
-model: orcarouter/deepseek/deepseek-v4-flash-free
+version: 1.3.0
 description: >-
   Gestisce la Mappa residui ./ToDo.md: scrivere Attività chiare, ordinare priorità,
   riconoscere ed eliminare completate, chiarire con ubiquitous-language e
@@ -24,6 +23,7 @@ Custode operativo di **`./ToDo.md`** (root repo). Backlog **rinfrescabile** — 
 3. **Prune/Risolvi/Tag:** Operazioni mirate sul delta passato dallo script.
 
 ## Output (Contratto)
+
 - **Zero verbosità, nessun preambolo, nessun riepilogo discorsivo.**
 - Restituisci il nuovo blocco per `ToDo.md` o aggiorna `handoff-todo.json`.
 - Restituisci sintesi `[N] Aperte, [M] Flushate in CHANGELOG` in una sola riga.

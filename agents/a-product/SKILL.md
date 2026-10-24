@@ -1,9 +1,8 @@
 ---
 name: a-product
 extends: a-agentzero
-version: 2.1.4
-model: orcarouter/deepseek/deepseek-v4-flash-free
-extends-version: 1.10.1
+version: 2.2.0
+extends-version: 1.11.0
 description: >-
   Reason why: senza un punto unificato di prodotto, discovery, PO, ricerca utente e BDD frammentano il lavoro.
   Agente L1 Product Management: discovery, PO (PRD, Lean Canvas, priorità, validazione), JTBD, Personas e BDD Spec.

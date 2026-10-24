@@ -1,3 +1,5 @@
+---
+
 # Cycle (L0)
 
 ## Objective
@@ -25,5 +27,4 @@ Eseguire lo **skeleton** `/cycle`: slice → red → green → refactor → read
 
 - Canone operativo: **a-harness**.
 - Tool: `scripts/harness-prompt-builder.sh` + `handoff-slice.json` / `handoff-cycle.json`.
-- Modello preferito: `orcarouter/deepseek/deepseek-v4-flash`; fallback default editor.
 - Baseline: `a-agentzero/commands/cycle.md`.

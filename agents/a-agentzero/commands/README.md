@@ -30,24 +30,17 @@ Non copiare i file L0 in ogni repo. Crea `{repo}/.agents/commands/{nome}.md` sol
 
 Questi **nove** comandi sono L0. Altri slash (`snapshot`, `test`, comandi dominio) restano locali al progetto o ad altri canali.
 
-| Comando    | Ruolo breve                             | Modello preferito        |
-| ---------- | --------------------------------------- | ------------------------ |
-| `version`  | Semver / CHANGELOG skill                | `deepseek-v4-flash-free` |
-| `document` | Documentazione                          | `gpt-4o-mini`            |
-| `review`   | Review codice/skill                     | `deepseek-v4-flash`      |
-| `improve`  | Miglioramenti mirati                    | `deepseek-v4-flash`      |
-| `commit`   | Pre-commit / messaggio                  | `gpt-4o-mini`            |
-| `todo`     | Igiene `./ToDo.md` (→ a-harness `todo`) | `deepseek-v4-flash-free` |
-| `slice`    | Plan slice (→ a-harness)                | `deepseek-v4-flash`      |
-| `cycle`    | Skeleton RGR (→ a-harness)              | `deepseek-v4-flash`      |
-| `graph`    | Work Graph / Loop (→ a-harness `graph`) | `deepseek-v4-flash`      |
+| Comando    | Ruolo breve                             |
+| ---------- | --------------------------------------- |
+| `version`  | Semver / CHANGELOG skill                |
+| `document` | Documentazione                          |
+| `review`   | Review codice/skill                     |
+| `improve`  | Miglioramenti mirati                    |
+| `commit`   | Pre-commit / messaggio                  |
+| `todo`     | Igiene `./ToDo.md` (→ a-harness `todo`) |
+| `slice`    | Plan slice (→ a-harness)                |
+| `cycle`    | Skeleton RGR (→ a-harness)              |
 
-## Modello LLM preferito
+- `graph` | Work Graph / Loop (→ a-harness `graph`) |
 
-Ogni comando L0 dichiara in frontmatter:
-
-```yaml
-model: orcarouter/…
-```
-
-Se il modello OrcaRouter non è raggiungibile o configurato, usare il **modello di default** attivo nell'editor.
+## Override di progetto

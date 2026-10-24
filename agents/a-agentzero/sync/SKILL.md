@@ -1,7 +1,6 @@
 ---
 name: sync
-version: 1.1.5
-model: orcarouter/deepseek/deepseek-v4-flash
+version: 1.2.0
 description: >-
   Sincronizza agenti HAL L0/L1 (deploy) e comandi Cursor L0 ereditabili; verifica
   allineamento versioni; analizza L2 per generalizzazione (/sync <). Usa quando

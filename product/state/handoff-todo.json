@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-10-24T05:09:33Z",
+  "ts": "2026-10-24T08:02:16Z",
   "flags": {"y": false},
   "acceptance": "",
   "files": "",
   "node_id": "",
   "next": "",
-  "summary": "Todo dopo flush: P0 vuota, P1 benchmark chiuso (tutti item flushati), P2 a-knowledge chiuso. File pulito con solo riferimenti storici (source_chunks_task). Nessuna voce aperta.",
+  "summary": "ToDo.md: 16 aperte (P1: 5 feature; P2: 13 voci — 3 spike bloccati N1/N2/N3, 4 feature/config, 3 hygiene/policy/tech-debt, 1 spike traduzione). Già fatto vuoto. Nessuna duplicazione o ambiguità rilevata. Tag coerenti (#feature #spike #config #hygiene #policy #tech-debt).",
   "brief": "",
   "token_budget": 200
 }

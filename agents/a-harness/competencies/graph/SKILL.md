@@ -1,8 +1,7 @@
 ---
 name: graph
 kind: competency
-version: 1.3.2
-model: orcarouter/deepseek/deepseek-v4-flash
+version: 1.4.0
 description: >-
   Genera Loop o Work Graph (Markdown + Mermaid) da contesto, file (es. /graph
   ToDo.md) o richiesta esplicita. Flag -y = auto-accept + multi-cycle sequenziale
@@ -23,6 +22,7 @@ Pin fonti: `references/graph-loop-source.md`.
 2. **Multi-cycle (`-y`)** — ogni nodo: leggi **solo** `handoff-graph.json` + la riga del nodo su cui si sta lavorando.
 
 ## Output (Contratto)
+
 - **Zero verbosità narrativa.**
 - Restituisci il Loop Spec, o il Mermaid diagram + Tabella Nodi.
 - Assicurati di chiamare `handoff-write graph` e nient'altro per gli update di stato.
