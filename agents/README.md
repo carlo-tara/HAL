@@ -28,7 +28,7 @@ L'esecuzione usa il modello System 2 predefinito: `SystemTwoEngine.ACTIVE_MODEL_
 ## Inventario
 
 - **L0:** `a-agentzero` — protocollo, sicurezza, versioni, workflow e competenze comuni.
-- **L1:** `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`.
+- **L1:** `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-knowledge`, `a-product`, `a-seozoom`, `a-wordpress`.
 - **Skill integrate:** `enrichment` (B2B); `charts`, `illustrator`, `uiux` (Design); `gherkin`, `jtbd`, `personas` (Product).
 - **L2 in HAL:** `harness-agentfactory` e `laya`.
 

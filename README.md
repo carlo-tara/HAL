@@ -74,6 +74,7 @@ bash benchmark/scripts/sync_hal_system2.sh check   # `apply` copia canonico → 
 6. **`a-copywriter`**: Copywriting web, Humanizer anti-AI e italiano locale.
 7. **`a-b2b`**: Piloti B2B, contact/account research e CRM cascade.
 8. **`a-wordpress`**: Analisi installazioni, plugin stabili e migrate.
+9. **`a-knowledge`**: Knowledge / Context Engineering - libri e doc tecnici (PDF/EPUB/DOCX/HTML) in skill on-demand; estrazione CPU-first, distillazione una-tantum, book-to-skill.
 
 ---
 

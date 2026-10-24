@@ -13,7 +13,7 @@ ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 VERSION_SH := $(ROOT)/a-agentzero/scripts/agent-version.sh
 SYNC_SH := $(ROOT)/a-agentzero/scripts/sync-agents.sh
 
-L1_AGENTS := a-b2b a-copywriter a-design a-harness a-product a-seozoom a-wordpress
+L1_AGENTS := a-b2b a-copywriter a-design a-harness a-knowledge a-product a-seozoom a-wordpress
 
 SHELL_SCRIPTS := \
 	$(ROOT)/deploy-all.sh \
@@ -29,7 +29,8 @@ SHELL_SCRIPTS := \
 	$(ROOT)/scripts/check-ready-proof.sh \
 	$(ROOT)/scripts/install-git-hooks.sh \
 	$(ROOT)/scripts/sync-consumer-stale.sh \
-	$(ROOT)/a-design/deploy.sh
+	$(ROOT)/a-design/deploy.sh \
+	$(ROOT)/a-knowledge/deploy.sh
 
 L2_HARNESS := $(ROOT)/project-skills/harness-agentfactory/SKILL.md
 

@@ -6,13 +6,13 @@ Specifica formale per agenti HAL e skill figlie di progetto.
 
 ## Livelli
 
-| Livello | Path | Frontmatter | Ruolo |
-|---------|------|-------------|-------|
-| **L0** | `HAL/agents/a-agentzero/` → `.agents/skills/a-agentzero` | `version` (radice) | Protocollo, workflow generici, scaffold figli |
-| **L1** | `HAL/agents/a-{dominio}/` → `.agents/skills/a-{dominio}` | `extends: a-agentzero`, `version`, `extends-version` | Competenza di dominio |
-| **L2** | `{progetto}/.agents/skills/{dominio}-{nome}/` | `extends: a-{dominio}`, `version`, `extends-version` | Delta progetto |
+| Livello | Path                                                     | Frontmatter                                          | Ruolo                                         |
+| ------- | -------------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------- |
+| **L0**  | `HAL/agents/a-agentzero/` → `.agents/skills/a-agentzero` | `version` (radice)                                   | Protocollo, workflow generici, scaffold figli |
+| **L1**  | `HAL/agents/a-{dominio}/` → `.agents/skills/a-{dominio}` | `extends: a-agentzero`, `version`, `extends-version` | Competenza di dominio                         |
+| **L2**  | `{progetto}/.agents/skills/{dominio}-{nome}/`            | `extends: a-{dominio}`, `version`, `extends-version` | Delta progetto                                |
 
-Agenti L1 disponibili: `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`.
+Agenti L1 disponibili: `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-knowledge`, `a-product`, `a-seozoom`, `a-wordpress`.
 
 ---
 
@@ -50,11 +50,11 @@ All'avvio di un agente o subagent:
 
 Percorsi risoluzione skill:
 
-| Livello | Percorso primario | Fallback |
-|---------|-------------------|----------|
-| L0 | `{repo}/.agents/skills/a-agentzero/SKILL.md` o `~/.agents/skills/a-agentzero/SKILL.md` | `HAL/agents/a-agentzero/SKILL.md` |
-| L1 | `{repo}/.agents/skills/a-{dominio}/SKILL.md` o `~/.agents/skills/a-{dominio}/SKILL.md` | `HAL/agents/a-{dominio}/SKILL.md` |
-| L2 | `{repo}/.agents/skills/*/SKILL.md` con `extends: a-{dominio}` | Naming legacy (sotto) |
+| Livello | Percorso primario                                                                      | Fallback                          |
+| ------- | -------------------------------------------------------------------------------------- | --------------------------------- |
+| L0      | `{repo}/.agents/skills/a-agentzero/SKILL.md` o `~/.agents/skills/a-agentzero/SKILL.md` | `HAL/agents/a-agentzero/SKILL.md` |
+| L1      | `{repo}/.agents/skills/a-{dominio}/SKILL.md` o `~/.agents/skills/a-{dominio}/SKILL.md` | `HAL/agents/a-{dominio}/SKILL.md` |
+| L2      | `{repo}/.agents/skills/*/SKILL.md` con `extends: a-{dominio}`                          | Naming legacy (sotto)             |
 
 ---
 
@@ -65,23 +65,24 @@ Cerca in `{repo}/.agents/skills/`:
 1. **Primario:** qualsiasi `SKILL.md` con frontmatter `extends: a-{dominio}` (dominio = agente L1 attivo)
 2. **Fallback legacy** (compatibilità progetti esistenti):
 
-| Agente L1 | Pattern legacy / compatibilità |
-|-----------|--------------------------------|
-| a-b2b | `b2b-*`, `enrichment-*` |
-| a-copywriter | `copywriter-*`, `*-tone-of-voice`, `*-voice` |
-| a-design | `design-*`, `uiux-*`, `charts-*`, `illustrator-*` |
-| a-harness | `harness-*` |
-| a-product | `product-*`, `po-*`, `personas-*`, `jtbd-*`, `gherkin-*` |
-| a-seozoom | `seo-*`, `seo-geo-*`, `seozoom-*` |
-| a-wordpress | `wordpress-*` |
+| Agente L1    | Pattern legacy / compatibilità                           |
+| ------------ | -------------------------------------------------------- |
+| a-b2b        | `b2b-*`, `enrichment-*`                                  |
+| a-copywriter | `copywriter-*`, `*-tone-of-voice`, `*-voice`             |
+| a-design     | `design-*`, `uiux-*`, `charts-*`, `illustrator-*`        |
+| a-harness    | `harness-*`                                              |
+| a-knowledge  | `knowledge-*`                                            |
+| a-product    | `product-*`, `po-*`, `personas-*`, `jtbd-*`, `gherkin-*` |
+| a-seozoom    | `seo-*`, `seo-geo-*`, `seozoom-*`                        |
+| a-wordpress  | `wordpress-*`                                            |
 
 ### Quanti figli
 
-| Caso | Azione |
-|------|--------|
-| **0 figli** | Solo L0 + L1; proponi scaffold da `references/extension-scaffold.md` |
-| **1 figlio** | Usalo come catena attiva |
-| **2+ figli** | Vedi **Multi-figlio** sotto |
+| Caso         | Azione                                                               |
+| ------------ | -------------------------------------------------------------------- |
+| **0 figli**  | Solo L0 + L1; proponi scaffold da `references/extension-scaffold.md` |
+| **1 figlio** | Usalo come catena attiva                                             |
+| **2+ figli** | Vedi **Multi-figlio** sotto                                          |
 
 ### Multi-figlio sullo stesso L1
 
@@ -91,7 +92,7 @@ Frontmatter opzionale:
 
 ```yaml
 role: data | editorial | voice | default
-primary: true   # un solo figlio primary per dominio, se serve default catena
+primary: true # un solo figlio primary per dominio, se serve default catena
 ```
 
 **Risoluzione (in ordine):**
@@ -127,15 +128,16 @@ La skill figlia **non può**:
 
 Convenzione consigliata: `{dominio}-{progetto}`
 
-| Agente L1 | Esempio figlio |
-|-----------|----------------|
-| a-b2b | `b2b-explorer` |
+| Agente L1    | Esempio figlio       |
+| ------------ | -------------------- |
+| a-b2b        | `b2b-explorer`       |
 | a-copywriter | `copywriter-esempio` |
-| a-design | `design-esempio` |
-| a-harness | `harness-esempio` |
-| a-product | `product-esempio` |
-| a-seozoom | `seozoom-esempio` |
-| a-wordpress | `wordpress-esempio` |
+| a-design     | `design-esempio`     |
+| a-harness    | `harness-esempio`    |
+| a-knowledge  | `knowledge-esempio`  |
+| a-product    | `product-esempio`    |
+| a-seozoom    | `seozoom-esempio`    |
+| a-wordpress  | `wordpress-esempio`  |
 
 Il campo `name` nel frontmatter deve essere unico nel repo.
 
@@ -143,12 +145,12 @@ Il campo `name` nel frontmatter deve essere unico nel repo.
 
 ## Gerarchia conflitti (unificata)
 
-| Priorità | Fonte | Cosa governa |
-|----------|-------|--------------|
-| 1 | Skill figlia L2 (`.agents/skills/{dominio}-*/`) | Override progetto, path, workflow locali |
-| 2 | File dati progetto (`brands/`, `wordpress/`, `illustration-styles/`, `product/`, brief SEO, …) | Identità, path, stack, artefatti discovery |
-| 3 | Skill L1 (`a-{dominio}`) | Competenza di dominio, reference, script |
-| 4 | Skill L0 (`a-agentzero`) | Protocollo, sicurezza, scaffold, checklist comuni |
+| Priorità | Fonte                                                                                          | Cosa governa                                      |
+| -------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| 1        | Skill figlia L2 (`.agents/skills/{dominio}-*/`)                                                | Override progetto, path, workflow locali          |
+| 2        | File dati progetto (`brands/`, `wordpress/`, `illustration-styles/`, `product/`, brief SEO, …) | Identità, path, stack, artefatti discovery        |
+| 3        | Skill L1 (`a-{dominio}`)                                                                       | Competenza di dominio, reference, script          |
+| 4        | Skill L0 (`a-agentzero`)                                                                       | Protocollo, sicurezza, scaffold, checklist comuni |
 
 **Eccezione:** le regole di sicurezza L0 non sono mai sovrascrivibili da L2.
 
@@ -169,11 +171,11 @@ Ogni agente ha **versione semver indipendente** e un `CHANGELOG.md` nella stessa
 
 ### Frontmatter per livello
 
-| Campo | L0 | L1 | L2 |
-|-------|----|----|-----|
-| `version` | obbligatorio | obbligatorio | obbligatorio |
-| `extends` | — | `a-agentzero` | `a-{dominio}` |
-| `extends-version` | — | versione L0 integrata | versione L1 integrata |
+| Campo             | L0           | L1                    | L2                    |
+| ----------------- | ------------ | --------------------- | --------------------- |
+| `version`         | obbligatorio | obbligatorio          | obbligatorio          |
+| `extends`         | —            | `a-agentzero`         | `a-{dominio}`         |
+| `extends-version` | —            | versione L0 integrata | versione L1 integrata |
 
 Esempio L1 (valori illustrativi; verifica versioni live con `agent-version.sh`):
 
@@ -209,11 +211,11 @@ description: >-
 
 ### Semver
 
-| Bump | Quando |
-|------|--------|
+| Bump      | Quando                                     |
+| --------- | ------------------------------------------ |
 | **patch** | Chiarimenti, typo, fix non comportamentali |
-| **minor** | Nuove capability retrocompatibili |
-| **major** | Breaking change per i figli |
+| **minor** | Nuove capability retrocompatibili          |
+| **major** | Breaking change per i figli                |
 
 ### Sync selettivo
 
@@ -226,10 +228,10 @@ Workflow: leggi voci > `extends-version` → classifica → applica solo delta a
 
 Tag obbligatori sulle voci che impattano i figli:
 
-| Tag | Significato |
-|-----|-------------|
-| `[sync:safe]` | Retrocompatibile; sync opzionale |
-| `[sync:review]` | Valutare adattamento delta L2 |
+| Tag               | Significato                            |
+| ----------------- | -------------------------------------- |
+| `[sync:safe]`     | Retrocompatibile; sync opzionale       |
+| `[sync:review]`   | Valutare adattamento delta L2          |
 | `[sync:breaking]` | Richiede modifica esplicita del figlio |
 
 Specifica completa: [`references/agent-versioning.md`](references/agent-versioning.md)  
@@ -254,11 +256,11 @@ competencies:
 
 ### Path canonici
 
-| Livello | Path |
-|---------|------|
-| **L0** | `a-agentzero/competencies/{id}/SKILL.md` (+ `CHANGELOG.md`) |
-| **L1** | `a-{dominio}/competencies/{id}/SKILL.md` (+ `CHANGELOG.md`, `references/…`) |
-| **L2** | `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo override) |
+| Livello | Path                                                                            |
+| ------- | ------------------------------------------------------------------------------- |
+| **L0**  | `a-agentzero/competencies/{id}/SKILL.md` (+ `CHANGELOG.md`)                     |
+| **L1**  | `a-{dominio}/competencies/{id}/SKILL.md` (+ `CHANGELOG.md`, `references/…`)     |
+| **L2**  | `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo override) |
 
 Id esempio (dominio copy): `tono-di-voce`, `humanizer`, `italiano-locale`.
 
@@ -266,11 +268,11 @@ Id esempio (dominio copy): `tono-di-voce`, `humanizer`, `italiano-locale`.
 
 ```yaml
 ---
-name: {id}   # es. tono-di-voce
+name: { id } # es. tono-di-voce
 kind: competency
 version: 1.0.1
 # Solo L1/L2: versione della STESSA competenza al livello inferiore
-extends-version: 1.0.0   # L1 → L0; L2 → L1
+extends-version: 1.0.0 # L1 → L0; L2 → L1
 description: >-
   ...
 ---
@@ -303,7 +305,7 @@ Dichiarare `competencies:` e mantenere `a-{dominio}/competencies/{id}/` è **opt
 
 ### File dati ≠ competenze
 
-I **file dati di progetto** (`brands/`, `illustration-styles/`, `wordpress/`, `product/` / `.claude/product/`, brief SEO, …) restano **dati**, non moduli `kind: competency`. La competenza governa *come* usarli (discovery, onboarding, coerenza); non spostare né duplicare i file dati sotto `competencies/{id}/`. Override L2 della competenza = regole/delta, non una seconda copia del brand/style brief.
+I **file dati di progetto** (`brands/`, `illustration-styles/`, `wordpress/`, `product/` / `.claude/product/`, brief SEO, …) restano **dati**, non moduli `kind: competency`. La competenza governa _come_ usarli (discovery, onboarding, coerenza); non spostare né duplicare i file dati sotto `competencies/{id}/`. Override L2 della competenza = regole/delta, non una seconda copia del brand/style brief.
 
 **Discovery product (personas / JTBD / Gherkin):** ordine di lookup `.claude/product/` → `product/`. Artefatti tipici: `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/`. Guida: [`docs/discovery-pipeline.md`](../docs/discovery-pipeline.md). Competenza condivisa: `po-interviewer` (L0).
 
@@ -336,10 +338,10 @@ Override L2 in scaffold: [`references/extension-scaffold.md`](references/extensi
 
 Skill L0 dedicata: [`learn/SKILL.md`](learn/SKILL.md).
 
-| Invocazione | Effetto |
-|-------------|---------|
-| `/learn ?` | Illustra apprendimenti dalla conversazione corrente; **non** modifica file |
-| `/learn !` | Consolida in skill L2 / brand / rules del repo attivo |
+| Invocazione | Effetto                                                                    |
+| ----------- | -------------------------------------------------------------------------- |
+| `/learn ?`  | Illustra apprendimenti dalla conversazione corrente; **non** modifica file |
+| `/learn !`  | Consolida in skill L2 / brand / rules del repo attivo                      |
 
 Gerarchia scrittura: L2 > file dati > rules > L1 (solo su richiesta esplicita). Sicurezza L0 non derogabile. Target per dominio: [`learn/references/consolidation-targets.md`](learn/references/consolidation-targets.md).
 
@@ -350,11 +352,11 @@ Gerarchia scrittura: L2 > file dati > rules > L1 (solo su richiesta esplicita). 
 Skill L0 dedicata: [`sync/SKILL.md`](sync/SKILL.md). Script: [`scripts/sync-agents.sh`](scripts/sync-agents.sh).  
 Criteri generalizzazione L2: [`sync/references/l2-generalization.md`](sync/references/l2-generalization.md).
 
-| Comando | Effetto |
-|---------|---------|
-| `/sync ?` | Report catene versioni L1←L0 (e L2 se path progetto) + stato comandi L0; **nessun** deploy |
+| Comando   | Effetto                                                                                              |
+| --------- | ---------------------------------------------------------------------------------------------------- |
+| `/sync ?` | Report catene versioni L1←L0 (e L2 se path progetto) + stato comandi L0; **nessun** deploy           |
 | `/sync !` | `deploy-all.sh` (skill, agents, comandi L0) + report; sync selettivo `extends-version` resta guidato |
-| `/sync <` | Analizza skill L2 nei progetti; propone taglio DUP o promozione a L1/L0; **nessuna scrittura** |
+| `/sync <` | Analizza skill L2 nei progetti; propone taglio DUP o promozione a L1/L0; **nessuna scrittura**       |
 
 Non sostituisce il workflow in [`references/agent-versioning.md`](references/agent-versioning.md): dopo STALE leggere CHANGELOG padre e applicare solo il delta necessario.  
 `/sync <` non applica promozioni: dopo conferma utente, edit mirati su L1/L0 + snellimento L2.
@@ -365,10 +367,10 @@ Non sostituisce il workflow in [`references/agent-versioning.md`](references/age
 
 Baseline slash command ereditabili da ogni progetto. Canone: [`commands/`](commands/). Canale ufficiale: **`/sync !`**.
 
-| Livello | Path | Ruolo |
-|---------|------|-------|
-| **L0** | `a-agentzero/commands/{nome}.md` | Baseline generica |
-| **Progetto** | `{repo}/commands/{nome}.md` | Override: se presente, vince |
+| Livello      | Path                             | Ruolo                        |
+| ------------ | -------------------------------- | ---------------------------- |
+| **L0**       | `a-agentzero/commands/{nome}.md` | Baseline generica            |
+| **Progetto** | `{repo}/commands/{nome}.md`      | Override: se presente, vince |
 
 Nomi L0: `version`, `document`, `review`, `improve`, `commit`.  
 `/sync ?` e `/sync !` riportano `OK` / `MISSING` / `DRIFT`; con `--projects` anche `override` vs `inherit` per repo.  

@@ -71,6 +71,18 @@
       }
     },
     {
+      "name": "a-knowledge",
+      "level": "L1",
+      "path": "a-knowledge/SKILL.md",
+      "version": "1.0.0",
+      "extends": "a-agentzero",
+      "llm_config": {
+        "LLM_EXTERNAL_MODE": 0,
+        "LLM_EXTERNAL_URI": "https://api.orcarouter.com/v1",
+        "LLM_EXTERNAL_MODEL": "orcarouter/deepseek/deepseek-v4-flash-free"
+      }
+    },
+    {
       "name": "a-product",
       "level": "L1",
       "path": "a-product/SKILL.md",

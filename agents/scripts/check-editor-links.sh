@@ -6,7 +6,7 @@ AGENTS_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 WORKSPACE_ROOT="$(cd "${AGENTS_ROOT}/.." && pwd)"
 AGENT_IDS=(
   a-agentzero a-b2b a-copywriter a-design a-harness
-  a-product a-seozoom a-wordpress
+  a-knowledge a-product a-seozoom a-wordpress
 )
 L0_COMMANDS=(version document review improve commit todo slice cycle graph)
 
@@ -68,7 +68,7 @@ root = Path(sys.argv[2])
 catalog = json.loads((root / "catalog.json").read_text(encoding="utf-8"))
 expected = {
     "a-agentzero", "a-b2b", "a-copywriter", "a-design", "a-harness",
-    "a-product", "a-seozoom", "a-wordpress",
+    "a-knowledge", "a-product", "a-seozoom", "a-wordpress",
 }
 actual = {agent["name"] for agent in catalog["agents"]}
 if actual != expected:

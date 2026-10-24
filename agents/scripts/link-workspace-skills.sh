@@ -11,6 +11,7 @@ AGENT_IDS=(
   a-copywriter
   a-design
   a-harness
+  a-knowledge
   a-product
   a-seozoom
   a-wordpress

@@ -16,6 +16,7 @@ I CHANGELOG degli agenti (`a-*/CHANGELOG.md`) restano ownership di `/version`.
 
 ### Added
 
+- Nuovo agente L1 `a-knowledge` (Knowledge / Context Engineering): pipeline `check → extract → distill → query` per trasformare testi tecnici (PDF/EPUB/DOCX/HTML/MD) in skill a disclosure progressiva; estrazione locale CPU-first (0 GPU, 0 token), distillazione una-tantum su modello free, routing System 1 al capitolo minimo. Integra `book-to-skill` (MIT) con selezione estrattore cost-aware, cache workdir e cache L1 HAL.
 - Promozione pattern sibling `role: data` + `role: editorial` in `a-seozoom` § Estensioni L2 — `a-seozoom` 1.8.11 (`35ebe87`)
 - Valutazione Substack in `a-seozoom` → **resta L2 NEED-N** (solo GiocoStrategico; nessun 2° sito) — `/graph -y` n4
 - `/sync <` su cwd AgentFactory: inventario L2 in-repo + consumer noti `/var/www` (`sync` 1.1.2)
