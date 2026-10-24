@@ -1,5 +1,12 @@
 # Changelog — harness-agentfactory (L2)
 
+## [1.1.28] - 2026-10-24
+
+### Changed
+
+- Fix working directory: /var/www/HAL/agents -> /var/www/hal_gateway/agents (root canonica); nota gate make -C agents. [sync:review]
+- Allineato a a-harness 1.7.7 (extends-version). [sync:safe]
+
 ## [Unreleased] - 2026-10-20
 
 ### Changed

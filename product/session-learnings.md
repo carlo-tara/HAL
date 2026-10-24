@@ -29,3 +29,12 @@ _(nessuna)_
 - Topologia HAL: root canonica `/var/www/hal_gateway` (repo `carlo-tara/HAL`); il consumer `hal_system2` espone `agents/` e `.agents/` come symlink verso di essa. Eseguire i gate dalla root canonica (`make -C agents`): gli script basati su `find`/`pwd` logico non attraversano il symlink dal consumer. Il working directory in `harness-agentfactory` L2 (`/var/www/HAL/agents`) e' stale. [sync:review]
 - Tooling editor su sotto-albero symlinkato: `write_file`/`create_directory` possono fallire (authorization channel closed); workaround = staging in-project + `cp`/`mv` via terminal. `edit_file` su markdown con tabelle riallinea i pipe (formatter) -> diff gonfiato. [sync:safe]
 - Follow-up actionable: script wrapper cost-aware `a-knowledge/scripts/` (extract.py --check + selezione estrattore + routing capitolo); registrazione comandi `/knowledge` L0. [sync:safe]
+
+---
+
+## 2026-10-24 — Sessione harness L2 + ToDo
+
+### HAL
+
+- Fix working directory harness-agentfactory L2: /var/www/HAL/agents -> /var/www/hal_gateway/agents (patch bump 1.1.27->1.1.28). [sync:review]
+- Follow-up a-knowledge P2: script wrapper cost-aware + comandi /knowledge. [sync:safe]

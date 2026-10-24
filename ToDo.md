@@ -69,3 +69,10 @@ _(nessuna)_
 ## Già fatto
 
 _(nessuna)_
+
+## P2
+
+### a-knowledge follow-up
+
+- [ ] Script wrapper cost-aware a-knowledge/scripts/: extract.py --check + selezione estrattore + routing capitolo Laya. Richiede book-to-skill installato. · P2 · #knowledge
+- [ ] Registrazione comandi L0 /knowledge (check|extract|distill|query|update). · P2 · #knowledge

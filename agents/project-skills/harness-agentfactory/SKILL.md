@@ -1,8 +1,8 @@
 ---
 name: harness-agentfactory
 extends: a-harness
-version: 1.1.27
-extends-version: 1.7.6
+version: 1.1.28
+extends-version: 1.7.7
 description: >-
   Delta harness per HAL (sorgente canonica skill L0/L1): Platform API
   Makefile, glossario, bounded contexts, bootstrap standard, gate version/shell;
@@ -22,7 +22,7 @@ HAL è la **sorgente canonica** di skill/agenti, non un'app consumer. Stack = Ma
 | Campo             | Valore                               |
 | ----------------- | ------------------------------------ |
 | Nome              | HAL                                  |
-| Working directory | `/var/www/HAL/agents`                |
+| Working directory | `/var/www/hal_gateway/agents`                |
 | Stack             | skills / markdown / bash (meta-repo) |
 | Bootstrap profile | **standard**                         |
 | Effort default    | thorough                             |
@@ -34,14 +34,14 @@ HAL è la **sorgente canonica** di skill/agenti, non un'app consumer. Stack = Ma
 | Platform API          | `Makefile` (root)                                                                                     |
 | Glossario             | `docs/glossary.md`                                                                                    |
 | Bounded contexts      | `docs/bounded-contexts.md`                                                                            |
-| Progress              | `product/agent-progress.md`                                                                   |
-| Learnings (opz.)      | `product/session-learnings.md`                                                                |
-| Contratti RED skill   | `product/contracts/check-harness-*.sh`                                                        |
-| Freeze                | `product/harness-freeze.md` (Makefile, GHA, hooks, RGR rule, AGENT-PROTOCOL)                  |
+| Progress              | `product/agent-progress.md`                                                                           |
+| Learnings (opz.)      | `product/session-learnings.md`                                                                        |
+| Contratti RED skill   | `product/contracts/check-harness-*.sh`                                                                |
+| Freeze                | `product/harness-freeze.md` (Makefile, GHA, hooks, RGR rule, AGENT-PROTOCOL)                          |
 | Playbook DUP L2       | `docs/playbook-l2-dup-cut.md`                                                                         |
 | Consumer STALE report | `make sync-consumer-stale`                                                                            |
 | Harness changelog     | `docs/harness-CHANGELOG.md`                                                                           |
-| Features              | `product/features/` (se presenti)                                                             |
+| Features              | `product/features/` (se presenti)                                                                     |
 | Hooks                 | `.cursor/hooks.json` + `agent-skill-{pretool,edit,stop}-rgr.sh` (deny senza slice; remind; stop+make) |
 | CI remota             | `.github/workflows/ready-for-review.yml` (`make ready-for-review` su push/PR `main`)                  |
 | Rules                 | `.cursor/rules/agents-rgr-mandatory.mdc` (+ `tdd-*.mdc`)                                              |
@@ -101,7 +101,7 @@ Plan→Act: niente `/green` finché `/slice` ha acceptance e perimetro file acce
 | Domain Agents / L1    | `a-*/` (eccetto agentzero)                                           | Skill di dominio + competencies             |
 | Consumer Delta / L2   | `.agents/skills/harness-agentfactory/` (+ consumer repos)            | Delta progetto; qui = harness del meta-repo |
 | Tooling / Sync-Deploy | `deploy-all.sh`, `a-*/deploy.sh`, `a-agentzero/scripts/`, `scripts/` | Deploy dual-runtime, version report         |
-| Docs / Harness meta   | `docs/`, `Makefile`, `product/`                              | Glossario, BC, progress, Platform API       |
+| Docs / Harness meta   | `docs/`, `Makefile`, `product/`                                      | Glossario, BC, progress, Platform API       |
 
 ## Override workflow
 
