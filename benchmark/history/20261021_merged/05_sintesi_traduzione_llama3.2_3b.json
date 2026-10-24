@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-20T23:50:45.410895+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 5321,
+    "output": 2465,
+    "reasoning": null,
+    "total": 7786
+  },
+  "status": "ok",
+  "finish_reason": "local_assembly",
+  "response": "Ecco la traduzione del primo segmento del libro:\n\n**Cover**\n\n001_il-libro\n\n**Il libro**\n\nSiamo stati abituati a ritenere che all’uomo, in quanto essere dotato di razionalità, sia sufficiente tenere a freno l’istinto e l’emotività per essere in grado di valutare in modo obiettivo le situazioni che deve affrontare e di scegliere, tra varie alternative, quella per sé più vantaggiosa. Gli studi sul processo decisionale condotti ormai da molti anni dal premio Nobel Daniel Kahneman hanno mostrato quanto illusoria sia questa convinzione e come, in realtà, siamo sempre esposti a condizionamenti – magari da parte del nostro stesso modo di pensare – che possono insidiare la capacità di giudicare e di agire lucidamente.\n\nIllustrando gli ultimi risultati della sua ricerca, Kahneman ci guida in un’affascinante esplorazione della mente umana e ci spiega come essa sia caratterizzata da due processi di pensiero ben distinti: uno veloce e intuitivo (sistema 1), e uno più lento ma anche più logico e riflessivo (sistema 2). Se il primo presiede all’attività cognitiva automatica e involontaria, il secondo entra in azione quando dobbiamo svolgere compiti che richiedono concentrazione e autocontrollo. Efficiente e produttiva, questa organizzazione del pensiero ci consente di sviluppare raffinate competenze e abilità e di eseguire con relativa facilità operazioni complesse. Ma può anche essere fonte di errori sistematici (bias), quando l’intuizione si lascia suggestionare dagli stereotipi e la riflessione è troppo pigra per correggerla.\n\nL’effetto profondo dei bias cognitivi si manifesta in tutti gli ambiti della nostra vita, dai progetti per le vacanze al gioco in borsa, e le questioni poste da Kahneman si rivelano spesso spiazzanti: è vero che il successo dei trader è del tutto casuale e che l’abilità finanziaria è solo un’illusione? Perché la paura di perdere è più forte del piacere di vincere? Come mai gli ultimi anni un po’ meno felici di una vita felice abbassano di molto la felicità totale?\n\nNota: ho mantenuto la struttura dei paragrafi e la fedeltà al testo originale, traducendo le parole e i concetti in modo da garantire la comprensione del testo.\n\n<traduzione_spagnolo>\nemoria di Amos Tversky\n\n005_introducción\n\nIntroducción\n\nCada autor, imagino, tiene en mente el contexto en el que los lectores pueden aplicar los posibles beneficios que se derivan de la lectura de sus obras. Mi es mi distribuidor de café y bebidas del despacho, frente al cual se intercambian opiniones y chismes. Mi esperanza es de enriquecer el vocabulario que se usa cuando se expresan comentarios sobre los juicios y las decisiones de otros, sobre las nuevas políticas corporativas o sobre las decisiones de inversión de un colega. ¿Por qué cuidarnos de estos chismes? ¿Porque es mucho más fácil, no así, mucho más divertido reconocer y etiquetar los errores de los demás antes que los propios. Meter en discusión lo que creemos y queremos es, en la mejor de las circunstancias, difícil, y especialmente difícil cuando la situación nos impone hacerlo, pero es indiscutible que extraemos beneficios de las opiniones informadas de los demás. A menudo nosotros prevenimos instintivamente cómo serán las opiniones de nuestros amigos y colegas sobre nuestras decisiones, así que la calidad y el contenido de tales previsiones tienen importancia. La expectativa de una observación inteligente sobre nosotros mismos representa un potente incentivo para una seria autoanálisis, y puede demostrarse un estímulo aún más fuerte que el deseo de mejorar, para el nuevo año, nuestro proceso de toma de decisiones en casa y en el trabajo.\n\nPara ser un buen diagnosticista, un médico debe adquirir la conocimiento de una amplia serie de \"etiquetas\" relacionadas con las enfermedades, cada una de las cuales compone una idea de la patología y de sus síntomas, de los posibles antecedentes y causas, de los posibles desarrollos y consecuencias, y de los posibles intervenciones para curarla o aliviarla. Aprender la arte médica consiste en parte en aprender su lenguaje. No es diferente, de manera similar, para llegar a una comprensión más profunda de los juicios y las decisiones, es necesario un vocabulario más rico del que nos está puesto a disposición el lenguaje cotidiano. En resumen, esperamos reconocer en un chismoso informado patrones característicos de los errores que la gente hace. Los errores sistémicos son definidos \"biases\", prejuicios que ocurren de manera previsible en ciertas circunstancias. Cuando por ejemplo, sale al escenario un orador de buen aspecto y con actitud desinhibida, el público tiende a evaluar sus observaciones más favorablemente de lo que merece. La disponibilidad de una etiqueta diagnóstica específica para este biase, llamado \"efecto de la sombra\", hace más fácil predecirlo, reconocerlo y comprenderlo.\n\nCuando nos preguntan a qué pensamos, generalmente respondemos. Pensamos que sabemos qué está sucediendo en nuestro cerebro y, a menudo, es un pensamiento consciente que lleva a otro pensamiento consciente. Sin embargo, la mente no funciona de esta manera, ni es en realidad su función típica. La mayoría de los pensamientos y impresiones se presentan a nuestra experiencia consciente sin que sepamos cómo se presentaron.\n\n**Traduzione del segmento 3/5**\n\nIl lavoro mentale che produce impressioni, intuizioni e molte decisioni avviene in silenzio nel cervello.\n\nGran parte delle riflessioni di questo libro riguarda i bias dell'intuizione. Individuare l'errore, però, non significa denigrare l'intelligenza umana più di quanto il concentrarsi sulle malattie propri dei manuali di medicina significhi negare la buona salute. La maggior parte di noi è sana per la maggior parte del tempo, e la maggior parte dei nostri giudizi e delle nostre azioni è appropriata per la maggior parte del tempo. Vivendo la nostra vita, ci lasciamo di norma guidare da impressioni e sensazioni, e la fiducia che abbiamo nelle nostre convinzioni e preferenze intuitive è solitamente giustificata. Ma non sempre. Spesso siamo sicuri delle nostre idee anche quando ci sbagliamo, e un osservatore obiettivo ha più probabilità di noi di individuare i nostri errori teorici.\n\nÈ questo, dunque, il mio contributo alle conversazioni davanti al distributore del caffè: migliorare la capacità di identificare e comprendere gli errori di giudizio e di scelta degli altri e, alla fine, anche di noi stessi, e fornire un linguaggio più ricco e preciso con cui discuterne. Almeno in alcuni casi, una diagnosi precisa consente di intervenire in maniera da limitare i danni che gli errori di giudizio e di scelta spesso provocano.\n\nNota: ho mantenuto la struttura dei paragrafi e la fedeltà al testo originale, mantenendo solo il contenuto del segmento 3/5.\n\n**Traduzione del segmento 4/5**\n\nLa nostra collaborazione era un equilibrio perfetto tra la mia intuizione intuitiva e la sua logica analitica. Mentre lavoravamo insieme, avevamo la capacità di controllarci tra le due persone, e ciò ci rese eccezionalmente pazienti e capaci di raggiungere risultati più precisi.\n\nIn particolare, Amos era un pensatore molto logico e teoretico, capace di comprendere con grande chiarezza il senso delle mie idee confuse. Io, d'altra parte, ero più intuitivo, con una formazione in psicologia della percezione che mi aveva insegnato a prendere in prestito molte idee interessanti.\n\nLa nostra collaborazione era un processo di reciproca critica e polemica, ma anche di grande rispetto e apertura. Nessuno di noi rifiutava mai le idee dell'altro, e anzi, si trascorreva molto tempo a discutere e a trovare un consenso. Era un processo di co-creazione, in cui ogni persona contribuiva con la sua prospettiva e la sua esperienza.\n\nIn questo modo, riuscivamo a raggiungere risultati più precisi e più efficaci, e la nostra collaborazione diventava sempre più armoniosa e produttiva.\n\n**Segmento 5/5**\n\nIl nostro esperimento ci aiutò a scoprire che la somiglianza di ciascun bambino con lo stereotipo culturale di una professione era un fattore molto importante. Nonostante le previsioni fossero assurde, trovavamo affascinanti e lo stesso. Era chiaro che le nostre intuizioni si basavano sulla somiglianza di ciascun bambino con lo stereotipo culturale di una professione. Esempio di ciò fu quando riflettivo su questa domanda: «Un individuo viene descritto da un vicino di casa in questo modo: “Steve è molto timido e chiuso. Sempre disponibile, ha però scarso interesse per le persone o il mondo della realtà. Anima mite e precisa, ha bisogno di ordine e struttura, e una passione per il dettaglio.” È più probabile che sia un bibliotecario o un agricoltore?»\n\nLa somiglianza della personalità di Steve con lo stereotipo della personalità del bibliotecario colpisce subito tutti, ma vengono quasi sempre ignorate considerazioni statistiche non meno pertinenti. Hai mai pensato che negli Stati Uniti ci sono oltre venti agricoltori maschi per ogni bibliotecario dello stesso sesso? Poiché gli agricoltori sono tanto più numerosi, è quasi sicuro che si troveranno più anime «miti e ordinate» sui trattori che al banco informazioni di una biblioteca. Tuttavia, come scoprimmo, i partecipanti al nostro esperimento ignorarono i dati statistici del.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1068,
+        "output": 597,
+        "reasoning": null,
+        "total": 1665
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1078,
+        "output": 768,
+        "reasoning": null,
+        "total": 1846
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1055,
+        "output": 409,
+        "reasoning": null,
+        "total": 1464
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1071,
+        "output": 311,
+        "reasoning": null,
+        "total": 1382
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1049,
+        "output": 380,
+        "reasoning": null,
+        "total": 1429
+      }
+    },
+    {
+      "system": "system2_local",
+      "stage": "assemblaggio_locale",
+      "status": "ok",
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "total": 0
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 5,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 243.851331,
+  "result_file": "05_sintesi_traduzione_llama3.2_3b.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 8
+  }
+}

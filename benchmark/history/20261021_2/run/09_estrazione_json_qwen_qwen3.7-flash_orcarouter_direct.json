@@ -1,0 +1,41 @@
+{
+  "model_requested": "qwen/qwen3.7-flash",
+  "model_served": "qwen3.7-flash",
+  "path": "orcarouter_direct",
+  "prompt_id": "estrazione_json",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 54.277,
+  "usage": {
+    "completion_tokens": 5583,
+    "completion_tokens_details": {
+      "reasoning_tokens": 4470,
+      "text_tokens": 5583
+    },
+    "prompt_tokens": 6585,
+    "prompt_tokens_details": {
+      "cached_tokens": 6400,
+      "text_tokens": 6585
+    },
+    "total_tokens": 12168
+  },
+  "response": "```json\n{\n  \"capitoli\": [\n    {\n      \"numero\": 1,\n      \"titolo\": \"Sinossi del libro (001_il-libro)\",\n      \"riassunto_sintetico\": \"Presenta la tesi centrale contro l'illusione della pura razionalità umana, introducendo i due sistemi di pensiero (Sistema 1 veloce/intuitivo e Sistema 2 lento/logico). Spiega come i bias cognitivi influenzino in modo sistematico le scelte quotidiane, professionali e finanziarie.\"\n    },\n    {\n      \"numero\": 2,\n      \"titolo\": \"Profilo dell'Autore (002_l-autore)\",\n      \"riassunto_sintetico\": \"Biografia di Daniel Kahneman, professore emerito a Princeton e vincitore del Premio Nobel per l'Economia nel 2002. Il premio fu assegnato per le ricerche pionieristiche sul processo decisionale condotte in collaborazione con Amos Tversky. Vengono citate alcune sue opere tradotte in italiano.\"\n    },\n    {\n      \"numero\": 3,\n      \"titolo\": \"Frontespizio (003_frontispiece)\",\n      \"riassunto_sintetico\": \"Identifica l'opera con il titolo 'Pensieri lenti e veloci' e ne attribuisce la paternità a Daniel Kahneman, fungendo da pagina introduttiva formale al testo.\"\n    },\n    {\n      \"numero\": 4,\n      \"titolo\": \"Dedica (004_dedication)\",\n      \"riassunto_sintetico\": \"L'intero volume è dedicato alla memoria di Amos Tversky, il brillante collega, amico e co-autore scomparso nel 1996. Riconosce il suo ruolo fondamentale come motore logico e teorico nella straordinaria collaborazione scientifica durata quattordici anni.\"\n    },\n    {\n      \"numero\": 5,\n      \"titolo\": \"Introduzione: Scopo e Metodo (005_introduzione)\",\n      \"riassunto_sintetico\": \"Kahneman illustra l'obiettivo del libro: arricchire il vocabolario quotidiano per analizzare giudizi e scelte altrui (e propri). Paragona questo processo all'apprendimento del linguaggio diagnostico in medicina, sottolineando come etichettare gli errori sistematici (bias) permetta di prevenirli e limitarne i danni.\"\n    },\n    {\n      \"numero\": 6,\n      \"titolo\": \"Introduzione: Le Origini della Ricerca\",\n      \"riassunto_sintetico\": \"Racconta l'incontro con Amos Tversky nel 1969 e la nascita della collaborazione. Dimostrano sperimentalmente che gli esseri umani, inclusi ricercatori esperti, non possiedono un'intuizione statistica affidabile, tendendo a sopravvalutare risultati basati su campioni troppo piccoli o prove inadeguate.\"\n    },\n    {\n      \"numero\": 7,\n      \"titolo\": \"Introduzione: Euristiche e Bias Cognitivi\",\n      \"riassunto_sintetico\": \"Spiega il funzionamento delle scorciatoie mentali attraverso esempi pratici. L'esempio di 'Steve il bibliotecario' illustra l'euristica di somiglianza, mentre quello della lettera 'K' dimostra l'euristica della disponibilità. Entrambi mostrano come il pensiero intuitivo ignori dati statistici rilevanti, generando errori prevedibili.\"\n    },\n    {\n      \"numero\": 8,\n      \"titolo\": \"Introduzione: Impatto Scientifico e Sociale\",\n      \"riassunto_sintetico\": \"Descrive la pubblicazione del lavoro su 'Science' nel 1974, che sfidò il dogma accademico della razionalità umana. Il metodo delle 'dimostrazioni' rese il testo accessibile e influente in discipline come filosofia ed economia, rivelando inoltre come i media alimentino l'euristica della disponibilità nel pubblico.\"\n    },\n    {\n      \"numero\": 9,\n      \"titolo\": \"Introduzione: Processo Decisionale e Prospect Theory\",\n      \"riassunto_sintetico\": \"Narra il passaggio dallo studio del giudizio a quello della scelta in condizioni di rischio. Le scoperte sui bias nelle preferenze intuitive portano alla formulazione della 'Prospect Theory', una teoria rivoluzionaria che costituisce uno dei pilastri dell'economia comportamentale e alla base del Nobel del 2002.\"\n    },\n    {\n      \"numero\": 10,\n      \"titolo\": \"Introduzione: L'Intuizione Esperta\",\n      \"riassunto_sintetico\": \"Distingue tra intuizioni fallaci e quelle validate dalla competenza. Citando Herbert Simon e un episodio con i pompieri, chiarisce che l'intuizione degli esperti non è magica, ma frutto del riconoscimento rapido di pattern familiari acquisiti attraverso migliaia di ore di pratica nel proprio campo.\"\n    }\n  ]\n}\n```",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-22T22:43:31.452850+00:00"
+}

@@ -1,0 +1,93 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "test_id": "programmazione",
+  "started_at": "2026-10-20T23:19:45.086303+00:00",
+  "quality": {
+    "passed": 6,
+    "total": 6,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": true
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 344,
+    "output": 1097,
+    "reasoning": null,
+    "total": 1441
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sudoku Game</title>\n    <style>\n        body {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            margin: 0;\n            height: 100vh;\n        }\n        #grid {\n            display: grid;\n            grid-template-columns: repeat(9, 1fr);\n            grid-template-rows: repeat(9, 1fr);\n            gap: 1px;\n            border: 1px solid #ccc;\n            box-sizing: border-box;\n            margin: 5px;\n            font-size: 20px;\n        }\n        #grid td {\n            border: 1px solid #ccc;\n            padding: 5px;\n            box-sizing: border-box;\n        }\n        #submit, #clear, #restart {\n            margin: 10px;\n            padding: 10px;\n            font-size: 18px;\n        }\n        #submit:disabled {\n            background-color: #f2f2f2;\n            cursor: not-allowed;\n        }\n    </style>\n</head>\n<body>\n    <table id=\"grid\">\n        <!-- Grid cells will be dynamically populated here -->\n    </table>\n    <input type=\"text\" id=\"inputCell\" disabled>\n    <button id=\"submit\">Submit</button>\n    <button id=\"clear\">Clear</button>\n    <button id=\"restart\">Restart</button>\n\n    <script>\n        const grid = document.getElementById('grid');\n        const inputCell = document.getElementById('inputCell');\n        const submit = document.getElementById('submit');\n        const clear = document.getElementById('clear');\n        const restart = document.getElementById('restart');\n\n        // Load pre-filled grid\n        const preFilledGrid = [\n            ['5', '3', '', '', '', '', '', '', ''],\n            ['6', '', '', '', '', '', '', '', '9'],\n            ['8', '', '', '', '', '', '', '', ''],\n            ['4', '', '', '', '', '', '', '', '2'],\n            ['7', '', '', '', '', '', '', '', '6'],\n            ['2', '', '', '', '5', '7', '', '', '8'],\n            ['1', '', '', '', '', '', '', '', '4'],\n            ['3', '5', '', '', '', '', '', '', '2'],\n            ['9', '', '', '', '', '', '', '', '1']\n        ];\n\n        // Populate grid with pre-filled values\n        for (let i = 0; i < 9; i++) {\n            for (let j = 0; j < 9; j++) {\n                const cell = document.createElement('td');\n                cell.innerText = preFilledGrid[i][j] || '';\n                grid.appendChild(cell);\n            }\n        }\n\n        // Handle input\n        inputCell.addEventListener('keydown', (event) => {\n            if (event.key === 'Enter' || event.key === 'Escape') {\n                if (inputCell.value.trim() !== '') {\n                    const row = Math.floor(inputCell.rowIndex / 3) * 3;\n                    const col = inputCell.colIndex;\n                    const cell = grid.children[row + col].cells[inputCell.colIndex];\n                    cell.innerText = inputCell.value;\n                    inputCell.value = '';\n                }\n            }\n        });\n\n        // Handle submit\n        submit.addEventListener('click', () => {\n            const emptyCells = [];\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    const cell = grid.children[i + j].cells[j];\n                    if (cell.innerText === '') {\n                        emptyCells.push(cell.innerText);\n                    }\n                }\n            }\n\n            if (emptyCells.length === 0) {\n                submit.disabled = true;\n                submit.style.background-color = 'orange';\n                const cell = grid.children[Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9)].cells[Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9)];\n                cell.innerText = 0;\n            } else {\n                submit.disabled = false;\n                submit.style.background-color = 'white';\n            }\n        });\n\n        // Handle clear\n        clear.addEventListener('click', () => {\n            grid.innerHTML = '';\n            inputCell.disabled = true;\n            inputCell.value = '';\n            submit.disabled = false;\n            submit.style.background-color = 'white';\n        });\n\n        // Handle restart\n        restart.addEventListener('click', () => {\n            submit.disabled = false;\n            submit.style.background-color = 'white';\n            inputCell.disabled = false;\n            inputCell.value = '';\n            grid.innerHTML = '';\n            for (let i = 0; i < 9; i++) {\n                for (let j = 0; j < 9; j++) {\n                    const cell = document.createElement('td');\n                    cell.innerText = preFilledGrid[i][j] || '';\n                    grid.appendChild(cell);\n                }\n            }\n        });\n    </script>\n</body>\n</html>\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 344,
+        "output": 1097,
+        "reasoning": null,
+        "total": 1441
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 36.720888,
+  "result_file": "03_programmazione_qwen2.5_1.5b.json",
+  "system1": {
+    "task_family": "coding",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "coding",
+      "required_strategy": "requirements_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9999,
+    "strategy": "requirements_check",
+    "strategy_confidence": 0.3321,
+    "execution_confidence": 0.3415,
+    "confidence": 0.3321,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 9
+  }
+}

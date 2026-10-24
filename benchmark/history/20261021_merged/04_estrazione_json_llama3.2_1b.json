@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T23:58:24.136776+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 12644,
+    "output": 9015,
+    "reasoning": null,
+    "total": 21659
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "La risposta a questa domanda non è specifica, poiché la struttura della domanda non fornisce informazioni utili per determinare il contesto specifico al quale si riferisce. Tuttavia, posso fornire una possibile interpretazione basata sul contesto generale del contesto fornito.\n\nIl contesto sembra riferirsi ad un contesto lavorativo o professionale, forse in un ambiente di emergenza o di risposta ai incendi, in cui gli operatori di pompataio devono agire rapidamente in condizioni estreme. Il testo sembra descrivere la cultura e le abitudini della cultura dei pompieri, che è nota per la sua empatia e la capacità di riconoscere i sentimenti degli altri.\n\nIn questo contesto, il testo potrebbe essere utilizzato come parte di un curriculum o di un trattato di cultura dei pompieri, per descrivere le abitudini, le norme e le regole del comportamento degli operatori di pompataio. Potrebbe anche essere utilizzato come strumento di formazione o di training per aiutare gli operatori di pompataio a comprendere meglio la cultura e le norme del loro ambiente di lavoro.\n\nIn generale, il testo sembra essere una descrizione di una cultura specifica e precisa, che è stata elaborata nel corso della storia e che ha trovato applicazione in diversi contesti lavorativi.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 781,
+        "reasoning": null,
+        "total": 1847
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 363,
+        "reasoning": null,
+        "total": 1439
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 632,
+        "reasoning": null,
+        "total": 1685
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 146,
+        "reasoning": null,
+        "total": 1215
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 774,
+        "reasoning": null,
+        "total": 1821
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 595,
+        "reasoning": null,
+        "total": 1654
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 563,
+        "reasoning": null,
+        "total": 1630
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 569,
+        "reasoning": null,
+        "total": 1613
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 834,
+        "reasoning": null,
+        "total": 1865
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 3439,
+        "reasoning": null,
+        "total": 4521
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 2050,
+        "output": 319,
+        "reasoning": null,
+        "total": 2369
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 336.684392,
+  "result_file": "04_estrazione_json_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 8
+  }
+}

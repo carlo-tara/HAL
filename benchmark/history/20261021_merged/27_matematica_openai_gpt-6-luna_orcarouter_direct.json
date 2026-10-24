@@ -1,0 +1,16 @@
+{
+  "model_requested": "openai/gpt-6-luna",
+  "model_served": null,
+  "path": "orcarouter_direct",
+  "prompt_id": "matematica",
+  "status": "not_executed_spend_limit",
+  "http_status": 403,
+  "seconds": 0.219,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"error\":{\"code\":\"access_denied\",\"message\":\"token cycle spend limit reached, resets at 2026-10-26T00:00:00Z (request id: 202610210929308529986108268d9d6LaJShmgd)\",\"type\":\"orcarouter_api_error\"}}",
+  "finished_at": "2026-10-21T09:29:30.477650+00:00"
+}

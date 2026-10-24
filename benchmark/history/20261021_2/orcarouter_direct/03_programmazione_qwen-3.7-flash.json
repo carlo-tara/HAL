@@ -1,0 +1,20 @@
+{
+  "provider": "google",
+  "model": "qwen-3.7-flash",
+  "test_id": "programmazione",
+  "started_at": "2026-10-22T22:06:19.220676+00:00",
+  "quality": null,
+  "tokens": {
+    "input": null,
+    "output": null,
+    "reasoning": null,
+    "total": null
+  },
+  "status": "error",
+  "error": {
+    "type": "http_error",
+    "http_status": 404
+  },
+  "seconds": 0.529826,
+  "result_file": "03_programmazione_qwen-3.7-flash.json"
+}

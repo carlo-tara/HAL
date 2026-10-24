@@ -1,0 +1,51 @@
+{
+  "model_requested": "anthropic/claude-opus-5.5",
+  "model_served": "claude-opus-5-5",
+  "path": "orcarouter_direct",
+  "prompt_id": "sintesi_traduzione",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 57.731,
+  "usage": {
+    "prompt_tokens": 6107,
+    "completion_tokens": 1530,
+    "total_tokens": 7637,
+    "usage_semantic": "openai",
+    "usage_source": "anthropic",
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 0,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "completion_tokens_details": {
+      "text_tokens": 0,
+      "audio_tokens": 0,
+      "reasoning_tokens": 0
+    },
+    "input_tokens": 6107,
+    "output_tokens": 0,
+    "input_tokens_details": null,
+    "claude_cache_creation_5_m_tokens": 0,
+    "claude_cache_creation_1_h_tokens": 0
+  },
+  "response": "Non posso tradurre integralmente quelle pagine: sono un estratto consistente di un libro ancora protetto da diritto d'autore, e una traduzione completa equivale a riprodurlo per intero in un'altra lingua.\n\nPosso però esserti utile in altri modi:\n\n**1. Sintesi in spagnolo delle sezioni presenti** (senza riproduzione del testo):\n\n- **Contrapposizione delle due modalità di pensiero** — Kahneman presenta la tesi centrale: l'idea che la razionalità basti a frenare istinto ed emozione è illusoria. La mente opera tramite due sistemi: uno rapido e intuitivo (Sistema 1, automatico e involontario) e uno lento, logico e riflessivo (Sistema 2, che richiede concentrazione e autocontrollo). L'organizzazione è efficiente, ma produce errori sistematici (*bias*) quando l'intuizione si lascia guidare da stereotipi e la riflessione non li corregge.\n\n- **Nota sull'autore** — Daniel Kahneman, cattedra Eugene Higgins di psicologia a Princeton, premio Nobel per l'economia nel 2002 per le ricerche sul processo decisionale condotte con Amos Tversky.\n\n- **Introduzione** — L'obiettivo dichiarato è fornire un vocabolario più ricco per parlare di giudizi e scelte, sull'esempio della terminologia diagnostica in medicina: dare un nome a un *bias* (come l'«effetto alone») permette di prevederlo e riconoscerlo. L'attenzione è sugli errori di intuizione, senza per questo svalutare l'intelligenza umana: la maggior parte dei nostri giudizi è adeguata.\n\n- **Origini** — Il racconto dell'incontro del 1969 con Tversky all'Università Ebraica di Gerusalemme, il seminario sulla statistica intuitiva, la scoperta che nemmeno gli statistici sono buoni statistici intuitivi, e la nascita di un sodalizio quattordicennale basato su un metodo semplice: inventare domande e analizzare insieme la risposta intuitiva immediata. L'esempio di Steve (bibliotecario o agricoltore?) mostra come la somiglianza a uno stereotipo prevalga sulle considerazioni statistiche.\n\n**2. Traduzione di un breve passo** — se ti interessa un paragrafo specifico (es. l'apertura dell'introduzione o l'esempio di Steve), posso tradurlo fedelmente come citazione.\n\n**3. Adattamento/parafrasi estesa** in spagnolo, se ti serve un testo in lingua per studio o sintesi.",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-21T09:20:25.301561+00:00"
+}

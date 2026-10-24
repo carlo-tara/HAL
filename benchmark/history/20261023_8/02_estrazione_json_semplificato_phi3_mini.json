@@ -1,0 +1,135 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "estrazione_json_semplificato",
+  "started_at": "2026-10-23T20:33:08.770173+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima riassunto",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 5726,
+    "output": 11443,
+    "reasoning": null,
+    "total": 17169
+  },
+  "status": "ok",
+  "finish_reason": "local_assembly",
+  "response": "[\n  {\n    \"capitolo\": \"Cover\",\n    \"riassunto\": \"Il libro approfondisce le implicazioni del ragionamento razionale sul processo decisionale umano, evidenziando la doppia natura del pensiero umano, che combina pensieri veloci e basati sull'intuizione con processi più lenti e riflessivi che entrano in gioco in situazioni che richiedono concentrazione e autocontrollo. La ricerca di Daniel Kahneman, premiato con un Nobel, esplora come queste dinamiche mentali possano portare a pregiudizi e bias che compromettono le nostre scelte e la nostra felicità.\"\n  },\n  {\n    \"capitolo\": \"Introduzione\",\n    \"riassunto\": \"Ogni autore, immagino, ha in mente il contesto in cui i lettori possono applicare gli eventuali benefici tratti dalla lettura delle sue opere. Il mio è il tipico distributore di caffè e bevande dell’ufficio, davanti al quale si scambiano opinioni e pettegolezzi. La mia speranza è di arricchire il vocabolario che si usa quando si esprimeamo commenti sui giudizi e le scelte altrui, sulle nuove politiche aziendali o sulle scelte d’investimento di un collega. Perché curarsi di simili pettegolezzi? Perché è molto più facile, nonché molto più divertente, riconoscere ed etichettare gli errori altrui piuttote che i propri. Mettere in discussione ciò che crediamo e vogliamo è, nella migliore delle circostanze, difficile, e particolarmente difficile quando la situazione ci impone di farlo, ma è indubbio che traiamo beneficio dalle opinioni informate degli altri. Spesso noi prevediamo istintivamente come amici e colleghi giudicheranno le nostre scelte, sicché la qualità e il contenuto di tali previsioni hanno importanza. L’aspettativa di un’osservazione intelligente sul nostro conto rappresenta un potente incentivo per una seria autocritica, e può dimostrarsi uno stimolo persino più forte del proposito di migliorare, per il nuovo anno, il nostro processo decisionale a casa e al lavoro.\"\n  },\n  {\n    \"capitolo\": \"Classificazione incerta\",\n    \"riassunto\": \"Per essere un buon diagnosta, un medico deve acquisire la conoscenza di un’ampia serie di etichette relative alle malattie, ciascuna delle quali compendi un’idea della patologia e dei suoi sintomi, dei possibili antecedenti e cause, dei potenziali sviluppi e conseguenze, e degli eventuali interventi per curarla o alleviarla. Imparare l’arte medica consiste in parte nell’imparare il suo linguaggio. Non diversamente, per arrivare a una comprensione più profonda dei giudizi e delle scelte, occorre un vocabolario più ricco di quello che ci è messo a disposizione dal linguaggio quotidiano. In sostanza, ci aspettiamo di riconoscere in un pettegolezzo informato schemi caratteristici degli errori che la gente compie.\"\n  },\n  {\n    \"capitolo\": \"Modalità di vita e intuizioni\",\n    \"riassunto\": \"Gran parte delle riflessioni di questo libro riguarda i bias dell’intuizione. Individuare l'errore, però, non significa denigrare l’intelligenza umana. La fiducia nelle nostre convinzioni e preferenze intuitive è solitamente giustificata nella maggior parte della nostra vita.\"\n  },\n  {\n    \"capitolo\": \"La nostra cecità\",\n    \"riassunto\": \"Ma non sempre. Spesso ci siamo sicuri delle nostre idee anche quando ci sbagliamo, e un osservatore obiettivo ha più probabilità di noi di individuare i nostri errori.\"\n  },\n  {\n    \"capitolo\": \"La nostra incapacità di riconoscere i nostri errori\",\n    \"riassunto\": \"La maggior parte di noi è sana per la maggior parte del tempo, e la maggior parte dei nostri giudizi e delle nostre azioni è appropriata per la maggior parte del tempo. Vivendo la nostra vita, ci lasciamo di norma guidare da impressioni e sensazioni.\"\n  },\n  {\n    \"capitolo\": \"La natura imprevedibile delle intuizioni umane\",\n    \"riassunto\": \"La maggior parte dei nostri giudizi e delle nostre azioni è appropriata per la maggior parte del tempo. Vivendo la nostra vita, ci lasciamo di norma guidare da impressioni e sensazioni.\"\n  },\n  {\n    \"capitolo\": \"La relazione tra giudizio e scelta\",\n    \"riassunto\": \"Almeno in alcuni casi, una diagnosi precisa consente di intervenire in maniera da limitare i danni che gli errori di giudizio e di scelta spesso provocano.\"\n  },\n  {\n    \"capitolo\": \"Origini\",\n    \"riassunto\": \"Questo libro espone le idee sulle decisioni che sono state forgiate dalle scoperte compiute dalla psicologia negli ultimi decenni.\"\n  },\n  {\n    \"capitolo\": \"Capitolo 2\",\n    \"riassunto\": \"Capitolo 2\"\n  },\n  {\n    \"capitolo\": \"Capitolo 3\",\n    \"riassunto\": \"Capitolo 3\"\n  },\n  {\n    \"capitolo\": \"Capitolo 4\",\n    \"riassunto\": \"Dopo aver raccolto le risposte degli esperti, Amos e io abbiamo iniziato a scrivere l'articolo che riportava le nostre scoperte, che si intravedonovano in un leggero bias nei nostri giudizi soggettivi e un'accedenza a informazioni insufficienti.\"\n  },\n  {\n    \"capitolo\": \"Capitolo 5\",\n    \"riassunto\": \"Conclusione dell'indagine, dove abbiamo capito che gli esperti non sono migliori intuitivamente dei nostri soggettivi, e che ci siamo sempre stati più inclini a credere a ricerche inadeguate basate su prove insufficienti.\"\n  },\n  {\n    \"capitolo\": \"Narrativa sulla nostra routine professionale e collaborazione\",\n    \"riassunto\": \"Passavamo molti giorni lavorativi insieme e condividevamo lunghe passeggiate, basandoci su un contratto locale che stabiliva la nostra routine professionale.\"\n  },\n  {\n    \"capitolo\": \"Sviluppo di una ricerca basata su intuizioni\",\n    \"riassunto\": \"Condividevamo intuizioni e le analizzavamo insieme tramite domande, considerando ogni quesito come un esperimento. Non cercavamo risposte corrette, ma piuttosto intuizioni che avvicinasseroci alla conoscenza, che erano probabili da condividere con altri.\"\n  },\n  {\n    \"capitolo\": \"Esplorazione della somiglianza e stereotipi\",\n    \"riassunto\": \"Abbiamo riconosciuto che le nostre intuizioni sulle future professioni di vari bambini erano basate sulla somiglianza con lo stereotipo culturale di una professione, che è stata testata e verificata attraverso decine di esperimenti.\"\n  },\n  {\n    \"capitolo\": \"Studi empirici sulla somiglianza e sulle professioni\",\n    \"riassunto\": \"Studiando la somiglianza della personalità di Steve con uno stereotipo di bibliotecario, scoprimmo che il numero di agricoltori maschi rispetto ai bibliotecari era probabilmente più alto, con i partecipanti ignorando le considerazioni statistiche pertinenti.\"\n  },\n  {\n    \"capitolo\": \"Conclusione e implicazioni\",\n    \"riassunto\": \"Il nostro esperimento ha mostrato che le intuizioni basate sulla somiglianza sono prevalenti, il che ha implicazioni sulla nostra comprensione della formazione professionale.\"\n  }\n]",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1201,
+        "output": 161,
+        "reasoning": null,
+        "total": 1362
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1146,
+        "output": 4660,
+        "reasoning": null,
+        "total": 5806
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1133,
+        "output": 5826,
+        "reasoning": null,
+        "total": 6959
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1126,
+        "output": 325,
+        "reasoning": null,
+        "total": 1451
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1120,
+        "output": 471,
+        "reasoning": null,
+        "total": 1591
+      }
+    },
+    {
+      "system": "system2_local",
+      "stage": "assemblaggio_locale",
+      "status": "ok",
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "total": 0
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 5,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 2105.548021,
+  "result_file": "02_estrazione_json_semplificato_phi3_mini.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.3495,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5356,
+    "execution_confidence": 0.1285,
+    "confidence": 0.1285,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 3086,
+    "complexity": "high",
+    "source": "docs/Pensieri_lenti_e_veloci.epub",
+    "output_format": "json"
+  }
+}

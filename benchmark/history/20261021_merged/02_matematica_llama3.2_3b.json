@@ -1,0 +1,81 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "matematica",
+  "started_at": "2026-10-20T23:37:32.586207+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 3,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": false
+      },
+      {
+        "label": "utile 610,20",
+        "passed": false
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 221,
+    "output": 666,
+    "reasoning": null,
+    "total": 887
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "**Problema:** Calcolare ricavo totale, utile e margine percentuale sul ricavo di un negozio che acquista e vende articoli.\n\n**Dati:**\n\n*   Acquisto: 120 articoli a 18 euro ciascuno\n*   Vendita:\n    *   90 articoli con un ricarico del 35% sul costo\n    *   30 articoli con uno sconto del 20% sul prezzo unitario applicato ai primi 90\n\n**Passaggi:**\n\n1.  **Calcolo costo di acquisto totale:**\n\n    *   Costo di acquisto = 120 articoli \\* 18 euro/articolo = 2160 euro\n2.  **Calcolo prezzo di vendita dei primi 90 articoli:**\n\n    *   Prezzo di acquisto = 18 euro\n    *   Ricarico = 35% \\* 18 euro = 6,3 euro\n    *   Prezzo di vendita = Prezzo di acquisto + Ricarico = 18 euro + 6,3 euro = 24,3 euro\n    *   Ricavo da 90 articoli = 90 articoli \\* 24,3 euro/articolo = 2187 euro\n3.  **Calcolo prezzo di vendita dei 30 articoli restanti:**\n\n    *   Prezzo di acquisto = 18 euro\n    *   Sconto = 20% \\* 18 euro = 3,6 euro\n    *   Prezzo di acquisto dei 30 articoli = 18 euro - 3,6 euro = 14,4 euro\n    *   Ricavo da 30 articoli = 30 articoli \\* 14,4 euro/articolo = 432 euro\n4.  **Calcolo ricavo totale:**\n\n    *   Ricavo totale = Ricavo da 90 articoli + Ricavo da 30 articoli = 2187 euro + 432 euro = 2619 euro\n5.  **Calcolo utile:**\n\n    *   Uso di denaro = 2160 euro (costo di acquisto)\n    *   Utile = Ricavo totale - Uso di denaro = 2619 euro - 2160 euro = 459 euro\n6.  **Calcolo margine percentuale sul ricavo:**\n\n    *   Margine percentuale = (Ricavo totale / Ricavo totale) \\* 100 = (2619 euro / 2619 euro) \\* 100 = 100%\n7.  **Arrotondamento dei risultati monetari a due decimali:**\n\n    *   Ricavo totale = 2619 euro \\* 0,00 euro (arrotondamento a due decimali) = 2619,00 euro\n    *   Utile = 459 euro \\* 0,00 euro (arrotondamento a due decimali) = 459,00 euro\n    *   Margine percentuale = 100%",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 221,
+        "output": 666,
+        "reasoning": null,
+        "total": 887
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 53.273056,
+  "result_file": "02_matematica_llama3.2_3b.json",
+  "system1": {
+    "task_family": "math",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "math",
+      "required_strategy": "math_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.4791,
+    "strategy": "math_check",
+    "strategy_confidence": 0.814,
+    "execution_confidence": 0.062,
+    "confidence": 0.062,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 8
+  }
+}

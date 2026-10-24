@@ -1,0 +1,44 @@
+{
+  "model_requested": "openai/gpt-6-luna",
+  "model_served": "gpt-6-luna",
+  "path": "orcarouter_direct",
+  "prompt_id": "estrazione_json",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 8.036,
+  "usage": {
+    "prompt_tokens": 7336,
+    "completion_tokens": 846,
+    "total_tokens": 8182,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 7333,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 166,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "response": "{\n  \"contenuti\": [\n    {\n      \"sezione\": \"Il libro\",\n      \"tipo\": \"Presentazione editoriale\",\n      \"riassunto\": \"Il libro descrive come il pensiero umano operi attraverso due modalità: una rapida e intuitiva e una lenta e riflessiva. Spiega che le intuizioni possono produrre errori sistematici, o bias, soprattutto quando la riflessione non interviene a correggerle. Kahneman illustra questi meccanismi e propone strumenti per riconoscerli e ragionare con maggiore consapevolezza.\"\n    },\n    {\n      \"sezione\": \"L’autore\",\n      \"tipo\": \"Nota biografica\",\n      \"riassunto\": \"Daniel Kahneman è psicologo e professore emerito a Princeton. Nel 2002 ha ricevuto il premio Nobel per l’economia per le ricerche sul processo decisionale svolte con Amos Tversky. La nota ricorda anche alcuni suoi libri tradotti in italiano.\"\n    },\n    {\n      \"sezione\": \"Introduzione\",\n      \"tipo\": \"Capitolo introduttivo\",\n      \"riassunto\": \"Kahneman presenta l’obiettivo del libro: offrire un vocabolario utile a riconoscere gli errori di giudizio e di scelta, negli altri e in sé stessi. Molti pensieri e impressioni emergono senza che siamo consapevoli dei processi che li producono; perciò possiamo essere sicuri di convinzioni errate. Individuare i bias non significa negare la capacità umana di giudicare correttamente, ma capire quando e perché essa può fallire.\"\n    },\n    {\n      \"sezione\": \"Introduzione — Origini\",\n      \"tipo\": \"Sottosezione\",\n      \"riassunto\": \"Kahneman racconta l’inizio della collaborazione con Amos Tversky e le ricerche sulle intuizioni statistiche. Gli esperimenti mostrarono che anche studiosi esperti trascurano talvolta i dati statistici e si affidano a scorciatoie mentali, come la somiglianza e la facilità con cui esempi vengono alla memoria. Queste euristiche possono generare bias prevedibili. Le loro ricerche influenzarono diverse discipline e contribuirono allo sviluppo della teoria del prospetto e dell’economia comportamentale.\"\n    },\n    {\n      \"sezione\": \"Introduzione — A che punto siamo oggi\",\n      \"tipo\": \"Sottosezione\",\n      \"riassunto\": \"Kahneman aggiorna il quadro delle ricerche, distinguendo le intuizioni distorte da quelle corrette, che possono derivare da una competenza acquisita con la pratica. L’intuizione esperta non è magia: consiste nel riconoscere indizi familiari e recuperare dalla memoria risposte apprese. L’estratto si interrompe mentre l’autore inizia a raccontare un episodio relativo a un dirigente finanziario.\"\n    }\n  ],\n  \"nota\": \"Le pagine riportate comprendono anche copertina, titolo e dedica; non sono capitoli e non sono state trattate come sezioni autonome.\"\n}",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-22T23:24:14.671817+00:00"
+}

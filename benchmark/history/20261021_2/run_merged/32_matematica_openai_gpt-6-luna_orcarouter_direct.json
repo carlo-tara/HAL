@@ -1,0 +1,48 @@
+{
+  "model_requested": "openai/gpt-6-luna",
+  "model_served": "gpt-6-luna",
+  "path": "orcarouter_direct",
+  "prompt_id": "matematica",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 6.299,
+  "usage": {
+    "prompt_tokens": 102,
+    "completion_tokens": 489,
+    "total_tokens": 591,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 160,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "response": "**1. Costo totale degli articoli**  \n\\(120 \\times 18 = 2.160,00\\ €\\)\n\n**2. Prezzo unitario dei primi 90 articoli**  \nRicarico del 35% sul costo:  \n\\(18 \\times 1,35 = 24,30\\ €\\)\n\nRicavo dai primi 90:  \n\\(90 \\times 24,30 = 2.187,00\\ €\\)\n\n**3. Prezzo unitario dei 30 articoli rimanenti**  \nSconto del 20% sul prezzo di 24,30 €:  \n\\(24,30 \\times 0,80 = 19,44\\ €\\)\n\nRicavo dai 30 articoli:  \n\\(30 \\times 19,44 = 583,20\\ €\\)\n\n**4. Ricavo totale e utile**  \nRicavo totale:  \n\\(2.187,00 + 583,20 = \\mathbf{2.770,20\\ €}\\)\n\nUtile:  \n\\(2.770,20 - 2.160,00 = \\mathbf{610,20\\ €}\\)\n\n**5. Margine percentuale sul ricavo**  \n\\(\\frac{610,20}{2.770,20} \\times 100 \\approx \\mathbf{22,03\\%}\\)\n\n**Risultati:** ricavo totale **2.770,20 €**, utile **610,20 €**, margine sul ricavo **22,03%**.",
+  "quality": {
+    "passed": 3,
+    "total": 3,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "ricavo totale 2.770,20",
+        "passed": true
+      },
+      {
+        "label": "utile 610,20",
+        "passed": true
+      },
+      {
+        "label": "margine 22,03%",
+        "passed": true
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-22T23:23:06.791529+00:00"
+}

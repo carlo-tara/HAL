@@ -35,6 +35,9 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Wrapper `extract.py` cost-aware per a-knowledge: `--check`, selezione estrattore per formato, cache sha256, routing capitolo Laya `#knowledge #feature`
 - Eseguiire igiene ToDo.md con `/todo`: prune heading vuoti, chiusura item completati, rimozione sezioni duplicate `#chore`
 - Bump versione skill modificate: `improve` 1.0.0→1.0.1, `review` 1.0.0→1.0.1 `#version-sync`
+- Nuova run phi3:mini e llama3.2:1b per confermare l'effetto dell'assemblaggio locale
+- Script wrapper cost-aware a-knowledge/scripts/: extract.py --check + selezione estrattore + routing capitolo Laya. Richiede book-to-skill installato. · #knowledge
+- Registrazione comandi L0 /knowledge (check|extract|distill|query|update). · #knowledge
 
 ## [2.3.0] - 2026-10-09
 

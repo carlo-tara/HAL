@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-23T00:27:21.941955+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 4238,
+    "output": 922,
+    "reasoning": null,
+    "total": 5160
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "**Il libro \"Pensieri lenti e veloci\" di Daniel Kahneman**\n\n**Introduzione**\n\nIn questo libro, Daniel Kahneman, un premio Nobel per l'economia, esplora il pensiero umano e il processo decisionale. Un'attenzione speciale è dedicata ai bias cognitivi, preconcetti che spesso contribuiscono a errori sistemici. Kahneman racconta le sue esperienze con Amos Tversky, un amico e conoscente, con cui condivideva le stesse preoccupazioni riguardo ai bias cognitivi.\n\n**Origini**\n\nLa ricerca di Kahneman e Tversky inizia con un seminario a Gerusalemme, dove incontra un collega che gli chiede di parlare come ospite. Lui, infatti, era considerato un astro nascente nel campo della ricerca sul processo decisionale. Dopo aver concluso la sua ricerca, si rende conto di essere un personaggio brillante, disinvolto e carismatico, con un dono per le conversazioni divertenti e una arte di utilizzare aneddoti per meglio illustrare un concetto.\n\n**La collaborazione**\n\nIl libro inizia con la collaborazione tra Kahneman e Tversky, che condivideva le stesse preoccupazioni riguardo ai bias cognitivi. Dopo aver lavorato insieme, stabiliscono una routine professionale, dove passano molti giorni lavorativi insieme e spesso condiviscono lunghe passeggiate. Questa collaborazione rappresenta il fulcro della loro vita e del loro lavoro per molti anni.\n\n**Il lavoro di ricerca**\n\nIl libro esplora diversi campi di ricerca, tra cui la statistica, la psicologia della percezione e la psicologia della decisione. Kahneman e Tversky scoprono che le loro intuizioni sono basate sulla somiglianza di ciascun individuo con stereotipi culturali. Procedono a elaborare e verificarle con decine di esperimenti, come nel caso della domanda sulla personalità di Steve.\n\n**I bias cognitivi**\n\nIl libro inizia con l'esempio della domanda sulla personalità di Steve, dove la somiglianza della sua personalità con lo stereotipo della personalità del bibliotecario colpisce subito tutti. Tuttavia, gli autori ignorano le considerazioni statistiche non meno pertinenti e scoprono che gli agricoltori sono più numerosi del bibliotecari. Questo esempio è il primo dei molti che Kahneman e Tversky utilizzano per mostrare come i bias cognitivi possano essere confusi con la verità.\n\n**La ricerca di Kahneman**\n\nIl libro esplora diversi campi di ricerca, tra cui la statistica, la psicologia della percezione e la psicologia della decisione. Kahneman e Tversky scoprono che le loro intuizioni sono basate sulla somiglianza di ciascun individuo con stereotipi culturali. Procedono a elaborare e verificarle con decine di esperimenti, come nel caso della domanda sulla personalità di Steve.\n\n**La mappa della struttura del pensiero**\n\nIl libro conclude con la presentazione di una mappa della struttura del pensiero, che rappresenta due processi di pensiero ben distinti: uno veloce e intuitivo (sistema 1), e uno più lento ma anche più logico e riflessivo (sistema 2). Kahneman e Tversky utilizzano questo modello per spiegare come i bias cognitivi possano essere confusi con la verità.\n\n**Conclusione**\n\nIl libro \"Pensieri lenti e veloci\" di Daniel Kahneman è un'opera di ricerca che esplora il pensiero umano e il processo decisionale. I bias cognitivi sono una parte importante di questo processo, che può influire negativamente sulla nostra decisione. La mappa della struttura del pensiero rappresenta due processi di pensiero ben distinti, che possono essere utilizzati per migliorare la nostra capacità di ragionare e di prendere decisioni.",
+  "seconds": 64.492535,
+  "result_file": "02_sintesi_traduzione_llama3.2_1b.json"
+}

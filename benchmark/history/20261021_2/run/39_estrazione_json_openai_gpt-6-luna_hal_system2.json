@@ -1,0 +1,44 @@
+{
+  "model_requested": "openai/gpt-6-luna",
+  "model_served": "gpt-6-luna",
+  "path": "hal_system2",
+  "prompt_id": "estrazione_json",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 12.207,
+  "usage": {
+    "prompt_tokens": 7336,
+    "completion_tokens": 1510,
+    "total_tokens": 8846,
+    "prompt_tokens_details": {
+      "cached_tokens": 7333,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 345,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "response": "{\n  \"sezioni\": [\n    {\n      \"titolo\": \"Il libro\",\n      \"tipo\": \"Presentazione editoriale\",\n      \"contenuto\": \"La presentazione introduce i due processi del pensiero descritti da Kahneman: uno rapido e intuitivo e uno più lento e riflessivo. Spiega che le intuizioni sono spesso utili, ma possono produrre errori sistematici quando sono influenzate da bias e non vengono corrette da un ragionamento più attento.\",\n      \"riassunto\": \"Il libro esplora come funzionano i processi intuitivi e riflessivi e come riconoscere i bias che possono compromettere giudizi e decisioni.\"\n    },\n    {\n      \"titolo\": \"L’autore\",\n      \"tipo\": \"Nota biografica\",\n      \"contenuto\": \"Daniel Kahneman è presentato come psicologo e docente a Princeton. Nel 2002 ha ricevuto il premio Nobel per l’economia per le ricerche sul processo decisionale condotte con Amos Tversky. La nota cita inoltre alcuni suoi libri tradotti in italiano.\",\n      \"riassunto\": \"Profilo di Kahneman, del suo lavoro sul processo decisionale e del riconoscimento ricevuto con il Nobel.\"\n    },\n    {\n      \"titolo\": \"Frontespizio\",\n      \"tipo\": \"Frontespizio\",\n      \"contenuto\": \"Sono indicati l’autore, Daniel Kahneman, e il titolo dell’opera, *Pensieri lenti e veloci*.\",\n      \"riassunto\": \"Presenta autore e titolo del libro.\"\n    },\n    {\n      \"titolo\": \"Dedica\",\n      \"tipo\": \"Dedica\",\n      \"contenuto\": \"Il libro è dedicato alla memoria di Amos Tversky, collaboratore di Kahneman nelle ricerche sul giudizio e sulle decisioni.\",\n      \"riassunto\": \"Dedica commemorativa ad Amos Tversky.\"\n    },\n    {\n      \"titolo\": \"Introduzione\",\n      \"tipo\": \"Introduzione\",\n      \"contenuto\": \"Kahneman spiega che il libro vuole offrire un linguaggio utile a riconoscere e discutere gli errori di giudizio e di scelta, negli altri e in sé stessi. Molti pensieri e impressioni emergono senza che siamo consapevoli dei processi che li producono; per questo possiamo essere sicuri delle nostre convinzioni anche quando sono sbagliate. L’autore racconta poi la nascita della collaborazione con Amos Tversky e le ricerche sulle intuizioni statistiche, sulle euristiche e sui bias. Descrive inoltre il passaggio allo studio delle decisioni in condizioni di rischio e alla formulazione della teoria del prospetto. Nella parte dedicata agli sviluppi successivi, distingue le intuizioni fallibili dalle intuizioni esperte, che possono derivare dal riconoscimento di schemi appresi con una lunga pratica.\",\n      \"riassunto\": \"L’introduzione presenta lo scopo del libro e ripercorre la collaborazione con Tversky: le intuizioni possono generare bias prevedibili, ma l’esperienza può anche produrre intuizioni accurate basate sul riconoscimento di situazioni familiari.\"\n    },\n    {\n      \"titolo\": \"Origini\",\n      \"tipo\": \"Sottosezione dell’introduzione\",\n      \"contenuto\": \"Kahneman racconta come, a partire dal 1969, lui e Amos Tversky iniziarono a studiare se le persone fossero capaci di ragionare intuitivamente in modo statistico. Gli esperimenti mostrarono che anche ricercatori esperti commettevano errori: per esempio, trascuravano le dimensioni dei campioni e si affidavano alla somiglianza con uno stereotipo o alla facilità con cui gli esempi venivano in mente. Da queste osservazioni nacquero gli studi sulle euristiche e sui bias, poi estesi alle decisioni in condizioni di rischio e alla teoria del prospetto.\",\n      \"riassunto\": \"La sezione ricostruisce l’origine delle ricerche di Kahneman e Tversky e mostra come scorciatoie mentali quali somiglianza e disponibilità possano generare errori sistematici.\"\n    },\n    {\n      \"titolo\": \"A che punto siamo oggi\",\n      \"tipo\": \"Sottosezione dell’introduzione\",\n      \"contenuto\": \"Kahneman chiarisce che il libro non si limita a riproporre i primi studi sui bias, ma integra sviluppi più recenti della psicologia. Il quadro attuale riconosce sia i limiti sia le capacità del pensiero intuitivo: alcune intuizioni sono distorte dalle euristiche, mentre quelle degli esperti possono essere accurate grazie alla pratica e al riconoscimento di schemi ricorrenti. L’esempio dei vigili del fuoco mostra come indizi percepiti senza piena consapevolezza possano sostenere una decisione esperta.\",\n      \"riassunto\": \"La sezione propone una visione più equilibrata dell’intuizione: può sbagliare, ma, in ambienti familiari e dopo molta pratica, può anche esprimere una competenza autentica.\"\n    }\n  ],\n  \"nota\": \"Il testo fornito si interrompe durante la sezione «A che punto siamo oggi»; il riassunto riguarda esclusivamente il contenuto presente nell’estratto.\"\n}",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-22T23:28:54.498825+00:00"
+}

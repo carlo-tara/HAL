@@ -1,0 +1,161 @@
+START qwen/qwen3.7-flash hal_system2 (5 prompts)
+  1/5 ragionamento_logico: ok (16.1s) model=qwen3.7-flash
+  2/5 matematica: ok (23.8s) model=qwen3.7-flash
+  3/5 programmazione: ok (47.7s) model=qwen3.7-flash
+  4/5 estrazione_json: ok (58.0s) model=qwen3.7-flash
+  5/5 sintesi_traduzione: error (60.0s) model=None
+COOLDOWN 180s
+START qwen/qwen3.7-flash orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: ok (34.7s) model=qwen3.7-flash
+  2/5 matematica: ok (21.5s) model=qwen3.7-flash
+  3/5 programmazione: ok (36.1s) model=qwen3.7-flash
+  4/5 estrazione_json: ok (54.3s) model=qwen3.7-flash
+  5/5 sintesi_traduzione: ok (109.2s) model=qwen3.7-flash
+COOLDOWN 180s
+START qwen/qwen3.8-flash orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: ok (7.2s) model=qwen3.8-flash
+  2/5 matematica: ok (13.1s) model=qwen3.8-flash
+  3/5 programmazione: ok (470.5s) model=qwen3.8-flash
+  4/5 estrazione_json: ok (113.5s) model=qwen3.8-flash
+  5/5 sintesi_traduzione: ok (511.5s) model=qwen3.8-flash
+COOLDOWN 180s
+START qwen/qwen3.8-flash hal_system2 (5 prompts)
+  1/5 ragionamento_logico: ok (17.8s) model=qwen3.8-flash
+  2/5 matematica: ok (30.7s) model=qwen3.8-flash
+  3/5 programmazione: error (60.0s) model=None
+  4/5 estrazione_json: error (60.2s) model=None
+  5/5 sintesi_traduzione: error (60.2s) model=None
+COOLDOWN 180s
+START anthropic/claude-haiku-4.5 hal_system2 (5 prompts)
+  1/5 ragionamento_logico: error (1.0s) model=None
+  2/5 matematica: error (1.0s) model=None
+  3/5 programmazione: error (0.9s) model=None
+  4/5 estrazione_json: error (1.0s) model=None
+  5/5 sintesi_traduzione: error (1.0s) model=None
+COOLDOWN 180s
+START anthropic/claude-haiku-4.5 orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: error (1.7s) model=None
+  2/5 matematica: error (0.9s) model=None
+  3/5 programmazione: error (1.0s) model=None
+  4/5 estrazione_json: error (1.4s) model=None
+  5/5 sintesi_traduzione: error (0.9s) model=None
+COOLDOWN 180s
+START openai/gpt-6-luna orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: ok (4.1s) model=gpt-6-luna
+  2/5 matematica: ok (6.3s) model=gpt-6-luna
+  3/5 programmazione: ok (59.8s) model=gpt-6-luna
+  4/5 estrazione_json: ok (8.0s) model=gpt-6-luna
+  5/5 sintesi_traduzione: ok (31.4s) model=gpt-6-luna
+COOLDOWN 180s
+START openai/gpt-6-luna hal_system2 (5 prompts)
+  1/5 ragionamento_logico: ok (4.4s) model=gpt-6-luna
+  2/5 matematica: ok (7.2s) model=gpt-6-luna
+  3/5 programmazione: ok (44.6s) model=gpt-6-luna
+  4/5 estrazione_json: ok (12.2s) model=gpt-6-luna
+  5/5 sintesi_traduzione: ok (32.3s) model=gpt-6-luna
+{
+  "qwen/qwen3.7-flash | hal_system2": {
+    "successful": 4,
+    "failed": 1,
+    "seconds": 205.58,
+    "prompt_results": 5,
+    "quality_passed": 15,
+    "quality_total": 15,
+    "usage": {
+      "prompt_tokens": 6955,
+      "completion_tokens": 14762,
+      "total_tokens": 21717
+    },
+    "quality_score": 1.0
+  },
+  "qwen/qwen3.7-flash | orcarouter_direct": {
+    "successful": 5,
+    "failed": 0,
+    "seconds": 255.852,
+    "prompt_results": 5,
+    "quality_passed": 17,
+    "quality_total": 17,
+    "usage": {
+      "prompt_tokens": 10282,
+      "completion_tokens": 25989,
+      "total_tokens": 36271
+    },
+    "quality_score": 1.0
+  },
+  "qwen/qwen3.8-flash | orcarouter_direct": {
+    "successful": 5,
+    "failed": 0,
+    "seconds": 1115.817,
+    "prompt_results": 5,
+    "quality_passed": 17,
+    "quality_total": 17,
+    "usage": {
+      "prompt_tokens": 10537,
+      "completion_tokens": 60474,
+      "total_tokens": 71011
+    },
+    "quality_score": 1.0
+  },
+  "qwen/qwen3.8-flash | hal_system2": {
+    "successful": 2,
+    "failed": 3,
+    "seconds": 228.896,
+    "prompt_results": 5,
+    "quality_passed": 7,
+    "quality_total": 7,
+    "usage": {
+      "prompt_tokens": 275,
+      "completion_tokens": 2115,
+      "total_tokens": 2390
+    },
+    "quality_score": 1.0
+  },
+  "anthropic/claude-haiku-4.5 | hal_system2": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 4.982,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  },
+  "anthropic/claude-haiku-4.5 | orcarouter_direct": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 5.878,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  },
+  "openai/gpt-6-luna | orcarouter_direct": {
+    "successful": 5,
+    "failed": 0,
+    "seconds": 109.658,
+    "prompt_results": 5,
+    "quality_passed": 17,
+    "quality_total": 17,
+    "usage": {
+      "prompt_tokens": 11452,
+      "completion_tokens": 9569,
+      "total_tokens": 21021
+    },
+    "quality_score": 1.0
+  },
+  "openai/gpt-6-luna | hal_system2": {
+    "successful": 5,
+    "failed": 0,
+    "seconds": 100.753,
+    "prompt_results": 5,
+    "quality_passed": 14,
+    "quality_total": 17,
+    "usage": {
+      "prompt_tokens": 11452,
+      "completion_tokens": 9677,
+      "total_tokens": 21129
+    },
+    "quality_score": 0.8235
+  }
+}

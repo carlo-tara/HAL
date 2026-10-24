@@ -1,0 +1,85 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-20T23:36:38.558966+00:00",
+  "quality": {
+    "passed": 4,
+    "total": 4,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "menziona la scatola Miste",
+        "passed": true
+      },
+      {
+        "label": "menziona Mele",
+        "passed": true
+      },
+      {
+        "label": "menziona Arance",
+        "passed": true
+      },
+      {
+        "label": "risposta argomentata",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 188,
+    "output": 681,
+    "reasoning": null,
+    "total": 869
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Risolvendo questo problema, dovrò seguire una serie di passaggi per determinare quale scatola contenerebbe un solo frutto e come determinare il contenuto delle altre due.\n\n1.  **Estrazione dei requisiti**: Dal prompt, sono stati estratti i seguenti requisiti: *   Tre scatole con etichette sbagliate (Mele, Arance e Miste) *   Possibilità di estrarre un solo frutto da una sola scatola senza guardare il contenuto *   Necessità di determinare il contenuto di tutte e tre le scatole\n2.  **Identificazione del contenuto delle scatole**: Inizialmente, non è possibile determinare con certezza il contenuto di ogni scatola, poiché tutte le etichette sono sbagliate. Tuttavia, è necessario trovare una soluzione che possa essere applicata a tutte le scatole. Una possibile soluzione è quella di chiedere a qualcuno che apre una delle scatole, in modo da poter determinare il contenuto di quella scatola. Una volta determinato il contenuto di una scatola, è possibile utilizzare le informazioni per determinare il contenuto delle altre due scatole. \n3.  **Determinazione del contenuto delle scatole**: Una volta determinato il contenuto di una scatola, è possibile utilizzare le informazioni per determinare il contenuto delle altre due scatole. Ad esempio, se si scopre che una scatola contiene solo un frutto, non è possibile determinare il contenuto delle altre due scatole senza ulteriori informazioni. Tuttavia, se si scopre che una scatola contiene un solo frutto, è possibile utilizzare le informazioni per determinare il contenuto delle altre due scatole.\n4.  **Determinazione della scatola con un solo frutto**: Una volta determinato il contenuto delle scatole, è possibile utilizzare le informazioni per determinare quale scatola contiene un solo frutto. In questo caso, è possibile scegliere la scatola che contiene solo un frutto.\n\n**Scelta della scatola con un solo frutto** \n\nIn base al fatto che si possa estrarre un solo frutto da una sola scatola senza guardare il contenuto, la scatola con un solo frutto potrebbe essere la scatola che contiene un solo tipo di frutto. \n\n**Determinazione del contenuto delle scatole**\n\nUna volta determinato il contenuto della scatola con un solo frutto, è possibile utilizzare le informazioni per determinare il contenuto delle altre due scatole. Ad esempio, se la scatola con un solo frutto contiene solo un tipo di frutto, è possibile utilizzare le informazioni per determinare che le altre due scatole contengono frutti di altri tipi.\n\nIn questo modo, è possibile determinare il contenuto di tutte e tre le scatole in base alle informazioni disponibili e alle possibilità offerte dal prompt.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "risposta_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 188,
+        "output": 681,
+        "reasoning": null,
+        "total": 869
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 1,
+    "execution_mode": "single_pass"
+  },
+  "seconds": 54.017157,
+  "result_file": "01_ragionamento_logico_llama3.2_3b.json",
+  "system1": {
+    "task_family": "reasoning",
+    "execution_mode": "single_pass",
+    "source_chars": 0,
+    "has_source": false,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "reasoning",
+      "required_strategy": "reasoning_check",
+      "execution_mode": "single_pass",
+      "preserve_source_order": false,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.7001,
+    "strategy": "reasoning_check",
+    "strategy_confidence": 0.2409,
+    "execution_confidence": 0.6528,
+    "confidence": 0.2409,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "reasoning",
+    "proposed_strategy": "grounded_extract",
+    "proposed_execution_mode": "single_pass",
+    "preflight_latency_ms": 11
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "model_requested": "anthropic/claude-opus-5.5",
+  "model_served": "claude-opus-5-5",
+  "path": "orcarouter_direct",
+  "prompt_id": "programmazione",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 99.532,
+  "usage": {
+    "prompt_tokens": 358,
+    "completion_tokens": 8192,
+    "total_tokens": 8550,
+    "usage_semantic": "openai",
+    "usage_source": "anthropic",
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 0,
+      "audio_tokens": 0,
+      "image_tokens": 0
+    },
+    "completion_tokens_details": {
+      "text_tokens": 0,
+      "audio_tokens": 0,
+      "reasoning_tokens": 0
+    },
+    "input_tokens": 358,
+    "output_tokens": 0,
+    "input_tokens_details": null,
+    "claude_cache_creation_5_m_tokens": 0,
+    "claude_cache_creation_1_h_tokens": 0
+  },
+  "response": "```html\n<!DOCTYPE html>\n<html lang=\"it\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Sudoku</title>\n<style>\n  *{box-sizing:border-box}\n  html,body{height:100%}\n  body{\n    margin:0;\n    min-height:100vh;\n    display:grid;\n    place-items:center;\n    padding:18px;\n    background:#0b1117;\n    background-image:radial-gradient(circle at 50% -10%, #1d3145 0%, #0b1117 62%);\n    color:#e8eef5;\n    font-family:system-ui,-apple-system,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif;\n    -webkit-tap-highlight-color:transparent;\n  }\n  .app{\n    width:min(100%,520px);\n    display:flex;\n    flex-direction:column;\n    gap:14px;\n  }\n  header{\n    display:flex;\n    align-items:center;\n    justify-content:space-between;\n    gap:12px;\n  }\n  h1{\n    margin:0;\n    font-size:1.15rem;\n    letter-spacing:.18em;\n    text-transform:uppercase;\n    font-weight:600;\n    color:#c9dcee;\n  }\n  .btn{\n    font:inherit;\n    font-weight:600;\n    color:#08131c;\n    background:linear-gradient(180deg,#9ad0ff,#63b3f0);\n    border:none;\n    border-radius:9px;\n    padding:10px 16px;\n    cursor:pointer;\n    transition:filter .15s ease, transform .05s ease;\n  }\n  .btn:hover{filter:brightness(1.08)}\n  .btn:active{transform:translateY(1px)}\n\n  .board-wrap{position:relative}\n\n  .board{\n    display:grid;\n    grid-template-columns:repeat(9,1fr);\n    grid-template-rows:repeat(9,1fr);\n    aspect-ratio:1/1;\n    background:#2a3a49;\n    border:3px solid #6f93b8;\n    border-radius:8px;\n    overflow:hidden;\n    box-shadow:0 22px 45px -20px #000, 0 0 0 1px #0a1118 inset;\n    touch-action:manipulation;\n  }\n\n  .cell{\n    display:flex;\n    align-items:center;\n    justify-content:center;\n    background:#101a23;\n    border-right:1px solid #24323e;\n    border-bottom:1px solid #24323e;\n    font-size:clamp(16px,5.2vw,28px);\n    font-variant-numeric:tabular-nums;\n    line-height:1;\n    cursor:pointer;\n    user-select:none;\n    -webkit-user-select:none;\n    transition:background .12s ease;\n  }\n  .cell.br{border-right:2px solid #6f93b8}\n  .cell.bb{border-bottom:2px solid #6f93b8}\n\n  .cell:hover{background:#182833}\n\n  .cell.given{color:#e6f0fa;font-weight:600}\n  .cell.user{color:#63c8ff;font-weight:600}\n  .cell.wrong{color:#ff8080;background:#331a1f}\n  .cell.peer{background:#16242f}\n  .cell.same{background:#1d3b52}\n  .cell.selected{background:#2a5f8f;box-shadow:inset 0 0 0 2px #9ad0ff}\n\n  .win{\n    position:absolute;\n    inset:0;\n    display:grid;\n    place-items:center;\n    padding:20px;\n    border-radius:8px;\n    background:rgba(7,13,19,.86);\n    text-align:center;\n    animation:fade .25s ease;\n  }\n  .win[hidden]{display:none}\n  @keyframes fade{from{opacity:0}to{opacity:1}}\n  .win p{margin:0}\n  .win .big{\n    font-size:1.45rem;\n    font-weight:700;\n    letter-spacing:.03em;\n    color:#9ad0ff;\n  }\n  .win .sub{\n    margin:8px 0 18px;\n    color:#b9cddd;\n    font-size:.95rem;\n  }\n\n  .pad{\n    display:grid;\n    grid-template-columns:repeat(5,1fr);\n    gap:8px;\n  }\n  .pad button{\n    font:inherit;\n    font-size:1.15rem;\n    font-weight:600;\n    padding:13px 0;\n    color:#dbe9f5;\n    background:#16242f;\n    border:1px solid #2b3e4d;\n    border-radius:9px;\n    cursor:pointer;\n    transition:background .12s ease, transform .05s ease;\n  }\n  .pad button:hover{background:#1f3340}\n  .pad button:active{transform:translateY(1px)}\n  .pad button.erase{color:#ffb0b0;border-color:#4a2b30;background:#251a1d}\n  .pad button.erase:hover{background:#332226}\n\n  .hint{\n    margin:0;\n    font-size:.8rem;\n    line-height:1.5;\n    color:#7f95a8;\n    text-align:center;\n  }\n</style>\n</head>\n<body>\n\n<div class=\"app\">\n  <header>\n    <h1>Sudoku</h1>\n    <button id=\"new\" class=\"btn\" type=\"button\">Nuova partita</button>\n  </header>\n\n  <div class=\"board-wrap\">\n    <div id=\"board\" class=\"board\"></div>\n    <div id=\"win\" class=\"win\" hidden>\n      <div>\n        <p class=\"big\">Complimenti!</p>\n        <p class=\"sub\">Hai completato il puzzle.</p>\n        <button id=\"winNew\" class=\"btn\" type=\"button\">Nuova partita</button>\n      </div>\n    </div>\n  </div>\n\n  <div id=\"pad\" class=\"pad\"></div>\n\n  <p class=\"hint\">\n    Seleziona una cella e usa i tasti 1&ndash;9 (o i pulsanti qui sopra).\n    Backspace cancella, le frecce spostano la selezione.\n  </p>\n</div>\n\n<script>\n(function () {\n  'use strict';\n\n  var N = 9;\n\n  var boardEl = document.getElementById('board');\n  var padEl   = document.getElementById('pad');\n  var winEl   = document.getElementById('win');\n\n  var solution = null;\n  var values   = null;\n  var fixed    = null;\n  var selected = null;\n  var solved   = false;\n\n  var cells = [];\n\n  /* ---------- utilità ---------- */\n\n  function shuffle(a) {\n    for (var i = a.length - 1; i > 0; i--) {\n      var j = Math.floor(Math.random() * (i + 1));\n      var t = a[i]; a[i] = a[j]; a[j] = t;\n    }\n    return a;\n  }\n\n  function isValid(g, r, c, v) {\n    for (var i = 0; i < N; i++) {\n      if (g[r][i] === v) return false;\n      if (g[i][c] === v) return false;\n    }\n    var br = Math.floor(r / 3) * 3;\n    var bc = Math.floor(c / 3) * 3;\n    for (var y = 0; y < 3; y++) {\n      for (var x = 0; x < 3; x++) {\n        if (g[br + y][bc + x] === v) return false;\n      }\n    }\n    return true;\n  }\n\n  /* ---------- generazione ---------- */\n\n  function generateSolution() {\n    var g = [];\n    for (var i = 0; i < N; i++) g.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);\n\n    function fill(pos) {\n      if (pos === 81) return true;\n      var r = Math.floor(pos / 9);\n      var c = pos % 9;\n      var nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n      for (var k = 0; k < 9; k++) {\n        var v = nums[k];\n        if (isValid(g, r, c, v)) {\n          g[r][c] = v;\n          if (fill(pos + 1)) return true;\n          g[r][c] = 0;\n        }\n      }\n      return false;\n    }\n\n    fill(0);\n    return g;\n  }\n\n  function countSolutions(grid, limit) {\n    var g = grid.map(function (row) { return row.slice(); });\n    var count = 0;\n\n    function search() {\n      var bestR = -1, bestC = -1, bestMask = 0, bestN = 10;\n\n      for (var r = 0; r < 9; r++) {\n        for (var c = 0; c < 9; c++) {\n          if (g[r][c] !== 0) continue;\n          var mask = 0, n = 0;\n          for (var v = 1; v <= 9; v++) {\n            if (isValid(g, r, c, v)) { mask |= (1 << v); n++; }\n          }\n          if (n === 0) return;\n          if (n < bestN) {\n            bestN = n; bestR = r; bestC = c; bestMask = mask;\n            if (n === 1) break;\n          }\n        }\n        if (bestN === 1) break;\n      }\n\n      if (bestR < 0) { count++; return; }\n\n      for (var val = 1; val <= 9; val++) {\n        if ((bestMask & (1 << val)) === 0) continue;\n        g[bestR][bestC] = val;\n        search();\n        g[bestR][bestC] = 0;\n        if (count >= limit) return;\n      }\n    }\n\n    search();\n    return count;\n  }\n\n  function buildPuzzle() {\n    var sol = generateSolution();\n    var work = sol.map(function (row) { return row.slice(); });\n    var order = shuffle(Array.from({ length: 81 }, function (_, i) { return i; }));\n    var targetClues = 34;\n    var clues = 81;\n\n    for (var i = 0; i < order.length && clues > targetClues; i++) {\n      var r = Math.floor(order[i] / 9);\n      var c = order[i] % 9;\n      var backup = work[r][c];\n      work[r][c] = 0;\n      if (countSolutions(work, 2) === 1) {\n        clues--;\n      } else {\n        work[r][c] = backup;\n      }\n    }\n    return { solution: sol, puzzle: work };\n  }\n\n  /* ---------- interfaccia ---------- */\n\n  function baseClass(r, c) {\n    var cls = 'cell';\n    if (c === 2 || c === 5) cls += ' br';\n    if (r === 2 || r === 5) cls += ' bb';\n    return cls;\n  }\n\n  for (var r = 0; r < N; r++) {\n    for (var c = 0; c < N; c++) {\n      (function (rr, cc) {\n        var el = document.createElement('div');\n        el.className = baseClass(rr, cc);\n        el.addEventListener('click', function () {\n          if (solved) return;\n          selected = { r: rr, c: cc };\n          render();\n        });\n        boardEl.appendChild(el);\n        cells.push(el);\n      })(r, c);\n    }\n  }\n\n  for (var n = 1; n <= 9; n++) {\n    (function (num) {\n      var b = document.createElement('button');\n      b.type = 'button';\n      b.textContent = String(num);\n      b.addEventListener('click', function () {\n        b.blur();\n        setValue(num);\n      });\n      padEl.appendChild(b);\n    })(n);\n  }\n\n  (function () {\n    var b = document.createElement('button');\n    b.type = 'button';\n    b.className = 'erase';\n    b.textContent = '\\u232B';\n    b.setAttribute('aria-label', 'Cancella');\n    b.addEventListener('click', function () {\n      b.blur();\n      setValue(0);\n    });\n    padEl.appendChild(b);\n  })();\n\n  function render() {\n    for (var r = 0; r < N; r++) {\n      for (var c = 0; c < N; c++) {\n        var el = cells[r * N + c];\n        var v = values[r][c];\n        var cls = baseClass(r, c);\n\n        if (fixed[r][c])      cls += ' given';\n        else if (v)           cls += ' user';\n        if (v && v !== solution[r][c]) cls += ' wrong';\n\n        if (selected) {\n          var sr = selected.r, sc = selected.c;\n          var inRow = (r === sr);\n",
+  "quality": {
+    "passed": 5,
+    "total": 6,
+    "score": 0.83,
+    "checks": [
+      {
+        "label": "documento HTML completo",
+        "passed": true
+      },
+      {
+        "label": "CSS e JavaScript inline",
+        "passed": true
+      },
+      {
+        "label": "gestione input da tastiera",
+        "passed": false
+      },
+      {
+        "label": "azione per nuova partita",
+        "passed": true
+      },
+      {
+        "label": "nessun salvataggio persistente",
+        "passed": true
+      },
+      {
+        "label": "nessuna dipendenza o risorsa remota",
+        "passed": true
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-21T09:18:33.537272+00:00"
+}

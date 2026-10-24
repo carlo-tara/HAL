@@ -1,0 +1,16 @@
+{
+  "model_requested": "anthropic/claude-haiku-4.5",
+  "model_served": null,
+  "path": "hal_system2",
+  "prompt_id": "matematica",
+  "status": "error",
+  "http_status": 502,
+  "seconds": 1.027,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"detail\":{\"error\":\"upstream_http\",\"provider_status\":503}}",
+  "finished_at": "2026-10-22T23:16:47.500826+00:00"
+}

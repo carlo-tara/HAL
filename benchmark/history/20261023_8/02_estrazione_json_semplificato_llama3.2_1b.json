@@ -1,0 +1,135 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json_semplificato",
+  "started_at": "2026-10-23T21:11:30.059237+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima riassunto",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 6387,
+    "output": 871,
+    "reasoning": null,
+    "total": 7258
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "```\n[\n  {\n    \"capitolo\": \"Sistema 1\",\n    \"riassunto\": \"Processo cognitivo automatico e involontario\"\n  },\n  {\n    \"capitolo\": \"Sistema 2\",\n    \"riassunto\": \"Processo cognitivo più lento e logico\"\n  },\n  {\n    \"capitolo\": \"Effetti dei bias cognitivi\",\n    \"riassunto\": \"Effetti profondi sulla vita di tutti i giorni\"\n  },\n  {\n    \"capitolo\": \"Analisi dei meccanismi mentali\",\n    \"riassunto\": \"Preziosi suggerimenti per contrastare i meccanismi mentali veloci\"\n  },\n  {\n    \"capitolo\": \"Protagonista\",\n    \"riassunto\": \"Daniel Kahneman titolare della cattedra Eugene Higgins di psicologia\"\n  },\n  {\n    \"capitolo\": \"Storia della sua ricerca\",\n    \"riassunto\": \"Studi condotti con Amos Tversky sul processo decisionale\"\n  }\n]\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1084,
+        "output": 205,
+        "reasoning": null,
+        "total": 1289
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1094,
+        "output": 100,
+        "reasoning": null,
+        "total": 1194
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1071,
+        "output": 53,
+        "reasoning": null,
+        "total": 1124
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1087,
+        "output": 36,
+        "reasoning": null,
+        "total": 1123
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1065,
+        "output": 237,
+        "reasoning": null,
+        "total": 1302
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 986,
+        "output": 240,
+        "reasoning": null,
+        "total": 1226
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 6,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 72.049712,
+  "result_file": "02_estrazione_json_semplificato_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.3495,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.5356,
+    "execution_confidence": 0.1285,
+    "confidence": 0.1285,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "coding",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 3086,
+    "complexity": "high",
+    "source": "docs/Pensieri_lenti_e_veloci.epub",
+    "output_format": "json"
+  }
+}

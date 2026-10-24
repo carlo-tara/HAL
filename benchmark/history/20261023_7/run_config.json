@@ -1,0 +1,28 @@
+{
+  "run_id": "20261023_7",
+  "num_ctx": 16384,
+  "models": [
+    "phi3:mini",
+    "llama3.2:1b"
+  ],
+  "prompts": [
+    "estrazione_json",
+    "sintesi_traduzione"
+  ],
+  "timeout": 1800,
+  "cooldown": 60,
+  "provider": "ollama",
+  "system1": true,
+  "mirror": "hal_gateway/benchmark/runner",
+  "baseline": "20261023_5",
+  "source_in_single_pass": true,
+  "summary": {
+    "successful": 3,
+    "errors": 1,
+    "min_chars_sintesi_traduzione": {
+      "phi3:mini": {"chars": 15941, "required": 7500, "passed": true},
+      "llama3.2:1b": {"chars": 12887, "required": 7500, "passed": true}
+    }
+  },
+  "note": "Confronto token parziale: phi3:mini/estrazione_json è andato in timeout; llama3.2:1b/estrazione_json ha usato assemblaggio_finale del modello, non assemblaggio_locale."
+}

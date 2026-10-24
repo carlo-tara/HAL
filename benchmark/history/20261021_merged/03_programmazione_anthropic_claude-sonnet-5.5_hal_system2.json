@@ -1,0 +1,16 @@
+{
+  "model_requested": "anthropic/claude-sonnet-5.5",
+  "model_served": null,
+  "path": "hal_system2",
+  "prompt_id": "programmazione",
+  "status": "error",
+  "http_status": 504,
+  "seconds": 60.021,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"detail\":\"Upstream provider timed out\"}",
+  "finished_at": "2026-10-21T09:06:10.647477+00:00"
+}

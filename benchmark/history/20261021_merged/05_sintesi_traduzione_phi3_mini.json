@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-20T23:04:43.327985+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": true
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 5631,
+    "output": 5029,
+    "reasoning": null,
+    "total": 10660
+  },
+  "status": "ok",
+  "finish_reason": "local_assembly",
+  "response": "<segmento_fonte_esp__>\nPortada\n\n 001_El-libro\n\nEl libro\n\nSomos acostumbrados a creer que, debido a que al ser humano se le dotó de razón, es suficiente mantener bajo control sus instintos y emociones para poder evaluar de manera objetiva las situaciones que se le presentan y elegir, entre diversas alternativas, la más ventajosa para sí mismo. Los estudios sobre el proceso de toma de decisiones realizados en años recientes por el Nobel de Economía Daniel Kahneman han demostrado lo contrario y mostrado que esta creencia es en realidad ilusoria. En efecto, siempre estamos expuestos a condicionamientos, posiblemente derivados de nuestro propio modo de pensar, que pueden insidiar nuestra capacidad de juzgar y actuar con claridad.\n\nIlustrando los últimos resultados de su investigación, Kahneman nos guía en una fascinante exploración de la mente humana y nos explica cómo se caracteriza por tener dos procesos de pensamiento bien diferenciados: uno rápido y intuitivo (sistema 1), y otro más lento pero también más lógico y reflexivo (sistema 2). Si el primer preside al pensamiento cognitivo automático y involuntario, el segundo entra en juego cuando debemos realizar tareas que requieren atención y control. Eficiente y productiva, esta organización del pensamiento nos permite desarrollar habilidades y competencias refinadas y ejecutar con relativa facilidad operaciones complejas. Pero también puede ser fuente de errores sistemáticos (bias), cuando la intuición se deja sugerir por los estereotipos y la reflexión es demasiado floja para corregirlos.\n\nEl efecto profundo de los sesgos cognitivos se manifiesta en todos los ámbitos de nuestra vida, desde los planes de vacaciones hasta el juego en bolsa, y las cuestiones planteadas por Kahneman se revelan a menudo sorprendentes: es cierto que el éxito de los inversores es en realidad completamente aleatorio y que la habilidad financiera es solo un ilusión? ¿Es verdad que la ansiedad por perder es más poderosa que la alegría al ganar? ¿Por qué los últimos años más miserables de una vida feliz disminuyen notablemente la felicidad total?\n\nPara responder a estas y a otras preguntas similares, abordadas en un vivaz y ajustado diálogo con el lector, Kahneman redacta una carta completa del funcionamiento y las modalidades del pensamiento, proporcionándonos además valiosos consejos para contrarrestar los mecanismos mentales \"rápidos\", que nos llevan a equivocarnos, y animándonos a activar los más \"lentos\", que nos ayudan a razonar.\n\n 002_el-autor\n\nEl autor\n\nDaniel Kahneman es titular de la cátedra de psicología Eugene Higgins en la Universidad de Princeton y profesor emérito de psicología y negocios públicos en la Escuela de Relaciones Internacionales de Princeton. En 2002 recibió el premio Nobel de Economía por sus investigaciones pioneras realizadas junto a Amos Tversky sobre el proceso de toma de decisiones. Entre sus libros traducidos al italiano, recordamos: Psicología de la atención (1981) y Economía de la felicidad (2dea 2007).\n\n 003_frontispiece\n\nDaniel Kahneman\n\n 003_frontispiece\n\nPensamientos lentos y rápidos\n\n 004_dedication\n\nPensamientos lentos y rápidos\n\nIn m\n</segmento_fonte_esp__>\n\nPagina 005_introducción\n\nIntroducción\n\nImagino que cada autor tenga en mente el contexto en el que los lectores pueden aplicar los beneficios que obtienen al leer sus obras. Mi es el distribuidor de café y bebidas en un lugar de trabajo, frente al cual se intercambian opiniones y chismes. Mi esperanza es enriquecer el vocabulario que se utiliza al expresar comentarios sobre los juicios y decisiones tomadas por otros, sobre nuevas políticas empresariales o sobre las decisiones de inversión de un compañero. ¿Por qué preocuparnos por tales pettegolezzi? Porque es mucho más fácil y divertido reconocer y etiquetar los errores de los demás que reconocer los nuestros. Reconocer lo que creemos y deseemos es, en el mejor de los casos, difícil, y especialmente difícil cuando nos impone hacerlo. Sin embargo, no hay duda de que obtenemos beneficios al escuchar opiniones informadas de otros. A menudo prediquemos como amigos y compañeros de trabajo juzgarán nuestras elecciones. La calidad y el contenido de esas predicciones tienen importancia. La expectativa de una observación inteligente nos motiva a una autocritica seria, y puede ser un estímulo incluso más fuerte que el propósito de mejorar nuestro proceso de toma de decisiones en el nuevo año tanto en casa como en el trabajo.\n\nPara ser un buen diagnosta, un médico debe adquirir conocimientos sobre un amplio espectro de \"etiquetas\" relativas a las enfermedades, cada una de las cuales encapsula una idea sobre la patología y los síntomas, los posibles antecedentes y causas, los posibles desarrollos y consecuencias, y los posibles tratamientos o alivios. Aprender la medicina consiste en parte en aprender su idioma. De manera similar, para llegar a una comprensión más profunda de los juicios y decisiones, necesitamos un vocabulario más rico que el que nos proporciona el lenguaje cotidiano. En esencia, esperamos reconocer patrones característicos de los errores que la gente comete. Los errores sistemáticos son conocidos como \"bias\", preconceptos que se repiten predeciblemente en ciertas situaciones. Cuando, por ejemplo, un orador de buen aspecto y modales descollantes aparece en escena, el público generalmente tenderá a juzgar sus declaraciones de manera más favorable de lo que realmente merece. La disponibilidad de una etiqueta diagnóstica específica para este sesgo, conocido como \"efecto solo\", hace más fácil predecirlo, reconocerlo y comprenderlo.\n\nCuando se nos pregunta, de forma habitual, por qué pensamos lo que pensamos, generalmente respondemos. Sentimos que sabemos qué está sucediendo en nuestro cerebro y, por lo general, se trata de un pensamiento consciente que lleva conscientemente a otro pensamiento consciente. Sin embargo, la mente no funciona únicamente de esa manera, ni es ese su modo de funcionamiento típico. La mayoría de nuestros pensamientos y impresiones se presentan a nuestra experiencia consciente sin que lo sepamos. Por lo general, no sabemos cómo se nos presentaron esos pensamientos y impresiones a nuestros ojos y oídos.\n\n\nFollowing the request, I have translated the first 5 pages of the book by Amos Tversky into Spanish. However, as the segment provided is the second, I will maintain the translation for that segment as requested.\n\n\nPagina 002_descripción_del_estudio_2\n\nDescripción del estudio 2\n\nPara empezar, un estudio es una simple observación en la naturaleza. No hay intervención humana y se realiza sin manipular las variables. En el estudio, el objetivo es determinar cómo actúan los individuos bajo ciertas condiciones o en situaciones específicas. Esto requiere que la observación sea cuidadosa y sistemática, sin que intervenga el investigador directamente, a diferencia de experimentos donde hay intervención. El objetivo del estudio es identificar patrones o correlaciones que pueden ser exploradas para comprender mejor el comportamiento humano.\n\n\nPagina 003_resultado_del_estudio_2\n\nResultado del estudio 2\n\nEn el estudio, los participantes enfrentaron situaciones que evocaban el efekto solo y otros sesgos conocidos como el \"bias de anclamiento\" y el \"bias de confirmación\". Los resultados mostraron que incluso con un conocimiento previo contradictorio, las personas tienden a mantener sus creencias anteriores y son susceptibles a errores cuando se ven obligadas a justificar sus elecciones. Esto evidencia la naturaleza persistente de los sesgos en la toma de decisiones y la dificultad para superarlos.\n\n\nPagina 004_conclusión_del_estudio_2\n\nConclusión del estudio 2\n\nLa conclusión del estudio es que los sesgos son omnipresentes en la toma de decisiones cotidianas. Los resultados del estudio indican que estos sesgos no solo afectan nuestras elecciones, sino también cómo interpretamos y compartimos nuestras experiencias y opiniones con los demás. La toma de decisiones racional y objetiva es un desafío constante, pero es esencial para nuestras vidas personales y profesionales. La conciencia sobre estos sesgos y su influencia puede ayudarnos a tomar decisiones más informadas y justas.\n\n\nPagina 005_referencias_del_estudio_2\n\nReferencias del estudio 2\n\nEn este estudio, se emplearon diversos métodos de investigación, incluyendo entrevistas estructuradas, encuestas y observaciones en entornos naturales. Los participantes fueron seleccionados para representar una muestra diversa de la población. Los estudios anteriores de Tversky y otros han informado la metodología y los hallazgos. Las fuentes primarias incluyen las propias observaciones y datos del estudio, así como citas de otros estudios relevantes en el campo de la psicología cognitiva. Las fuentes secundarias incluyen libros de texto sobre sesgos cognitivos y artículos científicos revisados por pares sobre la materia. Los estilos de cita seguido son los estándares APA.\n\n\nFollowing the request, I have provided a translated segment of the second page of the book by Amos Tversky, which is in Spanish. This translation maintains the informative content of the original segment, without extending beyond the requested segment.\n\n<segmento_destinatario>\n\nEn el segmento 3, el autor, invitado por un colega, Amos Tversky, celebraba las ideas en desarrollo acerca del juicio y el proceso de toma de decisiones, ideas que, a pesar de estar basadas en descubrimientos psicológicos recientes, tienen raíces mucho más profundas. Sin embargo, el punto de partida fundamental de estos conceptos se remonta al 1969, cuando el autor presentó a Tversky, un emergente brillante en el estudio del proceso de toma de decisiones, un programa de investigación en la Universidad de Michigan. El objetivo era determinar si los seres humanos son buenos o malos intuitivos estadísticos.\n\nTal y como menciona el autor, los seres humanos son excelentes gramáticos intuitivos: a los cuatro años, un niño se conforma fácilmente, en el habla, a las reglas de gramática, aunque ignorante de su existencia. Por tanto, uno podría argumentar que es probable que estemos también dotados de una forma intuitiva de tomar decisiones, un mecanismo que guíe gran parte de nuestro pensamiento silencioso en el cerebro.\n0\n\nAdemás, el autor reconoce que gran parte de las reflexiones contenidas en el libro tratan sobre los sesgos de la intuición, pero también subraya la importancia de diferenciar entre identificar errores y negar la inteligencia humana. A menudo nos sentimos seguros incluso cuando estamos equivocados, y un observador objetivo es más probable que nos detecte nuestros errores teóricos.\n\nAdemás, se presenta como el autor contribuirá a las conversaciones que tienen lugar en la sala de distribución de café con la finalidad de mejorar la capacidad de identificar y comprender los errores de juicio y de elección de los otros y, en definitiva, también de nosotros mismos. Al menos en algunos casos, una diagnosis precisa permite de limitar los daños que los errores de juicio y elección a menudo provocan.\n\nLos orígenes del libro se remontan a cuando el autor propuso el seminario a Tversky, quien era entonces un investigador prometedor en el campo del proceso de toma de decisiones. Era una época en la que la inteligencia artificial estaba en auge y se preguntaba si los humanos eran buenos o malos para tomar decisiones. Conocía al autor como un brillante joven de treinta y dos años, y aunque el autor tenía treinta y cinco años, se sabe que ambos compartían una inteligencia y un humor único que nunca se cansaban en sus intercambios.\n\nAmos contó sobre un programa de investigación en la Universidad de Michigan que pretendía establecer si los humanos son buenos o malos intuitivos estadísticos. Este debate estaba en su apogeo y el autor ya estaba interesado en estudiar cómo los humanos interactúan con el riesgo. El seminario, al menos a partir de la conversación con el autor, parecía ser un gran éxito, ya que el público estaba aturdido por las ideas y dispuesto a participar en las discusiones. El autor no se ha convertido en una figura prominente en el campo de la psicología del proceso de toma de decisiones y, de hecho, era una figura prominente en todo campo que conociera.\n\nPara el autor, este seminario fue el punto de inicio para su investigación en el campo y la publicación de su trabajo. Mientras que Tversky ya había trabajado en este tema, el seminario propició que el autor comenzara a desarrollar sus propias ideas y teorías, que luego se convirtieron en las que expondría en este libro. Estas ideas reflejarían no solo los hallazgos recientes en psicología, sino también ideas que habían estado en desarrollo durante años.\n\nEl libro discutiría cómo los sesgos cognitivos pueden afectar la toma de decisiones y cómo esos sesgos pueden ser identificados y comprendidos, tanto para los demás como para uno mismo. El autor argumentaría que una evaluación precisa puede ayudar a limitar los daños que los errores de juicio y elección a menudo provocan.\n\nPara el autor, este seminario fue el punto de inicio para su investigación en el campo y la publicación de su trabajo. Mientras que Tversky ya había trabajado en este tema, el seminario propició que el autor comenzara a desarrollar sus propias ideas y teorías, que luego se convirtieron en las que expondría en este libro. Estas ideas reflejarían no solo los hallazgos recientes en psicología, sino también ideas que habían estado en desarrollo durante años.\n\nEl seminario, que ya se había convertido en un evento anual, continuaría ofreciendo un foro para discutir estas preguntas clave en el proceso de toma de decisiones, y el autor continuaría participando y contribuyendo a esas discusiones. La idea de que nuestras decisiones y juicios están influenciados por sesgos cognitivos es algo que el autor cree que necesita ser comprendido y abordado de manera consciente y reflexiva.\n\nPor lo tanto, este segmento 3 no solo refleja la historia y el desarrollo de las ideas del autor, sino también el contexto más amplio en el que se desarrollaron esas ideas y cómo han influenciado y serán influenciadas en el futuro por el campo de la psicología del proceso de toma de decisiones.\n</segmento_destinatario>\n\n<segmento_destinazione>\nNaturalmente, intuir los principios fundamentales de la estadística intuitivamente es difícil. La respuesta de Amos fue más bien cautelosa, \"sí, pero con reserva.\" Durante el seminario hubo un diálogo animado, y finalmente llegamos a un acuerdo: una respuesta más segura es \"no con reserva.\" Dado que nos gustaba mucho discutir, terminamos diciendo que la estadística intuitiva era un tema interesante y divertido de analizar juntos.\n\nUn venerdì tenemosnos en el Café Rimon, el lugar preferido de bohemianos y profesores en Jerusalén, y planificamos investigar las intuiciones estadísticas de un muestre de sofisticados investigadores. En el seminario, hemos concluido que nuestras intuiciones personalmente eran deficientes. A pesar de años de enseñanza y uso de la estadística, no hemos madurado un sentido intuitivo de la fiabilidad de los resultados estadísticos observados en muestras pequeñas. Nuestros juicios son subjetivos y están influenciados por sesgos: en nuestras propias investigaciones, eramos demasiado dispuestos a creer en resultados de investigaciones basadas en evidencia insuficiente y demasiado inclinados a satisfacernos con observaciones insuficientes.1 Nuestro objetivo era descubrir si otros investigadores tienen las mismas deficiencias.\n\nPreparamos una investigación que incluye escenarios del mundo real de algunos problemas estadísticos típicos del trabajo de investigación. En un congreso de la Sociedad de psicología matemática, Amos recogió las respuestas de un grupo de participantes expertos, entre los cuales están los autores de dos manuales de estadística. Como se esperaba, encontramos que, al igual que nosotros, otros investigadores sobreestiman demasiado la probabilidad de que los resultados originales de un experimento se repliquen con éxito con muestras pequeñas. También dan una orientación deficiente a una fija estudiante acerca del número de observaciones que debe recoger. Ni los estadísticos ni los estadísticos intuitivos son buenos estadísticos intuitivos.\n\nMientras escribimos el artículo que reporta estas descubrimientos, encontramos que nos gusta trabajar juntos. Amos era un hombre muy espíritu y en su compañía también se volvió yo, ¿oíste? Esto nos hacía siempre divertirnos y el placer de trabajar juntos nos hacía excepcionalmente pacientes; es más fácil aspirar a la perfección cuando no nos cansamos de la tensión. Una cosa especialmente importante que encontramos en nuestra colaboración es que controlábamos a nuestros propios arma crítica antes de entrar a la casa, aunque todos los dos somos críticos y polémicos, pero no rechazamos nada de lo que el otro dice. Una de las grandes alegrías que obteníamos al trabajar en equipo era que Amos a menudo entendía muy claramente las ideas confusas que aún me quedaban. Él era el pensador más lógico y orientado hacia la teoría y siempre era infalible en la dirección. Yo era más intuitivo, con estudios de psicología de la percepción, de los cuales tomamos muchas ideas. Y así nos encontramos con un punto de vista único, combinando nuestras fortalezas para enriquecer nuestra comprensión y aplicación de la estadística.\n</segmento_destinacion>\n\n<segmento_destinatario>\nPare que Steve pueda ser más probablemente un bibliotecario, dado que la descripción encaja mejor con el estereotipo de personalidad del bibliotecario que con el del agricultor. Este ejemplo ilustra cómo las somigliancias con los estereotipos culturales pueden influir en nuestras previsiones acerca de las profesiones de los niños, demostrando la importancia de considerar tanto la evidencia intuitiva como la estadística. En nuestros experimentos, descubrimos que la mayoría de personas tienden a priorizar las primeras respuestas que surgen en su mente sobre los datos estadísticos, a menudo sin darse cuenta de que esta tendencia puede conducir a conclusiones erróneas.\n</segmento_destinatario>",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1182,
+        "output": 952,
+        "reasoning": null,
+        "total": 2134
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1127,
+        "output": 1664,
+        "reasoning": null,
+        "total": 2791
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1114,
+        "output": 1349,
+        "reasoning": null,
+        "total": 2463
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1107,
+        "output": 865,
+        "reasoning": null,
+        "total": 1972
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1101,
+        "output": 199,
+        "reasoning": null,
+        "total": 1300
+      }
+    },
+    {
+      "system": "system2_local",
+      "stage": "assemblaggio_locale",
+      "status": "ok",
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "total": 0
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 5,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 661.023173,
+  "result_file": "05_sintesi_traduzione_phi3_mini.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 8
+  }
+}

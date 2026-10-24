@@ -1,0 +1,190 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-23T02:21:40.666508+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 14335,
+    "output": 6764,
+    "reasoning": null,
+    "total": 21099
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati estratti dal capitolo 2 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"sistema1\": [\n    {\n      \"nome\": \"Sistema 1 (veloce e intuitivo)\",\n      \"funzione\": \"elaborazione dell'informazione automatica e involontaria\",\n      \"esempio\": \"L'istinto di proteggere la propria famiglia\"\n    },\n    {\n      \"nome\": \"Sistema 2 (lento e logico)\",\n      \"funzione\": \"concentrazione, autocontrollo e esecuzione complesse\",\n      \"esempio\": \"Scegliere la strada per la vacanza\"\n    }\n  ],\n  \"sistema2\": [\n    {\n      \"nome\": \"Sistema 2 (lento e logico)\",\n      \"funzione\": \"concettazione e elaborazione complesse\",\n      \"esempio\": \"Scegliere la strada per la vacanza\"\n    },\n    {\n      \"nome\": \"Sistema 2 (lento e logico)\",\n      \"funzione\": \"concentrazione, autocontrollo e esecuzione complesse\",\n      \"esempio\": \"Scegliere la strada per la vacanza\"\n    }\n  ],\n  \"sistema1\": [\n    {\n      \"nome\": \"Sistema 1 (veloce e intuitivo)\",\n      \"funzione\": \"elaborazione dell'informazione automatica e involontaria\",\n      \"esempio\": \"L'istinto di proteggere la propria famiglia\"\n    },\n    {\n      \"nome\": \"Sistema 1 (veloce e intuitivo)\",\n      \"funzione\": \"elaborazione dell'informazione automatica e involontaria\",\n      \"esempio\": \"L'istinto di proteggere la propria famiglia\"\n    }\n  ]\n}\n```\n\nEcco i risultati estratti dal capitolo 3 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"capitolo\": \"La reazione al nostro articolo non fu unanimemente positiva\",\n  \"risultato\": [\n    {\n      \"oggetto\": \"critica al fatto di concentrarsi sui bias\",\n      \"motivo\": \"suggeriva una visione impropriamente negativa della mente\"\n    },\n    {\n      \"oggetto\": \"propone alternative plausibili\",\n      \"motivo\": \"suggeriva una visione negativa della mente\"\n    },\n    {\n      \"oggetto\": \"effetto della ricerca sul giudizio su altre scienze\",\n      \"motivo\": \"suggeriva che la nostra mente fosse soggetta a errori sistematici\"\n    }\n  ]\n}\n```\n\nEcco i risultati estratti dal capitolo 4 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"capitolo\": \"La natura umana e il comportamento\",\n  \"riassunto\": \"La struttura del meccanismo cognitivo è considerata una fonte di errori sistematici del pensiero della gente normale. Gli studi hanno mostrato che le emozioni influenzano la percezione del mondo e la scelta di problemi da affrontare.\",\n  \"fonte\": \"La cultura popolare e la società\"\n}\n```\n\nEcco i risultati estratti dal capitolo 5 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"capitolo\": \"Studi sulla diversità di giudizi in relazione ai bias di pensiero intuitivo\",\n  \"risultato\": [\n    {\n      \"oggetto\": \"critica al fatto di concentrarsi sui bias\",\n      \"motivo\": \"suggeriva una visione impropriamente negativa della mente\"\n    },\n    {\n      \"oggetto\": \"propone alternative plausibili\",\n      \"motivo\": \"suggeriva una visione negativa della mente\"\n    },\n    {\n      \"oggetto\": \"effetto della ricerca sul giudizio su altre scienze\",\n      \"motivo\": \"suggeriva che la nostra mente fosse soggetta a errori sistematici\"\n    }\n  ]\n}\n```\n\nEcco i risultati estratti dal capitolo 6 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"capitolo\": \"I media e la mente conscia\",\n  \"riassunto\": \"I media tendono a concentrarsi sugli argomenti più facili da ricordare e meno importanti, a causa della loro attenzione concentrata sui fatti drammatici. Ciò spesso porta a una mancanza di interesse per problemi meno importanti.\",\n  \"fonte\": \"La cultura popolare e la società\"\n}\n```\n\nEcco i risultati estratti dal capitolo 7 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"capitolo\": \"La reazione al nostro articolo non fu unanimemente positiva\",\n  \"risultato\": [\n    {\n      \"oggetto\": \"critica al fatto di concentrarsi sui bias\",\n      \"motivo\": \"suggeriva una visione impropriamente negativa della mente\"\n    },\n    {\n      \"oggetto\": \"propone alternative plausibili\",\n      \"motivo\": \"suggeriva una visione negativa della mente\"\n    },\n    {\n      \"oggetto\": \"effetto della ricerca sul giudizio su altre scienze\",\n      \"motivo\": \"suggeriva che la nostra mente fosse soggetta a errori sistematici\"\n    }\n  ]\n}\n```\n\nEcco i risultati estratti dal capitolo 8 del libro \"Pensieri lenti e veloci\" di Daniel Kahneman:\n\n```\n{\n  \"capitolo\": \"L'epicentro dell'incendio non era stato la cucina, bensì la cantina sopra la quale gli uomini si trovavano\",\n  \"riassunto\": \"La situazione di emergenza aveva un indizio che non era stato rilevato dai vigili del fuoco, ma che aveva indotto l'intuizione esperta del comandante a considerare un 'sesto senso del pericolo'. Il comandante non sapeva esattamente cosa aveva sentito, ma si rese conto che l'incendio era parso silenzioso e che le orecchie gli erano state calde come il fuoco.\",\n  \"analisi\": \"La situazione di emergenza era stata un esempio di 'sesto senso del pericolo', un'incapacità di riconoscere il pericolo in quanto esso non era chiaro o rilevante al momento. L'intuizione esperta non si basava sulla conoscenza di una situazione nuova, ma sull'esperienza e il riconoscimento di elementi familiari.\",\n  \"rilevanza\": \"La capacità di intuizione esperta è stata dimostrata da vari studi, come quelli di Herbert Simon sulla capacità di campioni di scacchi. Tuttavia, come notato, la magia della capacità di intuizione esperta non è solo in relazione con la mera conoscenza di una situazione nuova, ma anche costruttiva e concreta.\",\n  \"natura\": \"La mente umana è una rete di connessioni e schemi che si modellano in base ai nostri esperienze e percorsi.\",\n  \"funzione\": \"La mente umana è una rete di connessioni e schemi che si modellano in base ai nostri esperienze e percorsi.\",\n  \"esempio\": \"La reazione al nostro articolo non fu unanimemente positiva\",\n  \"risultato\": [\n    {\n      \"oggetto\": \"critica al fatto di concentrarsi sui bias\",\n      \"motivo\": \"suggeriva una visione impropriamente negativa della mente\"\n    },\n    {\n      \"oggetto\": \"propone alternative plausibili\",\n      \"motivo\": \"suggeriva una visione negativa della mente\"\n    },\n    {\n      \"oggetto\": \"effetto della ricerca sul giudizio su altre scienze\",\n      \"motivo\": \"suggeriva che la nostra mente fosse soggetta a errori sistematici\"\n    }\n  ]\n}\n```",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 471,
+        "reasoning": null,
+        "total": 1537
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 680,
+        "reasoning": null,
+        "total": 1756
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 574,
+        "reasoning": null,
+        "total": 1627
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 660,
+        "reasoning": null,
+        "total": 1729
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 303,
+        "reasoning": null,
+        "total": 1350
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 541,
+        "reasoning": null,
+        "total": 1600
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 338,
+        "reasoning": null,
+        "total": 1405
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 226,
+        "reasoning": null,
+        "total": 1270
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 476,
+        "reasoning": null,
+        "total": 1507
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 612,
+        "reasoning": null,
+        "total": 1694
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3741,
+        "output": 1883,
+        "reasoning": null,
+        "total": 5624
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 368.420246,
+  "result_file": "01_estrazione_json_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9685,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.7051,
+    "execution_confidence": 0.0425,
+    "confidence": 0.0425,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 2884,
+    "complexity": "high",
+    "source": "docs/Pensieri_lenti_e_veloci.epub",
+    "output_format": "json"
+  }
+}

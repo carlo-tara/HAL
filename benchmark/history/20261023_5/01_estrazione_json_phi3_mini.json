@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-23T00:05:44.982717+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 8748,
+    "output": 781,
+    "reasoning": null,
+    "total": 9529
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "\n[\n  {\n    \"title\": \"Cover\",\n    \"content\": \"The book introduces the concept of two distinct thinking systems: System 1, which is fast, automatic, and emotional; and System 2, which is slower, more deliberative, and more logical.\"\n  },\n  {\n    \"title\": \"L'autore\",\n    \"content\": \"Daniel Kahneman, the Nobel laureate, explores the human mind and decision-making process, revealing the illusions of rationality and the biases that affect our choices.\"\n  },\n  {\n    \"title\": \"Frontispiece\",\n    \"content\": \"Daniel Kahneman, with a dedication to Amos Tversky.\"\n  },\n  {\n    \"title\": \"Introduction\",\n    \"content\": \"The author introduces the book, hoping to provide insights into human judgment and decision-making processes.\"\n  },\n  {\n    \"title\": \"Origins\",\n    \"content\": \"The book recounts the author's collaboration with Amos Tversky, his exploration of intuitive thinking biases, and their impact on decision-making.\"\n  },\n  {\n    \"title\": \"The Human Mind\",\n    \"content\": \"Human minds consist of two systems: System 1, fast and automatic, and System 2, slower and more deliberate. System 1 often relies on heuristics, which can lead to biases, while System 2 can correct these biases through effortful thinking.\"\n  },\n  {\n    \"title\": \"Early Research\",\n    \"content\": \"The author and Amos Tversky's early research on intuitive thinking revealed biases in decision-making, with studies showing that people often overestimate the replicability of small-sample experiments and make assumptions based on ease of recall rather than evidence.\"\n  },\n  {\n    \"title\": \"Contributions and Recognition\",\n    \"content\": \"Their work has had a significant impact across various disciplines, leading to Kahneman receiving the Nobel Prize in Economics, and has influenced fields like medicine, law, finance, and military strategy.\"\n  },\n  {\n    \"title\": \"The Present Day\",\n    \"content\": \"Kahneman's work has evolved to a more nuanced understanding of human intuition, acknowledging that expert intuition is based on experience rather than infallible insight. He highlights the importance of the gut feelings we all have in everyday decisions.\"\n  },\n  {\n    \"title\": \"The Human Mind\",\n    \"content\": \"Human minds are capable of both accurate and flawed intuitive thinking, with expert intuition relying on experience rather than infallible insight.\"\n  },\n  {\n    \"title\": \"Gut Feelings\",\n    \"content\": \"We all have gut feelings that help us navigate our everyday lives, but they are not infallible and are based on experience.\"\n  },\n  {\n    \"title\": \"Conclusion\",\n    \"content\": \"Kahneman's work continues to provide valuable insights into human intuition and decision-making, helping us to understand and improve our own thought processes.\"\n  }\n]\n\nPlease note that the JSON format was used here for simplicity, and it can be enhanced with additional fields like `imageURL`, `authorBio`, `keywords`, etc., as needed for a complete and professional eBook metadata.",
+  "seconds": 359.868397,
+  "result_file": "01_estrazione_json_phi3_mini.json"
+}

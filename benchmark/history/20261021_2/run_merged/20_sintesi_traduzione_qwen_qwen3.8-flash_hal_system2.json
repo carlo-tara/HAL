@@ -1,0 +1,16 @@
+{
+  "model_requested": "qwen/qwen3.8-flash",
+  "model_served": null,
+  "path": "hal_system2",
+  "prompt_id": "sintesi_traduzione",
+  "status": "error",
+  "http_status": 504,
+  "seconds": 60.215,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"detail\":\"Upstream provider timed out\"}",
+  "finished_at": "2026-10-22T23:13:45.423765+00:00"
+}

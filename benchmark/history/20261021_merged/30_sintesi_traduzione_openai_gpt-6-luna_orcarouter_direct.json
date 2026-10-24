@@ -1,0 +1,16 @@
+{
+  "model_requested": "openai/gpt-6-luna",
+  "model_served": null,
+  "path": "orcarouter_direct",
+  "prompt_id": "sintesi_traduzione",
+  "status": "not_executed_spend_limit",
+  "http_status": 403,
+  "seconds": 0.286,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"error\":{\"code\":\"access_denied\",\"message\":\"token cycle spend limit reached, resets at 2026-10-26T00:00:00Z (request id: 202610210929318259559438268d9d60mZ8pS9Q)\",\"type\":\"orcarouter_api_error\"}}",
+  "finished_at": "2026-10-21T09:29:31.454713+00:00"
+}

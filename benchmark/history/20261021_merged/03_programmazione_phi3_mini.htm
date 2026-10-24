@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku Game</title>
+    <style>
+        body { text-align: center; }
+        table { border-collapse: collapse; width: 450px; margin: 20px auto; }
+        td { width: 60px; height: 60px; font-size: 40px; text-align: center; vertical-align: middle; border: 1px solid black; }
+        table.sudoku { display: inline-block; }
+        .error { background-color: #ffcccc; color: #ff0000; text-align: center; font-size: 16px; }
+        button:disabled { opacity: 0.5; background-color: #cccccc; cursor: not-allowed; }
+    end style>
+    <script>
+        const DIGITS = '123456789';
+        const GRID_SIZE = 9;
+        const EMPTY_CELL = ' ';
+        let sudokuBoard = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 2, 0, 0],
+            [4, 0, 0, 8, 0, 3, 0, 0, 7],
+            [0, 0, 0, 0, 0, 0, 0, 2, 8],
+            [0, 0, 0, 0, 0, 0, 0, 7, 9],
+            [0, 0, 0, 0, 0, 0, 8, 0, 2]
+        ];
+        let emptyCells = { '3,5': true };
+        let currentCell = { row: 2, col: 2 };
+        let selectedCell = { row: 0, col: 0 };
+        let gameOver = false;
+
+        function resetGame() {
+            sudokuBoard = [
+                [5, 3, 4, 6, 7, 8, 9, 1, 2],
+                [6, 7, 2, 1, 9, 5, 3, 4, 8],
+                [1, 9, 8, 3, 4, 2, 5, 6, 7],
+                [8, 1, 2, 5, 6, 9, 7, 3, 4],
+                [4, 9, 5, 8, 2, 3, 1, 5, 6],
+                [2, 5, 3, 9, 6, 1, 8, 4, 7],
+                [7, 6, 1, 2, 8, 4, 9, 5, 3],
+                [9, 2, 4, 7, 3, 5, 6, 8, 1]
+            ];
+            emptyCells = {};
+            currentCell = { row: 0, col: 0 };
+            selectedCell = { row: 0, col: 0 };
+            gameOver = false;
+            document.querySelector('#cell-3-5').classList.remove('error');
+            disableButton();
+        }
+
+        function updateBoard() {
+            let cellValue = document.querySelector('#cell-' + currentCell.row + '-' + currentCell.col).textContent;
+            let valueDigit = cellValue ? parseInt(cellValue) : 0;
+            let cellId = 'cell-' + currentCell.row + '-' + currentCell.col;
+            if (valueDigit > 0 && findInRow(currentCell.row, valueDigit) ||
+                valueDigit > 0 && findInCol(currentCell.col, valueDigit) ||
+                valueDigit > 0 && findInBox(3 * Math.floor(currentCell.row / 3) + Math.floor(currentCell.col / 3), valueDigit)) {
+                showError();
+            } else {
+                sudokuBoard[currentCell.row][currentCell.col] = valueDigit;
+                if (valueDigit === 0) {
+                    emptyCells[currentCell.row + ',' + currentCell.col] = true;
+                } else {
+                    emptyCells[currentCell.row + ',' + currentCell.col] = false;
+                }
+                updateCells();
+            }
+        }
+
+        function findInRow(row, digit) {
+            for (let i = 0; i < GRID_SIZE; i++) {
+                if (sudokuBoard[row][i] === digit) return true;
+            }
+            return false;
+        }
+
+        function findInCol(col, digit) {
+            for (let i = 0; i < GRID_SIZE; i++) {
+                if (sudokuBoard[i][col] === digit) return true;
+            }
+            return false;
+        }
+
+        function findInBox(boxTopLeftRow, boxTopLeftCol, digit) {
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (sudokuBoard[3 * Math.floor(boxTopLeftRow / 3) + i][3 * Math.floor(boxTopLeftCol / 3) + j] === digit) return true;
+                }
+            }
+            return false;
+        }
+
+        function updateCells() {
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    document.querySelector('#cell-' + i + '-' + j).textContent = sudokuBoard[i][j] || EMPTY_CELL;
+                    if (sudokuBoard[i][j] !== 0) {
+                        document.querySelector('#cell-' + i + '-' + j).classList.remove('error');
+                    }
+                }
+            }
+            document.querySelectorAll('.cell').forEach(cell => {
+                if (cell.classList.contains('error')) cell.classList.add('error');
+            });
+        }
+
+        function showError() {
+            document.querySelector('#cell-' + currentCell.row + '-' + currentCell.col).classList.add('error');
+        }
+
+        function checkSolution() {
+            for (let i = 0; i < GRID_SIZE; i++) {
+                for (let j = 0; j < GRID_SIZE; j++) {
+                    if (sudokuBoard[i][j] !== DIGITS.includes(sudokuBoard[i][j]) && sudokuBoard[i][j] !== EMPTY_CELL) {
+                        return false;
+                   0;
+                }
+            }
+            return true;
+        }
+
+        function handleDigitChange() {
+            if (this.classList.contains('error')) {
+                this.textContent = EMPTY_CELL;
+                this.classList.remove('error');
+            } else {
+                let digit = this.value;
+                updateBoard();
+            }
+        }
+
+        function selectCell() {
+            let cell = document.querySelector(`#cell-${selectedCell.row}-${selectedCell.col}`);
+            cell.classList.remove('selected');
+            if (document.querySelector('.selected')) {
+                document.querySelector('.selected').classList.remove('selected');
+            }
+            cell.classList.add('selected');
+            selectedCell = { row: parseInt(cell.getAttribute('data-row')), col: parseInt(cell.getAttribute('data-col')) };
+        }
+
+        function handleCellClick() {
+            let cell = document.querySelector(`#cell-${currentCell.row}-${currentCell.col}`);
+            if (cell.classList.contains('error')) {
+                cell.classList.remove('error');
+                document.querySelectorAll('.cell').forEach(cell => {
+                    if (cell.classList.contains('error')) cell.classList.remove('error');
+                });
+                gameOver = checkSolution();
+                if (gameOver) {
+                    alert('Congratulations! Puzzle Solved.');
+                    disableButton();
+                } else if (!currentCell.col) {
+                    cell.classList.remove('selected');
+                    currentCell = { row: (currentCell.row + 1) % GRID_SIZE, col: currentCell.col };
+                } else if (!currentCell.row) {
+                    cell.classList.remove('selected');
+                    currentCell = { row: currentCell.row, col: (currentCell.col + 1) % GRID_SIZE };
+                } else if (findInRow(currentCell.row, sudokuBoard[currentCell.row][currentCell.col - 1])) {
+                    currentCell.col--;
+                } else if (findInCol(currentCell.col, sudokuBoard[currentCell.row - 1][currentCell.col])) {
+                    currentCell.row--;
+                } else if (findInBox(3 * Math.floor(currentCell.row / 3), 3 * Math.floor(currentCell.col / 3), sudokuBoard[Math.floor(currentCell.row / 3) + Math.floor(currentCell.col / 3) / 3][(currentCell.row - 3 * Math.floor(currentCell.row / 3)) + Math.floor(currentCell.col / 3)])) {
+                    currentCell.row -= 3 * Math.floor(currentCell.row / 3);
+                    currentCell.col -= 3 * Math.floor(currentCell.col / 3);
+                } else {
+                    gameOver = true;
+                }
+                if (gameOver) {
+                    alert('Game Over');
+                    disableButton();
+                }
+                updateBoard();
+            } else {
+                cell.classList.remove('selected');
+            }
+        }
+
+        function disableButton() {
+            document.querySelector('#new-game').disabled = true;
+        }
+
+        function enableButton() {
+            document.querySelector('#new-game').disabled = false;
+        }
+
+        function handleDigitInput() {
+            let cell = document.querySelector(`#cell-${currentCell.row}-${currentCell.col}`);
+            if (cell.classList.contains('selected')) {
+                let digit = this.value;
+                updateBoard();
+                handleDigitChange.call(cell, digit);
+            }
+        }
+
+        document.querySelector('#new-game').addEventListener('click', resetGame);
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.addEventListener('click', handleCellClick);
+            cell.addEventListener('mouseover', handleDigitChange);
+            cell.addEventListener('mouseout', handleDigitChange);
+            cell.addEventListener('mousedown', selectCell);
+            cell.addEventListener('click', handleDigitInput);
+        });
+
+        document.querySelector('#new-game').disabled = false;
+    </script>
+</head>0;
+<body>
+    <table class="sudoku">
+        <tbody>
+            <tr>
+                <td class="cell" data-row="0" data-col="0"></td>
+                <td class="cell" data-row="0" data-col="1"></td>
+                <td class="cell" data-row="0" data-col="2"></td>
+                <!-- ... remaining cells ... -->
+            </tr>
+            <!-- ... remaining rows ... -->
+        </tbody>
+    </table>
+    <button id="new-game" disabled>New Game</button>
+</body>
+</html>

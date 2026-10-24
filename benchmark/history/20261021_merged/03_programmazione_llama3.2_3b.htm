@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Stile della griglia */
+    table {
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .cella {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .errore {
+      background-color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+  <table id="grid">
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false">5</td>
+      <td class="cella" contenteditable="false">3</td>
+      <td class="cella" contenteditable="false">0</td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false">0</td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false">0</td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+    <tr>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+      <td class="cella" contenteditable="false"></td>
+    </tr>
+  </table>
+  <script>
+    // Funzione per generare una soluzione valid
+    function generazioneSoluzione() {
+      let soluzione = Array(81).fill(null);
+      for (let i = 0; i < 81; i++) {
+        if (soluzione[i] === null) {
+          let row = Math.floor(i / 9);
+          let col = i % 9;
+          if (soluzione[i] === null) {
+            let num = Math.floor(Math.random() * 9) + 1;
+            if (controllaSoluzione(soluzione, num, row, col)) {
+              soluzione[i] = num;
+            }
+          }
+        }
+      }
+      return soluzione;
+    }
+
+    // Funzione per controllare se una cella può contenere un numero
+    function controllaSoluzione(soluzione, num, row, col) {
+      // Controlla la riga
+      for (let i = col; i < col + 9; i++) {
+        if (soluzione[i] === num) {
+          return false;
+        }
+      }
+
+      // Controlla la colonna
+      for (let i = row; i < row + 9; i++) {
+        if (soluzione[i * 9 + col] === num) {
+          return false;
+        }
+      }
+
+      // Controlla la quadrato
+      let quadratoRow = Math.floor(row / 3) * 3;
+      let quadratoCol = Math.floor(col / 3) * 3;
+      for (let i = quadratoRow; i < quadratoRow + 3; i++) {
+        for (let j = quadratoCol; j < quadratoCol + 3; j++) {
+          if (soluzione[i * 9 + j] === num) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    // Funzione per selezionare una cella e inserire un numero
+    function selezionaCella(num) {
+      let cella = document.querySelector(`td.cella[value="${num}"]`);
+      if (cella) {
+        cella.contentEditable = "true";
+        document.querySelector(`td.cella[value="${num}"]`).focus();
+      }
+    }
+
+    // Funzione per cancellare il valore di una cella
+    function cancellaValore() {
+      let cella = document.querySelector(`td.cella[value=""]`);
+      if (cella) {
+        cella.contentEditable = "false";
+      }
+    }
+
+    // Funzione per verificare se la soluzione è completa
+    function verificaSoluzione(soluzione) {
+      for (let i = 0; i < 81; i++) {
+        if (soluzione[i] === null) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Funzione per controllare se la cella è valida
+    function controllaValidita(cella) {
+      let num = cella.value;
+      if (isNaN(num) || num < 1 || num > 9) {
+        return false;
+      }
+      let row = Math.floor(cella.parentNode.rowIndex / 9);
+      let col = Math.floor(cella.parentNode.cellIndex / 9);
+      for (let i = 0; i < 81; i++) {
+        if (soluzione[i] === null) {
+          let otherRow = Math.floor(i / 9);
+          let otherCol = i % 9;
+          if (otherRow === row && otherCol === col) {
+            continue;
+          }
+          if (otherRow === row || otherCol === col) {
+            if (soluzione[otherRow * 9 + otherCol] === num) {
+              return false;
+            }
+          }
+          if (
+            Math.floor(otherRow / 3) === Math.floor(row / 3) &&
+            Math.floor(otherCol / 3) === Math.floor(col / 3)
+          ) {
+            let quadratoRow = Math.floor(otherRow / 3) * 3;
+            let quadratoCol = Math.floor(otherCol / 3) * 3;
+            if (
+              otherRow >= row &&
+              otherRow < row + 3 &&
+              otherCol >= col &&
+              otherCol < col + 3
+            ) {
+              continue;
+            }
+            if (
+              otherRow === row &&
+              otherCol === col &&
+              cella.value !== ""
+            ) {
+              continue;
+            }
+            if (
+              otherRow === row ||
+              otherCol === col ||
+              (quadratoRow === row &&
+                quadratoCol === col) &&
+              cella.value !== ""
+            ) {
+              continue;
+            }
+          }
+        }
+      }
+      return true;
+    }
+
+    // Evento per selezionare una cella
+    document.querySelector("table").addEventListener("click", function (e) {
+      let cella = e.target;
+      if (cella.classList.contains("cella")) {
+        if (cella.contentEditable === "true") {
+          selezionaCella(cella.value);
+        } else {
+          cancellaValore();
+        }
+      }
+    });
+
+    // Evento per inserire un numero
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Backspace") {
+        cancellaValore();
+      } else if (e.key >= "1" && e.key <= "9") {
+        selezionaCella(e.key);
+      }
+    });
+
+    // Evento per confermare la soluzione
+    document.querySelector("table").addEventListener("change", function (e) {
+      if (e.target.tagName === "TD") {
+        if (e.target.contentEditable === "true") {
+          e.target.value = "";
+          let cella = document.querySelector(`td.cella[value="${e.target.value}"]`);
+          if (cella) {
+            cancellaValore();
+          }
+        }
+      }
+    });
+
+    // Evento per completare la soluzione
+    document.querySelector("table").addEventListener("click", function (e) {
+      if (e.target.classList.contains("cella")) {
+        let soluzione = generazioneSoluzione();
+        let cella = document.querySelector(`td.cella[value="${soluzione[81 - e.target.parentNode.rowIndex * 9 + e.target.cellIndex]}"]`);
+        if (cella) {
+          cella.contentEditable = "false";
+        }
+        if (verificaSoluzione(soluzione)) {
+          alert("Soluzione completa!");
+        }
+      }
+    });
+
+    // Evento per iniziare una nuova partita
+    document.querySelector("table").addEventListener("click", function (e) {
+      if (e.target.classList.contains("cella")) {
+        document.querySelector("table").contentEditable = "true";
+        let soluzione = generazioneSoluzione();
+        for (let i = 0; i < 81; i++) {
+          let cella = document.querySelector(`td.cella[value="${soluzione[i]}"]`);
+          if (cella) {
+            cella.contentEditable = "false";
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

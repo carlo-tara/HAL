@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-21T00:04:00.828092+00:00",
+  "quality": {
+    "passed": 0,
+    "total": 2,
+    "score": 0.0,
+    "checks": [
+      {
+        "label": "presenza di lessico spagnolo",
+        "passed": false
+      },
+      {
+        "label": "lunghezza minima della traduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 5321,
+    "output": 1164,
+    "reasoning": null,
+    "total": 6485
+  },
+  "status": "ok",
+  "finish_reason": "local_assembly",
+  "response": "Elaboro il segmento 1/5 del testo:\n\nIl libro, scritto da Daniel Kahneman, affronta il tema della classificazione della mente umana e dell'effetto dei bias cognitivi. Il titolo \"Pensieri lenti e veloci\" riferito a Kahneman suggerisce la contrapposizione tra questi due processi di pensiero. Il libro si concentra in particolare su come la mente umana si organizza e funzioni, e come queste organizzazioni possano essere influenzate dalle condizioni sociali e dalle idee che siamo abituati a pensare.\n\nEcco il segmento 2/5 della traduzione del passaggio in spagnolo che ha menzionato l'importanza dell'etichetta diagnostica per identificare gli errori:\n\n\"Per arrivare a una comprensione più profonda dei giudizi e delle scelte, occorre un vocabolario più ricco di quello che ci è messo a disposizione dal linguaggio quotidiano. In sostanza, ci aspettiamo di riconoscere in un pettegolezzo informato schemi caratteristici degli errori che la gente compie. Gli errori sistematici sono definiti «bias», preconcetti che ricorrono in maniera prevedibile in particolari circostanze. Quando per esempio sale sul palco un oratore di bell’aspetto e dai modi disinvolti, il pubblico tenderà a giudicare le sue osservazioni più favorevolemente di quanto egli non meriti. La disponibilità di una specifica etichetta diagnostica per questo bias, chiamato «effetto alone», rende più facile prevederlo, riconoscerlo e capirlo. Inoltre, gli errori sono tipicamente causati da influenze ambientali e sociali, e la nostra esperienza è influenzata dalle diverse culture e dalle diverse forme di comunicazione, quindi gli errori possono essere diversi in diverse culture. Pertanto, è importante considerare che i nostri errori possono essere influenzati da fattori esterni e sociali, e che la nostra comprensione di questi errori richiede un'etichetta più precisa e specifica.\"\n\nEcco il segmento 3/5 della traduzione in spagnolo delle prime 5 pagine del libro:\n\nElaboro la classificazione Laya incerta secondo il contratto locale, estraii i requisiti dal prompt e rispettai rigorosamente la fonte e il formato.\n\nNon ho più informazioni disponibili per continuare con l'altra metà del testo.\n\nLe prime cinque pagine del testo sono:\n\n\"Elabora soltanto il segmento 4/5. Non completare il lavoro sugli altri segmenti e non dichiarare che questa è la risposta complessiva. Mantieni informazioni utili all'assemblaggio finale.\n\n1. La discussione sul contratto locale e sulle requisiti del prompt è stata aperta, ma il testo specifica che il rapporto deve seguire la struttura della classificazione Laya incerta, che prevede la classificazione della lingua di destinazione come spagnolo.\n2. Il testo descrive l'elaborazione del testo in spagnolo, mantenendo fedeltà al testo originale e la struttura dei paragrafi.\n3. Il testo presenta alcune informazioni utili, come l'eventuale consultazione con un gruppo di esperti e la scoperta di carenze nella statistica intuitiva.\n4. Il testo esplora la relazione tra l'intuizione statistica e la teoria, con l'illustrazione del contributo di Amos al lavoro di squadra e la differenza tra i due approcci logico e intuitivo.\"\n\nElaborazione del segmento 5/5:\n\nUna volta scoprimmo con grande gioia che avevamo le stesse sciocche idee riguardo alle future professioni di vari bambini di nostra conoscenza. Erano previsioni assurde, ma trovavamo le cose affascinanti. Era chiaro che le nostre intuizioni si basavano sulla somiglianza di ciascun bambino con lo stereotipo culturale di una professione.\n\nRicordiamo che la nostra teoria sulla somiglianza delle previsioni era ancora in nuce, ma questo esempio ci aiutò a elaborarla e a verificarla con decine di esperimenti. Procedemmo a analizzare le nostre scoperte e a confrontarle con dati statistici per verificare la sua validità. In questo modo, riuscimmo a comprendere meglio come le nostre intuizioni si basavano e a ridurre la probabilità di previsioni errate.\n\nLa nostra ricerca continuò per molti anni, e una volta stabiliti i requisiti per la professione dell'avvocato, il professore universitario, lo psicoterapeuta empatico e il leggermente invadente, nonché il futuro polemico, lo specializzammo nel campo del diritto, all'Università di Milano.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1068,
+        "output": 139,
+        "reasoning": null,
+        "total": 1207
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1078,
+        "output": 369,
+        "reasoning": null,
+        "total": 1447
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1055,
+        "output": 86,
+        "reasoning": null,
+        "total": 1141
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1071,
+        "output": 266,
+        "reasoning": null,
+        "total": 1337
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1049,
+        "output": 304,
+        "reasoning": null,
+        "total": 1353
+      }
+    },
+    {
+      "system": "system2_local",
+      "stage": "assemblaggio_locale",
+      "status": "ok",
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "total": 0
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 5,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 59.778731,
+  "result_file": "05_sintesi_traduzione_llama3.2_1b.json",
+  "system1": {
+    "task_family": "translation",
+    "execution_mode": "source_chunks",
+    "source_chars": 15000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "translation",
+      "required_strategy": "faithful_translate",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": false
+    },
+    "family_confidence": 0.9696,
+    "strategy": "faithful_translate",
+    "strategy_confidence": 0.9829,
+    "execution_confidence": 0.0329,
+    "confidence": 0.0329,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "translation",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "plan_then_solve",
+    "preflight_latency_ms": 8
+  }
+}

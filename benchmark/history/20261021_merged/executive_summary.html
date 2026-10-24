@@ -1,0 +1,177 @@
+<section>
+    <h2>Executive summary</h2>
+    <p class="lead">
+        Run <b>20261021_2</b>: prova mirata su <code>qwen2.5:1.5b</code> /
+        <code>sintesi_traduzione</code> con <code>--timeout 1200</code> (il
+        timeout della run precedente era 600 s). Esito: <b>1/1 ok</b> in
+        <b>211,8 s</b>, 8.919 token, qualità 1/2. Il test non è andato in
+        timeout. Un solo tentativo non basta a dire che il problema sia risolto:
+        vedi decisione 2. Confronto con le sei run complete:
+        <b>20261017_all</b> (baseline senza middleware),
+        <b>20261017_2</b> (middleware vecchio), <b>20261019_3</b> (Laya su CPU),
+        <b>20261020_1</b> (Laya su GPU, pausa 300 s),
+        <b>20261020_2</b> (ripetizione parziale di phi3:mini e llama3.2:3b) e
+        <b>20261021_1</b>
+        (Laya su GPU, pausa 180 s, 4 modelli × 5 test). La run
+        <b>20261019_1</b> è esclusa perché incompleta (8/20).
+    </p>
+
+    <h3>Confronto qualità per modello (checks superati / disponibili)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Modello</th>
+                <th>20261017_all<br />baseline</th>
+                <th>20261017_2<br />middleware vecchio</th>
+                <th>20261019_3<br />Laya CPU</th>
+                <th>20261020_1<br />Laya GPU</th>
+                <th>20261020_2<br />Laya GPU (parziale)</th>
+                <th>20261021_1<br />Laya GPU</th>
+                <th>20261021_2<br />prova mirata</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>phi3:mini</code></td>
+                <td>15/17</td>
+                <td>10/17</td>
+                <td>13/17</td>
+                <td>9/17</td>
+                <td>10/15</td>
+                <td>13/17</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><code>llama3.2:3b</code></td>
+                <td>10/17 (4 ok)</td>
+                <td>10/17</td>
+                <td>12/17</td>
+                <td>12/17</td>
+                <td>10/17</td>
+                <td>14/17</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><code>qwen2.5:1.5b</code></td>
+                <td>11/17 (3 ok)</td>
+                <td>11/17</td>
+                <td>9/13 (3 ok)</td>
+                <td>10/15 (4 ok)</td>
+                <td>—</td>
+                <td>11/15 (4 ok)</td>
+                <td>sintesi 1/2 (1 ok)</td>
+            </tr>
+            <tr>
+                <td><code>llama3.2:1b</code></td>
+                <td>11/17</td>
+                <td>3/17</td>
+                <td>8/17</td>
+                <td>7/17</td>
+                <td>—</td>
+                <td>5/17</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><code>qwen2.5:7b</code></td>
+                <td>13/17</td>
+                <td>10/17</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><code>llama3.1:8b</code></td>
+                <td>12/17</td>
+                <td>12/17</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><code>mistral:7b</code></td>
+                <td>11/17</td>
+                <td>10/17</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Decisioni proposte</h3>
+    <ol>
+        <li>
+            <b>Il calo di phi3:mini in 20261020_1 non si ripete.</b> Con la
+            stessa configurazione (Laya GPU) phi3:mini passa da 9/17 a 13/17. Su
+            un solo test per modello, uno scarto di ±4 check è rumore di
+            campionamento. <i>Decisione:</i> chiudere il dubbio; trattare come
+            significative solo differenze ≥ 5 check o ripetute su più run.
+        </li>
+        <li>
+            <b
+                >Il timeout di <code>qwen2.5:1.5b</code> su
+                <code>sintesi_traduzione</code> non è confermato come
+                sistematico.</b
+            >
+            Le run 20261019_3, 20261020_1 e 20261021_1 hanno registrato un
+            errore su questo test (durate di run 735 s, 695 s, 600 s, con il
+            limite di 600 s per chiamata HTTP). La prova mirata 20261021_2 con
+            timeout 1200 s ha completato in 211,8 s. Il dato indica che la
+            latenza è variabile, ma una sola replica non permette di stimare il
+            tasso di errore. <i>Decisione:</i> ripetere la chiamata 2–3 volte
+            con il timeout di default (600 s) per misurare la frequenza dei
+            timeout. Lasciare aperta la voce in <code>ToDo.md</code>.
+        </li>
+        <li>
+            <b>Il consumo di token resta alto.</b> Su phi3:mini il middleware
+            usa ≈36–38k token contro ≈11k della baseline (circa 3,3×); su
+            llama3.2:1b ≈30–31k contro ≈12k (circa 2,5×). Il dato si ripete in
+            tutte le run con middleware, su qualunque dispositivo Laya.
+            <i>Decisione:</i> non chiudere la voce token/middleware su
+            <code>ToDo.md</code>: la causa va cercata nel percorso di prompt,
+            non in Laya GPU/CPU.
+        </li>
+        <li>
+            <b>I tempi per chiamata sono instabili.</b> La mediana di phi3:mini
+            passa da 141 s a 392 s tra 20261020_1 e 20261021_1. La chiamata qwen
+            della prova mirata (211,8 s) è sotto il limite di 600 s, ma è un
+            singolo campione. <i>Decisione:</i> non attribuire variazioni di
+            latenza al dispositivo di Laya senza repliche.
+        </li>
+        <li>
+            <b
+                >Il pattern di qualità resta sotto la baseline per
+                llama3.2:1b.</b
+            >
+            Con il middleware ottiene 5–8/17 contro 11/17 della baseline, e 3/17
+            con il middleware vecchio. Il dato è coerente su tutte le run. Vedi
+            la voce del modello in <code>ToDo.md</code>.
+        </li>
+    </ol>
+
+    <h3>Note di lettura</h3>
+    <ul>
+        <li>
+            <code>status: ok</code> non equivale a risposta corretta: la qualità
+            è una rubrica euristica (max 17 check per modello nei test
+            completi). Nella prova mirata il punteggio riguarda un solo test
+            (max 2 check).
+        </li>
+        <li>
+            Le run 20261020_2 (solo phi3:mini e llama3.2:3b) e 20261021_2 (solo
+            qwen su un test) hanno parametri diversi dalla baseline: confronti
+            validi solo per coppie (modello, test) appaiate.
+        </li>
+        <li>
+            Pausa: 20261021_1 e 20261021_2 usano 180 s, 20261020_1 usava 300 s.
+            Il confronto diretto tra 20261020_1 e le run del 21 ottobre è quindi
+            su configurazioni solo parzialmente identiche.
+        </li>
+    </ul>
+</section>

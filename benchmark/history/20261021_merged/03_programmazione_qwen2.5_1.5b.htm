@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+        }
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            grid-template-rows: repeat(9, 1fr);
+            gap: 1px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin: 5px;
+            font-size: 20px;
+        }
+        #grid td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        #submit, #clear, #restart {
+            margin: 10px;
+            padding: 10px;
+            font-size: 18px;
+        }
+        #submit:disabled {
+            background-color: #f2f2f2;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <table id="grid">
+        <!-- Grid cells will be dynamically populated here -->
+    </table>
+    <input type="text" id="inputCell" disabled>
+    <button id="submit">Submit</button>
+    <button id="clear">Clear</button>
+    <button id="restart">Restart</button>
+
+    <script>
+        const grid = document.getElementById('grid');
+        const inputCell = document.getElementById('inputCell');
+        const submit = document.getElementById('submit');
+        const clear = document.getElementById('clear');
+        const restart = document.getElementById('restart');
+
+        // Load pre-filled grid
+        const preFilledGrid = [
+            ['5', '3', '', '', '', '', '', '', ''],
+            ['6', '', '', '', '', '', '', '', '9'],
+            ['8', '', '', '', '', '', '', '', ''],
+            ['4', '', '', '', '', '', '', '', '2'],
+            ['7', '', '', '', '', '', '', '', '6'],
+            ['2', '', '', '', '5', '7', '', '', '8'],
+            ['1', '', '', '', '', '', '', '', '4'],
+            ['3', '5', '', '', '', '', '', '', '2'],
+            ['9', '', '', '', '', '', '', '', '1']
+        ];
+
+        // Populate grid with pre-filled values
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                const cell = document.createElement('td');
+                cell.innerText = preFilledGrid[i][j] || '';
+                grid.appendChild(cell);
+            }
+        }
+
+        // Handle input
+        inputCell.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === 'Escape') {
+                if (inputCell.value.trim() !== '') {
+                    const row = Math.floor(inputCell.rowIndex / 3) * 3;
+                    const col = inputCell.colIndex;
+                    const cell = grid.children[row + col].cells[inputCell.colIndex];
+                    cell.innerText = inputCell.value;
+                    inputCell.value = '';
+                }
+            }
+        });
+
+        // Handle submit
+        submit.addEventListener('click', () => {
+            const emptyCells = [];
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = grid.children[i + j].cells[j];
+                    if (cell.innerText === '') {
+                        emptyCells.push(cell.innerText);
+                    }
+                }
+            }
+
+            if (emptyCells.length === 0) {
+                submit.disabled = true;
+                submit.style.background-color = 'orange';
+                const cell = grid.children[Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9)].cells[Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9)];
+                cell.innerText = 0;
+            } else {
+                submit.disabled = false;
+                submit.style.background-color = 'white';
+            }
+        });
+
+        // Handle clear
+        clear.addEventListener('click', () => {
+            grid.innerHTML = '';
+            inputCell.disabled = true;
+            inputCell.value = '';
+            submit.disabled = false;
+            submit.style.background-color = 'white';
+        });
+
+        // Handle restart
+        restart.addEventListener('click', () => {
+            submit.disabled = false;
+            submit.style.background-color = 'white';
+            inputCell.disabled = false;
+            inputCell.value = '';
+            grid.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.createElement('td');
+                    cell.innerText = preFilledGrid[i][j] || '';
+                    grid.appendChild(cell);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

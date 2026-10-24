@@ -1,0 +1,16 @@
+{
+  "model_requested": "anthropic/claude-haiku-4.5",
+  "model_served": null,
+  "path": "orcarouter_direct",
+  "prompt_id": "sintesi_traduzione",
+  "status": "error",
+  "http_status": 503,
+  "seconds": 0.867,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"error\":{\"message\":\"The upstream provider is temporarily unavailable. Please try again later. (request id: 202610222319557036060548268d9d6RYuBSwYe)\",\"type\":\"api_error\",\"param\":\"\",\"code\":\"upstream_unavailable\"}}",
+  "finished_at": "2026-10-22T23:19:56.385918+00:00"
+}

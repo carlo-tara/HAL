@@ -1,0 +1,155 @@
+START anthropic/claude-sonnet-5.5 hal_system2 (5 prompts)
+  1/5 ragionamento_logico: wrong_model_served (9.1s) model=claude-sonnet-5-5
+  2/5 matematica: wrong_model_served (5.3s) model=claude-sonnet-5-5
+  3/5 programmazione: error (60.0s) model=None
+  4/5 estrazione_json: wrong_model_served (42.2s) model=claude-sonnet-5-5
+  5/5 sintesi_traduzione: wrong_model_served (54.3s) model=claude-sonnet-5-5
+COOLDOWN 180s
+START anthropic/claude-sonnet-5.5 orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: ok (7.2s) model=claude-sonnet-5-5
+  2/5 matematica: ok (7.2s) model=claude-sonnet-5-5
+  3/5 programmazione: ok (76.2s) model=claude-sonnet-5-5
+  4/5 estrazione_json: ok (36.9s) model=claude-sonnet-5-5
+  5/5 sintesi_traduzione: ok (40.0s) model=claude-sonnet-5-5
+COOLDOWN 180s
+START anthropic/claude-opus-5.5 orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: ok (7.3s) model=claude-opus-5-5
+  2/5 matematica: ok (12.0s) model=claude-opus-5-5
+  3/5 programmazione: ok (99.5s) model=claude-opus-5-5
+  4/5 estrazione_json: ok (54.0s) model=claude-opus-5-5
+  5/5 sintesi_traduzione: ok (57.7s) model=claude-opus-5-5
+COOLDOWN 180s
+START anthropic/claude-opus-5.5 hal_system2 (5 prompts)
+  1/5 ragionamento_logico: error (0.4s) model=None
+  2/5 matematica: error (0.4s) model=None
+  3/5 programmazione: error (0.3s) model=None
+  4/5 estrazione_json: error (0.5s) model=None
+  5/5 sintesi_traduzione: error (0.4s) model=None
+COOLDOWN 180s
+START openai/gpt-6-luna hal_system2 (5 prompts)
+  1/5 ragionamento_logico: error (0.9s) model=None
+  2/5 matematica: error (0.3s) model=None
+  3/5 programmazione: error (0.3s) model=None
+  4/5 estrazione_json: error (0.4s) model=None
+  5/5 sintesi_traduzione: error (0.3s) model=None
+COOLDOWN 180s
+START openai/gpt-6-luna orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: error (0.7s) model=None
+  2/5 matematica: error (0.2s) model=None
+  3/5 programmazione: error (0.2s) model=None
+  4/5 estrazione_json: error (0.4s) model=None
+  5/5 sintesi_traduzione: error (0.3s) model=None
+COOLDOWN 180s
+START openai/gpt-6.1-sol orcarouter_direct (5 prompts)
+  1/5 ragionamento_logico: error (0.4s) model=None
+  2/5 matematica: error (0.4s) model=None
+  3/5 programmazione: error (0.2s) model=None
+  4/5 estrazione_json: error (0.3s) model=None
+  5/5 sintesi_traduzione: error (0.4s) model=None
+COOLDOWN 180s
+START openai/gpt-6.1-sol hal_system2 (5 prompts)
+  1/5 ragionamento_logico: error (0.4s) model=None
+  2/5 matematica: error (0.3s) model=None
+  3/5 programmazione: error (0.3s) model=None
+  4/5 estrazione_json: error (0.3s) model=None
+  5/5 sintesi_traduzione: error (0.4s) model=None
+{
+  "anthropic/claude-sonnet-5.5 | hal_system2": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 170.985,
+    "prompt_results": 5,
+    "quality_passed": 11,
+    "quality_total": 11,
+    "usage": {
+      "prompt_tokens": 18473,
+      "completion_tokens": 10188,
+      "total_tokens": 28661,
+      "input_tokens": 18473,
+      "output_tokens": 0
+    },
+    "quality_score": 1.0
+  },
+  "anthropic/claude-sonnet-5.5 | orcarouter_direct": {
+    "successful": 5,
+    "failed": 0,
+    "seconds": 167.508,
+    "prompt_results": 5,
+    "quality_passed": 17,
+    "quality_total": 17,
+    "usage": {
+      "prompt_tokens": 18831,
+      "completion_tokens": 14564,
+      "total_tokens": 33395,
+      "input_tokens": 18831,
+      "output_tokens": 0
+    },
+    "quality_score": 1.0
+  },
+  "anthropic/claude-opus-5.5 | orcarouter_direct": {
+    "successful": 5,
+    "failed": 0,
+    "seconds": 230.599,
+    "prompt_results": 5,
+    "quality_passed": 14,
+    "quality_total": 17,
+    "usage": {
+      "prompt_tokens": 18831,
+      "completion_tokens": 15699,
+      "total_tokens": 34530,
+      "input_tokens": 18831,
+      "output_tokens": 0
+    },
+    "quality_score": 0.8235
+  },
+  "anthropic/claude-opus-5.5 | hal_system2": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 1.999,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  },
+  "openai/gpt-6-luna | hal_system2": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 2.16,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  },
+  "openai/gpt-6-luna | orcarouter_direct": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 1.89,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  },
+  "openai/gpt-6.1-sol | orcarouter_direct": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 1.604,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  },
+  "openai/gpt-6.1-sol | hal_system2": {
+    "successful": 0,
+    "failed": 5,
+    "seconds": 1.729,
+    "prompt_results": 5,
+    "quality_passed": 0,
+    "quality_total": 0,
+    "usage": {},
+    "quality_score": null
+  }
+}

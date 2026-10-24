@@ -1,0 +1,16 @@
+{
+  "model_requested": "anthropic/claude-opus-5.5",
+  "model_served": null,
+  "path": "hal_system2",
+  "prompt_id": "ragionamento_logico",
+  "status": "not_executed_spend_limit",
+  "http_status": 502,
+  "seconds": 0.395,
+  "usage": {},
+  "response": "",
+  "quality": null,
+  "error_type": "http_error",
+  "cache_hit": false,
+  "error_detail": "{\"detail\":{\"error\":\"upstream_http\",\"provider_status\":403}}",
+  "finished_at": "2026-10-21T09:23:25.701853+00:00"
+}

@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "phi3:mini",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T22:48:43.848000+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 11171,
+    "output": 6860,
+    "reasoning": null,
+    "total": 18031
+  },
+  "status": "ok",
+  "finish_reason": "local_assembly",
+  "response": "[\n  {\n    \"capitolo_1\": {\n      \"titolo\": \"Il libro\",\n      \"tema\": \"Conoscerci la falsità dell'assunzione classica sull'uomo e sulla razionalità\",\n      \"risultati\": \"La falsità dell'assunzione che gli esseri umani, dotati di razionalità, possano controllare i loro istinti e l'emotività per un'analisi obiettiva e decisioni vantaggiose è illustrata dai risultati degli studi sul processo decisionale di Daniel Kahneman. Questi studi hanno dimostrato la propensione dell'uomo a essere esposto a condizionamenti che insidiano la sua capacità di giudicare e agire in modo chiaro.\"\n    },\n    \"capitolo_2\": {\n      \"titolo\": \"L'autore\",\n      \"tema\": \"La vasta esperienza di Daniel Kahneman in psicologia e economia decisionale\",\n      \"risultati\": \"Daniel Kahneman è un'autorità nel campo della psicologia decisionale, avendo ricevuto il Premio Nobel per l'economia e ricoperendo cattedre prestigiose presso l'Università di Princeton e la Woodrow Wilson School of Public and International Affairs. Il suo lavoro ha avuto un'influenza profonda sulla comprensione della psicologia cognitiva e decisionale.\"\n    }\n  },\n  {\n    \"segmento_2\": {\n      \"capitolo_2_introduzione\": {\n        \"titolo\": \"Introduzione\",\n        \"riassunto\": \"Il relatore, un medico, inizia a esaminare i meccanismi della critica reciproca e della comprensione dei giudizi e delle scelte. Apre discussioni sui bias e sui meccanismi psicologici che influenzano le nostre percezioni e giudizi. Insegna che riconoscere i nostri bias può portare a una migliore autocritica e aiutarci a prendere decisioni più informate.\"\n      }\n    }\n  },\n  {\n    \"segmento\": {\n      \"capitolo\": 3,\n      \"titolo\": \"Origini\",\n      \"riassunto\": {\n        \"introduzione\": {\n          \"autore\": \"Amos Tversky\",\n          \"pubblicazione\": \"1969\",\n          \"ambito\": \"Università Ebraica di Gerusalemme\",\n          \"evento\": \"Seminario di psicologia\",\n          \"oggetto\": \"un programma di ricerca dell'Università del Michigan per determinare se gli esseri umani siano buoni o cattivi intuitivi statistici\",\n          \"persone_chiamate\": [\n            \"Amos Tversky\"\n          ],\n          \"dettagli_personali\": {\n            \"età\": \"32 anni\",\n            \"conosciuto_come\": \"una persona molto intelligente, disinvolta e carismatica\"\n          },\n          \"interazione\": {\n            \"personalizzazione_con_Amos\": \"invito a parlare come ospite\",\n            \"rapporto_con_Amos\": \"Amos era considerato un astro nascente nel campo della ricerca sul processo decisionale\"\n          }\n        }\n      }\n    }\n  },\n  {\n    \"segmento\": \"4\",\n    \"capitolo_summary\": \"Capitolo 4: Difficoltà Intuitiva con la Statistica e Bias\"\n  },\n  {\n    \"capitolo_5\": {\n      \"titolo\": \"Una scoperta insolita sull'influenza della somiglianza\",\n      \"riassunto\": \"Durante l'esperimento, condotto su una persona di sesso maschile, 'Steve', con l'obiettivo di determinare se le persone tendono a credere che le personalità stereotipate siano più comuni nella loro professione scelta, hanno scoperto che i partecipanti hanno scelto prevalentemente 'bibliotecario' nonostante che gli agricoltori siano significativamente più numerosi nel paese. Questo risultato ha rafforzato l'idea che la somiglianza con gli stereotipi può influenzare notevolmente le nostre percezioni della frequenza delle professioni, illustrando l'influenza potente della percezione soggettiva sull'oggettività.\"\n    }\n  },\n  {\n    \"segmento_6\": {\n      \"capitolo_6_titolo\": \"Euristiche e Bias in Giudizi sotto incertezza\",\n      \"capitolo_6_tema\": \"Presentazione dell'articolo intitolato 'Judgement Under Uncertainty: Heuristics and Biases', che discute delle scorciatoie semplificatrici del pensiero intuitivo, esponendo una ventina di bias come manifestazioni di quelle euristiche e come dimostrazioni del ruolo delle euristiche nel giudizio. L'articolo è stato presentato nel quinto anno della collaborazione tra Amos Tversky e il relatore.\",\n      \"capitolo_6_risultato\": \"Nell'articolo, Tversky e il relatore hanno documentato e analizzato varie euristiche che influenzano i giudizi umani in situazioni di incertezza. Hanno identificato un certo numero di bias mentali noti come 'euristiche', che spesso portano a decisioni sbagliate o distorte. Queste euristiche sono scorciatoie mentali che aiutano le persone a prendere decisioni rapidamente, ma possono portare a distorsioni e inesattezze. L'articolo ha esaminato i bias in più campi, inclusi l'assegnazione di probabilità agli eventi, la previsione del futuro, la valutazione delle ipotesi e lo stimare delle frequenze. Queste scoperte hanno contribuito alla nostra comprensione della psicologia cognitiva e del comportamento umano sotto condizioni di incertezza.\"\n    }\n  },\n  {\n    \"Capitolo7\": {\n      \"titolo\": \"L'euristica della disponibilità e l'euristica della similitudine\",\n      \"riassunto\": \"L'euristica della disponibilità spiega come la gente valuti l'importanza relativa dei problemi basandosi sulla facilità con cui ricordano i temi legati a tali problemi, influenzati dalla frequenza con cui i media esprimono interesse per determinati argomenti. La gente tende a dare maggiore importanza ai problemi più frequenti nei media, mentre dibatte meno su quelli meno discussi. Questa euristica ha implicazioni significative per la percezione dei problemi da parte del pubblico e della loro rappresentazione nei media.\"\n    }\n  },\n  {\n    \"Segmento_8\": {\n      \"Capitolo_1\": {\n        \"Titolo\": \"L'importanza della fortuna nelle imprese di successo\",\n        \"Riassunto\": \"Questo capitolo illustra come la fortuna gioca un ruolo chiave in ogni impresa di successo. Utilizzando una combinazione di ricerca storica e analisi statistica, l'autore descrive come piccole variazioni nella storia potrebbero trasformare un successo notevole in un risultato mediocre. La storia presentata nel capitolo evidenzia come questa idea sia quasi sempre vera, sottolineando l'importanza della fortuna.\"\n      },\n      \"Capitolo_2\": {}\n    },\n    \"Segmento_9\": {}\n  },\n  {\n    \"capitolo_9\": {\n      \"titolo\": \"Sulle sponde del fiume dell'intelligenza\",\n      \"sommario\": \"Questo capitolo riflette sulla collaborazione e sui successi raggiunti dalla ricerca condotta da Amos Tversky e da me. Anche se la distanza fisica ha rappresentato un ostacolo, abbiamo lavorato insieme per fondamentare l'economia comportamentale. Questa collaborazione ha portato a importanti scoperte che hanno avuto un impatto significativo nel campo della psicologia cognitiva e sociale. Il libro non intende riprodurre le nostre prime ricerche, ma fornisce un'analisi attuale delle intuizioni intuitive, evidenziando i loro meriti e i potenziali errori sistematici.\"\n    }\n  },\n  {\n    \"capitolo_1\": {\n      \"titolo\": \"Il pericolo insolito\",\n      \"riassunto\": \"Un capitano di pompiere e la sua squadra si avvicinano a una casa infuocata. Mentre spengono l'incendio, ricevono un ordine imprevisto dal loro comandante, che alla fine capisce che l'incendio era insolitamente silenzioso, suggerendo potenziali pericoli nascosti. L'epicentro dell'incendio è stato trovato non nella cucina, ma nella cantina, una scoperta che cambia il loro approccio alla situazione.\"\n    },\n    \"capitolo_2\": {\n      \"titolo\": \"Intuizione nella vita di tutti i gior0rli\",\n      \"riassunto\": \"La narrazione discute della natura diurne dell'intuizione esperta, sostenendo che le intuizioni non sono magiche ma piuttosto derivate dall'osservazione e dalla competenza. Si fornisce un esempio di un medico che arriva a una diagnosi rapida e accurata attraverso una rapida osservazione. Herbert Simon è citato, che ha studiato i campioni di scacchi e ha scoperto che con pratica adeguata, essi iniziano a percepire le posizioni dei pezzi in modo diverso dagli altri.\"\n    },\n    \"capitolo_3\": {\n      \"titolo\": \"La psicologia dell'intuizione\",\n      \"riassunto\": \"Herbert Simon suggerisce che l'intuizione non è più che un riconoscimento, piuttosto che una capacità mistica. Egli ha dimostrato che i campioni di scacchi sviluppano una percezione unica attraverso pratica. La competenza intuitiva, come per i professionisti, non deriva dall'istinto ma dalla competenza acquisita.\"\n    }\n  }\n]",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1183,
+        "output": 394,
+        "reasoning": null,
+        "total": 1577
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1128,
+        "output": 162,
+        "reasoning": null,
+        "total": 1290
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1115,
+        "output": 293,
+        "reasoning": null,
+        "total": 1408
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1108,
+        "output": 981,
+        "reasoning": null,
+        "total": 2089
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1102,
+        "output": 226,
+        "reasoning": null,
+        "total": 1328
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1116,
+        "output": 2872,
+        "reasoning": null,
+        "total": 3988
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1105,
+        "output": 185,
+        "reasoning": null,
+        "total": 1290
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 1074,
+        "reasoning": null,
+        "total": 2163
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1089,
+        "output": 200,
+        "reasoning": null,
+        "total": 1289
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1136,
+        "output": 473,
+        "reasoning": null,
+        "total": 1609
+      }
+    },
+    {
+      "system": "system2_local",
+      "stage": "assemblaggio_locale",
+      "status": "ok",
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "total": 0
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 10,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 959.473339,
+  "result_file": "04_estrazione_json_phi3_mini.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 8
+  }
+}

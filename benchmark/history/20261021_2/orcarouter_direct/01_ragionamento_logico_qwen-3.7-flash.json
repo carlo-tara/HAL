@@ -1,0 +1,20 @@
+{
+  "provider": "google",
+  "model": "qwen-3.7-flash",
+  "test_id": "ragionamento_logico",
+  "started_at": "2026-10-22T22:06:17.998276+00:00",
+  "quality": null,
+  "tokens": {
+    "input": null,
+    "output": null,
+    "reasoning": null,
+    "total": null
+  },
+  "status": "error",
+  "error": {
+    "type": "http_error",
+    "http_status": 404
+  },
+  "seconds": 0.720458,
+  "result_file": "01_ragionamento_logico_qwen-3.7-flash.json"
+}

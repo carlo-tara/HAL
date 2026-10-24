@@ -1,0 +1,190 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-23T07:57:43.178208+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": false
+      }
+    ]
+  },
+  "tokens": {
+    "input": 14333,
+    "output": 7589,
+    "reasoning": null,
+    "total": 21922
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati in formato JSON per il segmento 1/10:\n\n```\n{\n  \"0.001\": {\n    \"Titolo\": \"Ecco i risultati della selezione dei contenuti dei singoli capitoli del libro, estratti dal primo capitolo.\",\n    \"Resoconto\": \"I contenuti dei singoli capitoli del primo libro sono stati estratti e presentati in formato JSON.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 2/10:\n\n```\n{\n  \"capitolo1\": {\n    \"Titolo\": \"La nostra routine professionale\",\n    \"Descrizione\": \"Stabilimmo la nostra routine professionale, in base alla quale passavamo molti giorni lavorativi insieme e spesso ci concedevamo lunghe passeggiate.\",\n    \"Conclusione\": \"Il nostro lavoro fu il migliore che avessimo mai fatto durante quei quattordici anni di collaborazione.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 3/10:\n\n```\n{\n  \"capitolo2\": {\n    \"Titolo\": \"La nostra tecnica di ricerca\",\n    \"Descrizione\": \"Prestando attenzione alla somiglianza della personalità di Steve con lo stereotipo della personalità del bibliotecario, e ignorando i dati statistici.\",\n    \"Conclusione\": \"La nostra ricerca risultò esatta.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 4/10:\n\n```\n{\n  \"capitolo3\": {\n    \"Titolo\": \"Le nostre intuizioni e le loro prevedibilità\",\n    \"Descrizione\": \"Una volta scoprimmo con grande gioia che avevamo le stesse sciocche idee riguardo alle future professioni di vari bambini di nostra conoscenza.\",\n    \"Conclusione\": \"Le nostre intuizioni si basavano sulla somiglianza di ciascun bambino con lo stereotipo culturale di una professione.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 5/10:\n\n```\n{\n  \"capitolo4\": {\n    \"Titolo\": \"Il ruolo della somiglianza nelle pr\n</risultato_segmento_5>\n\n---\n\n<risultato_segmento_6>\nEcco i risultati in formato JSON per il segmento 6/10:\n\n```\n{\n  \"capitolo5\": {\n    \"Titolo\": \"La ricerca sul giudizio\",\n    \"Descrizione\": \"Il libro esamina come il giudizio umano sia soggetto a errori e come questo possa influenzare i risultati delle indagini.\",\n    \"Conclusione\": \"Il giudizio umano è soggetto a errori e può influenzare i risultati delle indagini. L'analisi della mente umana e la somiglianza come indizio di probabilità sono argomenti trattati nel libro.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 7/10:\n\n```\n{\n  \"capitolo6\": {\n    \"Titolo\": \"La natura complessa dei bias\",\n    \"Descrizione\": \"Il comportamento umano è complesso e non può essere reductionistico, ovvero, non possiamo analizzare il comportamento umano solo attraverso un'analisi dei suoi componenti elementari.\",\n    \"Conclusione\": \"Il comportamento umano è anche influenzato dalle dinamiche sociali, dalle relazioni interpersonali e dalle interazioni con il contesto. Questi fattori possono influenzare il modo in cui le persone valutano le informazioni e prendono decisioni, e possono portare a selezioni alternative delle euristiche che potrebbero conduci a risultati diversi.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 8/10:\n\n```\n{\n  \"capitolo7\": {\n    \"Titolo\": \"La ricerca sul giudizio\",\n    \"Contenuto\": {\n      \"nome\": \"Il giudizio come indizio di probabilità\",\n      \"riassunto\": \"Il libro esamina come il giudizio umano sia soggetto a errori e come questo possa influenzare i risultati delle indagini.\",\n      \"domande\": \"La mente umana è soggetta a errori? Come si influisce il giudizio sulle indagini?\",\n      \"analisi\": \"Il giudizio come indizio di probabilità\",\n      \"conclusione\": \"Il giudizio umano è soggetto a errori e può influenzare i risultati delle indagini. L'analisi della mente umana e la somiglianza come indizio di probabilità sono argomenti trattati nel libro.\"\n    },\n    \"fonte\": {\n      \"nome\": \"Laya\",\n      \"data\": null,\n      \"type\": \"source_chunks\",\n      \"strategia\": \"Classificazione Laya incerta\"\n    }\n  },\n  \"sensazioni\": [\"silenzioso\", \"calde\"]\n}\n```\n\nEcco i risultati in formato JSON per il segmento 9/10:\n\n```\n{\n  \"capitolo8\": {\n    \"Titolo\": \"La natura complessa dei bias\",\n    \"Descrizione\": \"Il comportamento umano è complesso e non può essere reductionistico, ovvero, non possiamo analizzare il comportamento umano solo attraverso un'analisi dei suoi componenti elementari.\",\n    \"Conclusione\": \"Il comportamento umano è anche influenzato dalle dinamiche sociali, dalle relazioni interpersonali e dalle interazioni con il contesto. Questi fattori possono influenzare il modo in cui le persone valutano le informazioni e prendono decisioni, e possono portare a selezioni alternative delle euristiche che potrebbero conduci a risultati diversi.\"\n  }\n}\n```\n\nEcco i risultati in formato JSON per il segmento 10/10:\n\n```\n{\n  \"capitolo9\": {\n    \"Titolo\": \"La ricerca sul giudizio\",\n    \"Descrizione\": \"Il libro esamina come il giudizio umano sia soggetto a errori e come questo possa influenzare i risultati delle indagini.\",\n    \"Conclusione\": \"Il giudizio umano è soggetto a errori e può influenzare i risultati delle indagini. L'analisi della mente umana e la somiglianza come indizio di probabilità sono argomenti trattati nel libro.\"\n  }\n}\n```\n\nSpero che questi risultati siano stati utili.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 353,
+        "reasoning": null,
+        "total": 1419
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 810,
+        "reasoning": null,
+        "total": 1886
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 441,
+        "reasoning": null,
+        "total": 1494
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 468,
+        "reasoning": null,
+        "total": 1537
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 565,
+        "reasoning": null,
+        "total": 1612
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 238,
+        "reasoning": null,
+        "total": 1297
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 486,
+        "reasoning": null,
+        "total": 1553
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 277,
+        "reasoning": null,
+        "total": 1321
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 446,
+        "reasoning": null,
+        "total": 1477
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 2025,
+        "reasoning": null,
+        "total": 3107
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3739,
+        "output": 1480,
+        "reasoning": null,
+        "total": 5219
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 399.674955,
+  "result_file": "01_estrazione_json_llama3.2_1b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.9685,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.7051,
+    "execution_confidence": 0.0425,
+    "confidence": 0.0425,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 12,
+    "complexity": "high",
+    "source": "docs/Pensieri_lenti_e_veloci.epub",
+    "output_format": "json"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "model_requested": "qwen/qwen3.7-flash",
+  "model_served": "qwen3.7-flash",
+  "path": "hal_system2",
+  "prompt_id": "estrazione_json",
+  "status": "ok",
+  "http_status": 200,
+  "seconds": 58.025,
+  "usage": {
+    "completion_tokens": 5135,
+    "completion_tokens_details": {
+      "reasoning_tokens": 3969,
+      "text_tokens": 5135
+    },
+    "prompt_tokens": 6585,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 6585
+    },
+    "total_tokens": 11720
+  },
+  "response": "```json\n{\n  \"titolo_libro\": \"Pensieri lenti e veloci\",\n  \"autore\": \"Daniel Kahneman\",\n  \"periodo_riferimento\": \"Prime 10 pagine (Frontespizio, Dedica, Introduzione e avvio del primo capitolo)\",\n  \"sezioni_capitoli\": [\n    {\n      \"id\": 1,\n      \"titolo\": \"Introduzione\",\n      \"contenuto_estratto\": \"L'autore illustra l'obiettivo del libro: arricchire il vocabolario quotidiano per analizzare giudizi e scelte, sia altrui che proprie. Paragona il processo all'apprendimento del linguaggio medico per diagnosticare le patologie, introducendo il concetto di 'bias' come etichette diagnostiche per errori sistematici e prevedibili.\",\n      \"riassunto_sintetico\": \"Presenta la finalità del volume: fornire un lessico preciso per identificare, comprendere e mitigare gli errori di giudizio e decisione, trasformando il pettegolezzo informato in uno strumento di autocritica e miglioramento cognitivo.\"\n    },\n    {\n      \"id\": 2,\n      \"titolo\": \"Origini della Ricerca\",\n      \"contenuto_estratto\": \"Racconta l'incontro del 1969 con Amos Tversky e la decisione di investigare se gli esseri umani fossero buoni statistici intuitivi. Descrive la dinamica collaborativa complementare (Tversky logico-teorico, Kahneman intuitivo-percettivo) e il metodo di lavoro basato su dialoghi continui, auto-critica reciproca e piccoli esperimenti quotidiani.\",\n      \"riassunto_sintetico\": \"Illustra le radici della ricerca congiunta, nata dalla consapevolezza dei propri limiti statistici intuitivi e caratterizzata da una sinergia intellettuale fondata sul confronto costante e sull'analisi delle risposte intuitive immediate.\"\n    },\n    {\n      \"id\": 3,\n      \"titolo\": \"Euristica della Rappresentatività e della Disponibilità\",\n      \"contenuto_estratto\": \"Attraverso esempi pratici (Steve bibliotecario/agricoltore e la frequenza della lettera K), introduce le scorciatoie mentali che semplificano i giudizi ma generano bias sistematici. Spiega come si ignori il dato statistico a favore della somiglianza stereotipata e come la facilità di richiamo mnemonico distorca la percezione della realtà.\",\n      \"riassunto_sintetico\": \"Definisce due principali meccanismi cognitivi: l'euristica della rappresentatività (giudizi guidati dalla somiglianza con stereotipi) e quella della disponibilità (valutazioni influenzate dall'accessibilità dei ricordi), entrambe cause di errori prevedibili.\"\n    },\n    {\n      \"id\": 4,\n      \"titolo\": \"La Rivoluzione Scientifica e l'Articolo su «Science»\",\n      \"contenuto_estratto\": \"Descrive la pubblicazione nel 1974 dell'articolo fondativo sulle euristiche e i bias, che sfidava i dogmi sulla razionalità umana. Sottolinea l'uso strategico di dimostrazioni pratiche (anziché solo dati sperimentali) per coinvolgere filosofi ed economisti, ottenendo un impatto trasversale e duraturo nelle scienze sociali.\",\n      \"riassunto_sintetico\": \"Racconta il successo e l'impatto rivoluzionario del lavoro pionieristico, che ha dimostrato come gli errori cognitivi siano strutturali e non emotivi, cambiando permanentemente la visione della natura umana nelle discipline accademiche.\"\n    },\n    {\n      \"id\": 5,\n      \"titolo\": \"Dalla Giudizio alla Scelta: La Teoria delle Prospettive\",\n      \"contenuto_estratto\": \"Segna il passaggio dallo studio del giudizio a quello del processo decisionale in condizioni di rischio (es. scommessa moneta). Annuncia la formulazione della Prospect Theory, pilastro dell'economia comportamentale, e ricorda il Premio Nobel 2002 ricevuto postumo con Tversky.\",\n      \"riassunto_sintetico\": \"Annuncia l'evoluzione della ricerca verso la teoria della scelta sotto incertezza, culminata nella Prospect Theory e nel riconoscimento Nobel, gettando le basi teoriche per l'economia comportamentale moderna.\"\n    },\n    {\n      \"id\": 6,\n      \"titolo\": \"Intuizione Esperta vs. Bias Cognitivi\",\n      \"contenuto_estratto\": \"Contrasta le intuizioni errate delle euristiche con quelle valide degli esperti (es. vigili del fuoco, scacchisti). Citando Herbert Simon, chiarisce che l'intuizione esperta è riconoscimento basato su pratica prolungata, non magia. Il testo si interrompe iniziando un aneddoto su un dirigente finanziario.\",\n      \"riassunto_sintetico\": \"Chiarisce la distinzione tra intuizione fallace (guidata da scorciatoie cognitive) e intuizione competente (basata su esperienza e pattern recognition), smontando il mito del 'sesto senso' e preparando il terreno per l'analisi delle professioni ad alta specializzazione.\"\n    }\n  ]\n}\n```",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "error_type": null,
+  "cache_hit": false,
+  "finished_at": "2026-10-22T22:37:04.756340+00:00"
+}

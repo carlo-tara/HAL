@@ -1,0 +1,32 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:1b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-23T00:25:55.183087+00:00",
+  "quality": {
+    "passed": 1,
+    "total": 2,
+    "score": 0.5,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": false
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 8361,
+    "output": 784,
+    "reasoning": null,
+    "total": 9145
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco il riassunto dei singoli capitoli con i risultati in formato JSON:\n\n**Capitolo 1: Introduzione**\n\n* La mente umana è soggetta a errori sistematici, noti come bias cognitivi\n* Gli errori sistematici sono definiti \"bias\", preconcetti che ricorrono in maniera prevedibile in particolari circostanze\n* La disponibilità di una specifica etichetta diagnostica per questo bias, chiamato \"effetto alone\", rende più facile prevederlo, riconoscerelo e capirlo\n\n**Capitolo 2: Pensieri lenti e veloci**\n\n* Il pensiero cognitivo è caratterizzato da due processi: uno veloce e intuitivo (sistema 1) e uno più lento ma anche più logico e riflessivo (sistema 2)\n* Il pensiero veloce presiede all'attività cognitiva automatica e involontaria\n* Il pensiero lento è necessario per sviluppare competenze e abilità e eseguire operazioni complesse\n* Gli errori sistematici possono essere fonte di bias e preconcetti\n\n**Capitolo 3: L'effetto profondo dei bias cognitivi**\n\n* I bias cognitivi possono avere un impatto significativo sulla nostra vita e sulle nostre scelte\n* Gli errori sistematici possono portare a prevedibili conclusioni errate\n* Le nostre opinioni e scelte sono influenzate dalla nostra esperienza e dalle nostre emozioni\n* La mente umana è soggetta a errori sistematici, ma è anche possibile contrastarli\n\n**Capitolo 4: L'autore**\n\n* Daniel Kahneman è titolare della cattedra Eugene Higgins di psicologia all'Università di Princeton e professore emerito di psicologia e affari pubblici alla Woodrow Wilson School of Public and International Affairs di Princeton\n* Ha ricevuto il premio Nobel per l'economia per le ricerche pionieristiche condotte con Amos Tversky sul processo decisionale\n* È autore di numerosi libri, tra cui \"Psicologia dell'attenzione\" e \"Economia della felicità\"\n\n**Capitolo 5: Origini**\n\n* In questo libro espongo le idee che ho attualmente in merito al giudizio e al processo decisionale\n* Le idee sono state forgiate dalle scoperte compiute dalla psicologia negli ultimi decenni\n* Gli concetti fondamentali risalgono al fortunato giorno del 1969 in cui invitai un collega a parlare come ospite a un seminario che tenevo alla facoltà di psicologia dell'Università Ebraica di Gerusalemme\n* Amos Tversky era considerato un astro nascente nel campo della ricerca sul processo decisionale, e di fatto lo era in qualunque campo, sicché sapevo che avrebbe detto cose interessanti\n\n**Capitolo 6: L'autore e Amos Kahneman**\n\n* Amos Kahneman e io abbiamo lavorato insieme per parecchi anni\n* La nostra collaborazione fu il motivo del premio Nobel che ricevetti nel 2002\n* È un libro divertente e informato che offre una visione del funzionamento della mente basata sui recenti sviluppi della psicologia cognitiva e sociale",
+  "seconds": 86.756972,
+  "result_file": "01_estrazione_json_llama3.2_1b.json"
+}

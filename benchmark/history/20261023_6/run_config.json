@@ -1,0 +1,19 @@
+{
+  "run_id": "20261023_6",
+  "num_ctx": 16384,
+  "models": [
+    "phi3:mini",
+    "llama3.2:1b"
+  ],
+  "prompts": [
+    "estrazione_json",
+    "sintesi_traduzione"
+  ],
+  "timeout": 1800,
+  "cooldown": 60,
+  "provider": "ollama",
+  "system1": true,
+  "mirror": "hal_gateway/benchmark/runner",
+  "baseline": "20261023_5",
+  "note": "Run diagnostica pre-fix: single_pass non includeva la fonte; entrambe le traduzioni non valide (min_chars fallito)."
+}

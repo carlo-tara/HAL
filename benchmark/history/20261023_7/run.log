@@ -1,0 +1,29 @@
+Fonte per estrazione_json: docs/Pensieri_lenti_e_veloci.epub (1,289,813 caratteri)
+Fonte per sintesi_traduzione: docs/Pensieri_lenti_e_veloci.epub (1,289,813 caratteri)
+System 1 Laya: preflight su 2 prompt (http://127.0.0.1:8091, modello multilingual)
+  → classificazione Laya: estrazione_json
+  → classificazione Laya: sintesi_traduzione
+Benchmark: 2 modelli × 2 test = 4 chiamate
+Ollama: http://127.0.0.1:11434
+Timeout per chiamata: 1800s
+Output: history/20261023_7/results.json
+
+━━ [1/2] ollama/phi3:mini → cartella 20261023_7
+  → test 1/2 estrazione_json: invio richiesta (1,398 caratteri)…
+    ✗ errore: timeout | 4215.6s [1/4]
+  → test 2/2 sintesi_traduzione: invio richiesta (1,385 caratteri)…
+    ✓ ok | token in 4574 · out 4479 · tot 9053 | qualità 2/2 | 1129.1s [2/4]
+
+Pausa di 60s prima del modello successivo…
+
+━━ [2/2] ollama/llama3.2:1b → cartella 20261023_7
+  → test 1/2 estrazione_json: invio richiesta (1,398 caratteri)…
+    ✓ ok | token in 14333 · out 7589 · tot 21922 | qualità 1/2 | 399.7s [3/4]
+  → test 2/2 sintesi_traduzione: invio richiesta (1,385 caratteri)…
+    ✓ ok | token in 4329 · out 3564 · tot 7893 | qualità 1/2 | 224.8s [4/4]
+
+Riepilogo per modello:
+  ollama/phi3:mini: 1/2 ok | token 9053 | 5344.7s | qualità 2/2
+  ollama/llama3.2:1b: 2/2 ok | token 29815 | 624.5s | qualità 2/4
+Totale: 3 ok, 1 errori, token 38868, tempo 5969.2s
+Risultati: history/20261023_7/results.json; successi: 3; errori: 1

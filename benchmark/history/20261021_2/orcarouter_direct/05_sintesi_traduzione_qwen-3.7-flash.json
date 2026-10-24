@@ -1,0 +1,20 @@
+{
+  "provider": "google",
+  "model": "qwen-3.7-flash",
+  "test_id": "sintesi_traduzione",
+  "started_at": "2026-10-22T22:06:20.337402+00:00",
+  "quality": null,
+  "tokens": {
+    "input": null,
+    "output": null,
+    "reasoning": null,
+    "total": null
+  },
+  "status": "error",
+  "error": {
+    "type": "http_error",
+    "http_status": 404
+  },
+  "seconds": 0.353986,
+  "result_file": "05_sintesi_traduzione_qwen-3.7-flash.json"
+}

@@ -1,0 +1,187 @@
+{
+  "provider": "ollama",
+  "model": "llama3.2:3b",
+  "test_id": "estrazione_json",
+  "started_at": "2026-10-20T23:42:40.231433+00:00",
+  "quality": {
+    "passed": 2,
+    "total": 2,
+    "score": 1.0,
+    "checks": [
+      {
+        "label": "risposta in formato JSON",
+        "passed": true
+      },
+      {
+        "label": "riferimento all'Introduzione",
+        "passed": true
+      }
+    ]
+  },
+  "tokens": {
+    "input": 14317,
+    "output": 4278,
+    "reasoning": null,
+    "total": 18595
+  },
+  "status": "ok",
+  "finish_reason": "stop",
+  "response": "Ecco i risultati parziali assemblati in un'unica risposta completa in formato JSON:\n\n```json\n{\n  \"capitoli\": [\n    {\n      \"titolo\": \"Il libro\",\n      \"riassunto\": \"Il libro esplora come l'uomo, considerato essere dotato di razionalità, possa essere soggetto a condizionamenti che influenzano la sua capacità di giudicare e agire lucidamente. Il libro segue le ricerche di Daniel Kahneman sulla mente umana e spiega come essa sia caratterizzata da due processi di pensiero: uno veloce e intuitivo (sistema 1) e uno più lento ma anche più logico e riflessivo (sistema 2).\"\n    },\n    {\n      \"titolo\": \"005_introduzione\",\n      \"riassunto\": \"L'autore introduce l'idea di esplorare il vocabolario di giudizi e scelte, e come possiamo imparare a riconoscere e capire gli errori altrui e i nostri stessi errori. Egli spiega che la conoscenza di un'ampia serie di «etichette» relative alle malattie è essenziale per essere un buon medico, e che lo stesso principio si applica alle scelte e ai giudizi.\"\n    },\n    {\n      \"titolo\": \"Capitolo 1: L'intuizione e l'errore\",\n      \"riassunto\": \"Il libro esamina l'intuizione come fonte di impressioni, intuizioni e decisioni. Tuttavia, individuare l'errore non significa denigrare l'intelligenza, ma piuttosto comprenderla meglio.\"\n    },\n    {\n      \"titolo\": \"Euristiche e bias nel giudizio intuitivo\",\n      \"riassunto\": \"Il capitolo 6 discute le euristiche e i bias nel giudizio intuitivo, come meccanismi che spingono la gente a prendere decisioni intuitive.\"\n    },\n    {\n      \"titolo\": \"Scorciatoie semplificatrici del pensiero intuitivo\",\n      \"riassunto\": \"Il capitolo 7 discute la struttura del meccanico cognitivo e come essa influenzi la forma in cui la gente pensa e agisce.\"\n    },\n    {\n      \"titolo\": \"Euristiche e bias nella valutazione delle ipotesi\",\n      \"riassunto\": \"Il capitolo 8 discute come le euristiche e i bias influenzano la valutazione delle ipotesi in campo scientifico e filosofico.\"\n    },\n    {\n      \"titolo\": \"La mente intuitiva\",\n      \"contenuto\": \"La nostra mente è capace di prendere decisioni intuitive senza che noi stessi ci accorgiamo di farlo. Tuttavia, queste decisioni non sono sempre razionali e possono essere influenzate da fattori come l'emozione, la familiarità e la lontananza geografica.\"\n    },\n    {\n      \"titolo\": \"Le euristiche del giudizio\",\n      \"contenuto\": \"Le euristiche del giudizio sono regole di base utilizzate per prendere decisioni. Sono molto utili, ma a volte conducono a gravi errori sistematici.\"\n    },\n    {\n      \"titolo\": \"La competenza e le euristiche\",\n      \"contenuto\": \"La competenza e le euristiche sono due fonti alternative dei giudizi e delle scelte intuitivi. La competenza si riferisce alla pratica e all'esperienza, mentre le euristiche sono regole di base utilizzate per prendere decisioni.\"\n    },\n    {\n      \"titolo\": \"Intuizione Esperta\",\n      \"riassunto\": \"L'intuizione esperta non è magia, ma un riconoscimento di elementi familiari in una situazione nuova. Gli esperti imparano a riconoscere elementi familiari e agire in maniera appropriata, con giudizi intuitivi che vengono in mente con immediatezza.\"\n    }\n  ]\n}\n```\n\nNota che non sono stati inclusi i risultati dei capitoli 9/10 e 10/10, poiché non sono stati richiesti di completare il lavoro sugli altri segmenti.",
+  "workflow": [
+    {
+      "system": "system2",
+      "stage": "segmento_1",
+      "status": "ok",
+      "tokens": {
+        "input": 1066,
+        "output": 196,
+        "reasoning": null,
+        "total": 1262
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_2",
+      "status": "ok",
+      "tokens": {
+        "input": 1076,
+        "output": 185,
+        "reasoning": null,
+        "total": 1261
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_3",
+      "status": "ok",
+      "tokens": {
+        "input": 1053,
+        "output": 232,
+        "reasoning": null,
+        "total": 1285
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_4",
+      "status": "ok",
+      "tokens": {
+        "input": 1069,
+        "output": 901,
+        "reasoning": null,
+        "total": 1970
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_5",
+      "status": "ok",
+      "tokens": {
+        "input": 1047,
+        "output": 419,
+        "reasoning": null,
+        "total": 1466
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_6",
+      "status": "ok",
+      "tokens": {
+        "input": 1059,
+        "output": 121,
+        "reasoning": null,
+        "total": 1180
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_7",
+      "status": "ok",
+      "tokens": {
+        "input": 1067,
+        "output": 181,
+        "reasoning": null,
+        "total": 1248
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_8",
+      "status": "ok",
+      "tokens": {
+        "input": 1044,
+        "output": 511,
+        "reasoning": null,
+        "total": 1555
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_9",
+      "status": "ok",
+      "tokens": {
+        "input": 1031,
+        "output": 430,
+        "reasoning": null,
+        "total": 1461
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "segmento_10",
+      "status": "ok",
+      "tokens": {
+        "input": 1082,
+        "output": 121,
+        "reasoning": null,
+        "total": 1203
+      }
+    },
+    {
+      "system": "system2",
+      "stage": "assemblaggio_finale",
+      "status": "ok",
+      "tokens": {
+        "input": 3723,
+        "output": 981,
+        "reasoning": null,
+        "total": 4704
+      }
+    }
+  ],
+  "workflow_summary": {
+    "system1_decisions": 0,
+    "system2_stages": 11,
+    "execution_mode": "source_chunks"
+  },
+  "seconds": 485.17365,
+  "result_file": "04_estrazione_json_llama3.2_3b.json",
+  "system1": {
+    "task_family": "source",
+    "execution_mode": "source_chunks",
+    "source_chars": 30000,
+    "has_source": true,
+    "explicit_plan": false,
+    "laya_recommended": true,
+    "task_contract": {
+      "family": "source",
+      "required_strategy": "grounded_extract",
+      "execution_mode": "source_chunks",
+      "preserve_source_order": true,
+      "respect_output_format": true
+    },
+    "family_confidence": 0.4826,
+    "strategy": "grounded_extract",
+    "strategy_confidence": 0.3731,
+    "execution_confidence": 0.1138,
+    "confidence": 0.1138,
+    "guidance": "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti dal prompt e rispetta rigorosamente fonte e formato.",
+    "laya_called": true,
+    "decision_source": "local_task_gate",
+    "proposed_task_family": "source",
+    "proposed_strategy": "faithful_translate",
+    "proposed_execution_mode": "source_chunks",
+    "preflight_latency_ms": 8
+  }
+}

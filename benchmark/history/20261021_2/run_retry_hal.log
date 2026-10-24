@@ -1,0 +1,11 @@
+CELLA DA RILANCIARE: 4 -> [('qwen/qwen3.7-flash', 'sintesi_traduzione'), ('qwen/qwen3.8-flash', 'programmazione'), ('qwen/qwen3.8-flash', 'estrazione_json'), ('qwen/qwen3.8-flash', 'sintesi_traduzione')]
+START qwen/qwen3.7-flash sintesi_traduzione
+  1/4 qwen/qwen3.7-flash sintesi_traduzione: ok (111.4s)
+COOLDOWN 180s
+START qwen/qwen3.8-flash programmazione
+  2/4 qwen/qwen3.8-flash programmazione: ok (352.6s)
+START qwen/qwen3.8-flash estrazione_json
+  3/4 qwen/qwen3.8-flash estrazione_json: ok (157.8s)
+START qwen/qwen3.8-flash sintesi_traduzione
+  4/4 qwen/qwen3.8-flash sintesi_traduzione: ok (423.2s)
+"completed"

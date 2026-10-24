@@ -1,0 +1,16 @@
+{
+  "run_id": "20261023_5",
+  "num_ctx": 16384,
+  "models": [
+    "phi3:mini",
+    "llama3.2:1b"
+  ],
+  "prompts": [
+    "estrazione_json",
+    "sintesi_traduzione"
+  ],
+  "timeout": 1800,
+  "cooldown": 60,
+  "runner_dir": "/var/www/hal_gateway/benchmark",
+  "system1": false
+}
