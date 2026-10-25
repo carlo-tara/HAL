@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.9.0] - 2026-10-25
+
+### Added
+
+- Static analysis gate come policy L1 nel body: stack standardizzato (`ruff`, `pyright`|`mypy`, `shellcheck`), target Platform API `lint`/`types`/`check-static`/`check-static-diff` nel template Makefile, uscita nodo act = diff-gate 0 + baseline non peggiorata; contratto in `tests/test_a_harness_static_policy.py` [sync:safe]
+
 ## [1.8.1] - 2026-10-25
 
 ### Added

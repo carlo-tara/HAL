@@ -3,7 +3,7 @@
 Copia/adatta in root del progetto target. Lo **Steward** è l'unico ruolo che modifica questi target in routine.
 
 ```makefile
-.PHONY: test-unit test-int test-e2e pre-commit check-standards ready-for-review db-up seed-data check-parity sync-assets
+.PHONY: test-unit test-int test-e2e pre-commit check-standards ready-for-review db-up seed-data check-parity sync-assets lint types check-static check-static-diff
 
 # --- Adapter: sostituire con comandi reali dello stack ---
 
@@ -35,7 +35,24 @@ sync-assets:
 	# es. cp -a static/. data/ && cp templates/... data/
 	@true
 
-pre-commit: check-parity
+# -- Static analysis gate (policy L1 a-harness): adapter per lo stack reale --
+
+lint:
+	@echo "Lint/format gate (es. ruff check --exit-non-zero-on-fix . && ruff format --check)"
+	@exit 1
+
+types:
+	@echo "Typecheck gate (es. pyright o mypy; soglia baseline documentata in L2)"
+	@exit 1
+
+check-static: lint types
+	@echo "Static gate: baseline completa (audit opzionali: dead-code, secrets, deps)"
+
+check-static-diff:
+	@echo "Static gate sui soli file del diff di nodo (lint+types; baseline non peggiorata)"
+	@exit 1
+
+pre-commit: check-parity check-static-diff
 	@echo "Lint, format, typecheck"
 	# es. npm run lint:strict && npm run typecheck && npm run format:check
 	@exit 1
