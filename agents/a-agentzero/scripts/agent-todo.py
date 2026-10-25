@@ -101,11 +101,28 @@ def _take_children(lines: list[str], start: int) -> tuple[list[str], int]:
     return lines[start:end], end
 
 
-def merge_unreleased(changelog: str, entries: list[tuple[str, str]]) -> str | None:
+def merge_unreleased(changelog: str, entries: list[tuple[str, str]]) -> str:
+    """Merge flushed entries under '## [Unreleased]'.
+
+    Il body della sezione si ferma al prossimo heading di livello 2 DI QUALSIASI
+    stile: i repo che usano `## 1.7.0 (data)` (senza parentesi) non devono essere
+    swallowati fino a EOF con perdita delle heading di versione (regressione
+    2026-10-25). Se la sezione manca, è creata prima della prima release.
+    """
     match = re.search(r"(?m)^## \[Unreleased\][^\n]*\n", changelog)
     if not match:
-        return None
-    nxt = re.search(r"(?m)^## \[", changelog[match.end() :])
+        block = "## [Unreleased]\n\n"
+        first_version = re.search(r"(?m)^## \[?\d", changelog)
+        if first_version:
+            changelog = (
+                changelog[: first_version.start()]
+                + block
+                + changelog[first_version.start() :]
+            )
+        else:
+            changelog = changelog.rstrip("\n") + "\n\n" + block
+        match = re.search(r"(?m)^## \[Unreleased\][^\n]*\n", changelog)
+    nxt = re.search(r"(?m)^## ", changelog[match.end() :])
     end = match.end() + nxt.start() if nxt else len(changelog)
     body = changelog[match.end() : end]
 
@@ -135,14 +152,11 @@ def flush(root: Path = Path(".")) -> int:
     if not entries:
         print("Nessun elemento da flushare in CHANGELOG.md.")
         return 0
-    merged = (
-        merge_unreleased(log_path.read_text(encoding="utf-8"), entries)
-        if log_path.exists()
-        else None
-    )
-    if merged is None:
-        print("CHANGELOG.md assente o senza '## [Unreleased]'.")
-        return 1
+    if log_path.exists():
+        changelog = log_path.read_text(encoding="utf-8")
+    else:
+        changelog = "# Changelog\n\n## [Unreleased]\n\n"
+    merged = merge_unreleased(changelog, entries)
     log_path.write_text(merged, encoding="utf-8")
     todo_path.write_text(new_todo.rstrip("\n") + "\n", encoding="utf-8")
     print(f"Flushate {len(entries)} voci in CHANGELOG.md.")
