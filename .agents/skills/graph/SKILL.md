@@ -1,6 +1,6 @@
 ---
 name: graph
-version: 1.0.0
+version: 1.0.1
 description: Command graph for HAL workspace.
 ---
 
@@ -31,6 +31,7 @@ Generare Loop o Work Graph in `product/state/work-graph.md` (Plan-only di defaul
 
 ## Notes
 
+- **Celle tabella `work-graph.md`**: mai pipe grezzi dentro una cella (alternazioni regex, opzioni tipo `a` o `b` separate da barra verticale): sfuggirli o riformulare con `/` — un pipe spezza la cella e corrompe la riga (caso 2026-10-25, riga N7).
 - Canone operativo: competenza `graph` sotto **a-harness**.
 - Tool: `scripts/harness-prompt-builder.sh` (token budget 200, handoff-graph.json).
 - Baseline: `a-agentzero/commands/graph.md`.
