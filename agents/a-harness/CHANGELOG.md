@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.8.1] - 2026-10-25
+
+### Added
+
+- Post-deploy gate funzionale nel body L1: dopo deploy/`make up` verificare una chiamata reale sul contratto primario (200 + log di successo); `health` verde non è prova [sync:safe]
+
 ## [Unreleased] - 2026-10-20
 
 ### Changed

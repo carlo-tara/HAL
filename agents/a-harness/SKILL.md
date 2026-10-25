@@ -1,7 +1,7 @@
 ---
 name: a-harness
 extends: a-agentzero
-version: 1.8.0
+version: 1.8.1
 extends-version: 1.11.0
 description: >-
   Reason why: senza test, gate Make e ritmi sostenibili, lo sviluppo non ha uscita verificabile né qualità stabile.
@@ -18,6 +18,7 @@ Agente L1 orchestratore dello sviluppo TDD/XP. Eredita da **a-agentzero**.
 - **Progressive disclosure** — carica le competenze on-demand (`context-budget`); non caricare tutto L1.
 - **System 1 Gating (Laya):** Pre-filtro rapido (routing test failure, score rischio blocco) prima di invocare System 2 (deep reasoning) via `python3 router.py triage` o `router.py score`.
 - Durante l'uso di test runner, adotta il troncamento dei log (es. via `head_lines: 5`, `tail_lines: 15`).
+- **Post-deploy gate funzionale** — `health` verde e container ricreato non sono prova di contratto: dopo ogni deploy/`make up` verifica una chiamata reale sul percorso primario (response 200 + riga di log di successo). Caso reale: un `NameError` nell'hook di logging faceva rispondere 500 a ogni `/predict` per giorni, con `/health` regolarmente verde.
 
 ## Output (Contratto)
 
