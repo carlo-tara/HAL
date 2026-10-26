@@ -218,6 +218,7 @@ class System2Metrics:
             rows = connection.execute(
                 f"""
                 SELECT CASE
+                         WHEN status != 'ok' THEN 'error'
                          WHEN stage LIKE 'segmento_%' THEN 'segment'
                          WHEN stage = 'assemblaggio_finale' THEN 'assembly'
                          WHEN stage = 'assemblaggio_locale' THEN 'local_assembly'

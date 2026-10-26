@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.5.0] - 2026-10-26
+
+### Added
+
+- Riferimento `references/tool-pitfalls.md`: pitfall tool Zed validati in ≥2 sessioni (parametri numerici → `sed`/ometti `timeout_ms`; batch `edit_file` non atomico; verifica assenze prima di ToDo; `ABSTAIN` routing → fallback System 2) [sync:safe]
+
 ## [1.3.1] - 2026-10-20
 
 ### Fixed

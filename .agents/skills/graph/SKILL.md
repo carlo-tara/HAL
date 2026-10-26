@@ -4,8 +4,6 @@ version: 1.0.1
 description: Command graph for HAL workspace.
 ---
 
----
-
 # Graph (L0)
 
 ## Objective

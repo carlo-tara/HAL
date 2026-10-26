@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-24T06:04:47Z",
+  "ts": "2026-10-26T07:00:30Z",
   "flags": {"y": true},
-  "acceptance": "conteggio token input prima invio; oltre budget → trim messaggi più vecchi → reject strutturato; evento context_trim con token recuperati; outcome non peggiore",
-  "files": "app/usage_estimator.py,app/main.py",
-  "node_id": "p1-context-budget",
-  "next": "p1-token-accounting",
-  "summary": "N1 benchmark esplorativo: 2 run a freddo qwen2.5:1.5b/programmazione (63.1s e 39.9s), output lunghezze diverse → dati esplorativi. P1 context-budget enforcement implementato e testato.",
-  "brief": "P1 context-budget enforcement completato: count_messages_tokens() via tiktoken in usage_estimator.py; enforcement in main.py legge max_context_tokens dai use-case YAML, trim messaggi più vecchi se oltre budget, evento context_trim con token recuperati. Test estimate_tokens_and_cost passato.",
+  "acceptance": "make test-unit 225 GREEN; make ready-for-review Gate OK",
+  "files": "benchmark/runner/system2_metrics.py,benchmark/runner/benchmark_models.py,global_config.py,ToDo.md,product/state/work-graph.md",
+  "node_id": "DONE",
+  "next": "Nessun nodo aperto: flush ToDo.md completato, attendere commit/user",
+  "summary": "Grafo 5/5 done: N1 categoria error nel breakdown; N2 Settings.laya_max_retries + retry loop bounded + fallback single_pass/strategy + laya_call_count (0 su skip); N3 disclaimer rimossa (127 chars); N4 translation source_chunks solo con fonte reale oltre soglia (fix phi3 preservato); N5 registro a-knowledge mode 0. Suite verde.",
+  "brief": "",
   "token_budget": 200
 }

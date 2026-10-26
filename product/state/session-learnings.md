@@ -75,3 +75,26 @@
 ### HAL
 
 - (nessuno)
+
+## [2026-10-25] bootstrap-2026-10-25-hal — /bootstrap standard
+
+### Progetto
+
+- **RED preesistente su HEAD** — i test Gate 5/6 e error-category passano in `FAILED (failures=7, errors=11)` con 222 test → `ToDo.md` · P0 · `#system1-gating`
+- **Il bundle `agents/` ha Platform API separata** (`agents/Makefile`, version-chains/sync): lo steward della root non la tocca, e viceversa
+
+### HAL
+
+- **Due Progress/learnings in `product/state/`**: il repo usa già `product/state/agent-progress.md` + journal `/learn`; il bootstrap ha corretto la L2 su questi path invece di duplicare in `docs/product/` (anti self-harness / potatura)
+
+## [2026-10-26] graph-gate56-close — /learn !
+
+### Progetto
+
+- **78 `.pyc` sotto tracking git, nessuna regola `__pycache__` in `.gitignore`** — confermato da `git ls-files` e grep su `.gitignore` → `./ToDo.md` · P2 · `#chore #infra`.
+- **Riconciliazione Gate 3/5/6 atterrata** — Laya conferma o declassa la modalità (mai fabrica chunks/piano), translation+`source_chunks` solo con fonte reale oltre soglia; già in codice, CHANGELOG e work-graph. (Fatto in sessione, nessuna voce ToDo.)
+
+### HAL
+
+- **Pitfall tool Zed consolidati in reference L0** — parametri numerici (`read_file` line range, `terminal` `timeout_ms`) respinti come stringa → fallback `sed`/ometti parametro; batch `edit_file` si interrompe al primo mismatch (precedenti applicati); reflow formatter tra i turni invalida `old_text` multiriga; `ABSTAIN` di `router.py routing` → decide la tabella Destinazione di `learn-guidelines.md`, non è fallimento da forzare. Pattern in `agents/a-agentzero/learn/references/tool-pitfalls.md`, skill `learn` 1.4.0 → 1.5.0 (`/version minor`).
+- **Correzione claim di sessione**: «graph referenzia `harness-graph.py` mancante» **non confermato** — nessun riferimento nel repo; lo stato nodi in `work-graph.md` è manuale by-design. Nessuna azione, promemoria «verificare le assenze con grep prima di asserirle» in `tool-pitfalls.md`.

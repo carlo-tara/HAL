@@ -4,8 +4,6 @@ version: 1.0.1
 description: Command cycle for HAL workspace.
 ---
 
----
-
 # Cycle (L0)
 
 ## Objective

@@ -2,3 +2,8 @@
 .env
 .env.*
 !.env.example
+# Harness quiet-test logs (rotazione settimanale ISO)
+logs/
+# Igiene: bytecode Python mai in tracking
+__pycache__/
+*.pyc

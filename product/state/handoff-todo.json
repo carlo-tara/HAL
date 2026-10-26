@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-10-24T08:02:16Z",
+  "ts": "2026-10-26T06:18:21Z",
   "flags": {"y": false},
   "acceptance": "",
-  "files": "",
+  "files": "ToDo.md CHANGELOG.md product/state/handoff-todo.json",
   "node_id": "",
-  "next": "",
-  "summary": "ToDo.md: 16 aperte (P1: 5 feature; P2: 13 voci — 3 spike bloccati N1/N2/N3, 4 feature/config, 3 hygiene/policy/tech-debt, 1 spike traduzione). Già fatto vuoto. Nessuna duplicazione o ambiguità rilevata. Tag coerenti (#feature #spike #config #hygiene #policy #tech-debt).",
+  "next": "Portare i test Gate 5/6 da RED a GREEN via /red→/green",
+  "summary": "ToDo.md: 2 aperte (P0: 1 Gate5/6 RED→GREEN #feature #system1-gating; P1: 1 benchmark middleware #techdebt). 1 flushata in CHANGELOG (source_chunks assemblaggio locale confermato). Poda: sub-voce COMPLETATO promossa a Già fatto→flush; formato conforme checkbox con Perché utile/Acceptance; tag coerenti con glossario.",
   "brief": "",
   "token_budget": 200
 }

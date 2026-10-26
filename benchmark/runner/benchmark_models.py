@@ -56,6 +56,8 @@ class Settings:
     laya_min_confidence: float = 0.7
     laya_model: str = "multilingual"
     laya_excerpt_max_chars: int = 1200
+    # Gate 6: Laya attempts allowed when the answer is under threshold.
+    laya_max_retries: int = 1
     # Opt-in cap on output tokens per source segment; None keeps requests unlimited.
     segment_max_output_tokens: int | None = None
 
@@ -108,6 +110,7 @@ class Settings:
                     env.get("LAYA_EXTRACT_MAX_CHARS", "1200"),
                 )
             ),
+            laya_max_retries=int(env.get("LAYA_MAX_RETRIES", "1")),
             segment_max_output_tokens=(
                 int(env["BENCHMARK_SEGMENT_MAX_TOKENS"])
                 if env.get("BENCHMARK_SEGMENT_MAX_TOKENS")
@@ -420,6 +423,7 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
             "confidence": 1.0,
             "guidance": SYSTEM1_STRATEGIES[required_strategy],
             "laya_called": False,
+            "laya_call_count": 0,
             "decision_source": "local_task_gate",
             "preflight_latency_ms": 0,
             "complexity": complexity,
@@ -477,19 +481,6 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
         },
         "model": config.laya_model,
     }
-    started = time.perf_counter()
-    response = client.post(
-        f"{config.laya_base_url}/predict",
-        headers={"Authorization": f"Bearer {config.laya_api_key}"},
-        json=payload,
-        timeout=config.laya_timeout,
-    )
-    preflight_latency_ms = round((time.perf_counter() - started) * 1000)
-    response.raise_for_status()
-    data = response.json()
-    answers = data.get("answers") if isinstance(data, dict) else None
-    if not isinstance(answers, dict):
-        raise TypeError("Laya response has no structured answers")
 
     def answer_for(key: str, allowed: dict[str, str]) -> tuple[str, float]:
         answer = answers.get(key)
@@ -506,40 +497,83 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
             confidence = 0.0
         return choice, confidence
 
-    proposed_family, family_confidence = answer_for(
-        "task_family", SYSTEM1_TASK_FAMILIES
-    )
-    proposed_strategy, strategy_confidence = answer_for("strategy", SYSTEM1_STRATEGIES)
-    proposed_mode, execution_confidence = answer_for(
-        "execution_mode", SYSTEM1_EXECUTION_MODES
-    )
-    confidence = min(family_confidence, strategy_confidence, execution_confidence)
+    # Gates 5/6: one useful preflight plus only the intermediate decisions
+    # that could change the flow. A sub-threshold answer is retried up to
+    # config.laya_max_retries times; every attempt is timed and counted.
+    max_retries = int(getattr(config, "laya_max_retries", 1))
+    laya_call_count = 0
+    preflight_latency_ms = 0
+    while True:
+        started = time.perf_counter()
+        response = client.post(
+            f"{config.laya_base_url}/predict",
+            headers={"Authorization": f"Bearer {config.laya_api_key}"},
+            json=payload,
+            timeout=config.laya_timeout,
+        )
+        preflight_latency_ms += round((time.perf_counter() - started) * 1000)
+        response.raise_for_status()
+        data = response.json()
+        answers = data.get("answers") if isinstance(data, dict) else None
+        if not isinstance(answers, dict):
+            raise TypeError("Laya response has no structured answers")
+        laya_call_count += 1
+        proposed_family, family_confidence = answer_for(
+            "task_family", SYSTEM1_TASK_FAMILIES
+        )
+        proposed_strategy, strategy_confidence = answer_for(
+            "strategy", SYSTEM1_STRATEGIES
+        )
+        proposed_mode, execution_confidence = answer_for(
+            "execution_mode", SYSTEM1_EXECUTION_MODES
+        )
+        confidence = min(family_confidence, strategy_confidence, execution_confidence)
+        if confidence >= config.laya_min_confidence or laya_call_count > max_retries:
+            break
+
+    confident = confidence >= config.laya_min_confidence
     coherent = (
         proposed_family == expected_family
         and proposed_strategy == required_strategy
-        and confidence >= config.laya_min_confidence
+        and confident
     )
     # The local contract is authoritative; Laya may refine only compatible choices.
     task_family = expected_family
     strategy = proposed_strategy if coherent else required_strategy
-    execution_mode = analysis["execution_mode"]
-    if analysis["explicit_plan"]:
-        execution_mode = (
-            "plan_then_solve"
-            if proposed_mode == "plan_then_solve"
-            and confidence >= config.laya_min_confidence
-            else "single_pass"
-        )
-    # Gate 3: blocca modalit\u00e0 incompatibili con la famiglia task.
+    if confident:
+        # Laya can confirm or downgrade the local mode; source_chunks is never
+        # fabricated over an analysis that did not call for it, and
+        # plan_then_solve stands only on an explicitly decomposable request.
+        execution_mode = proposed_mode
+        if (
+            proposed_mode == "source_chunks"
+            and analysis["execution_mode"] != "source_chunks"
+        ):
+            execution_mode = analysis["execution_mode"]
+        if proposed_mode == "plan_then_solve" and not analysis["explicit_plan"]:
+            execution_mode = "single_pass"
+    else:
+        # Gate 5: a sub-threshold decision must never change the flow.
+        execution_mode = "single_pass"
+        strategy = required_strategy
+    # Gate 3: blocca modalità incompatibili con la famiglia task.
     if not _mode_allowed_for_family(expected_family, execution_mode):
         execution_mode = "single_pass"
+    # Gate 3 (translation): il chunking è giustificato solo da una fonte reale
+    # oltre una pagina; senza, la traduzione fedele resta single_pass per non
+    # scartare segmenti di fonte (fissato dalla run phi3 sintesi_traduzione).
+    if (
+        execution_mode == "source_chunks"
+        and expected_family == "translation"
+        and len(source) <= CHARS_PER_A4_PAGE
+    ):
+        execution_mode = "single_pass"
     guidance = SYSTEM1_STRATEGIES[strategy]
-    if confidence < config.laya_min_confidence:
+    if not confident:
         guidance = (
             "Classificazione Laya incerta: segui il contratto locale, estrai i requisiti "
             "dal prompt e rispetta rigorosamente fonte e formato."
         )
-        strategy = required_strategy
     return {
         **analysis,
         "task_family": task_family,
@@ -551,6 +585,7 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
         "confidence": confidence,
         "guidance": guidance,
         "laya_called": True,
+        "laya_call_count": laya_call_count,
         "decision_source": "laya" if coherent else "local_task_gate",
         "proposed_task_family": proposed_family,
         "proposed_strategy": proposed_strategy,
@@ -616,7 +651,6 @@ def system1_decision(
 def system1_prompt(prompt: dict, guide: dict) -> str:
     strategy = (
         "<strategia_system1_laya>\n"
-        "Guida metodologica preliminare; non modifica il compito, i dati o il formato richiesto.\n"
         f"Categoria: {guide['task_family']}.\n"
         f"Modalità: {guide.get('execution_mode', 'single_pass')}.\n"
         f"Strategia: {guide['guidance']}\n"

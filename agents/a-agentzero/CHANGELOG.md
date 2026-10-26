@@ -1,5 +1,19 @@
 # Changelog — a-agentzero
 
+## [1.12.0] - 2026-10-26
+
+### Changed
+
+- Comandi canonici `cycle.md`/`graph.md` @ 1.0.1: bullet appresi da /learn 2026-10-25 (condizione STOP; celle `work-graph.md` senza pipe grezzi) spostati dal wrapper al canonico, frontmatter `version:` corretta — la rigenerazione dei wrapper via `link-workspace-skills.sh` ora è idempotente [sync:safe]
+- `scripts/agent-todo.py flush`: guardia esplicita con `RuntimeError` se la sezione `[Unreleased]` manca dopo l'inserimento [sync:safe]
+- Skill `learn` 1.4.0 → 1.5.0: nuovo reference `learn/references/tool-pitfalls.md` (pitfall tool Zed validati in ≥2 sessioni) [sync:safe]
+
+## [1.11.0] - 2026-10-24
+
+### Changed
+
+- Voce retroattiva (commit `3ddc96f`): rimozione dei campi modello preferito dal frontmatter di tutti gli agenti, con bump di versione coordinati [sync:safe]
+
 ## [1.10.1] - 2026-10-21
 
 ### Added

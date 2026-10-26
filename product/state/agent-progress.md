@@ -370,3 +370,20 @@
 | 2026-10-23 | green | passed  | _initialize aggiunge `error_message` via ALTER TABLE se assente; test di migrazione e regressione passano. Indici duplicati rimossi. | 0         |
 | 2026-10-23 | ready | blocked | sync_hal_system2.sh check exit 1: divergenze canonico/mirror su benchmark_models.py e system2_metrics.py. `apply` non eseguito per rischio overwrite. | 1         |
 
+| 2026-10-25 | slice | accepted | N11 policy static-analysis in a-harness: perimetro 4 file (SKILL.md, references/makefile-template.mk, CHANGELOG.md, tests/test_a_harness_static_policy.py) + progress; RED dichiarato = pytest sul test di contratto | 0 |
+
+
+## Session 2026-10-25-bootstrap-platform-api
+
+- Scope: `/bootstrap` a-harness profile **standard** sulla root gateway: Makefile Platform API + L2 `harness-hal` + glossary/BC/freeze + gitignore `logs/`.
+- Mode: solo fabbrica (isolamento steward): nessun file prodotto o test toccato.
+
+| ts | phase | event | detail | make_exit |
+|----|-------|-------|--------|-----------|
+| 2026-10-25 | plan | accepted | profile standard; target = repo root (Makefile assente; CI `ready-for-review.yml` = contratto) | — |
+| 2026-10-25 | act | scaffold | Makefile specchio CI (quiet+log ISO, tier N/A documentati), L2 `agents/project-skills/harness-hal` + symlink `.agents/skills/`, `docs/glossary.md`, `docs/bounded-contexts.md`, `product/state/harness-freeze.md`, journal `/learn` aggiornato | — |
+| 2026-10-25 | ready | gate | `make pre-commit`: secrets+deps+sast+compileall | 0 |
+| 2026-10-25 | ready | blocked | `make ready-for-review` rc 2 — `test-unit` Ran 225, FAILED (failures=7, errors=11): RED **preesistente su HEAD** (test Gate 5/6 → `Settings.laya_max_retries` assente; `by_category["error"]` non implementato). Finding registrato `ToDo.md` P0; niente patch su track altrui (concurrent N11 attivo). | 2 |
+| 2026-10-25 | green | passed | Policy L1 in `agents/a-harness/SKILL.md` (bullet Static analysis gate, version 1.9.0), target statici in `references/makefile-template.mk` (.PHONY + lint/types/check-static/check-static-diff + pre-commit wiring), CHANGELOG [sync:safe]; contratto `tests/test_a_harness_static_policy.py` 3/3 verde | 0 |
+| 2026-10-25 | refactor | skipped | Slice gia minimale (4 file: un bullet L1 + stub adapter MVH coerenti allo stile del template); nessun duplicato introdotto | 0 |
+| 2026-10-25 | ready | gate | Suite hal_gateway: 18 fail **preesistenti su HEAD** (probe stash: identici con/senza slice; gate5/6 + strategy + secret scanner, gia a ToDo P0 dalla sessione concorrente); contratto 3/3; hal_system2 `make check-static-diff`=0 e `make pre-commit`=0; commit solo 4 file del mio scope (progress condiviso non staged) | 0 |

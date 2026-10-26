@@ -122,6 +122,8 @@ def merge_unreleased(changelog: str, entries: list[tuple[str, str]]) -> str:
         else:
             changelog = changelog.rstrip("\n") + "\n\n" + block
         match = re.search(r"(?m)^## \[Unreleased\][^\n]*\n", changelog)
+    if match is None:  # non può accadere: il blocco è appena stato inserito
+        raise RuntimeError("sezione [Unreleased] non trovata dopo l'inserimento")
     nxt = re.search(r"(?m)^## ", changelog[match.end() :])
     end = match.end() + nxt.start() if nxt else len(changelog)
     body = changelog[match.end() : end]

@@ -38,6 +38,10 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Nuova run phi3:mini e llama3.2:1b per confermare l'effetto dell'assemblaggio locale
 - Script wrapper cost-aware a-knowledge/scripts/: extract.py --check + selezione estrattore + routing capitolo Laya. Richiede book-to-skill installato. · #knowledge
 - Registrazione comandi L0 /knowledge (check|extract|distill|query|update). · #knowledge
+- source_chunks_task — Isolare l'assemblaggio locale — confermato su phi3:mini — 5/5 segmenti JSON valido, 17.169 token, overhead 1,80× vs baseline estrazione_json; llama3.2:1b 0,79×
+- Benchmark — Token del middleware su phi3:mini e llama3.2:1b — chiuso (modelli rimossi da sys2; stack migrato a Gemini 3.5 Flash-Lite)
+- Gate 5/6 + error-category: chiudere il RED preesistente su HEAD: retry bounded sotto soglia + fallback conservativo single_pass/strategy, `laya_call_count` (0 su skip), categoria `error` nel token breakdown, blocco `<strategia_system1_laya>` ridotto (127 chars), coerenza translation+`source_chunks` (fonte reale oltre soglia, fix phi3 preservato), registro `a-knowledge` in `AGENT_EXTERNAL_MODELS` (mode 0 invariato). `make test-unit` 225 GREEN; `make ready-for-review` Gate OK · #feature #system1-gating #benchmark
+- Igiene repo: deseguiti 78 file `.pyc` dal tracking git e aggiunte regole `__pycache__/` + `*.pyc` a `.gitignore` · #chore #infra
 
 ## [2.3.0] - 2026-10-09
 

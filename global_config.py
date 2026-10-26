@@ -22,6 +22,7 @@ AGENT_EXTERNAL_MODELS: dict[str, str] = {
     "a-copywriter": "orcarouter/openai/gpt-4o-mini",
     "a-design": "orcarouter/qwen/qwen3.8-flash",
     "a-harness": "orcarouter/deepseek/deepseek-v4.1-flash",
+    "a-knowledge": "orcarouter/deepseek/deepseek-v4-flash-free",
     "a-product": "orcarouter/deepseek/deepseek-v4-flash-free",
     "a-seozoom": "orcarouter/deepseek/deepseek-v4-flash-free",
     "a-wordpress": "orcarouter/z-ai/glm-5.3-flash",

@@ -1,4 +1,6 @@
 ---
+version: 1.0.1
+---
 
 # Cycle (L0)
 
@@ -25,6 +27,7 @@ Eseguire lo **skeleton** `/cycle`: slice → red → green → refactor → read
 
 ## Notes
 
+- **Condizione STOP**: un nodo si segna skip/blocked solo dopo verifica empirica della stop condition (probe: `find_spec` per dipendenze, socket verso il servizio, `git show` per baseline) con evidenza e data nella riga del grafo — mai su presupposto.
 - Canone operativo: **a-harness**.
 - Tool: `scripts/harness-prompt-builder.sh` + `handoff-slice.json` / `handoff-cycle.json`.
 - Baseline: `a-agentzero/commands/cycle.md`.

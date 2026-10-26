@@ -1,7 +1,7 @@
 ---
 name: learn
 parent: a-agentzero
-version: 1.4.0
+version: 1.5.0
 description: >-
   Slash /learn con doppia modalità: /learn ? illustra gli apprendimenti dalla
   conversazione o sessione corrente; /learn ! consolida nelle skill attive del
@@ -19,6 +19,7 @@ Skill utility di **a-agentzero**. Cattura ciò che emerge dalla chat corrente e 
 
 - [consolidation-targets.md](references/consolidation-targets.md)
 - [learn-guidelines.md](references/learn-guidelines.md) (per regole cosa apprendere, ambiti e formato scrittura)
+- [tool-pitfalls.md](references/tool-pitfalls.md) (pitfall tool Zed validati in ≥2 sessioni)
 
 ---
 
