@@ -11,11 +11,11 @@ Ogni nodo resta uno slice con perimetro proprio (≤4 file o WAIVER). `-y` autor
 
 ## Risoluzione input
 
-| Invocazione | Sorgente |
-|-------------|----------|
-| `/graph` o `/graph -y` (no altri args) | **context** — chat + `./ToDo.md` (P0/P1 aperti se presenti) + friction/stuck in progress |
-| `/graph ToDo.md` / `/graph -y ToDo.md` (path file esistente o `*.md`) | **file** — voci/sezioni del file come serie di Richieste |
-| `/graph <testo>` / `/graph -y <testo>` (altro) | **request** — una Richiesta esplicita (es. refactor della classe User) |
+| Invocazione                                                           | Sorgente                                                                                 |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `/graph` o `/graph -y` (no altri args)                                | **context** — chat + `./ToDo.md` (P0/P1 aperti se presenti) + friction/stuck in progress |
+| `/graph ToDo.md` / `/graph -y ToDo.md` (path file esistente o `*.md`) | **file** — voci/sezioni del file come serie di Richieste                                 |
+| `/graph <testo>` / `/graph -y <testo>` (altro)                        | **request** — una Richiesta esplicita (es. refactor della classe User)                   |
 
 Se path ambiguo (file non trovato): trattalo come **request** e segnalalo nel meta `source`.
 
@@ -26,8 +26,9 @@ Orchestrazione (flag strip, next pointer, handoff) = **deterministica** — non 
 1. **Brief ≤200 token** — prima di clarify/emit, costruisci un brief lean con:
    `bash scripts/harness-prompt-builder.sh render --max-tokens 200 --set goal='…' --set source='context|file|request' -- " /graph source={source} goal={goal}. Emit work-graph + handoff only."`
 2. **Niente dump** — non incollare transcript, `ToDo.md` intero, né `work-graph.md` completo nel prompt; passa solo titoli/P0–P1 o il nodo `next`.
-3. **Handoff compatto** — dopo Write, aggiorna `product/handoff-graph.json`:
-   `bash scripts/harness-prompt-builder.sh handoff-write graph --field node_id=… --field next=… --field y=true|false --field brief='…'`
+3. **Handoff compatto** — dopo Write, aggiorna `product/state/handoff-graph.json`:
+   `bash scripts/harness-prompt-builder.sh handoff-write graph --dir product/state --field node_id=… --field next=… --field y=true|false --field brief='…'`
+   (il `--dir` è obbligatorio: il default del tool è `product/` e genera shadow copy fuori canone — caso 2026-10-27, vedi `learn/references/tool-pitfalls.md` § Writer canonico)
 4. **Multi-cycle (`-y`)** — ogni nodo: leggi **solo** `handoff-graph.json` + riga nodo in `work-graph.md`; non riaprire il contesto chat della `/graph` iniziale.
 
 ## Pipeline (`/graph`)
@@ -44,11 +45,11 @@ Orchestrazione (flag strip, next pointer, handoff) = **deterministica** — non 
 
 ## Loop vs Graph
 
-| Preferisci **Loop** | Usa **Work Graph** |
-|---------------------|--------------------|
-| Un obiettivo, un BC, un owner | Ruoli/L1 diversi |
-| Nessun parallelismo sicuro | Fan-out indipendente |
-| Path lineare RGR | Handoff auditabili o gate umani |
+| Preferisci **Loop**           | Usa **Work Graph**              |
+| ----------------------------- | ------------------------------- |
+| Un obiettivo, un BC, un owner | Ruoli/L1 diversi                |
+| Nessun parallelismo sicuro    | Fan-out indipendente            |
+| Path lineare RGR              | Handoff auditabili o gate umani |
 
 Default AF: **preferisci Loop**. Graph solo con motivazione esplicita nel file.
 
@@ -65,12 +66,12 @@ Default AF: **preferisci Loop**. Graph solo con motivazione esplicita nel file.
 
 **Nodo:** `id`, tipo (`plan|reflect|tool|act|review|human|delegate`), owner (slash o L1), input/output, stop, next
 
-| Building block (Ng) | AF |
-|---------------------|-----|
-| Reflection | pass critique / `/refactor` review |
-| Tool use | `make` / Platform API |
-| Planning | `/slice` |
-| Multi-agent | Deleghe L1 (`a-gherkin`, `a-po`, …) |
+| Building block (Ng) | AF                                  |
+| ------------------- | ----------------------------------- |
+| Reflection          | pass critique / `/refactor` review  |
+| Tool use            | `make` / Platform API               |
+| Planning            | `/slice`                            |
+| Multi-agent         | Deleghe L1 (`a-gherkin`, `a-po`, …) |
 
 Memoria condivisa = **progress** + **work-graph.md** (non transcript chat).
 
@@ -89,15 +90,17 @@ Memoria condivisa = **progress** + **work-graph.md** (non transcript chat).
 - next: <node_id> — attendi accept | multi-cycle (-y) → /slice o /cycle
 
 ## Loop (se mode=loop)
+
 …
 
 ## Graph (se mode=graph)
-| id | type | owner | in | out | stop | next |
-|----|------|-------|----|-----|------|------|
+
+| id  | type | owner | in  | out | stop | next |
+| --- | ---- | ----- | --- | --- | ---- | ---- |
 
 \`\`\`mermaid
 flowchart TD
-  …
+…
 \`\`\`
 ```
 

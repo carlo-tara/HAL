@@ -1,7 +1,7 @@
 ---
 name: graph
 kind: competency
-version: 1.4.0
+version: 1.4.1
 description: >-
   Genera Loop o Work Graph (Markdown + Mermaid) da contesto, file (es. /graph
   ToDo.md) o richiesta esplicita. Flag -y = auto-accept + multi-cycle sequenziale

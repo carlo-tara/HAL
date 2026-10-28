@@ -1,7 +1,7 @@
 ---
 name: context-budget
 kind: competency
-version: 1.3.1
+version: 1.3.2
 description: >-
   Carico cognitivo = context window: max 4 file attivi, no directory intere,
   offload output grandi su FS, quiet test default (full GREEN / selective RED),
@@ -26,7 +26,7 @@ L'equazione **carico cognitivo team = context window agente**. Contesto troppo a
 7. **Progressive disclosure** — carica competenze on-demand per fase, non tutto L1 in un colpo
 8. Onboarding `/slice`: glossary + makefile + modulo — non embedding product esterno
 9. **Brief slash ≤200 token** — per `/graph` `/slice` `/cycle` `/todo` usa `scripts/harness-prompt-builder.sh` (`render --max-tokens 200`); niente wall-of-text
-10. **Handoff JSON** — stato tra passi in `product/handoff-{graph,slice,cycle,todo}.json` (non transcript); leggi/scrivi via `handoff-read` / `handoff-write`
+10. **Handoff JSON** — stato tra passi in `product/state/handoff-{graph,slice,cycle,todo}.json` (non transcript); leggi/scrivi via `handoff-read` / `handoff-write` con `--dir product/state` (il default del tool è `product/` → shadow copy fuori canone)
 
 ## Escalation
 
