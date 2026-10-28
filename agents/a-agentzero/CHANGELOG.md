@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [Unreleased]
+
+### Changed
+
+- Skill `learn` 1.5.6 → 1.5.7: `tool-pitfalls.md` §Writer canonico — chiarito che il default di `handoff-write` è risolto dalla root dello script (hal_gateway); nuova regola workspace consumer: sempre `--out product/state/handoff-<kind>.json`; evidenza shadow copy stale 2026-10-26/28 (sessione brainbeez /todo+/graph) [sync:safe]
+
 ## [1.12.0] - 2026-10-26
 
 ### Changed

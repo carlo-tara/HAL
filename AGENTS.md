@@ -4,7 +4,7 @@ La fonte canonica di agenti e skill è `agents/`. Il repository AgentFactory è 
 
 - Le skill condivise sono esposte in `.agents/skills/` e puntano ai bundle canonici in `agents/`.
 - Il modello predefinito di esecuzione è System 2 (`SystemTwoEngine.ACTIVE_MODEL_NAME` in `global_config.py`). Non creare un runtime alternativo e non assegnare modelli diversi ai subagent.
-- Preservare contenuti, gerarchia L0/L1/L2 e competenze. Gli 8 agenti primari portano il prefisso `a-` (`a-agentzero`, `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-product`, `a-seozoom`, `a-wordpress`), mentre le skill integrate e i comandi operativi non usano il prefisso (`personas`, `jtbd`, `gherkin`, `enrichment`, `uiux`, `charts`, `illustrator`, `laya`, `learn`, `sync`, `harness-agentfactory`).
+- Preservare contenuti, gerarchia L0/L1/L2 e competenze. I 9 agenti primari portano il prefisso `a-` (`a-agentzero`, `a-b2b`, `a-copywriter`, `a-design`, `a-harness`, `a-knowledge`, `a-product`, `a-seozoom`, `a-wordpress`), mentre le skill integrate e i comandi operativi non usano il prefisso (`personas`, `jtbd`, `gherkin`, `enrichment`, `uiux`, `charts`, `illustrator`, `laya`, `learn`, `sync`, `harness-agentfactory`).
 - Non eseguire script dei bundle solo perché una skill è stata caricata.
 
 ## Architettura Cognitiva: System 1 (Laya) vs System 2 (Reasoning)

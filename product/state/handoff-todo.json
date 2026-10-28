@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-10-26T06:18:21Z",
+  "ts": "2026-10-28T10:54:51Z",
   "flags": {"y": false},
   "acceptance": "",
-  "files": "ToDo.md CHANGELOG.md product/state/handoff-todo.json",
+  "files": "ToDo.md",
   "node_id": "",
-  "next": "Portare i test Gate 5/6 da RED a GREEN via /red→/green",
-  "summary": "ToDo.md: 2 aperte (P0: 1 Gate5/6 RED→GREEN #feature #system1-gating; P1: 1 benchmark middleware #techdebt). 1 flushata in CHANGELOG (source_chunks assemblaggio locale confermato). Poda: sub-voce COMPLETATO promossa a Già fatto→flush; formato conforme checkbox con Perché utile/Acceptance; tag coerenti con glossario.",
+  "next": "/slice P0 cache key tool-inclusive",
+  "summary": "36 aperte (1 P0, 13 P1, 22 P2), 0 flushate in CHANGELOG; delta QwenCloud streaming: 4 voci",
   "brief": "",
   "token_budget": 200
 }

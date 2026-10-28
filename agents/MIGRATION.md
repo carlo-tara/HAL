@@ -12,7 +12,7 @@ La migrazione iniziale conserva i contenuti senza razionalizzarli. Il repository
 
 ## Struttura canonica successiva
 
-La struttura HAL attuale consolida i 14 bundle L1 originari in 7 L1, mantenendo le specializzazioni come skill integrate:
+La struttura HAL attuale consolida i 14 bundle L1 originari in 7 L1, mantenendo le specializzazioni come skill integrate. Successivamente è stato aggiunto `a-knowledge`, portando il totale a 8 agenti L1 attuali.
 
 | Bundle originario                                                             | Destinazione strutturale in HAL                              |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -21,5 +21,6 @@ La struttura HAL attuale consolida i 14 bundle L1 originari in 7 L1, mantenendo 
 | `a-charts`, `a-illustrator`, `a-uiux`                                         | Skill `charts`, `illustrator`, `uiux` nel dominio `a-design` |
 | `a-po`                                                                        | Consolidato nel dominio `a-product`                          |
 | `a-gherkin`, `a-jtbd`, `a-personas`                                           | Skill omonime nel dominio `a-product`                        |
+| `a-knowledge` (nuovo)                                                         | L1 omonimo                                                   |
 
 Questa mappa descrive la collocazione dei contenuti nell'albero HAL, non certifica la parità funzionale di ogni istruzione, riferimento o script con il repository AgentFactory. AgentFactory resta deprecato e non è una fonte operativa.

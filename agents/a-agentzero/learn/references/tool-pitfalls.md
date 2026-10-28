@@ -5,15 +5,33 @@ Pattern validati in ≥2 sessioni. Consultare prima di ripetere tentativi a vuot
 ## Parametri numerici respinti come stringhe
 
 - `read_file` con `start_line`/`end_line` e `terminal` con `timeout_ms` possono fallire con `invalid type: string, expected u32/u64` anche con valori numerici → non insistere: per i range usare `sed -n '<A>,<B>p' <file>` via terminal; per `terminal` omettere `timeout_ms` (il default basta per comandi brevi).
-- Evidenza: sessione `/graph -y` Gate 5/6 (2026-10-26, 3 occorrenze) e sessione graph-cycle-sync-todo (2026-10-21, `product/session-learnings.md` § "Tool pitfalls Zed editor").
+- Evidenza: sessione `/graph -y` Gate 5/6 (2026-10-26, 3 occorrenze), sessione graph-cycle-sync-todo (2026-10-21, `product/session-learnings.md` § "Tool pitfalls Zed editor"), sessione /learn Kimi dynamic-tool-loading (2026-10-28: `read_file` con range righe respinto 3×, `timeout_ms` respinto 1×; entrambi aggirati con `sed -n`/omissione), sessione QwenCloud multi-turn (2026-10-28: `read_file` con range respinto 2×, stesso identico errore anche a parametri numerici → `sed -n`) e sessione QwenCloud connection-pooling (2026-10-28: `read_file` con range respinto 4× in due tentativi paralleli, identico errore `invalid type: string, expected u32` → `sed -n` via terminal) e sessione QwenCloud async-task-management (2026-10-28: `read_file` con range respinto 3× anche con un solo parametro, `terminal timeout_ms` respinto 2× → `sed -n`/omissione) e sessione QwenCloud streaming (2026-10-28: `read_file` con range respinto 2× anche con parametri numerici → `sed -n`).
 
 ## Batch `edit_file` non atomico
 
 - Se un edit del batch non combacia, la chiamata si interrompe: gli edit **prima** sono applicati, quelli **dopo** no → dopo un failure, rileggere il file e riapplicare solo i mancanti con il testo esatto corrente.
 - Un formatter/reflow tra un turno e l'altro può spezzare liste YAML/Markdown (es. `tests: [a, b]` su più righe) e far fallire `old_text` multiriga → preferire ancore a riga singola o rileggere sempre prima di un nuovo batch.
-- Evidenza: `product/state/work-graph.md` (2026-10-26, batch interrotto all'indice 1 con YAML riflow; listini `tests:` multiriga).
+- File condivisi mutati da sessioni parallele tra lettura e scrittura invalidano le ancore come il reflow (es. `./ToDo.md` o questi reference, con delta/evidenze accodati da altre sessioni): rileggere prima di ogni batch. Non usare due edit a cascata con ancore sovrapposte nello stesso batch: se l'edit prima rimuove parte del testo che l'edit dopo usa come ancora, si tronca contenuto (stato intermedio applicato) → una inserzione = un edit.
+- Evidenza: `product/state/work-graph.md` (2026-10-26, batch interrotto all'indice 1 con YAML riflow; listini `tests:` multiriga) e sessione QwenCloud async-task-management (2026-10-28: `ToDo.md` e `tool-pitfalls.md` mutati da sessioni parallele tra le letture, ancore invalidate; un batch con 2 edit a cascata ha troncato il titolo della voce P0, ripristinato alla chiamata successiva) e sessione QwenCloud streaming (2026-10-28: `ToDo.md` cresciuto 67→151 righe tra lettura e scrittura per append concorrenti, index 1 di un batch di 2 edit fallito → rilettura della coda reale e riapplicato solo il mancante).
+
+## Writer canonico per handoff JSON
+
+- `product/state/handoff-<kind>.json` si scrive con `bash agents/scripts/harness-prompt-builder.sh handoff-write <kind> --field summary='…' --field files=… --field next=…` (default `product/state/` **risolto dalla root dello script**, `ts`/`cmd`/`token_budget` auto-compilati), non con `write_file` a mano: la scrittura manuale rischia schema drift e campi stale; dove i comandi citano `scripts/harness-prompt-builder.sh`, dalla root HAL il path va risolto in `agents/scripts/`.
+- **Workspace consumer:** il default `product/state/` è relativo a `hal_gateway/`, non al repo attivo → senza `--out` l'handoff finisce nella root HAL (shadow copy). Da consumer passare **sempre** `--out product/state/handoff-<kind>.json` (path relativo alla cwd del progetto).
+- Evidenza: sessione graph 2026-10-27 (meccanica handoff via tool, nota `--dir` poi allineata al default) e sessione /learn QwenCloud streaming 2026-10-28 (handoff scritto a mano via `write_file`, poi normalizzato con `handoff-write todo`; confermato default `product/state/`); sessione /todo+/graph brainbeez 2026-10-28 (shadow stale in `hal_gateway/product/state/handoff-todo.json` dal 2026-10-26; risolta con `--out` esplicito su tutti i kind, todo e graph).
 
 ## Assenze da verificare prima di ToDo/claim
 
 - Prima di asserire che uno script o un riferimento manca, `grep -r` sul repo: il claim «il comando graph referenzia `agents/scripts/harness-graph.py` mancante» (2026-10-26) era infondato — il comando usa solo `scripts/harness-prompt-builder.sh`.
 - Routing System 1: se `python3 router.py routing` risponde `ABSTAIN`, non forzare retry — decide la tabella Destinazione di `learn-guidelines.md` (System 2), come da fallback documentato dal router stesso.
+
+## Output lunghi restituiti a frammenti
+
+- `terminal` e `read_file` possono restituire risposte lunghe come **frammenti tagliati o disordinati** (righe di sezioni diverse, output mancante) mentre i file su disco sono integri: non concludere che uno script sia corrotto dal display. Verificare con comandi corti e mirati (`grep -n`, `sed -n` ≤25 righe, `wc -l`, `print(repr(...))` su riga singola) prima di ogni riscrittura.
+- Corollario per `edit_file`: dopo il reflow del formatter i blocchi lunghi non matchano più → ancorare `old_text` a righe brevi e uniche, e dopo un fallimento rileggere l'area (già in "Batch non atomico").
+- Evidenza: sessione takeout→Proton 2026-10-26/27 (>10 occorrenze su `sed`/`read_file`/output rclone).
+
+## `list_directory` con path `.` restituisce vuoto
+
+- `list_directory` con path `.` (o altro path non radice) restituisce stringa vuota senza errore: usare sempre il nome della root di progetto (es. `hal_gateway`) o un path che la includa come primo componente; per il summary senza path usare `diagnostics` o `find_path`.
+- Evidenza: sessione Kimi 2026-10-28 (osservazione singola, esclusa con nota «radice non verificata») e sessione QwenCloud multi-turn 2026-10-28 (`.` → vuoto, `hal_gateway` → ok: radice verific per contrasto).

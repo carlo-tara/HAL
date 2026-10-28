@@ -1,8 +1,8 @@
 ---
 name: a-harness
 extends: a-agentzero
-version: 1.9.0
-extends-version: 1.11.0
+version: 1.9.1
+extends-version: 1.12.0
 description: >-
   Reason why: senza test, gate Make e ritmi sostenibili, lo sviluppo non ha uscita verificabile né qualità stabile.
   Meta-Harness: TDD XP, Steward, DDD, Makefile gates, session progress, when-stuck, Plan→Act, L3.

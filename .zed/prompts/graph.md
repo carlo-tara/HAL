@@ -24,6 +24,8 @@ Generare Loop o Work Graph in `product/state/work-graph.md` (Plan-only di defaul
 ## Notes
 
 - **Celle tabella `work-graph.md`**: mai pipe grezzi dentro una cella (alternazioni regex, opzioni tipo `a` o `b` separate da barra verticale): sfuggirli o riformulare con `/` — un pipe spezza la cella e corrompe la riga (caso 2026-10-25, riga N7).
+- **Re-run `graph -y` su `work-graph.md` existente**: editing chirurgico con ancore a riga singola e verifica delle celle dopo la scrittura (pipe per riga costanti), non riscrittura integrale.
+- **Handoff**: `handoff-write graph` risolve il default `product/state/` dalla root dello script; nei workspace consumer passare sempre `--out product/state/handoff-graph.json` (vedi `learn/references/tool-pitfalls.md` § Writer canonico); campi `--field` JSON-first con fallback stringa.
 - Canone operativo: competenza `graph` sotto **a-harness**.
 - Tool: `scripts/harness-prompt-builder.sh` (token budget 200, handoff-graph.json).
 - Baseline: `a-agentzero/commands/graph.md`.

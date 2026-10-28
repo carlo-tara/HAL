@@ -1,5 +1,11 @@
 # Changelog — a-seozoom
 
+## [1.10.1] - 2026-10-28
+
+### Changed
+
+- Sync L0 a-agentzero `extends-version` 1.11.0 → 1.12.0: voci pending solo infrastruttura L0 (comandi canonici cycle/graph, agent-todo.py flush, utility learn 1.5.0) [sync:safe]; body L1 invariato
+
 ## [Unreleased] - 2026-10-20
 
 ### Changed
