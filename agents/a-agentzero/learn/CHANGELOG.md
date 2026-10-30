@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.5.11] - 2026-10-30
+
+### Added
+
+- `tool-pitfalls.md` § «Batch `edit_file` non atomico»: tre regole promosse via `/sync <` da brainbeez — ① mai ricostruire `old_text` a memoria (rilettura prima di ogni edit); ② un solo `edit_file` per file per chiamata (anche ancore simili → fuzzy al sito sbagliato); ③ tabelle markdown padded → append via `cat >>` heredoc quotato, non `edit_file`. Evidenze multiple 2026-10-28 → 2026-10-30 (brainbeez + QwenCloud) [sync:safe]
+
 ## [1.5.10] - 2026-10-29
 
 ### Added

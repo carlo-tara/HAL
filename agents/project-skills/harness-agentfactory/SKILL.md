@@ -1,8 +1,8 @@
 ---
 name: harness-agentfactory
 extends: a-harness
-version: 1.1.29
-extends-version: 1.9.2
+version: 1.1.30
+extends-version: 1.10.0
 description: >-
   Delta harness per HAL (sorgente canonica skill L0/L1): Platform API
   Makefile, glossario, bounded contexts, bootstrap standard, gate version/shell;

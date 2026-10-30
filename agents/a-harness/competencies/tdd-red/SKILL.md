@@ -1,7 +1,7 @@
 ---
 name: tdd-red
 kind: competency
-version: 1.1.0
+version: 1.2.0
 description: >-
   Fase RED TDD — persona Navigator: pre-ottimizzazioni (prompt lean, anti-bloat,
   delega), poi SOLO test che descrivono comportamento mancante. Exit: make test-unit fallisce.
@@ -61,3 +61,9 @@ Se il test passa senza implementazione → il test è insufficiente: rafforza l'
 - Sinonimi non presenti in `docs/glossary.md`
 - Gonfiare context o riespandere policy già note prima del contratto
 - Fare discovery/BDD/infra in locale invece di delegare
+
+---
+
+## Claim dei numeri decision-log (RED)
+
+- Con decision-log a numerazione incrementale (Q1, Q2, …), il numero si **assegna alla RED** (quando si scrive il test/contratto), non all'Act: onde o sessioni concorrenti che claimano alla chiusura collidono (caso reale brainbeez 2026-10-29: Q35 d'onda contro docstring S17). Il claim si registra nel titolo del nodo/slice insieme al test.

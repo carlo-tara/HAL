@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.10.0] - 2026-10-30
+
+### Added
+
+- Quattro regole promosse via `/sync <` con evidenza brainbeez (+ WTP): ① «Verità del gate» nel body — exit reale sempre, mai green da output troncato [sync:safe]; ② dead-rule guard meccanica L2↔`Makefile` nello steward-audit-checklist [sync:safe]; ③ §Pitfall rendezvous dei test realtime in `tdd-green` 1.2.0 (starlette TestClient buffer-0; un solo client + ping) [sync:safe]; ④ §Claim dei numeri decision-log alla RED in `tdd-red` 1.2.0 [sync:safe]. HOLD: «tool-pitfalls §terminal» (compose run orfani, probe `timeout -s ABRT`) non promosso — evidenza singola, resta in brainbeez fino alla seconda validazione.
+
 ## [1.9.2] - 2026-10-30
 
 ### Changed

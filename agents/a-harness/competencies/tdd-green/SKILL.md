@@ -1,7 +1,7 @@
 ---
 name: tdd-green
 kind: competency
-version: 1.1.0
+version: 1.2.0
 description: >-
   Fase GREEN TDD — persona Driver: eredita pre-ottimizzazioni RED, codice minimo
   YAGNI. Exit: make test-unit + make pre-commit verdi. Reasoning moderato.
@@ -60,3 +60,11 @@ Exit code **0**. Se linter fallisce → autocorreggi immediatamente, non chieder
 - JSON HTTP o record DB passati al core domain senza ACL
 - Chiedere attenzione umana per errori meccanici (lint, type)
 - Re-espandere prompt/context o ignorare la mappa deleghe RED
+
+---
+
+## Pitfall: rendezvous dei test realtime
+
+- Starlette `TestClient` WS = memory stream a **buffer 0** (rendezvous): broadcast `await`ato inline nel gestore HTTP deadlocka il thread della richiesta (in prod bloccherebbe la mutazione su subscriber lento). Canone: coda + sender task per connessione, l'handler fa solo `put_nowait`.
+- Test ws+http: **un solo TestClient** come context manager (due client = due event loop = stesso deadlock) e **ping di conferma** dopo `subscribe` (il server non risponde al subscribe: senza ping il test attende in eterno).
+- Evidenza: brainbeez S06 (2026-10-27, deadlock reale sul gate; pattern `src/ws.py`).

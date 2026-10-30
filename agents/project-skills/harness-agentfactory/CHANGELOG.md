@@ -1,5 +1,11 @@
 # Changelog — harness-agentfactory (L2)
 
+## [1.1.30] - 2026-10-30
+
+### Changed
+
+- Allineato a a-harness 1.10.0 (`extends-version` 1.9.2 → 1.10.0; il padre sale per le quattro regole `/sync <` — verità del gate, dead-rule L2↔Makefile, rendezvous tdd-green, claim Q alla RED), tutte voci [sync:safe]; body invariato
+
 ## [1.1.29] - 2026-10-30
 
 ### Changed
