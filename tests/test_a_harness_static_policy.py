@@ -28,13 +28,25 @@ class TestStaticAnalysisPolicyL1(unittest.TestCase):
     def test_skill_body_contiene_policy_gate_statico(self) -> None:
         _, body = _frontmatter_and_body(SKILL_MD.read_text(encoding="utf-8"))
         self.assertIn("**Static analysis gate", body)
-        for token in ("ruff", "pyright", "shellcheck", "check-static-diff", "Platform API"):
+        for token in (
+            "ruff",
+            "pyright",
+            "shellcheck",
+            "check-static-diff",
+            "Platform API",
+        ):
             self.assertIn(token, body)
 
     def test_versione_skill_bumpata_con_changelog(self) -> None:
         frontmatter, _ = _frontmatter_and_body(SKILL_MD.read_text(encoding="utf-8"))
-        self.assertIn("version: 1.9.0", frontmatter)
-        self.assertIn("## [1.9.0]", CHANGELOG.read_text(encoding="utf-8"))
+        version_line = next(
+            line for line in frontmatter.splitlines() if line.startswith("version:")
+        )
+        version = version_line.split(":", 1)[1].strip()
+        # La policy static-analysis è stata introdotta in 1.9.0: ogni bump successivo
+        # deve restare >= 1.9.0 e avere la propria voce in CHANGELOG.
+        self.assertGreaterEqual(tuple(int(p) for p in version.split(".")), (1, 9, 0))
+        self.assertIn(f"## [{version}]", CHANGELOG.read_text(encoding="utf-8"))
 
     def test_template_makefile_espone_target_statici(self) -> None:
         text = TEMPLATE.read_text(encoding="utf-8")

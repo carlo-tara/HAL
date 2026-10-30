@@ -1,0 +1,7 @@
+{
+  "skills": 39,
+  "full_tokens": 2332,
+  "compact_tokens": 449,
+  "reduction_pct": 80.7,
+  "catalog_root": "/var/www/hal_gateway/.agents/skills"
+}

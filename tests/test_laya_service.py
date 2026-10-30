@@ -34,7 +34,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"route": "a-product"}),
+            return_value=self._response({"result": {"choice": "a-product"}}),
         ) as post:
             recovered = LayaSystemOneService.routing(prompt, routes)
 
@@ -48,7 +48,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"route": "not-a-route"}),
+            return_value=self._response({"result": {"choice": "not-a-route"}}),
         ):
             invalid = LayaSystemOneService.routing(prompt, routes)
 
@@ -58,7 +58,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"route": "a-product"}),
+            return_value=self._response({"result": {"choice": "a-product"}}),
         ) as post:
             recovered = LayaSystemOneService.routing(prompt, routes)
 
@@ -79,7 +79,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"score": "not-a-number"}),
+            return_value=self._response({"result": {"score": "not-a-number"}}),
         ):
             invalid = LayaSystemOneService.score(text, "relevance")
 
@@ -129,7 +129,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"route": "a-product"}),
+            return_value=self._response({"result": {"choice": "a-product"}}),
         ) as post:
             result = GlobalLayaHandler.evaluate(
                 "routing", prompt, ["a-product", "a-harness"], task_contract=contract
@@ -153,7 +153,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"route": "a-product"}),
+            return_value=self._response({"result": {"choice": "a-product"}}),
         ) as post:
             result = GlobalLayaHandler.evaluate(
                 "routing", f"route {self.id()}", ["a-product"], task_contract=contract
@@ -201,7 +201,7 @@ class TestLayaService(unittest.TestCase):
 
         with patch(
             "laya_service._session.post",
-            return_value=self._response({"choice": "b"}),
+            return_value=self._response({"result": {"choice": "b"}}),
         ) as post:
             result = self._evaluate_atomic("choice", ["a", "b"], source)
 
@@ -284,7 +284,7 @@ class TestLayaBudget(unittest.TestCase):
         budget = self.budget(max_calls=1)
         with patch(
             "laya_service._session.post",
-            return_value=TestLayaService._response({"route": "a-product"}),
+            return_value=TestLayaService._response({"result": {"choice": "a-product"}}),
         ) as post:
             first = self.evaluate(budget)
             second = self.evaluate(budget)
@@ -324,7 +324,7 @@ class TestLayaBudget(unittest.TestCase):
     def test_flow_changing_intermediate_decision_uses_budget(self) -> None:
         with patch(
             "laya_service._session.post",
-            return_value=TestLayaService._response({"route": "a-product"}),
+            return_value=TestLayaService._response({"result": {"choice": "a-product"}}),
         ) as post:
             result = self.evaluate(is_intermediate=True, changes_flow=True)
         post.assert_called_once()
@@ -347,7 +347,7 @@ class TestLayaBudget(unittest.TestCase):
             "laya_service._session.post",
             side_effect=[
                 requests.Timeout(),
-                TestLayaService._response({"route": "a-product"}),
+                TestLayaService._response({"result": {"choice": "a-product"}}),
             ],
         ) as post:
             result = self.evaluate(budget)
@@ -373,7 +373,7 @@ class TestLayaBudget(unittest.TestCase):
 
     def test_invalid_result_and_http_error_are_not_retried(self) -> None:
         for failure in (
-            TestLayaService._response({"route": "invalid"}),
+            TestLayaService._response({"result": {"choice": "invalid"}}),
             requests.HTTPError(),
         ):
             with self.subTest(failure=type(failure).__name__):
@@ -396,7 +396,7 @@ class TestLayaBudget(unittest.TestCase):
         prompt = f"direct {self.id()}"
         with patch(
             "laya_service._session.post",
-            return_value=TestLayaService._response({"route": "a-product"}),
+            return_value=TestLayaService._response({"result": {"choice": "a-product"}}),
         ) as post:
             with LayaSystemOneService.budget(budget):
                 first = LayaSystemOneService.routing(prompt, ["a-product"])
@@ -411,7 +411,7 @@ class TestLayaBudget(unittest.TestCase):
         self.assertEqual(post.call_count, 2)
 
     def test_redirect_is_not_followed_or_accepted(self) -> None:
-        response = TestLayaService._response({"route": "a-product"})
+        response = TestLayaService._response({"result": {"choice": "a-product"}})
         response.status_code = 307
         with patch("laya_service._session.post", return_value=response) as post:
             result = self.evaluate()
@@ -432,7 +432,10 @@ class TestLayaBudget(unittest.TestCase):
 
     def test_triage_agent_and_skill_share_one_bounded_run(self) -> None:
         seen = []
-        responses = [{"route": "a-product"}, {"choice": "jtbd"}]
+        responses = [
+            {"result": {"choice": "a-product"}},
+            {"result": {"choice": "jtbd"}},
+        ]
 
         def reply(*args, **kwargs):
             with LayaSystemOneService.budget() as active:
@@ -450,7 +453,7 @@ class TestLayaBudget(unittest.TestCase):
         source = self.contract["source"] + self.id()
         with patch(
             "laya_service._session.post",
-            return_value=TestLayaService._response({"route": "a-product"}),
+            return_value=TestLayaService._response({"result": {"choice": "a-product"}}),
         ) as post:
             result = triage_request(source, laya_budget=self.budget(max_calls=1))
         self.assertEqual(result["decision_status"], "abstain")
@@ -473,22 +476,22 @@ class TestLayaBudget(unittest.TestCase):
             (
                 "router_routing",
                 partial(handle_batch_routing, routes=["a-product"]),
-                {"route": "a-product"},
+                {"result": {"choice": "a-product"}},
             ),
             (
                 "router_score",
                 partial(handle_batch_score, criteria="criterion"),
-                {"score": 0.9},
+                {"result": {"score": 0.9}},
             ),
             (
                 "service_routing",
                 partial(LayaSystemOneService.batch_routing, routes=["a-product"]),
-                {"route": "a-product"},
+                {"result": {"choice": "a-product"}},
             ),
             (
                 "service_score",
                 partial(LayaSystemOneService.batch_score, criteria="criterion"),
-                {"score": 0.9},
+                {"result": {"score": 0.9}},
             ),
         ):
             with self.subTest(operation=label):
@@ -520,7 +523,9 @@ class TestLayaBudget(unittest.TestCase):
         with (
             patch(
                 "laya_service._session.post",
-                return_value=TestLayaService._response({"route": "a-product"}),
+                return_value=TestLayaService._response(
+                    {"result": {"choice": "a-product"}}
+                ),
             ) as post,
             LayaSystemOneService.budget(parent),
             LayaSystemOneService.budget(max_calls=1),
@@ -541,7 +546,7 @@ class TestLayaBudget(unittest.TestCase):
                 "laya_service._session.post",
                 side_effect=[
                     requests.Timeout(),
-                    TestLayaService._response({"route": "a-product"}),
+                    TestLayaService._response({"result": {"choice": "a-product"}}),
                 ],
             ) as post,
             LayaSystemOneService.budget(parent),
@@ -556,22 +561,22 @@ class TestLayaBudget(unittest.TestCase):
             (
                 "router_routing",
                 partial(handle_batch_routing, routes=["a-product"]),
-                {"route": "a-product"},
+                {"result": {"choice": "a-product"}},
             ),
             (
                 "router_score",
                 partial(handle_batch_score, criteria="criterion"),
-                {"score": 0.9},
+                {"result": {"score": 0.9}},
             ),
             (
                 "service_routing",
                 partial(LayaSystemOneService.batch_routing, routes=["a-product"]),
-                {"route": "a-product"},
+                {"result": {"choice": "a-product"}},
             ),
             (
                 "service_score",
                 partial(LayaSystemOneService.batch_score, criteria="criterion"),
-                {"score": 0.9},
+                {"result": {"score": 0.9}},
             ),
         ):
             with self.subTest(operation=label):
@@ -616,6 +621,109 @@ class TestLayaBudget(unittest.TestCase):
             with self.assertRaises(TypeError):
                 self.evaluate(changes_flow="true")
         post.assert_not_called()
+
+
+class TestSystemOneContract(unittest.TestCase):
+    """Endpoint canonico dei task: POST /systemone {task_type,text,params} → envelope {"result": {choice,...}}."""
+
+    @staticmethod
+    def _response(payload: Mapping[str, object]) -> Mock:
+        response = Mock()
+        response.status_code = 200
+        response.json.return_value = payload
+        return response
+
+    def test_routing_uses_systemone_envelope(self) -> None:
+        routes = ["cache-cost-tokeni", "rete-non-tokeni"]
+        text = f"marker cache_control {self.id()}"
+        envelope = self._response(
+            {
+                "result": {
+                    "type": "choice",
+                    "choice": "cache-cost-tokeni",
+                    "confidence": 0.65,
+                },
+                "request_hash": "h1",
+            }
+        )
+        with patch("laya_service._session.post", return_value=envelope) as post:
+            outcome = LayaSystemOneService.routing(text, routes)
+        self.assertEqual(outcome.status, "ok")
+        self.assertEqual(outcome.value, "cache-cost-tokeni")
+        self.assertTrue(str(post.call_args.args[0]).endswith("/systemone"))
+        sent = post.call_args.kwargs["json"]
+        self.assertEqual(sent["task_type"], "routing")
+        self.assertEqual(sent["params"], routes)
+        self.assertEqual(sent["text"], text)
+
+    def test_choice_uses_systemone_envelope(self) -> None:
+        options = ["a-harness", "a-product"]
+        text = f"quale agente {self.id()}"
+        envelope = self._response(
+            {"result": {"type": "choice", "choice": "a-product", "confidence": 0.9}}
+        )
+        with patch("laya_service._session.post", return_value=envelope) as post:
+            outcome = LayaSystemOneService.choice(text, options)
+        self.assertEqual(outcome.status, "ok")
+        self.assertEqual(outcome.value, "a-product")
+        sent = post.call_args.kwargs["json"]
+        self.assertEqual(sent["task_type"], "choice")
+        self.assertEqual(sent["params"], options)
+
+    def test_score_bypass_abstains_with_documented_reason(self) -> None:
+        envelope = self._response(
+            {"result": {"bypass": True, "reason": "score_not_discriminative"}}
+        )
+        with patch("laya_service._session.post", return_value=envelope):
+            outcome = LayaSystemOneService.score(f"testo {self.id()}", "rischio")
+        self.assertEqual(outcome.status, "abstain")
+        self.assertEqual(outcome.reason, "score_not_discriminative")
+        self.assertIsNone(outcome.value)
+
+    def test_noul_returns_intent_choice_string(self) -> None:
+        envelope = self._response(
+            {
+                "result": {"type": "choice", "choice": "answer", "confidence": 0.8},
+                "request_hash": "h2",
+            }
+        )
+        with patch("laya_service._session.post", return_value=envelope):
+            outcome = LayaSystemOneService.noul(f"ciao mamma {self.id()}")
+        self.assertEqual(outcome.status, "ok")
+        self.assertEqual(outcome.value, "answer")
+
+    def test_noul_bypass_surfaces_reason(self) -> None:
+        """Il servizio by-passa noul (noul_gpu_excluded): il motivo documentato
+        deve arrivare nel LayaOutcome, non un generico invalid_result."""
+        envelope = self._response(
+            {"result": {"bypass": True, "reason": "noul_gpu_excluded"}}
+        )
+        with patch("laya_service._session.post", return_value=envelope):
+            outcome = LayaSystemOneService.noul(f"ciao {self.id()}")
+        self.assertEqual(outcome.status, "abstain")
+        self.assertEqual(outcome.reason, "noul_gpu_excluded")
+
+    def test_preflight_routing_parses_envelope_choice(self) -> None:
+        contract = system1_preflight.TaskContract(
+            task_type="routing",
+            instruction="instrada",
+            source="x" * 500,
+            output_format="json",
+            candidates=("a-product", "a-harness"),
+            risk_level="high",
+            complexity="complex",
+        )
+        envelope = self._response(
+            {"result": {"type": "choice", "choice": "a-product", "confidence": 0.7}}
+        )
+        with patch("laya_service._session.post", return_value=envelope) as post:
+            result = LayaSystemOneService.preflight(contract)
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.value["result"], "a-product")
+        self.assertEqual(result.value["origin"], "laya")
+        sent = post.call_args.kwargs["json"]
+        self.assertEqual(sent["task_type"], "routing")
+        self.assertEqual(sent["params"], ["a-product", "a-harness"])
 
 
 if __name__ == "__main__":

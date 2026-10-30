@@ -1,6 +1,14 @@
 # Changelog — a-agentzero
 
-## [Unreleased]
+## [1.13.0] - 2026-10-30
+
+### Fixed
+
+- `scripts/sync-agents.sh` § `report_workspace_links`: `expected` risolto con `resolve_link` prima del confronto (loop skill condivise e comandi L0): nei workspace con `agents/` symlinkato il confronto letterale stringa-vs-realpath produceva sempre «DRIFT» falsipositivi (×29 in hal_system1). Red (DRIFT su tutti i link corretti) → Green (tutti OK) validato 2026-10-29; gate `check-shellcheck.sh` OK. [sync:review]
+
+### Added
+
+- `AGENT-PROTOCOL.md` § "Regole di protocollo: contesto, dichiarazioni, cache": quattro regole da doc Kimi/QwenCloud 2026-10-28 (append-only dichiarazioni iniettate; mai reinserire `reasoning_content` nella history; ordering static-first con divieto di normalizzazione sul body inviato; persistere i risultati entro la retention del provider 24h/30g) — chiude le voci ToDo P1 `#docs` append-only/reasoning/ordering e la P2 `#docs` retention provider [sync:safe]
 
 ### Changed
 

@@ -483,7 +483,7 @@ def system1_guide(prompt: dict, config: Settings, client: httpx.Client) -> dict:
     }
 
     def answer_for(key: str, allowed: dict[str, str]) -> tuple[str, float]:
-        answer = answers.get(key)
+        answer = answers.get(key) if isinstance(answers, dict) else None
         if not isinstance(answer, dict):
             raise TypeError(f"Laya response is missing {key}")
         choice = answer.get("choice", answer.get("prediction"))
@@ -851,6 +851,8 @@ def parse_response(provider: str, data: dict) -> dict:
             "input": input_tokens,
             "output": output_tokens,
             "reasoning": None,
+            "cached": None,
+            "cache_creation": None,
             "total": input_tokens + output_tokens
             if input_tokens is not None and output_tokens is not None
             else None,
@@ -863,10 +865,19 @@ def parse_response(provider: str, data: dict) -> dict:
     elif provider == "google_openai":
         usage = data.get("usage") or {}
         details = usage.get("completion_tokens_details") or {}
+        prompt_details = usage.get("prompt_tokens_details") or {}
+        # campi cache uniformi su tutti i path cache-abilitati (doc QwenCloud
+        # 2026-10-28): prompt_tokens_details.cached_tokens + il campo piatto
+        # Anthropic-style cache_creation_input_tokens
+        cached = token_count(prompt_details, "cached_tokens")
+        if cached is None:
+            cached = token_count(usage, "cached_tokens")
         tokens = {
             "input": token_count(usage, "prompt_tokens"),
             "output": token_count(usage, "completion_tokens"),
             "reasoning": token_count(details, "reasoning_tokens"),
+            "cached": cached,
+            "cache_creation": token_count(usage, "cache_creation_input_tokens"),
             "total": token_count(usage, "total_tokens"),
         }
         choices = data.get("choices") or []
@@ -892,6 +903,8 @@ def parse_response(provider: str, data: dict) -> dict:
             "input": token_count(usage, "promptTokenCount"),
             "output": token_count(usage, "candidatesTokenCount"),
             "reasoning": token_count(usage, "thoughtsTokenCount"),
+            "cached": token_count(usage, "cachedContentTokenCount"),
+            "cache_creation": None,
             "total": token_count(usage, "totalTokenCount"),
         }
         candidates = data.get("candidates") or []
@@ -1041,6 +1054,8 @@ def system2_workflow_call(
             tokens_in=tokens.get("input"),
             tokens_out=tokens.get("output"),
             tokens_total=tokens.get("total"),
+            cached_tokens=tokens.get("cached"),
+            cache_creation_input_tokens=tokens.get("cache_creation"),
         )
         return result
 

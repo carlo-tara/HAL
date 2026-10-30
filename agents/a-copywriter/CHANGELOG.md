@@ -1,5 +1,11 @@
 # Changelog — a-copywriter
 
+## [1.7.2] - 2026-10-30
+
+### Changed
+
+- Sync L0 a-agentzero `extends-version` 1.12.0 → 1.13.0: voci pending = quattro regole di protocollo in `AGENT-PROTOCOL.md` (§ contesto, dichiarazioni, cache: append-only dichiarazioni iniettate, mai reinserire `reasoning_content`, ordering static-first, retention provider) e fix infrastrutturale `scripts/sync-agents.sh` § `report_workspace_links` [sync:safe]; body L1 invariato
+
 ## [1.7.1] - 2026-10-28
 
 ### Changed

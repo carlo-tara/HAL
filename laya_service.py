@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import math
 import os
+import random
+import time
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -11,6 +13,7 @@ from typing import Any, Generic, Literal, TypeVar
 
 import requests
 import urllib3
+from requests.adapters import HTTPAdapter
 
 from system1_preflight import LayaCallBudget, TaskContract, prepare_laya_request
 
@@ -18,6 +21,54 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 LAYA_BASE_URL = os.getenv("LAYA_BASE_URL", "http://laya.local:8091/v1")
 LAYA_TIMEOUT = float(os.getenv("LAYA_TIMEOUT") or "5.0")
+# Task endpoint del deployment: POST {base}/systemone, aperto su localhost. Il
+# client invia comunque Authorization: Bearer <chiave> (forward-compat; su
+# /predict — passthrough nativo {state,questions} — la header è obbligatoria).
+# Convenzione consumer HAL (benchmark/, a-knowledge/extract.py, scripts/test_laya.py):
+# env LAYA_API_KEY → fallback .env di repo → "sk-local" (default del servizio locale).
+LAYA_API_KEY_FALLBACK = "sk-local"
+
+
+def get_laya_api_key() -> str:
+    """Chiave di servizio Laya: env, poi .env di repo, poi default."""
+    key = (os.getenv("LAYA_API_KEY") or "").strip()
+    if key:
+        return key
+    try:
+        from dotenv import dotenv_values
+
+        env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+        key = (dotenv_values(env_file).get("LAYA_API_KEY") or "").strip()
+    except Exception:  # noqa: BLE001 - dotenv assente o .env illeggibile: default
+        key = ""
+    return key or LAYA_API_KEY_FALLBACK
+
+
+# Base ~0.3 s (range doc-consented 0.2-0.5) con cap difensivo sul backoff.
+LAYA_RETRY_BASE_S = float(os.getenv("LAYA_RETRY_BASE_S") or "0.3")
+LAYA_RETRY_MAX_S = float(os.getenv("LAYA_RETRY_MAX_S") or "4.0")
+
+# Hook iniettabile nei test: i tentativi retry devono risultare distanziati.
+_sleep = time.sleep
+
+
+def compute_backoff_delay(
+    attempt: int,
+    base: float | None = None,
+    cap: float | None = None,
+    rng: Callable[..., float] | None = None,
+) -> float:
+    """Attesa esponenziale (base * 2^attempt) con jitter +-50%, sopra cap.
+
+    Solo ``budget.max_retries`` governa QUANTI tentativi; questa funzione
+    distanzia il timing per non amplificare un'incidente su Laya degradata.
+    """
+    base = LAYA_RETRY_BASE_S if base is None else base
+    cap = LAYA_RETRY_MAX_S if cap is None else cap
+    raw = min(base * (2 ** max(0, int(attempt))), cap)
+    factor = rng(0.0) if rng is not None else random.uniform(0.5, 1.5)
+    return min(cap, max(0.0, raw * factor))
+
 
 T = TypeVar("T")
 
@@ -39,6 +90,93 @@ class _LayaAbstention(Exception):
 _session = requests.Session()
 
 
+def _env_positive_int(name: str, default: int) -> int:
+    try:
+        value = int(os.getenv(name) or default)
+    except (TypeError, ValueError):
+        return default
+    return value if value > 0 else default
+
+
+def _env_positive_float(name: str, default: float) -> float:
+    try:
+        value = float(os.getenv(name) or default)
+    except (TypeError, ValueError):
+        return default
+    return value if value > 0 else default
+
+
+def get_pool_settings() -> dict[str, int]:
+    """Dimensionamento del pool di connessioni Laya.
+
+    Default documentati: 10 connessioni per host in apertura, max 32 in piedi —
+    coerente con il massimo di chiamate batch concorrenti ``batch_score`` /
+    ``batch_routing`` (len(texts)). Env: LAYA_POOL_CONNECTIONS, LAYA_POOL_MAXSIZE.
+    """
+    return {
+        "pool_connections": _env_positive_int("LAYA_POOL_CONNECTIONS", 10),
+        "pool_maxsize": _env_positive_int("LAYA_POOL_MAXSIZE", 32),
+    }
+
+
+def get_pool_timeout() -> float:
+    """Attesa esplicita per una connessione libera nel pool (env LAYA_POOL_TIMEOUT)."""
+    return _env_positive_float("LAYA_POOL_TIMEOUT", 2.0)
+
+
+def get_timeout_tuple() -> tuple[float, float]:
+    """Timeout disaccoppiati (connect, read): connect corto per servizio locale
+    (default 2 s), read sul budget storico LAYA_TIMEOUT. Env: LAYA_CONNECT_TIMEOUT,
+    LAYA_READ_TIMEOUT. Il parsing è difensivo: valori non parsabili o non positivi
+    ricadono sui default.
+    """
+    connect = _env_positive_float("LAYA_CONNECT_TIMEOUT", 2.0)
+    read = _env_positive_float("LAYA_READ_TIMEOUT", LAYA_TIMEOUT)
+    return (connect, read)
+
+
+def get_tls_verify() -> bool | str:
+    """Verifica TLS per le chiamate Laya.
+
+    ``LAYA_CA_BUNDLE`` (percorso CA, anche self-signed di laya.local) ha la
+    precedenza; poi ``LAYA_TLS_VERIFY`` a 1/true/yes. Il fallback ``False`` è
+    una scelta esplicita documentata (vedi docs/24_trasporto_http_laya.md),
+    non una disattivazione silenziosa.
+    """
+    ca_bundle = os.getenv("LAYA_CA_BUNDLE")
+    if ca_bundle:
+        return ca_bundle
+    flag = (os.getenv("LAYA_TLS_VERIFY") or "").strip().lower()
+    return flag in {"1", "true", "yes"}
+
+
+def build_laya_adapter() -> HTTPAdapter:
+    """HTTPAdapter con pool dimensionato e retry di trasporto DISATTIVATO.
+
+    ``max_retries=0``: la forma di retry applicativa è il budget Laya
+    (LayaCallBudget + backoff); sommare il retry urllib3 raddoppierebbe i
+    tentativi. Il ``pool_timeout`` esplicito passa come default timeout del
+    pool (attesa connessione libera in urllib3).
+    """
+    settings = get_pool_settings()
+    adapter = HTTPAdapter(
+        pool_connections=settings["pool_connections"],
+        pool_maxsize=settings["pool_maxsize"],
+        max_retries=0,
+    )
+    adapter.poolmanager.connection_pool_kw["timeout"] = get_pool_timeout()
+    return adapter
+
+
+def mount_laya_adapter() -> None:
+    adapter = build_laya_adapter()
+    _session.mount("http://", adapter)
+    _session.mount("https://", adapter)
+
+
+mount_laya_adapter()
+
+
 @dataclass(frozen=True)
 class _BudgetScope:
     budget: LayaCallBudget
@@ -51,24 +189,45 @@ _active_budget: ContextVar[_BudgetScope | None] = ContextVar(
 )
 
 
+def _systemone_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Normalizza il payload legacy {task,text,routes|options|criteria} nel
+    contratto canonico di POST /systemone {task_type,text,params}."""
+    if "task_type" in payload:
+        return payload
+    body: dict[str, Any] = {
+        "task_type": str(payload.get("task") or "intent"),
+        "text": str(payload.get("text") or ""),
+    }
+    for key in ("routes", "options", "criteria"):
+        value = payload.get(key)
+        if value:
+            body["params"] = value
+            break
+    return body
+
+
 class LayaSystemOneService:
     """Servizio System 1 con session pooling e cache dei soli risultati validi."""
 
     @classmethod
     def _call(cls, payload: dict[str, Any]) -> dict[str, Any]:
-        url = f"{LAYA_BASE_URL}/predict"
+        # Endpoint canonico dei task (hal_system1/server.py): POST /systemone con
+        # envelope {"result": {choice,confidence,probabilities}, "request_hash": ...}.
+        url = f"{LAYA_BASE_URL}/systemone"
         scope = _active_budget.get()
         budget = scope.budget if scope is not None else LayaCallBudget()
         ceiling = scope.ceiling if scope is not None else budget.max_calls
+        attempt = 0
         while True:
             if not budget.try_consume(ceiling=ceiling):
                 raise _LayaAbstention("call_budget_exhausted")
             try:
                 response = _session.post(
                     url,
-                    json=payload,
-                    timeout=LAYA_TIMEOUT,
-                    verify=False,
+                    json=_systemone_payload(payload),
+                    headers={"Authorization": f"Bearer {get_laya_api_key()}"},
+                    timeout=get_timeout_tuple(),
+                    verify=get_tls_verify(),
                     allow_redirects=False,
                 )
                 response.raise_for_status()
@@ -82,6 +241,8 @@ class LayaSystemOneService:
                 if (scope is None or scope.allow_retries) and budget.try_retry(
                     ceiling=ceiling
                 ):
+                    _sleep(compute_backoff_delay(attempt))
+                    attempt += 1
                     continue
                 raise _LayaAbstention("unavailable") from exc
             except requests.exceptions.RequestException as exc:
@@ -91,7 +252,18 @@ class LayaSystemOneService:
 
             if not isinstance(result, dict):
                 raise _LayaAbstention("invalid_response")
-            return result
+            inner = result.get("result")
+            if not isinstance(inner, dict):
+                # Envelope {result: ...} assente o non-dict: violazione di
+                # trasporto del contratto /systemone, non un verdetto.
+                raise _LayaAbstention("invalid_response")
+            if inner.get("bypass"):
+                # By-pass onesto del servizio (NON_DISCRIMINATIVE_TASKS, es.
+                # score_not_discriminative / noul_gpu_excluded): il motivo
+                # documentato arriva nel LayaOutcome per qualunque operazione,
+                # mai un finto risultato.
+                raise _LayaAbstention(str(inner.get("reason") or "bypass"))
+            return inner
 
     @classmethod
     def _evaluate(cls, operation: Callable[..., T], *args: Any) -> LayaOutcome[T]:
@@ -131,7 +303,9 @@ class LayaSystemOneService:
         response = cls._call(
             {"task": "routing", "text": request_text, "routes": list(routes)}
         )
-        route = response.get("route", response.get("prediction"))
+        route = response.get(
+            "choice", response.get("route", response.get("prediction"))
+        )
         if not isinstance(route, str) or route not in routes:
             raise _LayaAbstention("invalid_route")
         return route
@@ -165,7 +339,9 @@ class LayaSystemOneService:
     @lru_cache(maxsize=128)
     def _cached_noul(cls, text: str) -> str:
         response = cls._call({"task": "noul", "text": text})
-        result = response.get("result", response.get("prediction"))
+        result = response.get(
+            "choice", response.get("result", response.get("prediction"))
+        )
         if not isinstance(result, str):
             raise _LayaAbstention("invalid_result")
         return result
@@ -231,7 +407,9 @@ class LayaSystemOneService:
     ) -> str | float:
         if contract.task_type in {"choice", "routing"}:
             key = "choice" if contract.task_type == "choice" else "route"
-            result = response.get(key, response.get("prediction"))
+            result = response.get(
+                "choice", response.get(key, response.get("prediction"))
+            )
             if not isinstance(result, str) or result not in contract.candidates:
                 raise _LayaAbstention(f"invalid_{key}")
             return result
@@ -246,7 +424,9 @@ class LayaSystemOneService:
             if not math.isfinite(score) or not 0.0 <= score <= 1.0:
                 raise _LayaAbstention("invalid_score")
             return score
-        result = response.get("result", response.get("prediction"))
+        result = response.get(
+            "choice", response.get("result", response.get("prediction"))
+        )
         if not isinstance(result, str):
             raise _LayaAbstention("invalid_result")
         return result
@@ -314,15 +494,39 @@ class LayaSystemOneService:
             _active_budget.reset(token)
 
     @classmethod
+    def close(cls) -> None:
+        """Teardown della sessione: rilascia adapter e pool di connessioni.
+
+        Le connessioni non restano aperte fino al termine del processo; la
+        sessione ricostruisce i pool lazy se usata di nuovo.
+        """
+        _session.close()
+
+    @classmethod
+    @contextmanager
+    def run(cls) -> Iterator[None]:
+        """Context manager di run: il teardown è garantito anche su eccezione."""
+        try:
+            yield
+        finally:
+            cls.close()
+
+    @classmethod
     def batch_score(cls, texts: list[str], criteria: str) -> list[LayaOutcome[float]]:
-        """e) Batch Score (System 1)."""
+        """e) Batch Score (System 1). Rilascia il pool al termine del batch."""
         with cls.budget(max_calls=len(texts)):
-            return [cls.score(text, criteria) for text in texts]
+            try:
+                return [cls.score(text, criteria) for text in texts]
+            finally:
+                cls.close()
 
     @classmethod
     def batch_routing(
         cls, texts: list[str], routes: list[str]
     ) -> list[LayaOutcome[str]]:
-        """f) Batch Routing (System 1)."""
+        """f) Batch Routing (System 1). Rilascia il pool al termine del batch."""
         with cls.budget(max_calls=len(texts)):
-            return [cls.routing(text, routes) for text in texts]
+            try:
+                return [cls.routing(text, routes) for text in texts]
+            finally:
+                cls.close()

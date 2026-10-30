@@ -56,6 +56,9 @@ report_workspace_links() {
       charts|illustrator|uiux) expected="${HAL_AGENTS_ROOT}/a-design/${agent}" ;;
       *) expected="${HAL_AGENTS_ROOT}/${agent}" ;;
     esac
+    # expected va risolto come actual: nei workspace con agents/ symlinkato il
+    # confronto letterale stringa-vs-realpath fallirebbe sempre (DRIFT falso).
+    expected="$(resolve_link "${expected}")"
     destination="${WORKSPACE_ROOT}/.agents/skills/${agent}"
     if [[ ! -e "${destination}" ]]; then
       status="MISSING"
@@ -73,7 +76,7 @@ report_workspace_links() {
   echo ">>> Comandi L0 (.agents/commands)"
   for agent in "${L0_COMMANDS[@]}"; do
     destination="${WORKSPACE_ROOT}/.agents/commands/${agent}.md"
-    expected="${AGENTZERO_DIR}/commands/${agent}.md"
+    expected="$(resolve_link "${AGENTZERO_DIR}/commands/${agent}.md")"
     if [[ ! -e "${destination}" ]]; then
       echo "  ${agent}: MISSING"
       missing=$((missing + 1))

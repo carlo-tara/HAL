@@ -2,6 +2,24 @@
 
 Formato [Keep a Changelog](https://keepachangelog.com/it/1.1.0/). Versionamento semver, ownership di `/version`.
 
+## [1.1.4] - 2026-10-30
+
+### Changed
+
+- Sync L0 a-agentzero `extends-version` 1.12.0 → 1.13.0: voci pending = quattro regole di protocollo in `AGENT-PROTOCOL.md` (§ contesto, dichiarazioni, cache: append-only dichiarazioni iniettate, mai reinserire `reasoning_content`, ordering static-first, retention provider) e fix infrastrutturale `scripts/sync-agents.sh` § `report_workspace_links` [sync:safe]; body L1 invariato
+
+## [1.1.3] - 2026-10-29
+
+### Changed
+
+- `scripts/extract.py` (ToDo N24, doc QwenCloud §connection reuse): factory `laya_client(timeout)` con singolo `httpx.Client` per run riusato da `cmd_check` e `route_chapter_laya` (prima: due istanze `httpx.Client` dentro funzioni invocate in loop, nessuna `close()` → leak); chiusura registrata via `atexit`; contratto in `tests/test_bundle_http_reuse.py` [sync:safe]
+
+## [1.1.2] - 2026-10-29
+
+### Added
+
+- Nota Batch API (-50% oltre soglia di volume) nello stub `cmd_distill` di `scripts/extract.py`, con rimando alla regola task-vs-batch in `docs/25_task_vs_batch.md` (ToDo N23, grafo 2026-10-28) [sync:safe]
+
 ## [1.1.1] - 2026-10-28
 
 ### Changed

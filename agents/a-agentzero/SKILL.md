@@ -1,6 +1,6 @@
 ---
 name: a-agentzero
-version: 1.12.0
+version: 1.13.0
 description: >-
   Reason why: senza L0 comune ogni dominio reinventa protocollo, sync e sicurezza.
   Agente radice HAL: ereditarietà a 3 livelli, competenze modulari,

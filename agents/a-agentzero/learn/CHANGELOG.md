@@ -1,5 +1,34 @@
 # Changelog — learn
 
+## [1.5.10] - 2026-10-29
+
+### Added
+
+- `learn-guidelines.md` regola 8 «Cause ereditate — riverificare»: mai replicare verbatim una diagnosi di sessione precedente senza verifica empirica (validato 2026-10-29: la dizione «servizio non raggiungibile» nascondeva tre cause distinte — 401 client, mismatch endpoint `/v1/predict` vs `/systemone`, path morto `/laya`) [sync:safe]
+- `tool-pitfalls.md` § «Assenze da verificare»: regola nuovo-strato — ABSTAIN `invalid_*` con servizio verde (verdetti reali su `POST /systemone`) = mismatch di contratto client↔endpoint, non disservizio; sondare `/systemone` prima di incolpare il server [sync:safe]
+
+### Changed
+
+- `tool-pitfalls.md` § «Parametri numerici»: decima conferma (sessione fix laya_service + /learn 2026-10-29: `read_file` `start_line`+`end_line` respinto 2×, `terminal timeout_ms=60000` respinto 1× → `sed -n`/omissione) [sync:safe]
+- Ripristinata in questo file la sezione `[1.5.9]` risultata assente dal worktree a metà turno (mutazione concorrente esterna; il contenuto di `tool-pitfalls.md` da essa documentato è rimasto integro) [sync:review]
+
+## [1.5.9] - 2026-10-29
+
+### Changed
+
+- `tool-pitfalls.md` § «Parametri numerici»: nona conferma (sessione diagnosi Laya ABSTAIN 2026-10-29: `read_file` range respinto 3× anche con parametri numerici, `terminal timeout_ms` respinto 1× → `sed -n`/omissione) [sync:safe]
+- `tool-pitfalls.md` § «Assenze da verificare»: nuova regola ABSTAIN — prima di dichiarare «servizio non raggiungibile» verificare path canonico router (`/var/www/hal_system1`, non `/var/www/HAL` morto) + `GET :8091/health`; righe `Broken pipe` in `log.sqlite` su `/systemone` = client-timeout, non disservizio (validato: sessione Laya 2026-10-29 + precedente regola ABSTAIN-retry 2026-10-26) [sync:safe]
+
+## [1.5.8] - 2026-10-28
+
+### Added
+
+- `tool-pitfalls.md`: nuova voce «Frammenti CJK nel testo italiano generato» — il candidato della sessione doc-review (regola: aprire voce alla seconda sessione) è stato validato dalla sessione models-catalog 2026-10-28; rimedio `grep -rnP '[\x{4e00}-\x{9fff}]'` post-scrittura, scope esteso anche agli heredoc terminal [sync:safe]
+
+### Changed
+
+- `tool-pitfalls.md` § «Parametri numerici»: ottava conferma (sessione models-catalog 2026-10-28, `terminal timeout_ms` respinto 2× con `invalid type: string, expected u64` → omesso) [sync:safe]
+
 ## [1.5.7] - 2026-10-28
 
 ### Changed

@@ -5,9 +5,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from html import escape as esc
 from pathlib import Path
 from typing import TypeGuard
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from benchmark.runner.cache_pricing import effective_input_tokens
 
 PATH_LABEL = {"hal_system2": "HAL System 2", "orcarouter_direct": "OrcaRouter diretto"}
 PATH_COLOR = {"hal_system2": "#d97706", "orcarouter_direct": "#2563eb"}
@@ -245,6 +249,7 @@ def build(report: dict) -> str:
                 "cache_text": 0,
                 "cache_creation_5m": 0,
                 "cache_creation_1h": 0,
+                "cache_creation_input": 0,
                 "reasoning": 0,
                 "audio_in": 0,
                 "audio_out": 0,
@@ -264,7 +269,8 @@ def build(report: dict) -> str:
                 u.get("completion_tokens", 0) or 0,
             )
         )
-        # Claude-specific cache tokens
+        # campi cache uniformi su tutti i path cache-abilitati (doc QwenCloud
+        # 2026-10-28): non più eccezione Claude-specific
         pd = u.get("prompt_tokens_details") or {}
         ct = pd.get("cached_tokens", 0) or 0
         entry["cache_text"] += ct
@@ -274,6 +280,8 @@ def build(report: dict) -> str:
         cc1h = u.get("claude_cache_creation_1_h_tokens", 0) or 0
         entry["cache_creation_5m"] += cc5
         entry["cache_creation_1h"] += cc1h
+        # campo piatto su tutti i path cache-abilitati (doc QwenCloud 2026-10-28)
+        entry["cache_creation_input"] += u.get("cache_creation_input_tokens", 0) or 0
         cd = u.get("completion_tokens_details") or {}
         entry["reasoning"] += cd.get("reasoning_tokens", 0) or 0
         entry["audio_out"] += cd.get("audio_tokens", 0) or 0
@@ -336,7 +344,12 @@ def build(report: dict) -> str:
             if not e or e["count"] == 0:
                 continue
             # Only show cache/reasoning for Anthropic models
-            if "anthropic" in m:
+            if (
+                e["cache_text"]
+                or e["cache_creation_5m"]
+                or e["cache_creation_1h"]
+                or e["cache_creation_input"]
+            ):
                 cache_pct = (e["cache_text"] / e["prompt"] * 100) if e["prompt"] else 0
                 cache_rows.append(
                     f"<tr><td>{esc(short(m))}</td><td>{esc(label)}</td>"
@@ -344,6 +357,8 @@ def build(report: dict) -> str:
                     f"<td class='num'>{fmt(cache_pct, 0)} %</td>"
                     f"<td class='num'>{fmt(e['cache_creation_5m'], 0)}</td>"
                     f"<td class='num'>{fmt(e['cache_creation_1h'], 0)}</td>"
+                    f"<td class='num'>{fmt(e['cache_creation_input'], 0)}</td>"
+                    f"<td class='num'>{fmt(effective_input_tokens(e['prompt'], e['cache_text'], e['cache_creation_input'] + e['cache_creation_5m'] + e['cache_creation_1h'], model=m), 0)}</td>"
                     f"<td class='num'>{fmt(e['audio_in'], 0)}</td>"
                     f"<td class='num'>{fmt(e['image_in'], 0)}</td></tr>"
                 )
@@ -541,7 +556,7 @@ Dalla quinta run OrcaRouter ha risposto <code>403 token cycle spend limit reache
 <div class="card">
 <h3>Riepilogo per modello e percorso</h3>
 <table><thead><tr><th>Modello</th><th>Percorso</th><th>Run OK</th><th>Token in (input)</th><th>Token out (output)</th><th>Totale</th><th>Media/run</th><th>Out/Input %</th></tr></thead>
-<tbody>{"".join(token_summary_rows) if token_summary_rows else "<tr><td colspan='8' class='na'>Nessun dato token disponibile</td></tr>"}</tbody></table>
+<tbody>{"".join(token_summary_rows) if token_summary_rows else "<tr><td colspan='10' class='na'>Nessun dato token disponibile</td></tr>"}</tbody></table>
 <p class="small">Out/Input % = output tokens / input tokens × 100 (rapporto di espansione del testo generato).</p>
 </div>
 
@@ -558,9 +573,9 @@ Dalla quinta run OrcaRouter ha risposto <code>403 token cycle spend limit reache
 </div>
 
 <div class="card">
-<h3>Cache tokens (modelli Anthropic)</h3>
-<table><thead><tr><th>Modello</th><th>Percorso</th><th>Cached tokens</th><th>% sul totale input</th><th>Cache creation 5m</th><th>Cache creation 1h</th><th>Audio input</th><th>Image input</th></tr></thead>
-<tbody>{"".join(cache_rows) if cache_rows else "<tr><td colspan='8' class='na'>Nessun dato cache (nessun modello Anthropic con dati validi)</td></tr>"}</tbody></table>
+<h3>Cache tokens (tutti i path cache-abilitati)</h3>
+<table><thead><tr><th>Modello</th><th>Percorso</th><th>Cached tokens</th><th>% sul totale input</th><th>Cache creation 5m</th><th>Cache creation 1h</th><th>Cache creation (flat)</th><th>Input effettivo (token-equiv)</th><th>Audio input</th><th>Image input</th></tr></thead>
+<tbody>{"".join(cache_rows) if cache_rows else "<tr><td colspan='10' class='na'>Nessun dato cache (nessun modello Anthropic con dati validi)</td></tr>"}</tbody></table>
 <p class="small">I cached tokens sono token di input già presenti nella finestra contestuale, che non vengono ricalcolati. Le metriche "cache creation" indicano i token usati per popolare la cache.</p>
 </div>
 

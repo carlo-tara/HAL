@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-10-28T10:54:51Z",
+  "ts": "2026-10-30T20:55:46Z",
   "flags": {"y": false},
   "acceptance": "",
   "files": "ToDo.md",
   "node_id": "",
-  "next": "/slice P0 cache key tool-inclusive",
-  "summary": "36 aperte (1 P0, 13 P1, 22 P2), 0 flushate in CHANGELOG; delta QwenCloud streaming: 4 voci",
+  "next": "—",
+  "summary": "prune 5 prose Delta 2026-10-28 obsolete da ToDo.md (voci gia chiuse e flushate in CHANGELOG; vincoli trasversali preservati nei doc consegnati: docs/07_cache_l1, docs/23-27); 0 aperte P0/P1/P2, buffer Gi fatto vuoto, nulla da flushare",
   "brief": "",
   "token_budget": 200
 }

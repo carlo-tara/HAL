@@ -32,6 +32,36 @@ LAYA_API_KEY = os.environ.get("LAYA_API_KEY", "sk-local")
 LAYA_TIMEOUT = float(os.environ.get("LAYA_TIMEOUT", "120"))
 LAYA_MODEL = os.environ.get("LAYA_MODEL", "multilingual")
 
+# ── HTTP connection reuse (N24, doc QwenCloud §connection reuse) ────────────
+_LAYA_CLIENTS: dict[float, object] = {}
+
+
+def laya_client(timeout: float):
+    """Un solo httpx.Client per run (per timeout): riusato tra cmd_check e
+    route_chapter_laya, chiuso a atexit — niente istanze dentro funzioni
+    invocate in loop."""
+    client = _LAYA_CLIENTS.get(timeout)
+    if client is None:
+        import httpx
+
+        client = httpx.Client(timeout=timeout)
+        _LAYA_CLIENTS[timeout] = client
+        if len(_LAYA_CLIENTS) == 1:
+            import atexit
+
+            atexit.register(_close_laya_clients)
+    return client
+
+
+def _close_laya_clients() -> None:
+    for c in list(_LAYA_CLIENTS.values()):
+        try:
+            c.close()  # type: ignore[attr-defined]
+        except Exception:  # noqa: BLE001 - teardown difensivo
+            pass
+    _LAYA_CLIENTS.clear()
+
+
 # Mappa formato → tool primario → fallback
 FORMAT_TOOLS: dict[str, dict[str, Any]] = {
     "pdf_text": {
@@ -274,9 +304,7 @@ def cmd_check() -> int:
 
     # Laya check
     try:
-        import httpx
-
-        client = httpx.Client(timeout=LAYA_TIMEOUT)
+        client = laya_client(LAYA_TIMEOUT)
         resp = client.post(
             f"{LAYA_URL}/predict",
             headers={"Authorization": f"Bearer {LAYA_API_KEY}"},
@@ -550,9 +578,7 @@ def route_chapter_laya(
         return None
 
     try:
-        import httpx
-
-        client = httpx.Client(timeout=laya_timeout)
+        client = laya_client(laya_timeout)
         payload = {
             "text": query,
             "task_family": "routing",
@@ -597,6 +623,9 @@ def cmd_distill(
     print(f"  Modello: {model}")
     print(f"  Profondità: {depth}")
     print("  NOTA: La distillazione richiede integrazione con OrcaRouter/LlamaIndex.")
+    print("  Batch API (-50%, esito in 24h): preferita oltre la soglia di volume")
+    print("    (> ~500 richieste JSONL); sotto soglia resta la Task API.")
+    print("    Regola completa: docs/25_task_vs_batch.md")
     print("  Per ora, usa il manuale: capitolo-per-capitolo con wc/grep/sed.")
     return True
 

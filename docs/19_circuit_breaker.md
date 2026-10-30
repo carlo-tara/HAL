@@ -32,9 +32,18 @@ insistere sulla via che non paga.
 4. Metriche: stato dei breaker in dashboard, conteggio fallback per provider.
 5. Il breaker conta anche i timeout lenti: latenza p95 sopra soglia per finestra = mezzo fallimento
    (degradazione, non solo morte).
+6. **Costo di refill cache nel failover**: la cache è isolata per modello oltre che per
+   account (doc QwenCloud FAQ). Quando il breaker o il `fallback_used` di `SystemTwoEngine`
+   cambiano modello a sessione invariata, il prefisso riparte da zero e la ricreazione
+   costa 125% (rapporto di default; per-modello/regione in `benchmark/runner/cache_pricing.py`).
+   Il sovrapprezzo non è solo latenza: l'evento `cache_refill`
+   (`gateway_core.record_failover_cache_burn`, metadati: session hash, from/to model,
+   prompt_tokens, costo atteso) va considerato nei modelli di costo del breaker e nei
+   gate di rollback di `SystemEvaluationEngine`.
 
 ---
 
 ### Verifica di successo
+
 Test: provider mock lento → richieste smistate al fallback entro una finestra.
 Test: due chat parallele in Zed → cache e stato non mescolati.

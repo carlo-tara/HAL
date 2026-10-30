@@ -1,5 +1,11 @@
 # Changelog — harness-agentfactory (L2)
 
+## [1.1.29] - 2026-10-30
+
+### Changed
+
+- Allineato a a-harness 1.9.2 (`extends-version` 1.7.7 → 1.9.2; il padre sale a 1.9.2 per allineamento L0 contestuale): voci pending = gate static-analysis come policy L1 (1.9.0) e handoff canonico `product/state` (1.9.1) [sync:safe]; body invariato
+
 ## [1.1.28] - 2026-10-24
 
 ### Changed

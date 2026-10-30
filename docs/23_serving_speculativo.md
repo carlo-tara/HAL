@@ -34,6 +34,35 @@ concordanza bozza/grande; il grande lavora comunque e la correzione arriva solo 
 
 ---
 
+## Vincoli di deployment SSE del serving (voce P1 streaming, ToDo 2026-10-28)
+
+Il percorso streaming System 2 (`streaming_backend.py`, registrato via
+`SystemTwoEngine.register_backend`) richiede che il layer di serving che espone
+`/chat/completions` rispetti questi vincoli, altrimenti lo streaming si manifesta
+come rallentamento percepito e vanifica il beneficio sui timeout:
+
+1. **`proxy_buffering off`** (Nginx) sulla rotta SSE: senza di esso gli eventi
+   vengono bufferizzati dal proxy e il client riceve l'intera risposta in un
+   blocco solo alla fine (peggio: con timeout proxy, il 504 torna).
+2. **Contratto di terminazione**: il flusso si chiude solo alla sentinella
+   `data: [DONE]` del backend; il proxy non deve inventare chiusure intermedie
+   (nessuna `gzip on` sul stream, `chunked_transfer_encoding on`).
+3. **Pool e fd dimensionati sulla concorrenza**: ogni conversazione streaming
+   tiene aperta una connessione end-to-end finché la generazione non finisce;
+   con N utenze concorrenti servono `worker_connections`/fd ≥ N più margine
+   (monitorare `ss -s` e i fd di processo sotto picco; target reuse ratio >95%
+   sui pool outbound lato gateway).
+4. **Nessun timeout short-read sotto la sentinella**: il timeout end-to-end non
+   si applica più al primo byte; il read timeout va tarato sull'inter-chunk
+   (es. 60 s), non sulla generazione totale (le generazioni lunghe Opus ~99 s
+   motivate dal report OrcaRouter).
+
+Questi vincoli sono prerequisito all'abilitazione del path streaming in
+produzione (bucket per bucket, come da regola 2 del serving speculativo sopra).
+
+---
+
 ### Verifica di successo
+
 Latenza percepita mediamente ≥2x migliore sui bucket attivati. Tasso di retry post-correzione
 entro soglia. Attivazione e disattivazione di bucket documentate nel log delle config.

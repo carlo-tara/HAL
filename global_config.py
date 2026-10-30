@@ -130,6 +130,129 @@ SYSTEM_TWO_PROFILES: dict[str, dict[str, Any]] = {
 }
 
 
+# Registro capability per-modello (ToDo 2026-10-28, voci Kimi dynamic tools e
+# QwenCloud context cache / streaming). Chiavi: dynamic_tools (iniezione
+# dinamica solo kimi-k3/k3.1-pro), prefix_caching (match byte-per-byte del
+# prefisso), context_cache (cache automatica Qwen-Max/Plus/Flash/Coder e
+# DeepSeek), streaming_only (modelli che senza stream restituiscono 200 vuoto:
+# Qwen3 open-source, QwQ, QVQ, Omni).
+MODEL_CAPABILITIES: dict[str, dict[str, bool]] = {
+    "orcarouter/kimi/kimi-k3": {
+        "dynamic_tools": True,
+        "prefix_caching": True,
+        "context_cache": False,
+        "streaming_only": False,
+    },
+    "orcarouter/kimi/kimi-k3.1-pro": {
+        "dynamic_tools": True,
+        "prefix_caching": True,
+        "context_cache": False,
+        "streaming_only": False,
+    },
+    "orcarouter/kimi/kimi-k2.7-code": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": False,
+        "streaming_only": False,
+    },
+    "orcarouter/deepseek/deepseek-v4.1-flash": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": True,
+        "streaming_only": False,
+    },
+    "orcarouter/deepseek/deepseek-v4.1-flash-free": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": True,
+        "streaming_only": False,
+    },
+    "orcarouter/qwen/qwen3.8-flash": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": True,
+        "streaming_only": False,
+    },
+    "orcarouter/qwen/qwen3.7-flash": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": True,
+        "streaming_only": False,
+    },
+    # QwQ / Omni: solo streaming (doc QwenCloud §Notes)
+    "orcarouter/qwen/qwq-32b": {
+        "dynamic_tools": False,
+        "prefix_caching": False,
+        "context_cache": True,
+        "streaming_only": True,
+    },
+    "orcarouter/qwen/qwen3.5-omni-flash": {
+        "dynamic_tools": False,
+        "prefix_caching": False,
+        "context_cache": True,
+        "streaming_only": True,
+    },
+    "Gemini 3.5 Flash-Lite": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": True,
+        "streaming_only": False,
+    },
+    "orcarouter/google/gemini-3.5-flash-lite": {
+        "dynamic_tools": False,
+        "prefix_caching": True,
+        "context_cache": True,
+        "streaming_only": False,
+    },
+}
+
+
+def model_has_capability(model: str, capability: str) -> bool:
+    """Lookup capability con normalizzazione del prefisso provider."""
+    entry = MODEL_CAPABILITIES.get(model)
+    if entry is None and model.startswith("orcarouter/"):
+        entry = MODEL_CAPABILITIES.get(model.removeprefix("orcarouter/"))
+    if entry is None:
+        entry = MODEL_CAPABILITIES.get(f"orcarouter/{model}")
+    return bool(entry and entry.get(capability, False))
+
+
+def validate_chat_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Validazione di frontiera dei payload chat lato provider.
+
+    Regole (doc Kimi/QwenCloud 2026-10-28):
+    - un messaggio ``system`` con ``tools`` non deve avere ``content`` (400);
+    - richiesta di tool loading dinamico (``dynamic_tools``/``tool_search``)
+      solo su modelli con capability ``dynamic_tools``;
+    - modello ``streaming_only``: forza ``stream=True`` invece di incassare un
+      200 vuoto (fallimento silenzioso, la classe peggiore per un gateway).
+    Ritorna una copia del payload, mai l'oggetto mutato del chiamante.
+    """
+    out = dict(payload)
+    for message in out.get("messages") or []:
+        if (
+            isinstance(message, dict)
+            and message.get("role") == "system"
+            and message.get("tools")
+            and str(message.get("content") or "").strip()
+        ):
+            raise ValueError(
+                "messaggio system con tools non deve avere content: il provider "
+                "risponde 400 (spostare le istruzioni dentro le dichiarazioni dei tool)"
+            )
+    model = str(out.get("model", ""))
+    if (
+        out.get("dynamic_tools") or out.get("tool_search")
+    ) and not model_has_capability(model, "dynamic_tools"):
+        raise ValueError(
+            f"modello {model!r} non supporta il tool loading dinamico "
+            "(solo kimi-k3/k3.1-pro; tokenization failed altrove)"
+        )
+    if model_has_capability(model, "streaming_only") and not out.get("stream"):
+        out["stream"] = True
+    return out
+
+
 def resolve_model_for_profile(
     profile: str = "default",
     required_capabilities: list[str] | None = None,
@@ -139,9 +262,30 @@ def resolve_model_for_profile(
     Seleziona il modello System 2 basandosi sul profilo d'uso e sulle capability,
     indipendentemente dall'identità dell'agente. Mantiene il fallback condiviso
     (ACTIVE_MODEL_NAME) e impedisce l'accettazione di nomi modello arbitrari o non validati da input esterni/Laya.
+
+    Con ``required_capabilities`` non vuote la selezione è guidata dal registro
+    ``MODEL_CAPABILITIES`` (profili cost-oriented: ``context_cache``): prima
+    i preferiti del profilo, poi il resto del catalogo in ordine stabile; se
+    nessun modello le possiede tutte l'errore è esplicito, mai un fallback
+    silenzioso su un modello che non supporta la feature richiesta.
     """
     required_capabilities = required_capabilities or []
     profile_cfg = SYSTEM_TWO_PROFILES.get(profile, SYSTEM_TWO_PROFILES["default"])
+
+    if required_capabilities:
+        candidates = list(profile_cfg.get("preferred_models", [])) + sorted(
+            MODEL_CAPABILITIES
+        )
+        for candidate in candidates:
+            if all(
+                model_has_capability(candidate, capability)
+                for capability in required_capabilities
+            ):
+                return candidate
+        raise ValueError(
+            f"Nessun modello nel catalogo supporta le capability richieste: "
+            f"{required_capabilities}"
+        )
 
     if requested_model:
         allowed_models = set(profile_cfg["preferred_models"]) | {

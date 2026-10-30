@@ -7,6 +7,32 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ## [Unreleased]
 
+### Added
+
+- Chiave Cache L1 a due livelli: prefix stabile + suffix append-only · Gateway Core
+- Catalogo skill compatto con System 1 (Laya) come tool-search · System 1 (Laya) + Agent Platform
+- ContextManager multi-turn nel Gateway Core: troncamento, rolling summary, retrieval · Gateway Core
+- Telemetria `cached_tokens` e `cache_creation_input_tokens` nei runner e nei gate · Benchmark
+- Retry su Laya con exponential backoff e jitter · System 1 (Laya)
+- HTTPAdapter con pool dimensionato sulla `_session` Laya · System 1 (Laya)
+- Timeout disaccoppiati connect/read/pool sulle chiamate Laya · System 1 (Laya)
+- Idempotenza di submit: registro task_id anti-duplicato · Gateway Core
+- Capability flag per-modelli per tool loading dinamico · Gateway Core
+- Registry tool session-scoped append-only (carry-forward) · Gateway Core
+- System prompt come `instructions`, fuori dal transcript append-only · Gateway Core
+- Capability flag `context_cache` nei `SYSTEM_TWO_PROFILES` · Gateway Core
+- Merge dei messaggi tool consecutivi same-role nel message builder · Gateway Core
+- Costo di refill cache nel failover e nel fallback · Gateway Core
+- Prezzi cache effettivi da tabella per modello/regione, non costanti · Benchmark
+- Budget di polling per gli endpoint di gestione task (20 QPS) · Gateway Core
+- Teardown della `_session` (close / context manager di run) · System 1 (Laya)
+- `verify` configurabile con CA bundle invece di `verify=False` fisso · System 1 (Laya)
+- Percorso di esecuzione streaming System 2 (SSE) per eliminare il timeout strutturale delle generazioni lunghe · Gateway Core
+- Capability flag `streaming_only` per-modelli con validazione alla frontiera · Gateway Core
+- Accumulo dei delta streaming per `tool_calls` e JSON Mode prima del parsing · Gateway Core
+- Client riusato negli script skill (a-knowledge, a-seozoom, illustrator) · Agent Platform
+- Regola System 1 task-vs-batch per workload ad alto volume · System 1 (Laya)
+
 ### Changed
 
 - Allineare al gate 1 il gate `laya_recommended` del runner benchmark `#system1-gating #benchmark`
@@ -45,6 +71,26 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Allineare README e documentazione sulla razionalizzazione e sui 14 L1 storici — `agents/README.md`, `agents/MIGRATION.md`, `AGENTS.md` e `agents/AGENTS.md` descrivono la struttura corrente (14 L1 originari → 7 consolidati + `a-knowledge`, 9 agenti `a-`; elenco skill esposte allineato a `.agents/skills/`); gate `make -C agents pre-commit` OK
 - `/sync !` eseguito: deploy L0+L1+comandi, link `.agents/skills` e wrapper rigenerati; tutte le 8 catene L1 allineate a `a-agentzero` 1.12.0 con bump patch [sync:safe] (`a-b2b` 2.3.1, `a-copywriter` 1.7.1, `a-design` 1.2.1, `a-harness` 1.9.1, `a-knowledge` 1.1.1, `a-product` 2.2.1, `a-seozoom` 1.10.1, `a-wordpress` 1.4.1) e voce CHANGELOG per ciascun figlio; verifica finale: zero catene STALE · #version-sync #infra
 - Coordinamento versioni: comando canonico `graph` 1.0.1→1.0.2 (bullet appresi 2026-10-27 aggiunti al body, wrapper rigenerato idempotente); utility `learn` 1.5.7 con section changelog mancante recuperata; L0 `a-agentzero` invariato per regola utility nested (bump di `learn` non richiede bump del padre) · #version-sync
+- Coordinamento versioni (release 2026-10-30): L0 `a-agentzero` rilasciato **1.13.0** (minor — nuove regole di protocollo `AGENT-PROTOCOL.md` §contesto/dichiarazioni/cache + fix `sync-agents.sh` §`report_workspace_links`); tutte le 8 catene L1 allineate a 1.13.0 con bump patch contrattuale [sync:safe] (`a-b2b` 2.3.2, `a-copywriter` 1.7.2, `a-design` 1.2.3, `a-harness` 1.9.2, `a-knowledge` 1.1.4, `a-product` 2.2.2, `a-seozoom` 1.10.3, `a-wordpress` 1.4.2) e voce CHANGELOG per ciascun figlio; catene harness allineate (`harness-agentfactory` 1.1.29, `harness-hal` 1.0.2, `extends-version` a-harness 1.9.2); skill `laya` 1.5.1 con comando canonico `commands/laya.md` @ 1.0.1 (fix path `router.py`, wrapper `laya-cmd` rigenerato); indice `docs/00_indice.md` allineato (25–27 censiti, conteggio 23→27); gate: `make -C agents version-chains` verde (zero STALE), `make -C agents pre-commit` OK, `make pre-commit` OK, `make test-unit` 369 GREEN · #version-sync #infra
+- Regola di protocollo: mai reinserire `reasoning_content` nella history · Agent Platform
+- Vincoli deployment SSE del serving documentati nel serving spec (proxy buffering, pool, fd) · Gateway Core
+- Regola di protocollo append-only per dichiarazioni iniettate · Agent Platform
+- Regola di protocollo ordering static-first: mai contenuto volatile in testa al prompt · Agent Platform + Gateway Core
+- Regola di protocollo: persistere i risultati entro la retention del provider · Agent Platform
+- Spike: session cache `x-dashscope-session-cache` via OrcaRouter/DashScope · Gateway Core
+- Spike: supporto marker `cache_control` (explicit cache) a due strati — ESITO: non adottato via OrcaRouter (marker tollerati ma inerti, `cached_tokens=0` anche a caldo, docs/26); contratto backend già tollera i marker (flag `context_cache`, N14), builder guardrail rinviato a backend con cache esplicita misurabile · Gateway Core
+- Metrica benchmark token/richiesta vs skill dichiarate · Benchmark
+- Metrica connection reuse nella telemetria HAL · Benchmark + Gateway Core
+- Astrazione conversation lato gateway (alternativa locale a `previous_response_id`) · Gateway Core
+
+### Fixed
+
+- `laya_service`: by-pass onesto del servizio mappato in `abstain` con reason documentata per **tutte** le operazioni S1 (`score_not_discriminative`, `noul_gpu_excluded`, …) — prima solo `score` lo surfacing, `noul` degenerava in `invalid_result`; test `test_noul_bypass_surfaces_reason` · System 1 (Laya)
+- `laya_service`: header `Authorization: Bearer` risolto da `LAYA_API_KEY` (env → `.env` di repo → default `sk-local`) su `/predict`; il 401 non autenticato era la causa delle ABSTAIN `unavailable` di tutte le operazioni System 1 · System 1 (Laya)
+- Includere dichiarazioni tool/skill nella chiave Cache L1 · Gateway Core
+- Polling a backoff esponenziale con stati terminali completi · Skill illustrator (a-design) + Gateway Core
+- Successo parziale nei task multi-output: iterare choices con `finish_reason` · Skill illustrator (a-design)
+- `laya_service`: operazioni instradate su `POST /systemone` `{task_type,text,params}` con unwrap dell'envelope `{result:{choice,confidence,probabilities}}`; routing/choice rispondono `ok` con `choice` ∈ candidates, `score` astiene con reason documentata `score_not_discriminative` (by-pass onesto, mai un valore fabricato), `noul` restituisce la stringa intent-choice; coperto da `TestSystemOneContract` (5 nuovi test, suite `test_laya_*` 60 verdi) e da verifica CLI live; fix collaterale `router.py` (`noul --json` serializzava l'intero `LayaOutcome`) · System 1 (Laya)
 
 ## [2.3.0] - 2026-10-09
 

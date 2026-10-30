@@ -36,5 +36,27 @@ e invalidazione alla modifica dei file dichiarati rilevanti dal contesto.
 ---
 
 ### Verifica di successo
+
 Hit rate >40% entro due settimane su traffico reale. Nessuna risposta stale servita dopo
 modifica file (test: modifica file, verifica miss).
+
+---
+
+## Due livelli: prefix stabile + suffix append-only (implementato 2026-10-28)
+
+A seguito delle voci Kimi/QwenCloud nel backlog (Tool Definition Bloat e prefix caching), la
+chiave esatta sull'intera richiesta è stata integrata da `compute_layered_cache_key` in
+`gateway_core.py`, che restituisce `{prefix, suffix, full}`:
+
+- **prefix** = messaggi `system` + dichiarazioni core (`stable_declarations`) + i primi
+  `stable_turns` turni non-system. Ogni append successivo (nuovo turno, skill iniettata)
+  non lo invalida: la voce registrata da `set_layered` resta interrogabile via `get_layered`
+  come `prefix_hit` (riuso parziale informativo, stile prefix caching provider).
+- **suffix** = tutto il resto del transcript e le dichiarazioni non core, hashato a parte.
+- **full** = `cache:v1:{session}:{use_case}:{prefix_hash}:{suffix_hash}` — unica chiave che
+  serve risposte: nessun falso hit tra conversazioni diverse.
+
+Le dichiarazioni tool/skill e i `tool_calls` entrano comunque nella normalizzazione (fix P0
+2026-10-28): stesso testo con tool set diverso produce chiavi diverse. `normalize_prompt`
+resta riservata alla chiave locale: non va mai applicata al body inviato upstream, perché
+la normalizzazione distruggerebbe il match di prefisso byte-per-byte lato provider.

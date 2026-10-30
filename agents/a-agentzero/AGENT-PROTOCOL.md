@@ -124,6 +124,31 @@ La skill figlia **non può**:
 
 ---
 
+## Regole di protocollo: contesto, dichiarazioni, cache (fonti Kimi/QwenCloud 2026-10-28)
+
+1. **Append-only per le dichiarazioni iniettate.** Le dichiarazioni di tool/skill
+   già iniettate in una conversazione non si modificano mai in-place a metà
+   sessione (invaliderebbe il prefix cache e il tool decade): le versioni
+   aggiornate si accodano come dichiarazione nuova, identica a quella dichiarata.
+2. **Mai reinserire `reasoning_content` nella history.** Con i modelli thinking,
+   quando si aggiorna l'array `messages` va trattenuto solo il campo `content`;
+   il ragionamento nel context spreca token e degrada le risposte (il filtro è
+   implementato in `context_manager.ContextManager.compact`).
+3. **Ordering static-first del prompt.** Ordine vincolante dei blocchi: system
+   prompt agente → tool descriptions → file di contesto → storico conversazione →
+   domanda attuale. Contenuto volatile (timestamp, nonce, `session_id`) mai in
+   testa: azzera ogni hit di prefix cache lato provider. La normalizzazione
+   (`normalize_prompt`) si applica SOLO alla chiave di cache L1 locale, mai al
+   body inviato: il match upstream è byte-per-byte.
+4. **Persistere i risultati entro la retention del provider.** I task asincroni
+   producono metadati e URL disponibili solo 24h (Batch: 30 giorni): il flusso
+   è submit → poll terminale → persist immediato; mai conservare solo l'URL del
+   provider. `UNKNOWN` su query è il sintomo a valle di una retention saltata.
+   Distinzione: retention HAL (body 30g, metadati 12 mesi, `docs/05`) vs
+   retention del provider (`docs/05` rimando).
+
+---
+
 ## Naming skill figlie L2
 
 Convenzione consigliata: `{dominio}-{progetto}`

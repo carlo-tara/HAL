@@ -60,6 +60,8 @@ class System2Metrics:
                     tokens_in INTEGER,
                     tokens_out INTEGER,
                     tokens_total INTEGER,
+                    cached_tokens INTEGER,
+                    cache_creation_input_tokens INTEGER,
                     decision TEXT,
                     confidence REAL,
                     fallback_used INTEGER NOT NULL DEFAULT 0,
@@ -76,6 +78,15 @@ class System2Metrics:
             if "error_message" not in columns:
                 connection.execute(
                     "ALTER TABLE system2_workflow_events ADD COLUMN error_message TEXT"
+                )
+            if "cached_tokens" not in columns:
+                connection.execute(
+                    "ALTER TABLE system2_workflow_events ADD COLUMN cached_tokens INTEGER"
+                )
+            if "cache_creation_input_tokens" not in columns:
+                connection.execute(
+                    "ALTER TABLE system2_workflow_events ADD COLUMN "
+                    "cache_creation_input_tokens INTEGER"
                 )
             connection.execute(
                 "CREATE INDEX IF NOT EXISTS idx_system2_events_run ON system2_workflow_events(run_id, id)"
@@ -106,6 +117,8 @@ class System2Metrics:
         tokens_in: int | None = None,
         tokens_out: int | None = None,
         tokens_total: int | None = None,
+        cached_tokens: int | None = None,
+        cache_creation_input_tokens: int | None = None,
         decision: str | None = None,
         confidence: float | None = None,
         fallback_used: bool = False,
@@ -130,6 +143,8 @@ class System2Metrics:
             tokens_in,
             tokens_out,
             tokens_total,
+            cached_tokens,
+            cache_creation_input_tokens,
             decision,
             confidence,
             int(fallback_used),
@@ -141,9 +156,10 @@ class System2Metrics:
                 INSERT INTO system2_workflow_events (
                     run_id, timestamp, prompt_id, provider, model, task_family,
                     execution_mode, system, stage, status, latency_ms, input_chars,
-                    output_chars, tokens_in, tokens_out, tokens_total, decision,
-                    confidence, fallback_used, error_message
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    output_chars, tokens_in, tokens_out, tokens_total, cached_tokens,
+                    cache_creation_input_tokens, decision, confidence, fallback_used,
+                    error_message
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 values,
             )
@@ -264,6 +280,52 @@ class System2Metrics:
                 }
                 for row in rows
             },
+        }
+
+    def cache_kpis(self, *, run_id: str | None = None) -> dict[str, Any]:
+        """KPI di cache per i gate di evaluation: hit-rate e costo effettivo.
+
+        Confronta i modelli su costo EFFETTIVO (input nominale meno token in
+        riuso) e non nominale, usando i campi ``cached_tokens`` /
+        ``cache_creation_input_tokens`` persistiti su tutti i path provider.
+        Disponibile agli stessi consumer di ``get_token_breakdown``.
+        """
+        where = "WHERE run_id = ?" if run_id is not None else ""
+        params: tuple[Any, ...] = (run_id,) if run_id is not None else ()
+        with self._connect() as connection:
+            row = connection.execute(
+                f"""
+                SELECT COUNT(*) AS requests_with_usage,
+                       SUM(CASE WHEN COALESCE(cached_tokens, 0) > 0 THEN 1 ELSE 0 END)
+                           AS requests_with_cache_hit,
+                       SUM(COALESCE(cached_tokens, 0)) AS cached_tokens_total,
+                       SUM(COALESCE(cache_creation_input_tokens, 0)) AS cache_creation_total,
+                       SUM(COALESCE(tokens_in, 0)) AS input_nominal_total,
+                       SUM(COALESCE(tokens_in, 0) - COALESCE(cached_tokens, 0)) AS input_effective_total
+                FROM system2_workflow_events
+                {where}
+                {"AND" if where else "WHERE"} tokens_in IS NOT NULL
+                """,
+                params,
+            ).fetchone()
+        requests = int(row["requests_with_usage"] or 0)
+        hits = int(row["requests_with_cache_hit"] or 0)
+        return {
+            "requests_with_usage": requests,
+            "requests_with_cache_hit": hits,
+            "hit_rate_pct": round(100.0 * hits / requests, 2) if requests else 0.0,
+            "cached_tokens_total": int(row["cached_tokens_total"] or 0),
+            "cache_creation_total": int(row["cache_creation_total"] or 0),
+            "input_nominal_avg": round(
+                int(row["input_nominal_total"] or 0) / requests, 2
+            )
+            if requests
+            else 0.0,
+            "effective_input_avg": round(
+                int(row["input_effective_total"] or 0) / requests, 2
+            )
+            if requests
+            else 0.0,
         }
 
     def get_summary(self, *, run_id: str) -> dict[str, int]:

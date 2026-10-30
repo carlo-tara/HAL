@@ -1,6 +1,6 @@
 ---
 name: laya-cmd
-version: 1.0.0
+version: 1.0.1
 description: Command laya-cmd for HAL workspace.
 ---
 
@@ -13,13 +13,15 @@ Consultare **Laya** (System 1 di HAL) per eseguire valutazioni veloci, instradam
 ## Esecuzione
 
 Tramite terminale:
+
 ```bash
-python3 /var/www/HAL/router.py routing "<testo o problema>" --routes "<rotta1>, <rotta2>, <rotta3>"
-python3 /var/www/HAL/router.py choice "<prompt di decisione>" --options "<opzioneA>, <opzioneB>"
-python3 /var/www/HAL/router.py score "<testo da valutare>" --criteria "<criterio>"
+python3 /var/www/hal_system1/router.py routing "<testo o problema>" --routes "<rotta1>, <rotta2>, <rotta3>"
+python3 /var/www/hal_system1/router.py choice "<prompt di decisione>" --options "<opzioneA>, <opzioneB>"
+python3 /var/www/hal_system1/router.py score "<testo da valutare>" --criteria "<criterio>"
 ```
 
 Oppure in Python:
+
 ```python
 from router import handle_choice, handle_routing, handle_score
 ```

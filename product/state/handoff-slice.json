@@ -1,17 +1,13 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-10-23T00:00:00Z",
-  "flags": { "y": true },
-  "title": "P1: migratione SQLite error_message su DB storici",
-  "acceptance": "In _initialize, verificare se la colonna error_message esiste nella tabella system2_workflow_events; se manca, eseguire ALTER TABLE ... ADD COLUMN error_message TEXT. Test che crea un DB con schema pre-G7 (senza error_message), chiama record_event con error_message='test', e verifica che l'inserimento vada a buon fine senza OperationalError. sync_hal_system2.sh check esce 0.",
-  "files": [
-    "benchmark/runner/system2_metrics.py",
-    "tests/test_gate7_sqlite.py"
-  ],
-  "waiver": null,
-  "node_id": "",
-  "next": "",
-  "summary": "Migratione SQLite implementata e testata; gate sync_hal_system2.sh fallisce (exit 1).",
-  "brief": "RED: test pre-G7 riproduce OperationalError. GREEN: _initialize aggiunge error_message via ALTER TABLE se manca; test migration passa. Sync gate fallisce per divergenze non gestite."
+  "ts": "2026-10-30T07:54:41Z",
+  "flags": {"y": false},
+  "acceptance": "laya_service su POST /systemone con envelope unwrap; score abstain score_not_discriminative; noul intent-choice; test_laya_* verdi",
+  "files": "laya_service.py,tests/test_laya_service.py,router.py",
+  "node_id": "laya-systemone-contract",
+  "next": "ready (gate pre-commit 0); follow-up fuori perimetro: request_hash→POST /outcome, L2 harness-hal nota check-static N/A gia presente",
+  "summary": "Slice completato Red(5)→Green(78 incl. regressione)→ready; P0 flushata in CHANGELOG Fixed; live CLI: routing ok cache-cost-tokeni, choice ok, score by-pass onesto, noul ok; fix collaterale router noul --json",
+  "brief": "",
+  "token_budget": 200
 }

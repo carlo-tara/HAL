@@ -1,4 +1,4 @@
-# Indice — 23 documenti di dettaglio (perché / cosa / come)
+# Indice — 27 documenti di dettaglio (perché / cosa / come)
 
 Modello di costo: forward Laya ~33ms CPU · op Redis <1ms · LLM in unità relative (piccolo=1, medio=3, frontier=10).
 
@@ -33,6 +33,10 @@ Modello di costo: forward Laya ~33ms CPU · op Redis <1ms · LLM in unità relat
 - [21_soglie_dinamiche.md](21_soglie_dinamiche.md) — Soglie dinamiche dal log: epsilon-esplorazione e learning rate con deadband
 - [22_broadcast_lavagna.md](22_broadcast_lavagna.md) — Broadcast della risposta S2 nella lavagna come fatto con provenance
 - [23_serving_speculativo.md](23_serving_speculativo.md) — Serving speculativo: bozza servita mentre il grande completa (estensione di 16)
+- [24_trasporto_http_laya.md](24_trasporto_http_laya.md) — Trasporto HTTP Laya: pooling, timeout disaccoppiati, retry con backoff, teardown, TLS verify
+- [25_task_vs_batch.md](25_task_vs_batch.md) — Scelta Task API vs Batch API per workload ad alto volume (regola System 1, -50% oltre soglia)
+- [26_spike_session_cache_orcarouter.md](26_spike_session_cache_orcarouter.md) — Spike (N28): session-cache `x-dashscope-session-cache` e marker `cache_control` via OrcaRouter — esito: marker inerti, non adottato
+- [27_spike_conversation_gateway.md](27_spike_conversation_gateway.md) — Spike (N25): astrazione conversation lato gateway come alternativa locale a `previous_response_id`
 
 ## Riferimenti — harness & contesto
 

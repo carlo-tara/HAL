@@ -1,7 +1,7 @@
 ---
 name: illustrator
 parent: a-design
-version: 1.5.9
+version: 1.6.2
 competencies:
   - stile-visivo
   - prompt-composizione

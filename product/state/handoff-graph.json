@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-26T07:00:30Z",
+  "ts": "2026-10-30T20:53:34Z",
   "flags": {"y": true},
-  "acceptance": "make test-unit 225 GREEN; make ready-for-review Gate OK",
-  "files": "benchmark/runner/system2_metrics.py,benchmark/runner/benchmark_models.py,global_config.py,ToDo.md,product/state/work-graph.md",
+  "acceptance": "backlog ToDo.md esaurito: 0 voci aperte",
+  "files": "product/state/work-graph.md",
   "node_id": "DONE",
-  "next": "Nessun nodo aperto: flush ToDo.md completato, attendere commit/user",
-  "summary": "Grafo 5/5 done: N1 categoria error nel breakdown; N2 Settings.laya_max_retries + retry loop bounded + fallback single_pass/strategy + laya_call_count (0 su skip); N3 disclaimer rimossa (127 chars); N4 translation source_chunks solo con fonte reale oltre soglia (fix phi3 preservato); N5 registro a-knowledge mode 0. Suite verde.",
-  "brief": "",
+  "next": "—",
+  "summary": "re-run /graph -y 2026-10-30 su ToDo.md: P0/P1/P2 = 0 voci aperte, buffer Già fatto vuoto, prose delta obsolete (flush già in CHANGELOG); work-graph N0-N29 done/skip resta DONE; fine backlog deterministico, nessun Act; Laya choice indicava multi-cycle su nodi residui ma è in conflitto col next-pointer —, prevale la regola deterministica",
+  "brief": "ToDo.md senza voci aperte; work-graph in DONE; eventuale nuovo grafo solo a seguito di nuovo backlog",
   "token_budget": 200
 }

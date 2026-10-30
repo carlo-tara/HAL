@@ -155,3 +155,20 @@
 - Nuovo pitfall «writer canonico per handoff JSON»: il primo handoff di sessione è stato scritto a mano con `write_file` e solo dopo normalizzato con `bash agents/scripts/harness-prompt-builder.sh handoff-write todo --field …` (default `product/state/` già allineato; la nota `--dir` del 2026-10-27 è superata). [sync:safe]
 - Regola 7 di `learn-guidelines.md` estesa con clausola `Non applicabili:` (validata dai delta Connection pooling e Streaming); complementare alla clausola `Vincoli trasversali:` aggiunta in 1.5.5. Skill `learn` 1.5.5→1.5.6. [sync:safe]
 - `router.py routing` `ABSTAIN` 3× sulle destinazioni → fallback tabella Destinazione (System 2) senza retry, come da protocollo. Escluso dalla consolidazione (anti-grasso, già in padre): pattern generale batch-ToDo-da-doc (regola 7), lettura outline di `read_file` su file grandi. [sync:safe]
+
+---
+
+## 2026-10-29 — fix laya_service + contratto /systemone → HAL (sessione)
+
+### Progetto
+
+- RCA completa delle ABSTAIN System 1 (tre strati distinti): (1) `laya_service.py` non inviava `Authorization` → 401 su `/v1/predict` → `abstain unavailable` (fix con risoluzione chiave env `LAYA_API_KEY` → `.env` di repo → default `sk-local`; Red→Green `TestAuthHeader` in `tests/test_laya_http_pool.py`, suite `test_laya_*` 55 verdi; voce `### Fixed` in `./CHANGELOG.md`); (2) mismatch di contratto — il client invia `{task,routes,options,criteria}` a `/v1/predict`, che accetta solo nativo `{state,questions}` o shorthand `{text}` (→ intent-only), mentre il task endpoint canonico è `POST /systemone` `{task_type,text,params}` → `{result:{choice,confidence,probabilities},request_hash}` (localhost, senza auth): servizio sano, verdetti reali ottenuti (routing marker→`cache-cost-tokeni` p=0.88; 7/7 voci ToDo instradate, diverse sotto confidenza 0.3 → escalation System 2); (3) path morto del comando `/laya` (scoperto e sistemato da sessione parallela, `laya` 1.4.2).
+- Voce P0 di `./ToDo.md` riscritta (da «servizio guasto» — diagnosi parziale ereditata dalla stessa sessione — a «client da allineare al contratto canonico», `#bug`); nota della voce task-vs-batch corretta. By-pass onesto di `score` (`score_not_discriminative`, distribuzione misurata non discriminante): non fabricare punteggi. Rilevato: `/var/www/laya/log.sqlite` è una directory vuota (sqlite3 «unable to open» ≠ corruzione); il log del servizio è `/var/www/hal_system1/log.sqlite`.
+- Correzione d'inventario HAL: `laya_service.py` del gateway aveva `_call` senza auth; i consumer (`benchmark/`, `a-knowledge/extract.py`, `scripts/test_laya.py`) usavano già l'header — il client gateway era l'outlier.
+
+### HAL
+
+- `laya` 1.4.2→1.4.3: § «Diagnosi rapida — ABSTAIN» estesa con contratto degli endpoint (auth solo su `/predict`, task su `/systemone` senza auth), by-pass `score`, log canonico `/var/www/hal_system1/log.sqlite`, `confidence < 0.3` non prova [sync:safe]
+- `learn` 1.5.9→1.5.10: `learn-guidelines.md` regola 8 «Cause ereditate — riverificare»; `tool-pitfalls.md` regola mismatch-contratto + decima conferma dei parametri numerici (`read_file` range 2×, `timeout_ms` 1×) [sync:safe]
+- Concorrenza: la sezione `[1.5.9]` del `learn/CHANGELOG.md` è risultata sparita dal worktree a metà turno (mutazione esterna, contenuto `tool-pitfalls.md` integro) → ripristinata; ottava conferma del pitfall «file condivisi mutati da sessioni parallele» [sync:review]
+- Candidati a osservazione singola (NON consolidati, regola: aprire voce alla seconda sessione): `edit_file` fallito con «file changed on disk» quando l'`old_text` era ricostruito a memoria («ha astenuto» vs il verbatim «ha abstenuto»); `edit_file` con anchor breve su heading di versione genera match fuzzy multipli (usare block lungo con titolo file come ancora).
