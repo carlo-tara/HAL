@@ -12,6 +12,16 @@
 
 - Protocollo Token Budget: strategie A-D formalizzate con telemetria integrata. Strategy A (multi-question anchoring), B (semantic pacing ≤5 opzioni), C (confidence-based routing con escalation automatica), D (attachment filtering). Tracciamento chiamate System1/System2 in `events/token-budget.jsonl`.
 
+## [1.6.0] - 2026-10-30
+
+### Added
+
+- § MCP: tool `laya_outcome` (verdetto `correct|incorrect` + `correction` su `POST /outcome`, Bearer) e eco `request_hash` su `/predict` lato server → ciclo di calibrazione chiuso anche per routing/choice da Zed (cache-hit saltate: una inferenza = un voto). Gate `make test` (suite completa) accanto a `make mcp-test`. [sync:safe]
+
+### Changed
+
+- (a) Rientro di `noul` in inferenza GPU: rimossa la esclusione `noul_gpu_excluded` da `server.py` — i picchi 3–30 s erano eccezioni da GPU contesa (mediana ~2 s); il budget di latenza ora vive nel client/tool (`LAYA_TIMEOUT`, `LAYA_NOUL_TIMEOUT`, retry-once MCP), non nel server. [sync:safe]
+
 ## [1.5.0] - 2026-10-29
 
 ### Added

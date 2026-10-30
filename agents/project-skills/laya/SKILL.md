@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 1.5.1
+version: 1.6.0
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py, modulo Python router o come tool MCP in Zed (mcp_laya.py).
 ---
@@ -79,12 +79,13 @@ python3 router.py noul "<testo>"
 Oltre alla CLI, Laya è esposta in Zed come **context server MCP**: `mcp_laya.py` (server JSON-RPC stdio senza dipendenze, wrapper di `laya_service.py` per i task su `/predict` e di `POST /systemone` per `noul`). Setup idempotente in `~/.config/zed/settings.json` via `python3 scripts/setup_zed_mcp.py` (parser JSONC-aware, backup one-shot `settings.json.bak-laya`).
 
 - **Endpoint**: sempre DNS `laya.local` (env `LAYA_URL`, default nel codice), mai IP nudi.
-- **Tool**: `laya_routing`, `laya_choice`, `laya_score`, `laya_confidence`, `laya_context`, `laya_noul`, `laya_health`.
+- **Tool**: `laya_routing`, `laya_choice`, `laya_score`, `laya_confidence`, `laya_context`, `laya_noul`, `laya_outcome`, `laya_health`.
 - **Esito decisioni** (`laya_routing` / `laya_choice`): `selected`, `margin`, `probabilities` e `recommendation` — `system1_direct` | `accept_with_caution` | `escalate_system2`. L'escalation (Strategy C) è decisione dell'agente System 2 che chiama: il tool non consulta mai L2 internamente.
 - **`laya_noul`**: path GPU canonico `POST /systemone` `{task_type,text,params}`; budget proprio `LAYA_NOUL_TIMEOUT` (default 15 s vs media ~2 s; picchi 3–30 s da GPU contesa = eccezioni → su timeout retry una volta, poi escalate). Restituisce anche `request_hash` per la calibrazione via `/outcome`.
+- **Calibrazione**: `laya_routing`/`laya_choice` (via eco `request_hash` ora presente anche su `/predict`) e `laya_noul` restituiscono `request_hash`; `laya_outcome` registra il verdetto `correct|incorrect` (+ `correction` opzionale) su `POST /outcome` con Bearer. Il server salta le righe cache-hit: una inferenza = un voto.
 - **Strategy B al confine**: >5 opzioni → errore con hint di raggruppamento; 5 opzioni → truncation diversificata a 4 con nota; label >30 caratteri → warning.
 - **Igiene stdio**: stdout trasporta solo frame JSON-RPC; i warning di `laya_service` vanno su stderr. Su errore di qualsiasi tool, chiamare `laya_health` prima di dichiarare disservizio (Diagnosi ABSTAIN).
-- **Gate**: `make mcp-test` (unit tool + setup JSONC + contratto di questa sezione).
+- **Gate**: `make mcp-test` (unit tool + setup JSONC + contratto di questa sezione); suite completa del servizio con `make test`.
 
 ## Best Practices per Agenti (Ottimizzazione L1)
 
