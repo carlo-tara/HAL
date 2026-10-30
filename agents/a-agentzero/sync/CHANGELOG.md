@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 
+## [1.2.1] - 2026-10-30
+
+### Added
+
+- Notes: regola «canonico vs mirror generato» per i comandi L0 (il bump su `.agents/skills/<cmd>/SKILL.md` viene annullato dal `/sync !`; caso graph 1.0.3, 2026-10-30). Versione: `sync` 1.2.1 [sync:safe]
+
 ## [1.1.3] - 2026-09-17
 
 ### Added

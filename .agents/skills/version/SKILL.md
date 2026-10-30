@@ -1,6 +1,6 @@
 ---
 name: version
-version: 1.3.0
+version: 1.3.1
 description: Command version for HAL workspace.
 ---
 
@@ -56,6 +56,7 @@ Il comando `/version` (es. `/version patch`, `/version minor`, `/version major`)
 
 - **Delta only:** non modificare la versione di file che non hanno subito modifiche effettive nella sessione o nel diff corrente.
 - **Isolamento L0/L1/L2:** non incrementare la versione di `a-agentzero` (L0) per modifiche locali confinate in skill L2 o documentazione di progetto consumer.
+- **L0 command — canonico vs mirror:** `.agents/skills/<cmd>/SKILL.md`, `.zed/prompts/<cmd>.md` e `product/adapters/commands/<cmd>.md` sono rigenerati da `agents/a-agentzero/commands/<cmd>.md` via `link-workspace-skills.sh`/`/sync !`: il bump va applicato al canonico e il mirror rigenerato subito, mai solo sul mirror (verrebbe annullato — caso graph 1.0.3, 2026-10-30).
 - **Tracciabilità:** ogni bump deve essere accompagnato da una riga nel changelog pertinente (es. `CHANGELOG.md` del modulo o registro di sessione).
 
 ---

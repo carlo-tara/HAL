@@ -1,6 +1,6 @@
 ---
 name: sync
-version: 1.2.0
+version: 1.2.1
 description: >-
   Sincronizza agenti HAL L0/L1 (deploy) e comandi Cursor L0 ereditabili; verifica
   allineamento versioni; analizza L2 per generalizzazione (/sync <). Usa quando
@@ -51,3 +51,9 @@ Task Progress:
 ```
 
 Per dettaglio logica e output, usa `sync-guidelines.md`.
+
+## Notes
+
+- **Mirror dei comandi L0**: `.agents/skills/<cmd>/SKILL.md` e `.zed/prompts/<cmd>.md` sono generati da `agents/a-agentzero/commands/<cmd>.md` (link-workspace-skills.sh): contenuto e `version` vivono nel canonico, le modifiche al mirror sono annullate da `/sync !` (caso graph 1.0.3, 2026-10-30). Se dopo il deploy un mirror risulta sporco di contenuto vecchio, il canonico è indietro: bumpa il canonico e rilancia il link.
+- `sync` (come `learn`) è una skill utility canonica in `agents/a-agentzero/<nome>/`, pubblicata in `.agents/skills/<nome>` **via symlink**: lì l'edit del canonico è diretto e non c'è rigenerazione. La regola del mirror vale solo per i comandi L0 in `a-agentzero/commands/` (graph, todo, slice, cycle, version, document, commit, review, improve).
+

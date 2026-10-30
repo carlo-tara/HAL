@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.5.12] - 2026-10-30
+
+### Added
+
+- `tool-pitfalls.md` § «Path dei comandi L0: canonico vs mirror generato»: `edit_file`/`write_file` non risolvono gli symlink intermedi (usare alias `.agents/skills/...` o heredoc terminale fuori progetto); i mirror `.agents/skills/<cmd>/SKILL.md` dei comandi L0 sono rigenerati da `link-workspace-skills.sh` — bump sempre sul canonico `a-agentzero/commands/<cmd>.md`, mai solo sul mirror (caso graph 1.0.3, 2026-10-30) [sync:safe]
+
 ## [1.5.11] - 2026-10-30
 
 ### Added
