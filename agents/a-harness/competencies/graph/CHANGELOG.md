@@ -8,6 +8,12 @@ Formato Keep a Changelog + Semantic Versioning. Tag sync sul padre `a-harness`.
 
 - Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `graph` 1.3.2 [sync:safe]
 
+## [1.4.2] - 2026-10-30
+
+### Added
+
+- `references/graph-extended.md`: regola «Gate passivi» (riverifica con misura diretta dei prerequisiti prima di marcare skip nei re-run) e nota «handoff-write fonde i campi» (passare sempre `--field date=` e i campi semantici aggiornati). Versione: `graph` 1.4.2 [sync:safe]
+
 ## [1.4.1] - 2026-10-28
 
 ### Fixed

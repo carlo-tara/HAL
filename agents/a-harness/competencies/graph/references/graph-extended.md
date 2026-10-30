@@ -1,4 +1,5 @@
 5. **Fine backlog** quando: `next` assente/`—`, oppure lista Richieste/Attività aperte della sorgente esaurita, oppure nodi restanti marcati skip (es. opz. con nota in progress)
+6. **Gate passivi** — un gate umano/ops può sbloccarsi da solo tra un re-run e l'altro (container ricreato da altra sessione, data di consolidamento raggiunta, servizio externo avviato): prima di marcare skip, riverificare il prerequisito con una **misura diretta** (data sistema, `docker inspect` created, `ss -ltn` porte, import dipendenze) — l'etichetta di skip della sessione precedente non è verità persistente (caso 2026-10-30 rv6: «default post-split» marcato gate ops in rv5 era già eseguibile da un giorno)
 
 **Hard stop (interrompe il multi-cycle, non bypassabile con `-y`):**
 
@@ -28,7 +29,7 @@ Orchestrazione (flag strip, next pointer, handoff) = **deterministica** — non 
 2. **Niente dump** — non incollare transcript, `ToDo.md` intero, né `work-graph.md` completo nel prompt; passa solo titoli/P0–P1 o il nodo `next`.
 3. **Handoff compatto** — dopo Write, aggiorna `product/state/handoff-graph.json`:
    `bash scripts/harness-prompt-builder.sh handoff-write graph --dir product/state --field node_id=… --field next=… --field y=true|false --field brief='…'`
-   (il `--dir` è obbligatorio: il default del tool è `product/` e genera shadow copy fuori canone — caso 2026-10-27, vedi `learn/references/tool-pitfalls.md` § Writer canonico)
+   (il `--dir` è obbligatorio: il default del tool è `product/` e genera shadow copy fuori canone — caso 2026-10-27, vedi `learn/references/tool-pitfalls.md` § Writer canonico; `handoff-write` **fonde i campi**: `date`, `brief` e `acceptance` non passati restano dalla scrittura precedente → passare sempre `--field date=YYYY-MM-DD` e i campi semantici aggiornati, caso 2026-10-30: handoff-todo conservava il brief di rv5)
 4. **Multi-cycle (`-y`)** — ogni nodo: leggi **solo** `handoff-graph.json` + riga nodo in `work-graph.md`; non riaprire il contesto chat della `/graph` iniziale.
 
 ## Pipeline (`/graph`)

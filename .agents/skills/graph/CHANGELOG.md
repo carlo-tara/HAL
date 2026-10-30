@@ -1,5 +1,11 @@
 # Changelog — graph (L0)
 
+## [1.0.3] - 2026-10-30
+
+### Changed
+
+- Appreso da sessione 2026-10-30 (`/graph -y` re-run #6): verifica pipe su tutte le righe della tabella a ogni re-run (la corruzione può venire da run precedenti — caso righe N11/N14 con pipe grezzi dal 2026-10-25/26); mai a capo dentro la riga durante la riparazione [sync:safe]
+
 ## [1.0.2] - 2026-10-27
 
 ### Changed
