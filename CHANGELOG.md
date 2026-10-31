@@ -35,6 +35,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Client riusato negli script skill (a-knowledge, a-seozoom, illustrator) · Agent Platform
 - Regola System 1 task-vs-batch per workload ad alto volume · System 1 (Laya)
 
+- Promozioni `/sync <` — contratto naming L2 nel L0 `references/extension-scaffold.md` §4–5 (`a-agentzero` 1.13.1: `name` kebab-case pari alla directory, sanificazione degli underscore allo scaffold, «su disco ≠ in catalogo» come sintomo) e policy L1 «Copertura gate» in `a-harness` 1.10.1 (scan a zero match = vacuous pass, fallire a zero); `harness-agentfactory` 1.1.32 riduce i due bullet a puntatore (anti-DUP) · Agent Skills
+- Contratto RED→GREEN `product/contracts/check-harness-skill-naming.sh`; creati `CHANGELOG.md` per `harness-hal` (1.0.3) e le 4 L2 rinominate (1.0.1), catene riallineate su `a-harness@1.10.1` · Harness
 ### Changed
 
 - Allineare al gate 1 il gate `laya_recommended` del runner benchmark `#system1-gating #benchmark`
@@ -93,6 +95,9 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Polling a backoff esponenziale con stati terminali completi · Skill illustrator (a-design) + Gateway Core
 - Successo parziale nei task multi-output: iterare choices con `finish_reason` · Skill illustrator (a-design)
 - `laya_service`: operazioni instradate su `POST /systemone` `{task_type,text,params}` con unwrap dell'envelope `{result:{choice,confidence,probabilities}}`; routing/choice rispondono `ok` con `choice` ∈ candidates, `score` astiene con reason documentata `score_not_discriminative` (by-pass onesto, mai un valore fabricato), `noul` restituisce la stringa intent-choice; coperto da `TestSystemOneContract` (5 nuovi test, suite `test_laya_*` 60 verdi) e da verifica CLI live; fix collaterale `router.py` (`noul --json` serializzava l'intero `LayaOutcome`) · System 1 (Laya)
+
+- Naming skill L2: le 4 `harness-hal_mcp_docs|_mcp_tools|_translate|_tts` con underscore erano scartate in silenzio dal loader Zed (regex `^[a-z0-9]+(-[a-z0-9]+)*$` + `name`==directory) — rinominate kebab e riferimenti allineati nei Makefile/CHANGELOG di `hal_mcp_docs`, `hal_mcp_tools`, `hal_translate`, `hal_tts` · Agent Skills
+- `check-frontmatter-all.sh`: lo scan `.agents/skills/*` con ROOT errato non matchava mai nulla (vacuous pass) e il campo `name` non era validato → `find` separato sulle directory reali `.agents/skills/harness-*` + verifica name/regex/directory · Harness
 
 ## [2.3.0] - 2026-10-09
 

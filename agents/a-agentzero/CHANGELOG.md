@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.1] - 2026-10-31
+
+### Added
+
+- `references/extension-scaffold.md` §4–5: contratto naming del loader Agent Skills per le skill L2 — `name` kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`) pari alla directory, sanificazione degli underscore dei nomi progetto allo scaffold, «su disco ≠ in catalogo» come sintomo di scarto silenzioso. Promossa via `/sync <` da `harness-agentfactory` (validata su 4 L2 `harness-hal_*`, 2026-10-31). Contratti: `product/contracts/check-harness-skill-naming.sh` (RED 2026-10-31 → GREEN), enforcement `check-frontmatter-all.sh`. [sync:safe]
+
 ## [1.13.0] - 2026-10-30
 
 ### Fixed

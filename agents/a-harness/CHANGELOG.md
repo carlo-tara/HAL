@@ -5,6 +5,13 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.10.1] - 2026-10-31
+
+### Added
+
+- Policy L1 «Copertura gate»: uno scan a zero match è un vacuous pass; il gate conta i file controllati e fallisce a zero (evidenza: `check-frontmatter-all.sh` verde con `.agents/skills/harness-*` reali mai scansionati, sessione 2026-10-31) [sync:safe]
+- Allineato a a-agentzero 1.13.1 (`extends-version` 1.13.0 → 1.13.1; regola naming promossa in `extension-scaffold.md` §4–5, body non impattato) [sync:safe]
+
 ## [1.10.0] - 2026-10-30
 
 ### Added

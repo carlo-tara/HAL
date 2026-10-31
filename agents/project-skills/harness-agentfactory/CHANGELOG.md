@@ -1,5 +1,18 @@
 # Changelog — harness-agentfactory (L2)
 
+## [1.1.32] - 2026-10-31
+
+### Changed
+
+- Promozione `/sync <`: i bullet Steward «Naming skill» e «Copertura gate» salgono nella catena (L0 `extension-scaffold.md` 1.13.1 / L1 `a-harness` 1.10.1); nel L2 restano come puntatore al contratto `product/contracts/check-harness-skill-naming.sh` (anti-DUP) [sync:safe]
+- Allineato a a-harness 1.10.1 (`extends-version` 1.10.0 → 1.10.1) [sync:safe]
+
+## [1.1.31] - 2026-10-31
+
+### Added
+
+- Steward notes: contratto naming skill del loader Zed (kebab-case, `name`==directory, esclusione silenziosa delle violazioni, riscatto da nomi progetto con underscore), regola di copertura dei gate (scan a zero match = vacuous pass; fallire a zero) e fatto `.agents` condiviso dei consumer `hal_*` (L2 come directory reali in HAL). Appreso dalla sessione di fix delle 4 L2 scaffoldate con underscore. [sync:safe]
+
 ## [1.1.30] - 2026-10-30
 
 ### Changed

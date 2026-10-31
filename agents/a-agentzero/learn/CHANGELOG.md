@@ -1,5 +1,17 @@
 # Changelog — learn
 
+## [1.5.14] - 2026-10-31
+
+### Added
+
+- `tool-pitfalls.md` § «Batch `edit_file` non atomico»: nuova evidenza «file condivisi mutati da sessioni parallele» — `.agents/skills/harness-wtp/SKILL.md` 1.1.4→1.1.5 tra due letture nella stessa sessione (2026-10-31, sessione fix naming L2 harness-*) [sync:safe]
+
+## [1.5.13] - 2026-10-31
+
+### Added
+
+- `tool-pitfalls.md` § «Parametri numerici respinti come stringhe»: nuova evidenza — sessione orcarouter add+remove modelli (2026-10-31: `read_file` range respinto 3×, `terminal timeout_ms` respinto 2× → `sed -n`/omissione) [sync:safe]
+
 ## [1.5.12] - 2026-10-30
 
 ### Added

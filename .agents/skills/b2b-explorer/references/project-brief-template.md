@@ -39,7 +39,7 @@ Working directory: `/var/www/WTP_App`. Dati: `.shared/b2b/`. Env: **solo** `.env
 
 ## 6) Data and evidence
 - Available notes/data sources: `product/`, `explorer/b2b/docs/`, `projects/b2b-piccoleimprese/`
-- Enrichment DB: Postgres schema `enrichment.*` (`DATABASE_URL`; legacy `WTP_ENRICHMENT_DB_PATH` sqlite)
+- Enrichment DB: Postgres schema `enrichment.*` (`DATABASE_URL`)
 - Enrichment entry: A cohort/CRM / B domain-first / both:
 - What is already validated:
 - What is still hypothesis:

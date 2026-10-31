@@ -4,6 +4,8 @@
 
 ### Changed
 
+- 1.2.3 → **1.2.4** — Master SQLite enrichment ritirato: riferimenti a `enrichment.sqlite` rimossi da script e doc; script sqlite-only eliminati (recuperabili dallo storico git); archivio gzip read-only in `.shared/b2b/archive/`; guard test di purezza PG aggiunti `[sync:safe]`
+
 - 1.2.2 → **1.2.3** — Rimossi riferimenti a Cursor: `.cursor/product/` → `product/`, `.cursor/rules/` → `docs/rules/`, `.cursorrules` rimosso da layout repo `[sync:safe]`
 - 1.2.1 → **1.2.2** — Appreso da sessione: riconciliazione alias Company Key / Customer 360, allineamento `primary_domain` al sito corporate verificato e clearing domini freemail/privacy (`simplelogin`, `gmx.us`, ecc.) `[sync:safe]`
 

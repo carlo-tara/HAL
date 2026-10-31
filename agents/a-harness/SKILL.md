@@ -1,8 +1,8 @@
 ---
 name: a-harness
 extends: a-agentzero
-version: 1.10.0
-extends-version: 1.13.0
+version: 1.10.1
+extends-version: 1.13.1
 description: >-
   Reason why: senza test, gate Make e ritmi sostenibili, lo sviluppo non ha uscita verificabile né qualità stabile.
   Meta-Harness: TDD XP, Steward, DDD, Makefile gates, session progress, when-stuck, Plan→Act, L3.
@@ -22,6 +22,8 @@ Agente L1 orchestratore dello sviluppo TDD/XP. Eredita da **a-agentzero**.
 - **Static analysis gate (policy L1)** — senza un gate statico standardizzato ogni progetto inventa la propria quality bar e i nodi act chiudono senza uscita verificabile. Tool stack: `ruff` (lint/format), `pyright` o `mypy` (types), `shellcheck` (severity error); audit opzionali (dead-code, secrets, deps) aggregati in `check-static`. Target esposti nella Platform API (`references/makefile-template.mk`): `lint`, `types`, `check-static`, `check-static-diff` (soli file del diff di nodo), `pre-commit`. Uscita di un nodo act: `check-static-diff` = 0 e baseline globale non peggiorata; whitelist documentata, mai un bypass silenzioso.
 
 - **Verità del gate (policy L1)** — un run interrotto non è prova di nulla e `cmd | tail`/`cmd | head` restituisce il codice del filtro, non del comando: catturare sempre l'exit reale (`sh -c 'cmd > log 2>&1; ec=$?; tail log; exit $ec'`) e mai dichiarare green da output troncato. Evidenza: brainbeez S06 (2026-10-27, «verde» dichiarato 2× su un run che deadiccava) + harness-wtp 1.0.50 (niente `| tail` sui gate, MAKE_EXIT).
+
+- **Copertura gate (policy L1)** — uno scan che non matcha file produce un vacuous pass: `-path` non matcha fuori dalla radice di `find` (con ROOT=`agents/`, il pattern `$ROOT/.agents/skills/*` non ha mai matchato nulla e `frontmatter-all` restava verde saltando i L2 reali). Un gate deve provare la propria copertura: contare i file controllati e fallire a zero match. Evidenza: sessione 2026-10-31, 4 L2 con nomi underscore scartate in silenzio dal loader mentre il gate segnava OK.
 
 ## Output (Contratto)
 

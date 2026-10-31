@@ -38,15 +38,15 @@ Task Progress:
 
 ### 1. Identifica agente madre L1
 
-| Dominio | Agente madre | Template dati opzionale |
-|---------|--------------|------------------------|
-| B2B / GTM | `a-b2b` | L2 `b2b-*` + path enrichment in skill figlio |
-| Copy | `a-copywriter` | `brands/{nome}.md` da `brand-brief-template.md` |
-| Design (UI, Charts, Illustrazioni) | `a-design` | `.cursor/chart-styles/`, `.cursor/illustration-styles/` |
-| Harness / Engineering / TDD | `a-harness` | `docs/glossary.md`, `Makefile`, L2 `harness-*` |
-| Product (PO, Personas, JTBD, BDD) | `a-product` | L2 `product-*` + `product/` (`prd.md`, `personas.md`, `jtbd.md`, `features/`) |
-| SEO | `a-seozoom` | brief SEO da `project-brief-template.md` |
-| WordPress | `a-wordpress` | `.cursor/wordpress/{nome}.md` da `site-brief-template.md` |
+| Dominio                            | Agente madre   | Template dati opzionale                                                       |
+| ---------------------------------- | -------------- | ----------------------------------------------------------------------------- |
+| B2B / GTM                          | `a-b2b`        | L2 `b2b-*` + path enrichment in skill figlio                                  |
+| Copy                               | `a-copywriter` | `brands/{nome}.md` da `brand-brief-template.md`                               |
+| Design (UI, Charts, Illustrazioni) | `a-design`     | `.cursor/chart-styles/`, `.cursor/illustration-styles/`                       |
+| Harness / Engineering / TDD        | `a-harness`    | `docs/glossary.md`, `Makefile`, L2 `harness-*`                                |
+| Product (PO, Personas, JTBD, BDD)  | `a-product`    | L2 `product-*` + `product/` (`prd.md`, `personas.md`, `jtbd.md`, `features/`) |
+| SEO                                | `a-seozoom`    | brief SEO da `project-brief-template.md`                                      |
+| WordPress                          | `a-wordpress`  | `.cursor/wordpress/{nome}.md` da `site-brief-template.md`                     |
 
 ### 2. Carica catena ereditarietà
 
@@ -68,6 +68,8 @@ grep -r "extends: a-{dominio}" .agents/skills/ 2>/dev/null
 Se esiste già un figlio per lo stesso dominio+progetto, chiedi se aggiornare o creare variante.
 
 ### 4–5. Crea SKILL.md figlio
+
+Il slug `{dominio}-{progetto}` e il campo `name` rispettano il **contratto del loader Agent Skills**: kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`), `name` pari al nome directory; i nomi progetto con underscore si sanificano in hyphen allo scaffold (`hal_mcp_docs` → `harness-hal-mcp-docs`). Il loader **scarta in silenzio** le violazioni: sintomo = skill presente su disco ma assente dal catalogo. Contratti: `product/contracts/check-harness-skill-naming.sh`, enforcement `check-frontmatter-all.sh`.
 
 ```bash
 mkdir -p .agents/skills/{dominio}-{progetto}
@@ -103,13 +105,13 @@ Copia il valore `Version` in `extends-version` del figlio.
 
 Nel body del figlio, compila almeno:
 
-| Sezione | Contenuto |
-|---------|-----------|
-| **Progetto** | Nome, dominio, working directory |
-| **Path locali** | Dove scrivere output (content/, plugins/, assets/, seo/) |
-| **Override workflow** | Solo ciò che differisce dal L1 |
-| **Capacità aggiuntive** | Skill/regole specifiche del progetto |
-| **Deleghe** | Sibling e altri agenti (vedi template sotto) |
+| Sezione                 | Contenuto                                                |
+| ----------------------- | -------------------------------------------------------- |
+| **Progetto**            | Nome, dominio, working directory                         |
+| **Path locali**         | Dove scrivere output (content/, plugins/, assets/, seo/) |
+| **Override workflow**   | Solo ciò che differisce dal L1                           |
+| **Capacità aggiuntive** | Skill/regole specifiche del progetto                     |
+| **Deleghe**             | Sibling e altri agenti (vedi template sotto)             |
 
 Se esistono **più figli** sullo stesso L1, dichiara `role:` (e opz. `primary:`) nel frontmatter — vedi AGENT-PROTOCOL § Multi-figlio.
 
@@ -118,18 +120,18 @@ Se esistono **più figli** sullo stesso L1, dichiara `role:` (e opz. `primary:`)
 ```markdown
 ## Deleghe
 
-| Agente / skill | Ruolo | Quando |
-|----------------|-------|--------|
-| `{sibling-data}` | data | Import, CSV, manifest, metriche |
-| `{sibling-editorial}` | editorial | Title, meta, FAQ, CTA, publish checklist |
-| `{slug}-voice` | voice | Tono, registri, rewrite vocale |
-| `a-copywriter` | L1/L2 | Corpo lungo, humanize |
-| `a-illustrator` | L1/L2 | Asset, copertine |
-| `a-seozoom` / L2 SEO | L1/L2 | Keyword da dati reali |
-| `a-charts` | L1/L2 | Grafici, serie, funnel visuali |
-| `a-b2b` | L1/L2 | Facade B2B → a-product § Profilo B2B (delega po/enrichment) |
-| `a-po` | L1/L2 | Product shape, validate, prioritize |
-| `a-enrichment` | L1/L2 | Cascade HubSpot/Apollo/LeadMagic / gates |
+| Agente / skill        | Ruolo     | Quando                                                      |
+| --------------------- | --------- | ----------------------------------------------------------- |
+| `{sibling-data}`      | data      | Import, CSV, manifest, metriche                             |
+| `{sibling-editorial}` | editorial | Title, meta, FAQ, CTA, publish checklist                    |
+| `{slug}-voice`        | voice     | Tono, registri, rewrite vocale                              |
+| `a-copywriter`        | L1/L2     | Corpo lungo, humanize                                       |
+| `a-illustrator`       | L1/L2     | Asset, copertine                                            |
+| `a-seozoom` / L2 SEO  | L1/L2     | Keyword da dati reali                                       |
+| `a-charts`            | L1/L2     | Grafici, serie, funnel visuali                              |
+| `a-b2b`               | L1/L2     | Facade B2B → a-product § Profilo B2B (delega po/enrichment) |
+| `a-po`                | L1/L2     | Product shape, validate, prioritize                         |
+| `a-enrichment`        | L1/L2     | Cascade HubSpot/Apollo/LeadMagic / gates                    |
 
 **Conflitto tipico:** stuffing / CTA invasiva vs tono → vince voice/brand (non SEO).
 ```
@@ -222,10 +224,10 @@ Frontmatter minimo:
 
 ```yaml
 ---
-name: {id}
+name: { id }
 kind: competency
 version: 1.0.1
-extends-version: 1.0.0   # = version L1 a-{dominio}/competencies/{id}/
+extends-version: 1.0.0 # = version L1 a-{dominio}/competencies/{id}/
 description: >-
   Override {id} per {progetto}.
 ---

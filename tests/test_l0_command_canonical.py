@@ -9,13 +9,18 @@ stato toccato. Le regole consolidate:
    solo sul mirror».
 2. skill `sync` 1.2.1: note «le modifiche al mirror sono annullate da
    `/sync !`».
-3. learn 1.5.12: sezione tool-pitfalls «Path dei comandi L0: canonico vs
-   mirror generato» (include edit_file su path via symlink `agents/` e
-   write_file fuori progetto -> heredoc terminale).
+3. learn >= 1.5.12 (versione corrente estratta dal frontmatter): sezione
+   tool-pitfalls «Path dei comandi L0: canonico vs mirror generato» (include
+   edit_file su path via symlink `agents/` e write_file fuori progetto ->
+   heredoc terminale). Il contratto verifica che la `version` corrente di
+   learn risulti nel proprio CHANGELOG, non un numero pinato (i bump patch
+   legittimi — es. 1.5.13/1.5.14 del 2026-10-31 — non devono rompere la
+   suite).
 """
 
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -56,8 +61,13 @@ class TestLearnPitfallPath(unittest.TestCase):
         self.assertIn("## Path dei comandi L0: canonico vs mirror generato", text)
 
     def test_learn_bump_e_changelog(self) -> None:
-        self.assertIn("version: 1.5.12", LEARN_SKILL.read_text(encoding="utf-8"))
-        self.assertIn("[1.5.12]", LEARN_CL.read_text(encoding="utf-8"))
+        skill = LEARN_SKILL.read_text(encoding="utf-8")
+        m = re.search(r"^version: (\d+\.\d+\.\d+)$", skill, re.M)
+        self.assertIsNotNone(m, "campo version assente in learn/SKILL.md")
+        self.assertGreaterEqual(
+            tuple(int(x) for x in m.group(1).split(".")), (1, 5, 12)
+        )
+        self.assertIn(f"[{m.group(1)}]", LEARN_CL.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

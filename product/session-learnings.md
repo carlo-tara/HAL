@@ -172,3 +172,15 @@
 - `learn` 1.5.9→1.5.10: `learn-guidelines.md` regola 8 «Cause ereditate — riverificare»; `tool-pitfalls.md` regola mismatch-contratto + decima conferma dei parametri numerici (`read_file` range 2×, `timeout_ms` 1×) [sync:safe]
 - Concorrenza: la sezione `[1.5.9]` del `learn/CHANGELOG.md` è risultata sparita dal worktree a metà turno (mutazione esterna, contenuto `tool-pitfalls.md` integro) → ripristinata; ottava conferma del pitfall «file condivisi mutati da sessioni parallele» [sync:review]
 - Candidati a osservazione singola (NON consolidati, regola: aprire voce alla seconda sessione): `edit_file` fallito con «file changed on disk» quando l'`old_text` era ricostruito a memoria («ha astenuto» vs il verbatim «ha abstenuto»); `edit_file` con anchor breve su heading di versione genera match fuzzy multipli (usare block lungo con titolo file come ancora).
+
+---
+
+## 2026-10-31 — fix naming L2 harness-* + copertura gate frontmatter → HAL (sessione)
+
+### HAL
+
+- Contratto naming del loader Zed: `name` kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`) e uguale alla directory; le 4 L2 scaffoldate in giornata con underscore (`harness-hal_mcp_docs|_mcp_tools|_translate|_tts`) erano scartate in silenzio (presenti su disco, assenti dal catalogo skill). Rinominate in kebab + riferimenti allineati nei 4 Makefile/CHANGELOG consumer. Consolidato in `harness-agentfactory` 1.1.30→1.1.31 (§ Steward notes); candidato a promozione L1 via `/sync <` (validato su 4 progetti, nessuna richiesta esplicita in sessione). [sync:safe]
+- Bug di copertura in `check-frontmatter-all.sh`: scan `-path "$ROOT/.agents/skills/*"` con ROOT=`agents/` mai matchato → gate verde senza controllare i L2 reali, e `name` mai validato. Fix: `find` separato sulle directory reali `.agents/skills/harness-*/SKILL.md` (senza seguire symlink) + verifica name/regex/directory. Lezione generalizzata ai gate: uno scan a zero match è un vacuous pass, va contato e fatto fallire a zero. [sync:review]
+- Infra HAL: `hal_mcp_docs`, `hal_mcp_tools`, `hal_translate`, `hal_tts` hanno `.agents` symlink → `/var/www/hal_gateway/.agents` (stesso inode) — le loro L2 vivono come directory reali sotto `.agents/skills/` di questo repo; listando quei progetti si vede il contenuto di HAL, non è duplicazione. [sync:safe]
+- Concorrenza: `harness-wtp/SKILL.md` mutato 1.1.4→1.1.5 (bump di sessione parallela) tra due letture nel turno → evidenza accodata a `tool-pitfalls.md`, learn 1.5.13→1.5.14. Seconda conferma parametri numerici (`read_file` range 2× → `sed -n`) NON accodata: evidenza orcarouter già registrata in 1.5.13 per la stessa giornata (anti-grasso). [sync:safe]
+- Esclusi dalla consolidazione: catene STALE note (`harness-hal` 1.9.2, `wtp`/`semidifocusing` 1.7.3 vs `a-harness` 1.10.0 — bump di competenza consumer via `sync-consumer-stale`); `sed -i` terminale su file fuori progetto riuscito (osservazione singola, aprire voce alla seconda sessione). [sync:safe]

@@ -1,8 +1,8 @@
 ---
 name: harness-agentfactory
 extends: a-harness
-version: 1.1.30
-extends-version: 1.10.0
+version: 1.1.32
+extends-version: 1.10.1
 description: >-
   Delta harness per HAL (sorgente canonica skill L0/L1): Platform API
   Makefile, glossario, bounded contexts, bootstrap standard, gate version/shell;
@@ -22,7 +22,7 @@ HAL è la **sorgente canonica** di skill/agenti, non un'app consumer. Stack = Ma
 | Campo             | Valore                               |
 | ----------------- | ------------------------------------ |
 | Nome              | HAL                                  |
-| Working directory | `/var/www/hal_gateway/agents`                |
+| Working directory | `/var/www/hal_gateway/agents`        |
 | Stack             | skills / markdown / bash (meta-repo) |
 | Bootstrap profile | **standard**                         |
 | Effort default    | thorough                             |
@@ -151,6 +151,8 @@ Uno slice su agenti/skill è **Done** solo se:
 - **CI remota:** GitHub Actions `ready-for-review` (+ shellcheck apt) su push/PR `main`.
 - **Git hook locale:** `make install-git-hooks` → `.git/hooks/pre-commit` lancia `make pre-commit`.
 - **Qualità Make:** un solo frontmatter (`frontmatter-all`); `shell-syntax` ≠ `shellcheck-ok`; più `md-links` / `ready-proof`.
+- **Naming skill & copertura gate:** promossi via `/sync <` — naming nel L0 `extension-scaffold.md` (§4–5), copertura gate in `a-harness` (policy L1); contratto greppabile `product/contracts/check-harness-skill-naming.sh`, enforcement `check-frontmatter-all.sh`. La regola del caricatore vale anche per gli L2 `harness-*` sanificando gli underscore dei nomi progetto (`hal_mcp_docs` → `harness-hal-mcp-docs`).
+- **`.agents` condiviso dei consumer hal\_*:** `hal_mcp_docs`, `hal_mcp_tools`, `hal_translate`, `hal_tts` hanno `.agents` symlink → `/var/www/hal_gateway/.agents` (stesso inode): le loro L2 vivono qui come directory reali sotto `.agents/skills/`; listando quei progetti si vede il contenuto di questo repo — non è duplicazione.
 - **STALE consumer:** `make sync-consumer-stale` (report); apply bump nei repo consumer con RGR — vedi playbook DUP.
 - **Ambito `ready-proof`:** osserva solo `a-*/` e `.agents/skills/` in **questo** repo. Le L2 in un consumer (`/var/www/{repo}/.agents/skills/`) non sono gate AF: version/CHANGELOG e `make` si verificano **nel** repo target (se assente → check greppabili dichiarati in progress).
 - **a-uiux:** L1 per static/a11y/layout; consumer L2 restano delta token/IA.

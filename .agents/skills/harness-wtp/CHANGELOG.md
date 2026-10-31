@@ -4,6 +4,8 @@
 
 ### Changed
 
+- 1.1.4 → **1.1.5** — Enrichment runtime SoT: rimossi dal repo gli script sqlite legacy (`enrichment.sqlite` ritirato in archivio read-only); la riga § Enrichment del delta doc vieta ora anche l'uso Explorer-side di sqlite `[sync:safe]`
+
 - 1.1.3 → **1.1.4** — Rimossi riferimenti a Cursor: `.cursor/product/` → `product/`, `.cursor/versioned-cursor-paths` → `config/versioned-agent-paths`, `.cursor/hooks*` → `config/hooks.json` + `scripts/hooks/`, `.cursor/rules/` → `docs/rules/`, `check-cursor-whitelist` → `check-agent-whitelist` `[sync:safe]`
 - 1.1.2 → **1.1.3** — Appreso da sessione: Cost control OpenAPI Risk; `/IT-negativita` strictly on-demand (includeNegativity: true, bottone UI); Company 360 lazy risk solo su tab #rischi (no prefetch su renderShell); fetch incrementale existingSources riutilizza Start/Advanced senza ri-addebiti `[sync:safe]`
 
