@@ -9,6 +9,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ### Added
 
+- Gate k-aware System 1 sul client gateway: choice/routing/preflight con probabilità verificano il verdetto con self-consistency (k≥4 mai diretto senza top1≥0,8), astensione `low_margin` quando non accettabile — soglie e helper ora nel modulo canonico `laya_gate.py` (symlink verso hal_system1), niente mirror manuale.
+
 - Chiave Cache L1 a due livelli: prefix stabile + suffix append-only · Gateway Core
 - Catalogo skill compatto con System 1 (Laya) come tool-search · System 1 (Laya) + Agent Platform
 - ContextManager multi-turn nel Gateway Core: troncamento, rolling summary, retrieval · Gateway Core

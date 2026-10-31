@@ -726,5 +726,110 @@ class TestSystemOneContract(unittest.TestCase):
         self.assertEqual(sent["params"], ["a-product", "a-harness"])
 
 
+class KAwareGateGatewayTests(unittest.TestCase):
+    """Gate k-aware (telemetria laya_calls): mirrored from hal_system1 — a k>=4 il
+    solo margin non basta, e i verdetti senza speranza si astengono subito."""
+
+    @staticmethod
+    def _response(payload: Mapping[str, object]) -> Mock:
+        response = Mock()
+        response.status_code = 200
+        response.json.return_value = payload
+        return response
+
+    def test_clear_margin_routing_single_call(self) -> None:
+        prompt = f"gate clear {self.id()}"
+        env = self._response(
+            {
+                "result": {"choice": "a", "probabilities": {"a": 0.9, "b": 0.1}},
+                "request_hash": "h",
+            }
+        )
+        with patch("laya_service._session.post", return_value=env) as post:
+            outcome = LayaSystemOneService.routing(prompt, ["a", "b"])
+        self.assertEqual(outcome.status, "ok")
+        self.assertEqual(outcome.value, "a")
+        post.assert_called_once()
+
+    def test_no_probabilities_still_trusted(self) -> None:
+        prompt = f"gate noprob {self.id()}"
+        env = self._response({"result": {"choice": "b"}, "request_hash": "h"})
+        with patch("laya_service._session.post", return_value=env) as post:
+            outcome = LayaSystemOneService.choice(prompt, ["a", "b"])
+        self.assertEqual(outcome.status, "ok")
+        self.assertEqual(outcome.value, "b")
+        post.assert_called_once()
+
+    def test_deeply_unclear_abstains_with_single_call(self) -> None:
+        prompt = f"gate unclear {self.id()}"
+        env = self._response(
+            {
+                "result": {"choice": "a", "probabilities": {"a": 0.52, "b": 0.48}},
+                "request_hash": "h1",
+            }
+        )
+        with patch("laya_service._session.post", return_value=env) as post:
+            outcome = LayaSystemOneService.routing(prompt, ["a", "b"])
+        self.assertEqual(outcome.status, "abstain")
+        self.assertEqual(outcome.reason, "low_margin")
+        post.assert_called_once()
+
+    def test_k4_high_margin_low_top1_forces_reversed_verification(self) -> None:
+        prompt = f"gate k4 {self.id()}"
+        probs = {"a": 0.65, "b": 0.10, "c": 0.125, "d": 0.125}
+        first = self._response(
+            {"result": {"choice": "a", "probabilities": probs}, "request_hash": "h1"}
+        )
+        second = self._response(
+            {"result": {"choice": "a", "probabilities": probs}, "request_hash": "h2"}
+        )
+        with patch("laya_service._session.post", side_effect=[first, second]) as post:
+            outcome = LayaSystemOneService.choice(prompt, ["a", "b", "c", "d"])
+        self.assertEqual(outcome.status, "ok")
+        self.assertEqual(outcome.value, "a")
+        self.assertEqual(post.call_count, 2)
+        self.assertEqual(
+            post.call_args_list[1].kwargs["json"]["params"], ["d", "c", "b", "a"]
+        )
+
+    def test_gate_helpers_shared_with_laya_gate(self) -> None:
+        """Anti-drift: il gateway non duplica più il gate, importa il canonico."""
+        import laya_gate
+        import laya_service as gw
+
+        self.assertIs(gw._top_and_margin, laya_gate._top_and_margin)
+        self.assertIs(gw.verdict_directly_acceptable, laya_gate.verdict_directly_acceptable)
+        self.assertEqual(gw.FAST_MARGIN, laya_gate.FAST_MARGIN)
+
+    def test_preflight_abstains_on_unclear_verdict(self) -> None:
+        contract = system1_preflight.TaskContract(
+            task_type="choice",
+            instruction="Scegli lagente corretto per la richiesta di enrichment",
+            source="x" * 500,
+            output_format="md",
+            candidates=("docs", "infra", "agents", "product"),
+            risk_level="medium",
+            complexity="complex",
+        )
+        env = self._response(
+            {
+                "result": {
+                    "choice": "docs",
+                    "probabilities": {
+                        "docs": 0.40,
+                        "infra": 0.30,
+                        "agents": 0.15,
+                        "product": 0.15,
+                    },
+                },
+                "request_hash": "h",
+            }
+        )
+        with patch("laya_service._session.post", return_value=env):
+            outcome = LayaSystemOneService.preflight(contract)
+        self.assertEqual(outcome.status, "abstain")
+        self.assertEqual(outcome.reason, "low_margin")
+
+
 if __name__ == "__main__":
     unittest.main()

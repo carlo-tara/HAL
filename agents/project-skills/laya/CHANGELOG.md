@@ -1,5 +1,34 @@
 # Changelog — laya (System 1 Service)
 
+## [1.7.2] - 2026-10-31
+
+### Changed
+
+- Trasporto L2 per il voto implicito: `_read_completion` legge gli SSE frame-by-frame fino a `[DONE]`/`finish_reason` (l'orchestratore :8910 non chiude il socket dopo la risposta → `response.read()`Whole-body andava in timeout); validato live end-to-end: verdetto S2 registrato come outcome sulla riga d'inferenza (`smart_option` `incorrect`/`correction`).
+
+
+## [1.7.1] - 2026-10-31
+
+### Added
+
+- `laya_gate.py`: modulo canonico delle soglie e degli helper k-aware del gate — il gateway lo importa via symlink, CLI/tool/gateway condividono per costruzione le stesse soglie (niente più mirror manuale).
+- Sezione «votes by family» in `scripts/analyze_telemetry.py` (`make telemetry`): i verdetti calibrati sono raggruppati `noul` vs `decision-family` vs `other` — è l'accettazione della P1 di monitoraggio del gate (decision-family ≥ 20/settimana).
+- Voto implicito configurabile end-to-end: `SYSTEM2_URL`/`SYSTEM2_MODEL` in `hal_system1/.env` puntano l'orchestratore locale e `_extract_completion_text` tollera risposte JSON e SSE (`chat.completion.chunk`).
+
+
+## [1.7.0] - 2026-10-31
+
+### Added
+
+- Gate k-aware sulla Strategy C: `system1_direct` con k≥4 richiede ensemble `top1 ≥ LAYA_DIRECT_MIN_TOP1` (0.8) e self-consistency forzata — misura telemetrica (a k=4 solo 5% dei primi pass ha top1≥0,8); mirror applicato anche al client gateway (`hal_gateway/laya_service.py`, astensione `low_margin` invece di verdetto inaffidabile).
+- § Tabella di delega verde/giallo/rossa derivata dai dati `laya_calls` 2026-10-11→30 e dal benchmark S1/S2.
+
+### Changed
+
+- Strategy C: la soglia non è più la `confidence` entropica (inaffidabile: media 0,34 con top1 0,79 a k=2) ma `margin`/`top1_prob`; `router.py routing/choice --json` espone `margin`, `top1_prob`, `recommendation`, `passes`, `request_hash`.
+- Voto implicito System 2: l'escalation di `smart_choice`/`smart_route` registra l'esito L2 su `/outcome` (`LAYA_IMPLICIT_VOTES=0` disattiva); `record_outcome` non sovrascrive verdetti esistenti (una inferenza = un voto).
+
+
 ## [1.5.1] - 2026-10-30
 
 ### Changed

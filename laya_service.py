@@ -15,11 +15,23 @@ import requests
 import urllib3
 from requests.adapters import HTTPAdapter
 
+from laya_gate import (
+    DIRECT_CAP_OPTIONS,
+    ESCALATE_MARGIN,
+    FAST_MARGIN,
+    _answer_probs,
+    _top_and_margin,
+    verdict_directly_acceptable,
+)
 from system1_preflight import LayaCallBudget, TaskContract, prepare_laya_request
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 LAYA_BASE_URL = os.getenv("LAYA_BASE_URL", "http://laya.local:8091/v1")
+
+# Soglie e helper del gate: modulo canonico laya_gate.py (symlink al sorgente
+# hal_system1). Non duplicare: la soglia divergente qui cambierebbe solo il
+# comportamento del gateway, silenziosamente.
 LAYA_TIMEOUT = float(os.getenv("LAYA_TIMEOUT") or "5.0")
 # Task endpoint del deployment: POST {base}/systemone, aperto su localhost. Il
 # client invia comunque Authorization: Bearer <chiave> (forward-compat; su
@@ -288,7 +300,15 @@ class LayaSystemOneService:
         choice = response.get("choice", response.get("prediction"))
         if not isinstance(choice, str) or choice not in options:
             raise _LayaAbstention("invalid_choice")
-        return choice
+        probs = _answer_probs(response, list(options))
+        if probs is None:
+            return choice
+        top, margin = _top_and_margin(probs)
+        if verdict_directly_acceptable(len(options), probs[top], margin, FAST_MARGIN):
+            return top
+        return cls._verification_pass(
+            "choice", prompt, list(options), probs, top, margin
+        )
 
     @classmethod
     def routing(cls, request_text: str, routes: list[str]) -> LayaOutcome[str]:
@@ -308,7 +328,52 @@ class LayaSystemOneService:
         )
         if not isinstance(route, str) or route not in routes:
             raise _LayaAbstention("invalid_route")
-        return route
+        probs = _answer_probs(response, list(routes))
+        if probs is None:
+            return route
+        top, margin = _top_and_margin(probs)
+        if verdict_directly_acceptable(len(routes), probs[top], margin, FAST_MARGIN):
+            return top
+        return cls._verification_pass(
+            "routing", request_text, list(routes), probs, top, margin
+        )
+
+    @classmethod
+    def _verification_pass(
+        cls,
+        task: str,
+        text: str,
+        options: list[str],
+        probs: dict[str, float],
+        top: str,
+        margin: float,
+    ) -> str:
+        """Seconda passata autoconsistente (ordine invertito) per verdetti non diretti.
+
+        Mirror del gate hal_system1: a k≥4 la verifica è obbligatoria anche con
+        margine alto; sotto il CAP un margine sotto ESCALATE_MARGIN si astende
+        subito, senza spendere una seconda chiamata. Se la verifica non è
+        possibile (budget o servizio) il verdetto passa solo nella banda prudente
+        sotto il CAP.
+        """
+        key = "options" if task == "choice" else "routes"
+        if margin < ESCALATE_MARGIN and len(options) < DIRECT_CAP_OPTIONS:
+            raise _LayaAbstention("low_margin")
+        try:
+            second = cls._call(
+                {"task": task, "text": text, key: list(reversed(options))}
+            )
+        except _LayaAbstention:
+            if margin >= ESCALATE_MARGIN and len(options) < DIRECT_CAP_OPTIONS:
+                return top
+            raise _LayaAbstention("low_margin") from None
+        probs2 = _answer_probs(second, options)
+        if probs2 is not None:
+            probs = {opt: (probs[opt] + probs2[opt]) / 2 for opt in options}
+        top, margin = _top_and_margin(probs)
+        if margin >= ESCALATE_MARGIN:
+            return top
+        raise _LayaAbstention("low_margin")
 
     @classmethod
     def score(cls, text: str, criteria: str) -> LayaOutcome[float]:
@@ -412,6 +477,20 @@ class LayaSystemOneService:
             )
             if not isinstance(result, str) or result not in contract.candidates:
                 raise _LayaAbstention(f"invalid_{key}")
+            probs = _answer_probs(response, list(contract.candidates))
+            if probs is not None:
+                # Preflight ha un solo tentativo: il verdetto passa se diretto o
+                # prudente sotto il CAP; altrove astensione (fallback locale).
+                top, margin = _top_and_margin(probs)
+                direct = verdict_directly_acceptable(
+                    len(contract.candidates), probs[top], margin, FAST_MARGIN
+                )
+                cautious = (
+                    margin >= ESCALATE_MARGIN
+                    and len(contract.candidates) < DIRECT_CAP_OPTIONS
+                )
+                if not (direct or cautious):
+                    raise _LayaAbstention("low_margin")
             return result
         if contract.task_type == "score":
             raw_score = response.get("score", response.get("prediction"))
