@@ -2,6 +2,19 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.1.1] - 2026-11-01
+
+### Added
+
+- Path «Browser driver» (`app/playwright_tools.py` + `app/playwright_driver.py`) e 3 safety note apprese da sessione `/learn !`: `playwright` solo nel driver-subprocess (mai import nel core; vietato modulo `app/playwright.py` per shadowing), grep dei letterali del vecchio nome dopo ogni rinomina in tree condiviso, gate statico via venv temporaneo esterno (PEP 668, mai `venv/` nel repo) [sync:safe]
+
+## [1.1.0] - 2026-10-31
+
+### Added
+
+- Target `install-zed` (dry-run default, `APPLY=1` scrive) e nuovi path in tabella artefatti: `app/s1.py` + `logs/s1-decisions.jsonl`, `app/install_zed.py` [sync:safe]
+- Safety note: preflight fail-open (KPI-3: S1 non tocca status/exit), secret solo da env, esito `TIMEOUT`=124 e cap 4000 char sulla risposta [sync:safe]
+
 ## [1.0.1] - 2026-10-31
 
 ### Changed
