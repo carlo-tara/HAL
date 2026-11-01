@@ -2,6 +2,22 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.1.3] - 2026-11-01
+
+### Added
+
+- Path «Scraping driver» (`app/scrape_tools.py` + `app/scrape_driver.py`, env `HAL_SCRAPE_DRIVER`) e 4 safety note apprese da sessione `scrape`: driver **puro stdlib** senza deroga §5 né auto-skip (contratti identici a `playwright_tools`, ponte JS via `html_path`); `RobotFileParser.read()` in py3.12 non accetta argomenti ⇒ usare `parse(lines)`, altrimenti il `TypeError` inghiottito dal fail-open spegne i robots in silenzio; `title`/`meta` intercettati prima del gate di skip nell'estrattore + fallback senza rimozione rumore su markup che abusa delle tag semantiche; smoke CLI del driver nuovo prima della suite (exit atteso 2 su `--request-json 'non-json'`) [sync:safe]
+
+### Changed
+
+- Cell «Stack» e tabella Target Makefile allineate allo stato reale: `test-unit` corre `-m "not int"`, `test-int` consegnato in M2 con spawn reale (N/A obsoleto rimosso, restano `test-e2e`/`check-parity`/`sync-assets`) [sync:safe]
+
+## [1.1.2] - 2026-11-01
+
+### Changed
+
+- Allineata ad a-harness 1.10.2 (`extends-version` 1.10.1 → 1.10.2) — bump di sessione parallela non registrato nel changelog, documentato qui in sede di consolidamento [sync:safe]
+
 ## [1.1.1] - 2026-11-01
 
 ### Added
