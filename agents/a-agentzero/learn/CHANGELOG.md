@@ -1,5 +1,17 @@
 # Changelog — learn
 
+## [1.5.16] - 2026-11-03
+
+### Changed
+
+- `tool-pitfalls.md` § «Parametri numerici respinti come stringhe»: nuova evidenza sessione menubar brainbeez (2026-11-03: `read_file` range respinto 4× anche con parametri numerici identici al retry; `terminal timeout_ms` respinto 2× → `sed -n`/omissione) [sync:safe]
+
+## [1.5.15] - 2026-11-01
+
+### Added
+
+- `tool-pitfalls.md` § «Parametri numerici respinti come stringhe» + § «Batch `edit_file` non atomico»: nuova evidenza sessione hal_seo seozoom-imports (2026-11-01: `read_file` range respinto 2× anche con interi → `sed -n`; anchor `old_text` invalidato da reflow formatter tra `write_file` ed `edit_file`, batch parzialmente applicato → riscrittura integrale; `rules.py` con `KIND_ORDER` duplicato da merge parallelo) [sync:safe]
+
 ## [1.5.14] - 2026-10-31
 
 ### Added
