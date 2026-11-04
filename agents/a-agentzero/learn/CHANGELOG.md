@@ -1,5 +1,17 @@
 # Changelog — learn
 
+## [1.5.19] - 2026-11-04
+
+### Changed
+
+- 1.5.19: Evidenza in § «Parametri numerici respinti come stringhe» — `read_file` con range respinto 2× in due chiamate (`invalid type: string, expected u32`, retry identici; fallback: lettura integrale senza range), sessione fix pyright brainbeez (/learn ! 2026-11-04 #16). Nessuna regola nuova: pattern già documentato.
+
+## [1.5.18] - 2026-11-04
+
+### Changed
+
+- `tool-pitfalls.md` § «Path dei comandi L0: canonico vs mirror generato»: nuova evidenza sessione RCA-500 brainbeez (2026-11-04: consumer senza symlink `agents/` → override `script` assoluto per `version_pending`/`agent-version.sh`; `git -C` per il cross-repo, `cd` del terminale accetta solo root di progetto) [sync:safe]
+
 ## [1.5.17] - 2026-11-04
 
 ### Changed
