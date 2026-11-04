@@ -1,5 +1,12 @@
 # Changelog — learn
 
+## [1.5.20] - 2026-11-04
+
+### Changed
+
+- `tool-pitfalls.md` § «Parametri numerici respinti come stringhe»: bullet di fallback per runtime **senza terminal** (`sed -n`/omissioni non esistono: `read_file` senza range = integrale dei piccoli, **outline** dei grandi; guardie di lettura sorgente per viste non importabili) + evidenza sessione brainbeez /learn ! #17; ripulita la coda duplicata della riga Evidenza [sync:safe]
+- `tool-pitfalls.md` § «Assenze da verificare prima di ToDo/claim»: regola tool dichiarato nello schema ma assente nel runtime (stop dopo 2 congetture di nome, dichiarare il limite) + corollario regola-8 estesa al transcript (tool-result asseriti ≠ prova; ri-verificare con letture reali e `git --no-pager log` quando il terminale torna) [sync:safe]
+
 ## [1.5.19] - 2026-11-04
 
 ### Changed
