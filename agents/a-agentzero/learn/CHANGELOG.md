@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.5.17] - 2026-11-04
+
+### Changed
+
+- `tool-pitfalls.md` § «Parametri numerici respinti come stringhe»: nuova evidenza sessione RCA-500 prod brainbeez (2026-11-04: `terminal timeout_ms` respinto 2× con `expected u64` → omesso) [sync:safe]
+
 ## [1.5.16] - 2026-11-03
 
 ### Changed
