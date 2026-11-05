@@ -2,6 +2,12 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.2.0] - 2026-11-05
+
+### Added
+
+- Path «Product-Oracles» (`app/impersonate_tools.py` + registry statico `app/oracles.py`, tool `impersonate`): BC 11 consegnato con 28 oracoli curati (5 codice / 19 prodotto / 4 strategia); `/impersonate <oracolo>` = scheda-lente, `/impersonate ?` = indice per categoria + `matched[]` ranking deterministico da `context` (token∩tag); alias/refusi risolti per normalizzazione + suggerimenti difflib; cap 4000 char con degrado a livelli (`trimmed`). Unico tool puramente in-process (zero subprocess, zero LLM nel perimetro — regola AGENTS di progetto); `tools/list` a 12 tool, suite 160 (156u+4i); skill comando `/impersonate` aggiunta nel pool workspace [sync:safe]
+
 ## [1.1.3] - 2026-11-01
 
 ### Added

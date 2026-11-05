@@ -1,7 +1,7 @@
 ---
 name: harness-hal-mcp-tools
 extends: a-harness
-version: 1.1.3
+version: 1.2.0
 extends-version: 1.10.2
 description: >-
   Reason why: senza Platform API e gate, il progetto delegato resterebbe uno script privo di uscita verificabile.
@@ -24,20 +24,21 @@ Skill figlia (L2). All'avvio: L0 `a-agentzero` → L1 `a-harness` → **questo f
 
 ## Path locali
 
-| Artefatto        | Path                                                                                                            |
-| ---------------- | --------------------------------------------------------------------------------------------------------------- |
-| Platform API     | `Makefile` (root)                                                                                               |
-| Glossario        | `docs/glossary.md`                                                                                              |
-| Bounded contexts | `docs/bounded-contexts.md`                                                                                      |
-| PRD              | `docs/PRD.md`                                                                                                   |
-| Progress         | `docs/product/agent-progress.md`                                                                                |
-| Preflight S1     | `app/s1.py` + `logs/s1-decisions.jsonl` (gitignored)                                                            |
-| Installer Zed    | `app/install_zed.py` (CLI off-runtime)                                                                          |
-| Browser driver   | `app/playwright_tools.py` (lato MCP) + `app/playwright_driver.py` (subprocess; env `HAL_PLAYWRIGHT_DRIVER`)     |
-| Scraping driver  | `app/scrape_tools.py` (lato MCP) + `app/scrape_driver.py` (subprocess **puro stdlib**; env `HAL_SCRAPE_DRIVER`) |
-| Residui          | `./ToDo.md`                                                                                                     |
-| Changelog        | `CHANGELOG.md` (Keep a Changelog)                                                                               |
-| Docker           | `Dockerfile` + `docker-compose.yml`                                                                             |
+| Artefatto        | Path                                                                                                                                            |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platform API     | `Makefile` (root)                                                                                                                               |
+| Glossario        | `docs/glossary.md`                                                                                                                              |
+| Bounded contexts | `docs/bounded-contexts.md`                                                                                                                      |
+| PRD              | `docs/PRD.md`                                                                                                                                   |
+| Progress         | `docs/product/agent-progress.md`                                                                                                                |
+| Preflight S1     | `app/s1.py` + `logs/s1-decisions.jsonl` (gitignored)                                                                                            |
+| Installer Zed    | `app/install_zed.py` (CLI off-runtime)                                                                                                          |
+| Browser driver   | `app/playwright_tools.py` (lato MCP) + `app/playwright_driver.py` (subprocess; env `HAL_PLAYWRIGHT_DRIVER`)                                     |
+| Scraping driver  | `app/scrape_tools.py` (lato MCP) + `app/scrape_driver.py` (subprocess **puro stdlib**; env `HAL_SCRAPE_DRIVER`)                                 |
+| Product-Oracles  | `app/impersonate_tools.py` + registry statico `app/oracles.py` (tool `impersonate`, unico tool puramente in-process: zero subprocess, zero LLM) |
+| Residui          | `./ToDo.md`                                                                                                                                     |
+| Changelog        | `CHANGELOG.md` (Keep a Changelog)                                                                                                               |
+| Docker           | `Dockerfile` + `docker-compose.yml`                                                                                                             |
 
 ## Target Makefile
 
