@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 1.7.2
+version: 1.8.0
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py, modulo Python router o come tool MCP in Zed (mcp_laya.py).
 ---
@@ -103,10 +103,11 @@ Oltre alla CLI, Laya è esposta in Zed come **context server MCP**: `mcp_laya.py
 - **Tool**: `laya_routing`, `laya_choice`, `laya_score`, `laya_confidence`, `laya_context`, `laya_noul`, `laya_outcome`, `laya_health`.
 - **Esito decisioni** (`laya_routing` / `laya_choice`): `selected`, `margin`, `probabilities` e `recommendation` — `system1_direct` | `accept_with_caution` | `escalate_system2`. L'escalation (Strategy C) è decisione dell'agente System 2 che chiama: il tool non consulta mai L2 internamente.
 - **`laya_noul`**: path GPU canonico `POST /systemone` `{task_type,text,params}`; budget proprio `LAYA_NOUL_TIMEOUT` (default 15 s vs media ~2 s; picchi 3–30 s da GPU contesa = eccezioni → su timeout retry una volta, poi escalate). Restituisce anche `request_hash` per la calibrazione via `/outcome`.
-- **Calibrazione**: `laya_routing`/`laya_choice` (via eco `request_hash` ora presente anche su `/predict`) e `laya_noul` restituiscono `request_hash`; `laya_outcome` registra il verdetto `correct|incorrect` (+ `correction` opzionale) su `POST /outcome` con Bearer. Il server salta le righe cache-hit e non sovrascrive righe già votate: una inferenza = un voto.
-- **Gate k-aware (v1.7.0)**: `system1_direct` con k≥4 richiede ensemble `top1 ≥ LAYA_DIRECT_MIN_TOP1` (default 0.8); `laya_routing`/`laya_choice` forzano la self-consistency quando il cap blocca la direzione e lo dichiarano in `notes`.
+- **Calibrazione**: `laya_routing`/`laya_choice` (via eco `request_hash` ora presente anche su `/predict`) e `laya_noul` restituiscono `request_hash`; `laya_outcome` registra il verdetto `correct|incorrect` (+ `correction` opzionale) **oppure** il voto cieco `expected` (rv8: il server calcola `correct|incorrect` dal confronto con la scelta archiviata ed è mutuamente esclusivo con `outcome`, `400` su conflitto) su `POST /outcome` con Bearer. Il server salta le righe cache-hit e non sovrascrive righe già votate: una inferenza = un voto.
+- **Gate k-aware (rv7 c1, revoca v1.7.0)**: con k≥4 `system1_direct` non è mai emesso, a prescindere da `top1`; `laya_routing`/`laya_choice` forzano il secondo pass (`fresh=true`, istruzioni canoniche ⇒ `request_hash` norm identico) e lo dichiarano in `notes` con `flipped` se i due pass divergono. `LAYA_FAMILY_ESCALATION_OVERRIDES` (liste di famiglie, lettura env live) forza `escalate_system2` senza toccare codice.
 - **Voto implicito System 2**: l'escalation di `smart_choice`/`smart_route` (CLI/gateway) registra il verdetto L2 come outcome sulla riga del primo pass via `/outcome` (`LAYA_IMPLICIT_VOTES=0` disattiva).
 - **Strategy B al confine**: >5 opzioni → errore con hint di raggruppamento; 5 opzioni → truncation diversificata a 4 con nota; label >30 caratteri → warning.
+- **Campi rv7/rv8 nel payload**: `degraded_context` (true quando `usage.truncated`/`state_tokens_dropped` — verdetto computato su contesto ridotto), `calibrated_confidence` (accuracy empirica per famiglia×banda dalla tabella di `make telemetry-report ARGS=--write-table`, `LAYA_CALIBRATION_TABLE`; `null` se tabella assente o voti insufficienti — la grezza resta nel campo `margin`/`probabilities`), `flipped` (solo a 2 pass). Le risposte cache-hit del servizio espongono `retried`; i corpi freschi riportano il `model` richiesto (rv8 f2).
 - **Igiene stdio**: stdout trasporta solo frame JSON-RPC; i warning di `laya_service` vanno su stderr. Su errore di qualsiasi tool, chiamare `laya_health` prima di dichiarare disservizio (Diagnosi ABSTAIN).
 - **Gate**: `make mcp-test` (unit tool + setup JSONC + contratto di questa sezione); suite completa del servizio con `make test`.
 
@@ -142,13 +143,13 @@ Evitare più di 5 opzioni e usare descrizioni di criteri con alta distanza seman
 
 ### Strategy C — Gate k-aware (top1_prob / margin)
 
-La telemetria (8.091 chiamate `laya_calls`, 2026-10-11→30) falsifica la `confidence` entropica come soglia: il gate corretto è il **margine top-1/top-2** di `probabilities`, e a k grande anche `top1` (a k=4 solo il 5% dei primi pass raggiunge top1≥0,8 — un margin alto lì è over-confidence misurata).
+La telemetria (8.091 chiamate `laya_calls`, 2026-10-11→30; estesa rv7 a n=94 voti family) falsifica la `confidence` entropica come soglia: il gate corretto è il **margine top-1/top-2** di `probabilities`; a k≥4 il margine stesso non separa più (37% anche a margin≥0,6) → il cap blocca `system1_direct` del tutto (rv7 c1).
 
 | Opzioni | Diretto richiede | Se non diretto |
 |---|---|---|
 | 2–3 | `margin ≥ 0.5` (`LAYA_FAST_MARGIN`) | self-consistency (seconda passata con ordine invertito, vettori mediati); ensemble `margin < 0.15` → escalate |
-| 4–5 | mai di prima passata: serve ensemble `margin ≥ 0.5` **e** `top1 ≥ 0.8` (`LAYA_DIRECT_MIN_TOP1`) | self-consistency forzata; verdetto = `accept_with_caution` |
-| Routing | `margin ≥ 0.6` (`LAYA_ROUTE_FAST`); con k≥4 anche `top1 ≥ 0.8` | banda `≥ 0.4` self-consistency, poi `escalate_system2` |
+| 4–5 | mai `system1_direct` con k≥4, a prescindere da top1 (rv7 c1: l'eccezione `top1 ≥ 0.8` è revocata — decision-family 37% anche a margin≥0,6) | self-consistency forzata (pass2 con `fresh=true` sul `request_hash` canonico); verdetto ≤ `accept_with_caution` |
+| Routing | `margin ≥ 0.6` (`LAYA_ROUTE_FAST`); con k≥4 mai direct (rv7 c1) | banda `≥ 0.4` self-consistency (pass2 `fresh=true`), poi `escalate_system2` |
 
 - I tool MCP applicano già il gate: `recommendation` non emette `system1_direct` su primo pass k≥4 a massa dispersa; il payload espone `margin`, `probabilities` e `thresholds.direct_min_top1`.
 - **Sorgente canonico del gate**: soglie e helper (`verdict_directly_acceptable`, `decision_recommendation`) vivono in `laya_gate.py`; il gateway (`hal_gateway/laya_service.py`) lo importa via symlink, quindi CLI, tool MCP e gateway condividono per costruzione le stesse soglie.

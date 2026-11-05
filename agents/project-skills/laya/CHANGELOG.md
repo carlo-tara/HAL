@@ -1,5 +1,15 @@
 # Changelog — laya (System 1 Service)
 
+## [1.8.0] - 2026-11-05
+
+### Changed
+
+- Gate rv7 c1: con k≥4 `system1_direct` non è mai emesso (revocata l'eccezione ensemble `top1 ≥ LAYA_DIRECT_MIN_TOP1` del 1.7.x — decision-family votata 37% anche a margin≥0,6); il secondo pass viaggia con `fresh=true` e istruzioni canoniche (hash norm identico), campo `flipped` quando i pass divergono
+- Voto cieco rv8 (c10/R2): `laya_outcome` accetta `expected` in alternativa mutuamente esclusiva a `outcome` (match calcolato server-side, `400` su conflitto)
+- Campi rv7/rv8 nel payload: `degraded_context` (contesto tagliato/compresso visibile), `calibrated_confidence` (accuracy empirica famiglia×banda dalla tabella `--write-table`, env `LAYA_CALIBRATION_TABLE`, fallback null); risposte cache-hit del servizio: `retried`
+- `LAYA_FAMILY_ESCALATION_OVERRIDES`: override env live per forzare escalate_system2 su famiglie scelte (C1 parziale, versione completa con il blind set)
+- allineati README (contratti, target make rv8) e docs/27 (runbook telemetria) [sync:safe]
+
 ## [1.7.2] - 2026-10-31
 
 ### Changed
