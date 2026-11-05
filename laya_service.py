@@ -29,9 +29,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 LAYA_BASE_URL = os.getenv("LAYA_BASE_URL", "http://laya.local:8091/v1")
 
-# Soglie e helper del gate: modulo canonico laya_gate.py (symlink al sorgente
-# hal_system1). Non duplicare: la soglia divergente qui cambierebbe solo il
-# comportamento del gateway, silenziosamente.
+# Soglie e helper del gate: laya_gate.py è la copia tracciata (mirror) del
+# canonico laya (hal_system1) — il symlink assoluto non risolve su CI. Guardia:
+# tests/test_laya_gate_mirror.py. Non modificare il mirror per "aggiustare" il
+# gateway: cambiare il canonico in laya e risincronizzare (cp).
 LAYA_TIMEOUT = float(os.getenv("LAYA_TIMEOUT") or "5.0")
 # Task endpoint del deployment: POST {base}/systemone, aperto su localhost. Il
 # client invia comunque Authorization: Bearer <chiave> (forward-compat; su
