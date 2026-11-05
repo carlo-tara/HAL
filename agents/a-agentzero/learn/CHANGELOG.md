@@ -1,5 +1,26 @@
 # Changelog — learn
 
+## [1.5.23] - 2026-11-05
+
+### Added
+
+- `tool-pitfalls.md`: nuova sezione «`grep` con `include_pattern`: match sul path completo dalla root» — promozione del candidato §grep (1ª evidenza brainbeez S40 2026-11-02, 2ª evidenza sessione triage feedback beta 2026-11-04, entrambe registrate nel ToDo consumer): `include_pattern` matchato sul path completo dalla root di progetto → falsi negativi su pattern di sottorecarte senza prefisso; regola: ri-verificare le assenze con una seconda query [sync:safe]
+- `tool-pitfalls.md`: nuova sezione «`docker compose run` ucciso da fuori: container orfani e hang» — promozione del candidato ⑤ §terminal (1ª evidenza HAL 2026-10-30, 2ª evidenza brainbeez /graph -y rv11 2026-11-05: container `pytest -q` orfano «Up» ~3h dopo cancello esterno a metà `make test-unit`): `--rm` non scatta se il client muore; `docker ps` prima di dichiarare «non ha fatto in tempo», `docker rm -f` per pulizia, gate bounded con `timeout` + exit reale (policy L1 «verità del gate») [sync:safe]
+
+## [1.5.22] - 2026-11-05
+
+### Changed
+
+- `tool-pitfalls.md` §«Parametri numerici respinti come stringhe»: appendice evidenza sessione analisi Kent Beck brainbeez (/learn !, 2026-11-05) — `read_file` range respinto 2× anche con valori identici al retry; outline-only su file di 138 righe anche CON terminal (corollario run-4 riverificato). Nessuna regola nuova: pattern già canonico [sync:safe]
+
+## [1.5.21] - 2026-11-05
+
+### Changed
+
+- `tool-pitfalls.md` §«Parametri numerici respinti come stringhe»: corollario run-4 — con range respinto, `read_file` senza range è outline-only anche CON terminal su file ~100 righe (ToDo.md 104), unico accesso `sed -n` a chunk; appendice evidenza sessione analisi telemetria Laya + /learn ! (2026-11-05) [sync:safe]
+- `tool-pitfalls.md` §«Path dei comandi L0»: rifiuto `read_file` esteso alle **sottocartelle symlinkate sotto l'alias** (`.agents/skills/a-product/competencies/…` → `hal_gateway`, confermato da `readlink -f`); fallback `skill` tool / `cat` [sync:safe]
+- `tool-pitfalls.md` §«Assenze da verificare»: conferma su finestra ampia (16,6k righe) della causa broken-pipe del 2026-10-29 — cluster 25–29 ott, zero post-guard/timeout (analisi telemetria 2026-11-05; Regola 8: ha fatto riscrivere una voce ToDo che spacciava la causa per ignota) [sync:safe]
+
 ## [1.5.20] - 2026-11-04
 
 ### Changed
