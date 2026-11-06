@@ -2,6 +2,12 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.2.1] - 2026-11-06
+
+### Added
+
+- §«Tag ToDo dichiarati (L2)»: `#xp` (azioni micro-ciclo da oracoli code) e `#product` (gate decisionali con esperimento pre-registrato) legittimati contro il canone L1 di `todo-extended` — uso nato in sessione `/graph -y` + `/todo` e già mappato dal flush deterministic verso `### Changed` [sync:safe]
+
 ## [1.2.0] - 2026-11-05
 
 ### Added

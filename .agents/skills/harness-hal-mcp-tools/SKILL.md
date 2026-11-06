@@ -1,7 +1,7 @@
 ---
 name: harness-hal-mcp-tools
 extends: a-harness
-version: 1.2.0
+version: 1.2.1
 extends-version: 1.10.2
 description: >-
   Reason why: senza Platform API e gate, il progetto delegato resterebbe uno script privo di uscita verificabile.
@@ -53,6 +53,13 @@ Skill figlia (L2). All'avvio: L0 `a-agentzero` → L1 `a-harness` → **questo f
 ## N/A documentati (L1)
 
 - \`test-e2e\`/\`check-parity\`/\`sync-assets\`: nessun E2E dual-client oltre Zed (il contratto stdio è coperto da `test-int`, 2026-11-01); nessun dual-canon (server = \`app/\`, nessuna copia runtime).
+
+## Tag ToDo dichiarati (L2)
+
+Canone L1: `feature`, `bug`, `techdebt`, `uiux`, `docs`, `infra`, `spike`. Questo progetto dichiara inoltre (uso consolidato 2026-11-05/06, mapping flush → `### Changed` come «altri»):
+
+- `#xp` — azione eseguibile micro-ciclo TDD/XP nata dalle letture degli oracoli code (`/impersonate kentbeck`/`unclebob`)
+- `#product` — gate decisionale di prodotto con esperimento pre-registrato (falsificatore dichiarato)
 
 ## Bounded context attivi
 

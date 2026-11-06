@@ -1,6 +1,6 @@
 ---
 name: impersonate
-version: 1.0.0
+version: 1.0.1
 description: >-
   Reason why: senza lenti esperte dichiarate, la revisione di codice/design/spec
   dipende dall'opinione del momento e l'artefatto viene letto una volta sola.
@@ -99,7 +99,13 @@ python3 agents/a-agentzero/scripts/token_budget.py report        # events/token-
 
 - Registry: `app/oracles.py` del progetto `/var/www/hal_mcp_tools` (tier
   deterministico/zero crediti, regola di progetto). Aggiungere un oracolo = nuova
-  entry + unit test (cap scheda ≤ 4000 char serializzati) → poi `/version`.
+  entry + unit test (cap scheda ≤ 4000 char serializzati; vincolo `_CARD_FIELDS`
+  asserito dai test) → poi `/version`.
+- Filtro di missione del registry (finding `/impersonate martycagan`): nuovo
+  oracolo solo se copre una lente assente nell'indice E l'esperimento sul valore
+  (voce `#product` in ToDo) è verde. Niente espansione del registry a valore non
+  dimostrato: è la riga che tiene la feature factory fuori dal tier
+  deterministico.
 - Il tool non contiene LLM: la persona è una lente testuale; a «parlare» è
   l'agente host, che non deve trasformarla in caricatura.
 - `/sync <` valuterà la promozione a L0 se il comando è riusato tra progetti.
