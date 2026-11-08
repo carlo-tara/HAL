@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.6.2] - 2026-11-09
+
+### Changed
+
+- tool-pitfalls §«Parametri numerici»: aggiunta evidenza di sessione #24 (brainbeez S89 2026-11-09 — `read_file` range respinto 2× `expected u32`, `terminal head_lines` respinto `expected usize`, `timeout_ms` respinto `expected u64` → omissione totale dei parametri numerici opzionali, `sed -n`/`timeout` di shell). Nessuna regola nuova: classe già canonica (evidenza ≥14ª sessione).
+
 ## [1.6.1] - 2026-11-08
 
 ### Added
