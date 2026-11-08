@@ -1,7 +1,7 @@
 ---
 name: learn
 parent: a-agentzero
-version: 1.5.23
+version: 1.6.1
 description: >-
   Slash /learn con doppia modalità: /learn ? illustra gli apprendimenti dalla
   conversazione o sessione corrente; /learn ! consolida nelle skill attive del

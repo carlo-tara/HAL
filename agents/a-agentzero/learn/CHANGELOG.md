@@ -1,5 +1,50 @@
 # Changelog — learn
 
+## [1.6.1] - 2026-11-08
+
+### Added
+
+- tool-pitfalls: nuova sezione «Shell di lavoro `sh`/dash» — process substitution `<(...)` e quoting `bash -c` annidato falliscono nel terminal (sh/dash), rimedio file temporanei / python heredoc; due evidenze (brainbeez /todo rv17 2026-11-07 + /cycle CIC 2026-11-08) → promozione ex policy ≥2. Bullet «diagnosi hang» nella sezione docker: exit 124 ≠ fallimento; ordine read-exit → `docker ps` orfani → handle aperti del runner (jsdom senza dispose arena `node --test` identico a una contesa compose); terza evidenza della sezione.
+
+## [1.6.0] - 2026-11-07
+
+### Changed
+
+- `tool-pitfalls.md` due appendici di evidenza sorella (brainbeez sessione /improve ui/ux M3, /learn ! #23): §«Parametri numerici» (`read_file` range respinto 2× su `web/index.html`, identico al retry, e 2× sul reference stesso → `sed -n`; 75 righe senza range → outline, corollario run-4), §«grep/find_path» (quattro include_pattern senza prefisso root — `web/**`, `web/**/*`, `web/**/*.css`, `web/src/**/*.js` — → falsi «No matches» su contenuto reale, ri-verifica `grep -rn` via terminal come da regola).
+- Versione 1.5.27 → 1.6.0 (minor: /version minor richiesto dall'owner, assorbe il patch 1.5.28 applicato in sessione). Brainbeez: nuova voce ToDo P1 `#bug` (card.js: token di opacità `--bb-state-*` usati come colori → focus ring e hover rotti, fix in attesa di GO), nuova HOLD P2 `#sync` (regola IACVT «fallback di var() non scatta su valore invalido per la proprietà» → candidata a `uiux` L1 alla seconda evidenza), «Commit HAL» estesa a learn 1.6.0.
+
+## [1.5.27] - 2026-11-07
+
+### Added
+
+- `tool-pitfalls.md` §«Batch `edit_file` non atomico»: bullet nuova **«Àncora «caposaldo» consumata in singolo edit»** — `old_text` che include un heading confinante, non reproduced alla fine di `new_text`, lo inghiotte silenziosamente (nessun errore; l'edit basta applica). Evidenza brainbeez #22: heading `## [0.7.0]` del CHANGELOG sparito e committato rotto (9e84b86), riparato con chirurgia asserita; classe gemella delle ancore sovrapposte di #21, variante single-edit.
+
+### Changed
+
+- `tool-pitfalls.md` tre appendici di evidenza sorella (brainbeez sessione S75–S77, /learn ! #22): §«Parametri numerici» (`read_file` range 2× anche a ordine invertito, `terminal timeout_ms` 2×), §«Frammenti CJK» (frammento «吞» intra-commento di heredoc python, prima occorrenza), §«Path dei comandi L0» (MCP `todo_flush` respinto col default `repo/agents/...` sul workspace senza symlink: passare `script` esplicito sul bundle).
+- Versione 1.5.26 → 1.5.27. Brainbeez: voce ToDo «Commit HAL» estesa (work tree HAL non committato, gate umano).
+
+## [1.5.26] - 2026-11-07
+
+### Changed
+
+- `tool-pitfalls.md` quattro appendici di evidenza (brainbeez /graph -y rv16 + S74, /learn ! #21): §«Parametri numerici» (read_file range + timeout_ms respinti anche con interi; corollario run-4 riverificato), §«Batch edit_file non atomico» (cascata di ancore sovrapposte su `CHANGELOG.md` → titolo voce troncato; **variante nuova**: edit nullo su tabella padded che ne reflowa l'intera griglia — riverificare i pipe dopo l'edit), §«Frammenti CJK» (due frammenti in una sessione, `路径` in codice JS generato + `绑定` in heredoc — perimetro sweep esteso al sorgente), §«compose run orfani» (pattern setsid+`.ec` rivalidato 4 gate, `docker ps` post-timeout pulito).
+
+## [1.5.25] - 2026-11-06
+
+### Changed
+
+- `tool-pitfalls.md` §«Parametri numerici respinti come stringhe»: evidenza estesa alla classe `head_lines`/`tail_lines` del terminale (`invalid type: string, expected usize`), oltre a `read_file` range e `timeout_ms` — rimedi invariati (omissione + loop bounded) [sync:safe]
+- `tool-pitfalls.md` §«`docker compose run` ucciso da fuori»: nuovo bullet sul pattern `setsid` + marcatore `EXIT_CODE=$?` nel log come unica prova del verdetto per gate lunghi dal contesto (`test_run` context-timeout e `nohup` alla chiusura pty = kill esterni; `--rm` non lascia exit code consultabile) + terza evidenza della classe (brainbeez /learn ! #20, 2026-11-06) [sync:safe]
+- `tool-pitfalls.md` §«Frammenti CJK nel testo italiano generato»: evidenza estesa ai **messaggi commit** generati («14条目» inside `git commit -m`, amend riparatore) — rimedio validato: file messaggio + sweep `grep -P` pre-commit + `git commit -F` [sync:safe]
+
+## [1.5.24] - 2026-11-05
+
+### Changed
+
+- `tool-pitfalls.md` §«`grep` con `include_pattern`» estesa a §«`grep`/`find_path`: pattern matchati sul path completo dalla root» — accorpata l'evidenza sorella di /learn ! #18 (2026-11-05, registrata nel ToDo consumer come obbligo di promozione): `find_path` con glob `web/**/*` → «No matches» malgrado `web/src/*.js` esista (`**/*.py` matcha); il matching sul path completo dalla root non riguarda solo `include_pattern`; nuovo bullet + catena evidenza [sync:safe]
+- `tool-pitfalls.md` §«Frammenti CJK nel testo italiano generato» — appendice evidenza (brainbeez /graph -y rv11, 2026-11-05): frammento heredoc «闭合urabili» in `work-graph.md` a catena in corso, intercettato dallo sweep post-scrittura `grep -rnP` esteso a tutti i file toccati dalla sessione (riconferma: perimetro = sessione, non ultimo file) [sync:safe]
+
 ## [1.5.23] - 2026-11-05
 
 ### Added
