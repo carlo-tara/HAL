@@ -1,9 +1,13 @@
-"""Gate 5: fallback conservativi sotto soglia e retry limitati.
+"""Gate 5: fallback conservativi sotto soglia e preflight bounded.
 
 Acceptance:
 - ogni decisione sotto soglia ricade nel percorso single-pass senza perdita di contenuto
-- retry ammessi solo se una decisione confidente può cambiare il flusso e con tetto massimo
-- test su fallback low-confidence e limite retry
+- retry ammessi solo se una decisione confidente puo' cambiare il flusso e con tetto massimo
+- test su fallback low-confidence e limite chiamate
+
+2026-11-09 (reverse port rv7): il canonico non prevede alcun re-poll di Laya su
+bassa confidenza: il tetto e' realizzato come tentativo singolo e conservativo
+(0 retry), quindi la clausola "retry limitati" e' soddisfatta per costruzione.
 """
 
 from __future__ import annotations
@@ -27,8 +31,9 @@ def _make_settings(**overrides):
         "laya_timeout": 120,
         "laya_min_confidence": 0.7,
         "laya_model": "multilingual",
-        "laya_max_retries": 1,
     }
+    # 2026-11-09: laya_max_retries non esiste piu' in Settings (frozen dataclass
+    # del canonico rv7): il retry loop e' stato rimosso, il tentativo e' singolo.
     base.update(overrides)
     return Settings(**base)
 
@@ -52,9 +57,9 @@ def _make_mock_response(family, strategy, mode, confidence=0.9):
 class TestGate5LowConfidenceFallback(unittest.TestCase):
     """Verifica che le decisioni low-confidence ricadano in single-pass."""
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_low_confidence_forces_single_pass(
         self, mock_perf, mock_epub, mock_analyze
     ):
@@ -96,9 +101,9 @@ class TestGate5LowConfidenceFallback(unittest.TestCase):
         self.assertTrue(result["laya_called"])
         self.assertLess(result["confidence"], settings.laya_min_confidence)
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_low_confidence_preserves_strategy(
         self, mock_perf, mock_epub, mock_analyze
     ):
@@ -136,9 +141,9 @@ class TestGate5LowConfidenceFallback(unittest.TestCase):
         self.assertEqual(result["strategy"], "grounded_extract")
         self.assertEqual(result["decision_source"], "local_task_gate")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_high_confidence_allows_source_chunks(
         self, mock_perf, mock_epub, mock_analyze
     ):
@@ -154,7 +159,10 @@ class TestGate5LowConfidenceFallback(unittest.TestCase):
             "execution_mode": "source_chunks",
             "source_chars": 10000,
             "has_source": True,
-            "explicit_plan": True,
+            # 2026-11-09: explicit_plan=False perche' source_chunks non e' una
+            # escalation di piano; con True il canonico declassa comunque a
+            # single_pass (branch esplicito) e il test non provea piu' il gate.
+            "explicit_plan": False,
             "laya_recommended": True,
             "task_contract": {
                 "family": "general",
@@ -179,18 +187,27 @@ class TestGate5LowConfidenceFallback(unittest.TestCase):
 
 
 class TestGate5BoundedRetries(unittest.TestCase):
-    """Verifica il meccanismo di retry limitato."""
+    """Verifica il tetto di una sola chiamata: nessun re-poll di Laya.
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    2026-11-09: il retry loop del vecchio monolite non esiste nel canonico rv7;
+    il bounded behavior e' ora "una chiamata, poi fallback locale".
+    """
+
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_retry_on_low_confidence(self, mock_perf, mock_epub, mock_analyze):
-        """Il retry viene tentato una volta quando la confidenza è bassa."""
-        # 2 tentativi × 2 chiamate perf_counter = 4+ valori
+        """Sotto soglia non c'e' re-poll: la seconda risposta in coda resta consumata-zero.
+
+        2026-11-09: l'asserzione originale (retry che ribalta l'esito a conf
+        alta) non e' piu' rappresentabile: system1_guide effettua una sola
+        chiamata /predict. Il test prova ora il tetto reale: side_effect con 2
+        risposte, ne viene consumata esattamente 1, fallback locale conservativo.
+        """
         mock_perf.side_effect = [100.0, 100.5, 101.0, 101.5, 102.0, 102.5]
         mock_epub.return_value = ""
 
-        settings = _make_settings(laya_max_retries=1)
+        settings = _make_settings()
         prompt = {"id": "test", "prompt": "Analizza questo testo"}
 
         mock_analyze.return_value = {
@@ -231,22 +248,27 @@ class TestGate5BoundedRetries(unittest.TestCase):
         mock_client.post.side_effect = [low_resp, high_resp]
         result = system1_guide(prompt, settings, mock_client)
 
-        # Il retry ha cambiato l'esito: ora abbiamo single_pass con alta confidenza
+        # Tentativo singolo bounded: la risposta alta in coda non e' mai letta.
         self.assertEqual(result["execution_mode"], "single_pass")
-        self.assertEqual(result["decision_source"], "laya")
-        self.assertGreaterEqual(result["confidence"], settings.laya_min_confidence)
-        self.assertEqual(mock_client.post.call_count, 2)  # 2 chiamate a Laya
+        self.assertEqual(result["decision_source"], "local_task_gate")
+        self.assertLess(result["confidence"], settings.laya_min_confidence)
+        self.assertEqual(mock_client.post.call_count, 1)  # una sola chiamata a Laya
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_no_retry_when_zero_max_retries(self, mock_perf, mock_epub, mock_analyze):
-        """Con laya_max_retries=0 non ci sono retry."""
-        # max_retries=0 → 1 tentativo × 2 chiamate perf_counter = 2 valori
+        """Il comportamento "zero retry" e' ora l'unico: tentativo singolo garantito.
+
+        2026-11-09: laya_max_retries e' stato rimosso da Settings; il gate
+        decade a prova strutturale di single-attempt (call_count == 1) e
+        fallback locale immediato.
+        """
+        # 1 tentativo × 2 chiamate perf_counter = 2 valori
         mock_perf.side_effect = [100.0, 100.5]
         mock_epub.return_value = ""
 
-        settings = _make_settings(laya_max_retries=0)
+        settings = _make_settings()
         prompt = {"id": "test", "prompt": "Analizza questo testo"}
 
         mock_analyze.return_value = {
@@ -281,16 +303,19 @@ class TestGate5BoundedRetries(unittest.TestCase):
         self.assertEqual(result["decision_source"], "local_task_gate")
         self.assertEqual(mock_client.post.call_count, 1)  # 1 sola chiamata
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_retry_exhausted_falls_back(self, mock_perf, mock_epub, mock_analyze):
-        """Se il retry mantiene bassa confidenza, si fallisce in single_pass."""
-        # 2 tentativi × 2 chiamate perf_counter = 4 valori
-        mock_perf.side_effect = [100.0, 100.5, 101.0, 101.5]
+        """Bassa confidenza: il tentativo esausto e' il primo (e unico), fallback single_pass.
+
+        2026-11-09: post.call_count passa da 2 a 1: nessun re-poll nel canonico.
+        """
+        # 1 tentativo × 2 chiamate perf_counter
+        mock_perf.side_effect = [100.0, 100.5]
         mock_epub.return_value = ""
 
-        settings = _make_settings(laya_max_retries=1)
+        settings = _make_settings()
         prompt = {"id": "test", "prompt": "Analizza questo testo"}
 
         mock_analyze.return_value = {
@@ -321,11 +346,11 @@ class TestGate5BoundedRetries(unittest.TestCase):
         mock_client.post.side_effect = [low_resp, low_resp]
         result = system1_guide(prompt, settings, mock_client)
 
-        # Retry esaurito: fallback conservativo
+        # Tentativo unico esaurito: fallback conservativo
         self.assertEqual(result["execution_mode"], "single_pass")
         self.assertEqual(result["decision_source"], "local_task_gate")
         self.assertLess(result["confidence"], settings.laya_min_confidence)
-        self.assertEqual(mock_client.post.call_count, 2)  # 2 chiamate (iniziale + 1 retry)
+        self.assertEqual(mock_client.post.call_count, 1)  # una sola chiamata
 
 
 if __name__ == "__main__":

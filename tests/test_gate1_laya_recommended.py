@@ -8,7 +8,6 @@ Acceptance:
 
 from __future__ import annotations
 
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -19,6 +18,22 @@ if _project_root not in sys.path:
     sys.path.insert(0, _project_root)
 
 from benchmark.runner.benchmark_models import Settings, analyze_prompt, system1_guide
+
+
+def _laya_client(family, strategy, mode, confidence=0.9):
+    """Client mock con risposta Laya strutturata (contratto system1_guide rv7)."""
+    client = MagicMock()
+    response = MagicMock()
+    response.json.return_value = {
+        "answers": {
+            "task_family": {"choice": family, "confidence": confidence},
+            "strategy": {"choice": strategy, "confidence": confidence},
+            "execution_mode": {"choice": mode, "confidence": confidence},
+        }
+    }
+    response.raise_for_status = MagicMock()
+    client.post.return_value = response
+    return client
 
 
 class TestGate1LayaRecommended(unittest.TestCase):
@@ -73,8 +88,8 @@ class TestGate1LayaRecommended(unittest.TestCase):
 
     # --- Integration tests: system1_guide alignment ---
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_short_atomic_prompt_skips_laya_call(self, mock_perf, mock_epub):
         """Short atomic prompt should skip Laya (gateway alignment)."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -91,10 +106,16 @@ class TestGate1LayaRecommended(unittest.TestCase):
         self.assertEqual(result["decision_source"], "local_task_gate")
         self.assertEqual(result["complexity"], "atomic")
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_instruction_plus_source_under_threshold(self, mock_perf, mock_epub):
-        """instruction + source < 400 → skip Laya."""
+        """instruction + source < 400 → Laya chiamata: la soglia corta vale solo per "general".
+
+        2026-11-09: la deviazione gateway (skip sotto 400 char per qualsiasi
+        famiglia) e' stata assorbita dal canonico rv7, dove laya_recommended =
+        famiglia != general oppure len >= 400 oppure explicit_plan. Una richiesta
+        con fonte (famiglia source) preflighta sempre.
+        """
         mock_perf.side_effect = [100.0, 100.5]
 
         settings = self._make_settings()
@@ -103,13 +124,16 @@ class TestGate1LayaRecommended(unittest.TestCase):
         mock_epub.return_value = source_content
 
         prompt = self._make_prompt(instruction, source="dummy.epub")
-        result = system1_guide(prompt, settings, MagicMock())
+        mock_client = _laya_client("source", "grounded_extract", "single_pass", 0.9)
+        result = system1_guide(prompt, settings, mock_client)
 
-        self.assertFalse(result["laya_called"])
-        self.assertEqual(result["decision_source"], "local_task_gate")
+        mock_client.post.assert_called_once()
+        self.assertTrue(result["laya_called"])
+        self.assertEqual(result["task_family"], "source")
+        self.assertEqual(result["decision_source"], "laya")
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_instruction_plus_source_at_threshold_calls_laya(
         self, mock_perf, mock_epub
     ):
@@ -140,20 +164,31 @@ class TestGate1LayaRecommended(unittest.TestCase):
         mock_client.post.assert_called_once()
         self.assertTrue(result["laya_called"])
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
-    def test_short_translation_skipped_by_gateway_alignment(self, mock_perf, mock_epub):
-        """Short translation prompt also skipped when instruction+source < 400 (gateway alignment)."""
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
+    def test_short_translation_calls_laya_per_canonical_rule(
+        self, mock_perf, mock_epub
+    ):
+        """Traduzione breve → Laya chiamata: il gate canonico non salta la famiglia translation.
+
+        2026-11-09: la vecchia allineamento gateway saltava il preflight per
+        qualsiasi prompt atomico corto; il canonico rv7 lo salta solo per la
+        famiglia general sotto soglia (test_short_atomic_prompt_skips_laya_call).
+        """
         mock_perf.side_effect = [100.0, 100.5]
 
         settings = self._make_settings()
         prompt = self._make_prompt("translate this text")
 
-        result = system1_guide(prompt, settings, MagicMock())
+        mock_client = _laya_client(
+            "translation", "faithful_translate", "single_pass", 0.9
+        )
+        result = system1_guide(prompt, settings, mock_client)
 
-        # Gateway alignment: short atomic prompts skip Laya regardless of family
-        self.assertFalse(result["laya_called"])
-        self.assertEqual(result["decision_source"], "local_task_gate")
+        mock_client.post.assert_called_once()
+        self.assertTrue(result["laya_called"])
+        self.assertEqual(result["task_family"], "translation")
+        self.assertEqual(result["decision_source"], "laya")
 
 
 if __name__ == "__main__":

@@ -81,25 +81,36 @@ class TestGate4ExecutionMode(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "single_pass")
 
     def test_source_chunks_with_translation_family(self):
-        """Translation with long source → source_chunks."""
+        """Translation with long source → single_pass (chunks scelti solo per la famiglia source).
+
+        2026-11-09: nel canonico analyze_prompt seleziona source_chunks solo per
+        family == "source"; la traduzione di fonti lunghe resta single_pass
+        (modalita' chunking comunque compatibile con translation, vedi gate 3).
+        """
         large_source = "y" * (CHARS_PER_A4_PAGE + 500)
         result = analyze_prompt(
             {"prompt": "traduci questo testo", "source": "fake.epub"},
             source_chars=len(large_source),
         )
-        self.assertEqual(result["execution_mode"], "source_chunks")
+        self.assertEqual(result["execution_mode"], "single_pass")
         self.assertEqual(result["task_family"], "translation")
+        self.assertTrue(result["has_source"])
 
     # --- Integration tests: system1_guide mode enforcement ---
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_single_pass_default_skips_laya(self, mock_perf, mock_epub):
-        """Short prompt without plan → single_pass, no Laya call."""
+        """Short general prompt without plan → single_pass, no Laya call.
+
+        2026-11-09: la famiglia math (prompt originale "calcola il risultato")
+        non salta piu' il preflight: il gate canonico salta solo i prompt
+        atomici brevi di famiglia general.
+        """
         mock_perf.side_effect = [100.0, 100.5]
 
         settings = self._make_settings()
-        prompt = self._make_prompt("calcola il risultato")
+        prompt = self._make_prompt("ciao mondo")
 
         mock_client = MagicMock()
         result = system1_guide(prompt, settings, mock_client)
@@ -108,8 +119,8 @@ class TestGate4ExecutionMode(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "single_pass")
         self.assertFalse(result["laya_called"])
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_plan_then_solve_requires_laya_confidence(self, mock_perf, mock_epub):
         """Explicit plan → Laya called; plan_then_solve only if confidence >= threshold."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -137,8 +148,8 @@ class TestGate4ExecutionMode(unittest.TestCase):
         self.assertTrue(result["laya_called"])
         self.assertGreaterEqual(result["confidence"], settings.laya_min_confidence)
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_plan_then_solve_rejected_on_low_confidence(self, mock_perf, mock_epub):
         """Explicit plan + Laya proposes plan_then_solve but LOW confidence → fallback single_pass."""
         # Retry loop: 2 tentativi × 2 chiamate perf_counter = 4 valori
@@ -162,14 +173,15 @@ class TestGate4ExecutionMode(unittest.TestCase):
 
         result = system1_guide(prompt, settings, mock_client)
 
-        # Retry loop: 2 chiamate (iniziale + 1 retry) poi fallback single_pass
-        self.assertEqual(mock_client.post.call_count, 2)
+        # 2026-11-09: il loop di retry del vecchio monolite non esiste piu':
+        # una sola chiamata preflight bounded, poi fallback conservativo locale.
+        self.assertEqual(mock_client.post.call_count, 1)
         # Should fall back to single_pass because confidence < threshold
         self.assertEqual(result["execution_mode"], "single_pass")
         self.assertTrue(result["laya_called"])
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_source_chunks_triggered_above_threshold(self, mock_perf, mock_epub):
         """Long source (> CHARS_PER_A4_PAGE) → source_chunks mode."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -198,8 +210,8 @@ class TestGate4ExecutionMode(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "source_chunks")
         self.assertEqual(result["source_chars"], len(large_source))
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_source_not_chunked_at_or_below_threshold(self, mock_perf, mock_epub):
         """Source exactly at CHARS_PER_A4_PAGE → NOT source_chunks."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -228,8 +240,8 @@ class TestGate4ExecutionMode(unittest.TestCase):
         self.assertNotEqual(result["execution_mode"], "source_chunks")
         self.assertEqual(result["execution_mode"], "single_pass")
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_numero_pagine_caps_source_before_chunking(self, mock_perf, mock_epub):
         """numero_pagine argument caps source length before chunking decision."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -265,8 +277,8 @@ class TestGate4ExecutionMode(unittest.TestCase):
         self.assertNotEqual(result["execution_mode"], "source_chunks")
         self.assertEqual(result["execution_mode"], "single_pass")
 
-    @patch("benchmark.runner.benchmark_models.epub_text", return_value="")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text", return_value="")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_segment_max_output_tokens_passed_through(self, mock_perf, mock_epub):
         """segment_max_output_tokens setting is respected in config."""
         mock_perf.side_effect = [100.0, 100.5]

@@ -62,6 +62,7 @@ class System2Metrics:
                     tokens_total INTEGER,
                     cached_tokens INTEGER,
                     cache_creation_input_tokens INTEGER,
+                    input_collapsed INTEGER,
                     decision TEXT,
                     confidence REAL,
                     fallback_used INTEGER NOT NULL DEFAULT 0,
@@ -87,6 +88,10 @@ class System2Metrics:
                 connection.execute(
                     "ALTER TABLE system2_workflow_events ADD COLUMN "
                     "cache_creation_input_tokens INTEGER"
+                )
+            if "input_collapsed" not in columns:
+                connection.execute(
+                    "ALTER TABLE system2_workflow_events ADD COLUMN input_collapsed INTEGER"
                 )
             connection.execute(
                 "CREATE INDEX IF NOT EXISTS idx_system2_events_run ON system2_workflow_events(run_id, id)"
@@ -119,6 +124,7 @@ class System2Metrics:
         tokens_total: int | None = None,
         cached_tokens: int | None = None,
         cache_creation_input_tokens: int | None = None,
+        input_collapsed: int | None = None,
         decision: str | None = None,
         confidence: float | None = None,
         fallback_used: bool = False,
@@ -145,6 +151,7 @@ class System2Metrics:
             tokens_total,
             cached_tokens,
             cache_creation_input_tokens,
+            input_collapsed,
             decision,
             confidence,
             int(fallback_used),
@@ -157,9 +164,9 @@ class System2Metrics:
                     run_id, timestamp, prompt_id, provider, model, task_family,
                     execution_mode, system, stage, status, latency_ms, input_chars,
                     output_chars, tokens_in, tokens_out, tokens_total, cached_tokens,
-                    cache_creation_input_tokens, decision, confidence, fallback_used,
-                    error_message
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    cache_creation_input_tokens, input_collapsed, decision, confidence,
+                    fallback_used, error_message
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 values,
             )
@@ -170,30 +177,30 @@ class System2Metrics:
         self, *, run_id: str | None = None
     ) -> dict[str, Any]:
         """Aggregate events by (task_family, model), optionally for one run."""
-        where = "WHERE run_id = ?" if run_id is not None else ""
-        params: tuple[Any, ...] = (run_id,) if run_id is not None else ()
+        # run_id=None ⇒ il primo ? è NULL e la clausola non filtra (SQL statico).
+        params: tuple[Any, ...] = (run_id, run_id)
         with self._connect() as connection:
             rows = connection.execute(
-                f"""
+                """
                 SELECT task_family, model,
                        COUNT(*) AS events,
                        SUM(COALESCE(tokens_total, 0)) AS tokens_total,
                        SUM(CASE WHEN status != 'ok' THEN 1 ELSE 0 END) AS errors,
                        SUM(latency_ms) AS latency_ms
                 FROM system2_workflow_events
-                {where}
+                WHERE (? IS NULL OR run_id = ?)
                 GROUP BY task_family, model
                 ORDER BY task_family, model
                 """,
                 params,
             ).fetchall()
             totals = connection.execute(
-                f"""
+                """
                 SELECT COUNT(*) AS total_events,
                        SUM(COALESCE(tokens_total, 0)) AS total_tokens,
                        SUM(CASE WHEN status != 'ok' THEN 1 ELSE 0 END) AS total_errors
                 FROM system2_workflow_events
-                {where}
+                WHERE (? IS NULL OR run_id = ?)
                 """,
                 params,
             ).fetchone()
@@ -228,13 +235,12 @@ class System2Metrics:
         (run, prompt, model) workflow that also contains a failed stage: their
         output is discarded because the workflow as a whole failed.
         """
-        where = "WHERE run_id = ?" if run_id is not None else ""
-        params: tuple[Any, ...] = (run_id,) if run_id is not None else ()
+        # run_id=None ⇒ il primo ? è NULL e la clausola non filtra (SQL statico).
+        params: tuple[Any, ...] = (run_id, run_id)
         with self._connect() as connection:
             rows = connection.execute(
-                f"""
+                """
                 SELECT CASE
-                         WHEN status != 'ok' THEN 'error'
                          WHEN stage LIKE 'segmento_%' THEN 'segment'
                          WHEN stage = 'assemblaggio_finale' THEN 'assembly'
                          WHEN stage = 'assemblaggio_locale' THEN 'local_assembly'
@@ -245,17 +251,17 @@ class System2Metrics:
                        COUNT(*) AS events,
                        SUM(COALESCE(tokens_total, 0)) AS tokens
                 FROM system2_workflow_events
-                {where}
-                {"AND" if where else "WHERE"} system = 'system2'
+                WHERE (? IS NULL OR run_id = ?)
+                AND system = 'system2'
                 GROUP BY category
                 """,
                 params,
             ).fetchall()
             wasted = connection.execute(
-                f"""
+                """
                 SELECT SUM(COALESCE(e.tokens_total, 0))
                 FROM system2_workflow_events e
-                WHERE {"e.run_id = ? AND" if where else ""} e.system = 'system2'
+                WHERE (? IS NULL OR e.run_id = ?) AND e.system = 'system2'
                   AND e.status = 'ok'
                   AND EXISTS (
                     SELECT 1 FROM system2_workflow_events f
@@ -367,11 +373,11 @@ class System2Metrics:
         it. ``retry_stages`` counts revision stages (the single Laya-driven
         retry of the plan phase).
         """
-        where = "WHERE run_id = ?" if run_id is not None else ""
-        params: tuple[Any, ...] = (run_id,) if run_id is not None else ()
+        # run_id=None ⇒ il primo ? è NULL e la clausola non filtra (SQL statico).
+        params: tuple[Any, ...] = (run_id, run_id)
         with self._connect() as connection:
             rows = connection.execute(
-                f"""
+                """
                 SELECT run_id, prompt_id, provider, model, task_family, execution_mode,
                        COUNT(*) AS stages,
                        SUM(COALESCE(tokens_in, 0)) AS tokens_in,
@@ -384,7 +390,7 @@ class System2Metrics:
                        SUM(CASE WHEN stage = 'piano_revisionato' THEN 1 ELSE 0 END) AS retry_stages,
                        SUM(CASE WHEN status != 'ok' THEN 1 ELSE 0 END) AS errors
                 FROM system2_workflow_events
-                {where}
+                WHERE (? IS NULL OR run_id = ?)
                 GROUP BY run_id, prompt_id, provider, model, task_family, execution_mode
                 ORDER BY run_id, prompt_id, provider, model
                 """,

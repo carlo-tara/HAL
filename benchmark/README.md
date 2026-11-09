@@ -99,10 +99,12 @@ docker compose -f docker-compose.benchmark.yml run --rm benchmark \
 
 La telemetria viva è `hal_system2/events/benchmarks/system2_metrics.sqlite3` (la copia in `history/` è un'istantanea più vecchia). Aprirla in sola lettura, ad esempio `sqlite3.connect("file:<path>?mode=ro", uri=True)`.
 
+- Soglie e limiti del System 1 (Laya): `docs/28_laya_model_card.md` (riesame ROI del layer ancorato alla voce ToDo `HT-003`).
+
 - Tabella `system2_workflow_events`: `run_id` è un UUID, non il nome della run; per datare le run usare `timestamp`.
 - Gli eventi `system1` (`preflight_laya`) non hanno token; i token sono solo negli stage `system2` (`segmento_N`, `assemblaggio_finale`, `risposta_finale`).
 - `--timeout` (default 600 s) vale per **singola chiamata HTTP**; `seconds` nei JSON di test è la durata dell'intero workflow, quindi può superare il timeout (es. 1172 s = stage riusciti + 600 s dello stage in timeout).
-- Gli stage in errore (timeout) non registrano token, quindi il costo dei retry non è misurabile da qui.
+- Gli stage in errore o timeout **registrano il costo** dal 2026-11-09 (ciclo 2, HT-004/N30): `run_stage` registra in un unico `finally`, quindi gli stage falliti lasciano la riga con status `failed`; quando l'`usage` non è ricostruibile dalla risposta d'errore i token **non si inventano** — si registrano `input_chars` e la colonna `input_collapsed` (char del messaggio wire collassato), dichiarati come proxy in `error_message`. Riga «retry cost» sulle run storiche (verifica 2026-11-09 su questo snapshot): 6 eventi `failed`, `tokens_total` NULL su tutti e 6 → il costo dei retry delle run passate resta invisibile (feature successiva), è misurabile dalle prossime run in avanti.
 - `System2Metrics.get_token_breakdown(run_id=None)` restituisce token per categoria (segmenti, assemblaggio, risposta singola) e `wasted_tokens`: token spesi da stage riusciti in workflow che poi hanno avuto uno stage fallito (output scartato).
 
 ## Report e confronti

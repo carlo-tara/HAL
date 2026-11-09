@@ -9,6 +9,7 @@ from unittest.mock import patch
 import httpx
 
 from benchmark.runner import benchmark_models as runner
+from benchmark.runner import benchmark_parsing as parsing
 
 MODEL = {"provider": "ollama", "model": "local:1b"}
 SOURCE = "a" * 3000 + "b" * 3000 + "c" * 1000
@@ -40,7 +41,7 @@ def _run(prompt: dict, guide: dict, answers: list[str] | None = None):
         )
 
     with (
-        patch.object(runner, "epub_text", return_value=SOURCE),
+        patch.object(parsing, "epub_text", return_value=SOURCE),
         httpx.Client(transport=httpx.MockTransport(handler)) as client,
     ):
         result = runner.system2_workflow_call(
@@ -106,7 +107,12 @@ class TestLocalAssembly(unittest.TestCase):
             "<risultato_segmento_3>\nout-3\n</risultato_segmento_3>",
         )
 
-    def test_json_extraction_with_invalid_segment_falls_back_to_model(self) -> None:
+    def test_json_extraction_with_invalid_segment_falls_back_to_generic_tags(
+        self,
+    ) -> None:
+        # Contratto canonico (hal_system2, rv7+): JSON richiesto ma segmento
+        # invalido → niente call di assemblaggio, fallback alla concatenazione
+        # generica con tag (mai token sprecati per "Assembla i risultati").
         prompt = {"id": "e", "prompt": "Estrai in JSON.", "source": "x.epub"}
 
         result, messages = _run(
@@ -115,9 +121,10 @@ class TestLocalAssembly(unittest.TestCase):
             answers=["[1]", "non json", "[3]", "out-4"],
         )
 
-        self.assertEqual(len(messages), 4)
-        self.assertIn("Assembla i risultati parziali", messages[-1])
-        self.assertEqual(result["response"], "out-4")
+        self.assertEqual(len(messages), 3)
+        self.assertFalse(any("Assembla i risultati parziali" in m for m in messages))
+        self.assertIn("non json", result["response"])
+        self.assertEqual(result["finish_reason"], "local_assembly")
 
     def test_json_extraction_with_valid_segments_is_merged_locally(self) -> None:
         prompt = {"id": "j", "prompt": "Estrai in JSON.", "source": "x.epub"}
@@ -137,7 +144,9 @@ class TestLocalAssembly(unittest.TestCase):
         self.assertIsNone(assemble("translation", "x", []))
         self.assertEqual(assemble("source", "x", ["solo"]), "solo")
         self.assertEqual(assemble("translation", "x", [" a ", "b"]), "a\n\nb")
-        self.assertIsNone(assemble("source", "estrai json", ["[1]", "non json"]))
+        invalid = assemble("source", "estrai json", ["[1]", "non json"])
+        self.assertIsNotNone(invalid)
+        self.assertIn("non json", invalid or "")
         self.assertEqual(
             assemble("source", "riassumi", ["uno", "due"]),
             "<risultato_segmento_1>\nuno\n</risultato_segmento_1>\n\n---\n\n"

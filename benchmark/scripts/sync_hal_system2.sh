@@ -14,6 +14,16 @@ HAL_SYSTEM2_DIR="${HAL_SYSTEM2_DIR:-/var/www/hal_system2}"
 # canonico (relativo a HAL_SYSTEM2_DIR) | mirror (relativo a GATEWAY_DIR)
 PAIRS=(
   "app/benchmark_models.py|benchmark/runner/benchmark_models.py"
+  "app/benchmark_calls.py|benchmark/runner/benchmark_calls.py"
+  "app/benchmark_cli.py|benchmark/runner/benchmark_cli.py"
+  "app/benchmark_parsing.py|benchmark/runner/benchmark_parsing.py"
+  "app/benchmark_quality.py|benchmark/runner/benchmark_quality.py"
+  "app/benchmark_report.py|benchmark/runner/benchmark_report.py"
+  "app/benchmark_runner.py|benchmark/runner/benchmark_runner.py"
+  "app/benchmark_settings.py|benchmark/runner/benchmark_settings.py"
+  "app/benchmark_system2.py|benchmark/runner/benchmark_system2.py"
+  "app/benchmark_workflow.py|benchmark/runner/benchmark_workflow.py"
+  "app/translation.py|benchmark/runner/translation.py"
   "app/system2_metrics.py|benchmark/runner/system2_metrics.py"
   "scripts/generate_benchmark_report.py|benchmark/scripts/generate_benchmark_report.py"
 )

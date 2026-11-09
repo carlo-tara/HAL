@@ -9,11 +9,25 @@ from pathlib import Path
 SCRIPT = (
     Path(__file__).resolve().parent.parent / "benchmark/scripts/sync_hal_system2.sh"
 )
-PAIRS = {
-    "app/benchmark_models.py": "benchmark/runner/benchmark_models.py",
-    "app/system2_metrics.py": "benchmark/runner/system2_metrics.py",
-    "scripts/generate_benchmark_report.py": "benchmark/scripts/generate_benchmark_report.py",
-}
+
+
+def _pairs() -> dict[str, str]:
+    """Legge PAIRS dallo script (fonte unica): la lista cresce col rifactor rv7 e
+    un hardcode invecchierebbe al primo modulo aggiunto al pacchetti runner."""
+    import re
+
+    body = SCRIPT.read_text()
+    match = re.search(r"PAIRS=\((.*?)\)", body, re.DOTALL)
+    if match is None:
+        raise RuntimeError("blocco PAIRS non trovato in sync_hal_system2.sh")
+    block = match.group(1)
+    return {
+        canonical: mirror
+        for canonical, mirror in re.findall(r'"([^"|]+)\|([^"|]+)"', block)
+    }
+
+
+PAIRS = _pairs()
 
 
 class TestSyncHalSystem2(unittest.TestCase):
@@ -35,7 +49,11 @@ class TestSyncHalSystem2(unittest.TestCase):
             "GATEWAY_DIR": str(self.gateway),
         }
         return subprocess.run(
-            ["bash", str(SCRIPT), mode], env=env, capture_output=True, text=True
+            ["bash", str(SCRIPT), mode],
+            env=env,
+            capture_output=True,
+            text=True,
+            check=False,
         )
 
     def test_check_passes_when_identical(self) -> None:

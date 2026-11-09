@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-10-30T20:55:46Z",
+  "ts": "2026-11-08T22:24:30Z",
   "flags": {"y": false},
   "acceptance": "",
   "files": "ToDo.md",
-  "node_id": "",
-  "next": "—",
-  "summary": "prune 5 prose Delta 2026-10-28 obsolete da ToDo.md (voci gia chiuse e flushate in CHANGELOG; vincoli trasversali preservati nei doc consegnati: docs/07_cache_l1, docs/23-27); 0 aperte P0/P1/P2, buffer Gi fatto vuoto, nulla da flushare",
+  "node_id": "N12",
+  "next": "/slice HT-001 (cycle-closable)",
+  "summary": "flush 0 (Già fatto vuoto); ID HT-nnn introdotti con legenda; voce P2 unica divisa in HT-001 #cycle (riapertura cattura eventi gateway, TDD+Make) e HT-002 #human (≥5 sessioni reali + spike_m0 + annotazione cross-repo hal_system2); 2 aperte P2, dipendenza HT-002→HT-001 preservata",
   "brief": "",
   "token_budget": 200
 }

@@ -4,6 +4,11 @@
 !.env.example
 # Harness quiet-test logs (rotazione settimanale ISO)
 logs/
+# Telemetria harness runtime (token-budget, wire log effimeri)
+events/
+# Sidecar WAL/SHM sqlite (journal_mode=WAL, transienti mai in tracking)
+*.sqlite3-wal
+*.sqlite3-shm
 # Igiene: bytecode Python mai in tracking
 __pycache__/
 *.pyc

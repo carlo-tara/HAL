@@ -48,7 +48,7 @@ def load_runs(folder: Path) -> list[dict]:
     runs = []
     for path in sorted(folder.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
-        if not isinstance(data, dict) or not RUN_KEYS <= data.keys():
+        if not isinstance(data, dict) or not data.keys() >= RUN_KEYS:
             continue
         quality = data["quality"] or {
             "passed": 0,
@@ -65,9 +65,7 @@ def load_runs(folder: Path) -> list[dict]:
                 "passed": quality["passed"],
                 "total": quality["total"],
                 "score": quality["score"],
-                "failed_checks": [
-                    c["label"] for c in quality["checks"] if not c["passed"]
-                ],
+                "failed_checks": [c["label"] for c in quality["checks"] if not c["passed"]],
                 "seconds": data["seconds"],
                 "tokens": data["tokens"]["total"],
                 "started_at": data.get("started_at"),
@@ -107,9 +105,7 @@ def mean_score(runs: list[dict]) -> float | None:
     return statistics.fmean(scores) if scores else None
 
 
-def build_comparison(
-    runs: list[dict], baseline_name: str, baseline_runs: list[dict]
-) -> dict:
+def build_comparison(runs: list[dict], baseline_name: str, baseline_runs: list[dict]) -> dict:
     previous = {run_key(r): r for r in baseline_runs}
     current_keys = {run_key(r) for r in runs}
     pairs = []
@@ -169,9 +165,7 @@ def build_comparison(
         "models": models,
         "pairs": pairs,
         "unmatched_current": sum(run_key(r) not in previous_keys for r in runs),
-        "unmatched_previous": sum(
-            run_key(r) not in current_keys for r in baseline_runs
-        ),
+        "unmatched_previous": sum(run_key(r) not in current_keys for r in baseline_runs),
     }
 
 
@@ -241,7 +235,9 @@ def render_table(runs: list[dict]) -> str:
         failed = run["failed_checks"]
         if failed:
             items = "".join(f"<li>{esc(label)}</li>" for label in failed)
-            failed_cell = f"<details><summary>{len(failed)} non superati</summary><ul>{items}</ul></details>"
+            failed_cell = (
+                f"<details><summary>{len(failed)} non superati</summary><ul>{items}</ul></details>"
+            )
         else:
             failed_cell = "—"
         rows.append(
@@ -267,9 +263,7 @@ def render_table(runs: list[dict]) -> str:
         "Check non superati",
     ]
     head = "".join(f'<th scope="col">{h}</th>' for h in headers)
-    return (
-        f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
-    )
+    return f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
 
 
 def fmt_pp(delta: float | None) -> str:
@@ -278,7 +272,7 @@ def fmt_pp(delta: float | None) -> str:
     points = round(delta * 100)
     if points == 0:
         return "±0 pp"
-    return f"{'+' if points > 0 else '−'}{abs(points)} pp"
+    return f"{'+' if points > 0 else '−'}{abs(points)} pp"  # noqa: RUF001 — typographic minus in report copy
 
 
 def fmt_pct(value: float | None) -> str:
@@ -286,9 +280,7 @@ def fmt_pct(value: float | None) -> str:
 
 
 def render_changes_table(pairs: list[dict]) -> str:
-    changed = [
-        p for p in pairs if p["delta"] != 0 or p["prev_status"] != p["curr_status"]
-    ]
+    changed = [p for p in pairs if p["delta"] != 0 or p["prev_status"] != p["curr_status"]]
     if not changed:
         return f'<p class="note">Nessuna variazione di punteggio o stato tra le {fmt_int(len(pairs))} run abbinate.</p>'
     rows = [
@@ -314,10 +306,7 @@ def render_changes_table(pairs: list[dict]) -> str:
     ]
     head = "".join(f'<th scope="col">{h}</th>' for h in headers)
     note = f'<p class="note">{fmt_int(len(pairs) - len(changed))} run invariate non elencate.</p>'
-    return (
-        note
-        + f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
-    )
+    return note + f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
 
 
 def render_comparison(comparison: dict | None) -> str:
@@ -371,7 +360,9 @@ def render_comparison(comparison: dict | None) -> str:
         f'<div id="{chart_id}"></div></figure></section>'
         for title, chart_id, caption in charts
     )
-    changes = f"<section><h2>Run che cambiano</h2>{render_changes_table(comparison['pairs'])}</section>"
+    changes = (
+        f"<section><h2>Run che cambiano</h2>{render_changes_table(comparison['pairs'])}</section>"
+    )
     return header + sections + changes
 
 
@@ -422,9 +413,7 @@ def main(argv: list[str]) -> int:
     baseline = None
     if args.confronto is not None:
         if not args.confronto.is_dir():
-            print(
-                f"Cartella di confronto non trovata: {args.confronto}", file=sys.stderr
-            )
+            print(f"Cartella di confronto non trovata: {args.confronto}", file=sys.stderr)
             return 1
         baseline_runs = load_runs(args.confronto)
         if not baseline_runs:
@@ -691,7 +680,7 @@ function signedPp(v) {
   if (v === null) return 'n/d';
   const pts = Math.round(v * 100);
   if (pts === 0) return '±0 pp';
-  return (pts > 0 ? '+' : '−') + Math.abs(pts) + ' pp';
+  return (pts > 0 ? '+' : '-') + Math.abs(pts) + ' pp';
 }
 
 function compareLegend(svg, x0, y0) {
@@ -815,7 +804,7 @@ function chartDeltaHeatmap() {
   const lx = left, lw = 260, ly = H - legendH + 30;
   svg.append('rect').attr('x', lx).attr('y', ly).attr('width', lw).attr('height', 12)
     .attr('fill', 'url(#delta-grad)');
-  [['−100 pp', 0, 'start'], ['±0', 0.5, 'middle'], ['+100 pp', 1, 'end']].forEach(([label, t, anchor]) => svg.append('text')
+  [['-100 pp', 0, 'start'], ['±0', 0.5, 'middle'], ['+100 pp', 1, 'end']].forEach(([label, t, anchor]) => svg.append('text') // noqa: RUF001 — typographic minus in chart label
     .attr('x', lx + t * lw).attr('y', ly + 28).attr('text-anchor', anchor).text(label));
   svg.append('text').attr('x', lx + lw + 12).attr('y', ly + 11).attr('dominant-baseline', 'middle')
     .text('rosso: peggio · blu: meglio');

@@ -10,7 +10,6 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 ### Added
 
 - Gate k-aware System 1 sul client gateway: choice/routing/preflight con probabilità verificano il verdetto con self-consistency (k≥4 mai diretto senza top1≥0,8), astensione `low_margin` quando non accettabile — soglie e helper ora nel modulo canonico `laya_gate.py` (symlink verso hal_system1), niente mirror manuale.
-
 - Chiave Cache L1 a due livelli: prefix stabile + suffix append-only · Gateway Core
 - Catalogo skill compatto con System 1 (Laya) come tool-search · System 1 (Laya) + Agent Platform
 - ContextManager multi-turn nel Gateway Core: troncamento, rolling summary, retrieval · Gateway Core
@@ -34,9 +33,9 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Accumulo dei delta streaming per `tool_calls` e JSON Mode prima del parsing · Gateway Core
 - Client riusato negli script skill (a-knowledge, a-seozoom, illustrator) · Agent Platform
 - Regola System 1 task-vs-batch per workload ad alto volume · System 1 (Laya)
-
 - Promozioni `/sync <` — contratto naming L2 nel L0 `references/extension-scaffold.md` §4–5 (`a-agentzero` 1.13.1: `name` kebab-case pari alla directory, sanificazione degli underscore allo scaffold, «su disco ≠ in catalogo» come sintomo) e policy L1 «Copertura gate» in `a-harness` 1.10.1 (scan a zero match = vacuous pass, fallire a zero); `harness-agentfactory` 1.1.32 riduce i due bullet a puntatore (anti-DUP) · Agent Skills
 - Contratto RED→GREEN `product/contracts/check-harness-skill-naming.sh`; creati `CHANGELOG.md` per `harness-hal` (1.0.3) e le 4 L2 rinominate (1.0.1), catene riallineate su `a-harness@1.10.1` · Harness
+
 ### Changed
 
 - Allineare al gate 1 il gate `laya_recommended` del runner benchmark `#system1-gating #benchmark`
@@ -86,6 +85,10 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Metrica benchmark token/richiesta vs skill dichiarate · Benchmark
 - Metrica connection reuse nella telemetria HAL · Benchmark + Gateway Core
 - Astrazione conversation lato gateway (alternativa locale a `previous_response_id`) · Gateway Core
+- `HT-001` — Strumentazione gateway: riaprire la cattura eventi del gateway (delegata da `hal_mcp_tools`, nodo N12 del `/graph -y` 2026-11-06; strada (a) delle due in esame) — ESITO (2026-11-08): premessa invalidata, la cattura non era ferma (il TDD Zed passa dal provider System2 `:8910`, `main.py` → `wire_log`/`tdd_logger` registra eventi DOPO l'11-01); il blocco era di visibilità: spike puntava a `/var/www/hal_system2/events` (copia obsoleta), dati live nel volume `hal_system2_events` (`/data/events`) e nel layer effimero del container (`/app/events`). Fix persistenza applicato: `TDD_DB_PATH=/data/events/harness_tdd.db` nel compose di hal_system2 (config validata) + DB storico fuso host+container seminato nel volume; ricreazione container eseguita 2026-11-08 (env attiva, DB fuso seminato nel volume, cattura verificata post-rebuild) · Gateway Core
+- `HT-002` — Finestra «DOPO» KPI-1 token-shrink: accumulare ≥5 sessioni TDD strumentate in uso reale dei tool MCP, poi rieseguire `python3 /var/www/hal_mcp_tools/scripts/spike_m0.py` e annotare la riga `context_trim`/`body_bytes` in `hal_system2/ToDo.md` voce 2 — ESITO (2026-11-08): prerequisito raggiunto — 42 sessioni DOPO il 2026-11-01 su DB fuso host+container (1.654 righe, 2026-10-14→2026-11-08; ≥5/giorno dal 02; tool MCP nei `tool_functions` dei wire_in dal 11-05); KPI-1 −30% NON dimostrato — proxy `context_bloat_detected` ≈100% post-rilascio, `body_bytes` p50 640k (10-31) → 1,27M (11-08), `tools_pct` 99; confound dominante inflazione toolset (→ voce P2 «Potatura dei toolset Zed per task» in `hal_system2/ToDo.md`), baseline grezzi `context_trim` ruotata e non confrontabile; nota di esito in `hal_system2/ToDo.md` voce 2, witness chiuso in `hal_mcp_tools/ToDo.md`, report `hal_mcp_tools/events/spike_m0_2026-11-08.txt` · Gateway Core
+- `HT-004` — Telemetria token anche per stage falliti/timeout (buchi dichiarati nel README) · Benchmark — ESITO (2026-11-09, nodo N30 via /cycle in hal_system2 + deflusso gateway): opzione A approvata — reverse port `cached_tokens` sul canonico post-rv7, completato con `cache_kpis` (port parziale, regressione `tests/test_metrics_cache_kpis.py`, suite hs2 679 verdi); ciclo 2: `run_stage` registra in `finally` gli stage falliti con status `failed` e proxy `input_chars`/`input_collapsed` quando l'usage non c'è (token non inventati, +4 test); deflusso gateway: sync script esteso a 13 PAIRS (facade rv7 + `translation.py`), guardia sync dinamica, 21 casi gate1-6/strategy/error-category adattati al contratto canonico, `make test-unit` 389 OK e check mirror 13/13; riga retry-cost rigenerata in `benchmark/README.md` §Telemetria (6 failed storici con token NULL → invisibili prima, misurabili d'ora in poi).
+- `HT-006` — `laya_model_card.md` nel gateway (ricostruibilità del black-box) · System 1 (Laya) — ESITO (2026-11-09, nodo N33 /graph -y): carta in `docs/28_laya_model_card.md` con funzione input/uscita, limiti misurati (rv7 n=94: decision-family ~37% anche a margin≥0,6; eccezione top1≥0,8 revocata), ciclo di calibrazione, N/A documentati; link da §Telemetria del README benchmark; riesame ROI ancorato a `HT-003`. Bonus di green: mirror `laya_gate.py` in drift (guardia RED) — risincronizzato dal canonico `hal_system1` via `cp` come da messaggio del test; suite completa verde (389 test).
 
 ### Fixed
 
@@ -95,7 +98,6 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Polling a backoff esponenziale con stati terminali completi · Skill illustrator (a-design) + Gateway Core
 - Successo parziale nei task multi-output: iterare choices con `finish_reason` · Skill illustrator (a-design)
 - `laya_service`: operazioni instradate su `POST /systemone` `{task_type,text,params}` con unwrap dell'envelope `{result:{choice,confidence,probabilities}}`; routing/choice rispondono `ok` con `choice` ∈ candidates, `score` astiene con reason documentata `score_not_discriminative` (by-pass onesto, mai un valore fabricato), `noul` restituisce la stringa intent-choice; coperto da `TestSystemOneContract` (5 nuovi test, suite `test_laya_*` 60 verdi) e da verifica CLI live; fix collaterale `router.py` (`noul --json` serializzava l'intero `LayaOutcome`) · System 1 (Laya)
-
 - Naming skill L2: le 4 `harness-hal_mcp_docs|_mcp_tools|_translate|_tts` con underscore erano scartate in silenzio dal loader Zed (regex `^[a-z0-9]+(-[a-z0-9]+)*$` + `name`==directory) — rinominate kebab e riferimenti allineati nei Makefile/CHANGELOG di `hal_mcp_docs`, `hal_mcp_tools`, `hal_translate`, `hal_tts` · Agent Skills
 - `check-frontmatter-all.sh`: lo scan `.agents/skills/*` con ROOT errato non matchava mai nulla (vacuous pass) e il campo `name` non era validato → `find` separato sulle directory reali `.agents/skills/harness-*` + verifica name/regex/directory · Harness
 

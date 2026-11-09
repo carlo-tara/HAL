@@ -1,13 +1,13 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-10-30T20:53:34Z",
+  "ts": "2026-11-09T01:08:56Z",
   "flags": {"y": true},
-  "acceptance": "backlog ToDo.md esaurito: 0 voci aperte",
+  "acceptance": "N31: run appaiata gated vs 20261017_all con kill criterion nel report; prerequisito N30 soddisfatto (telemetria failed+proxy, mirror 13/13, guardie adattate 389 OK)",
   "files": "product/state/work-graph.md",
-  "node_id": "DONE",
-  "next": "—",
-  "summary": "re-run /graph -y 2026-10-30 su ToDo.md: P0/P1/P2 = 0 voci aperte, buffer Già fatto vuoto, prose delta obsolete (flush già in CHANGELOG); work-graph N0-N29 done/skip resta DONE; fine backlog deterministico, nessun Act; Laya choice indicava multi-cycle su nodi residui ma è in conflitto col next-pointer —, prevale la regola deterministica",
-  "brief": "ToDo.md senza voci aperte; work-graph in DONE; eventuale nuovo grafo solo a seguito di nuovo backlog",
+  "node_id": "N31",
+  "next": "N32",
+  "summary": "/graph -y ToDo.md 2026-11-09 completato: N33 done (docs/28 model card + sync laya_gate) e N30 done (reverse port A cached_tokens+cache_kpis in hal_system2, ciclo 2 finally/failed con proxy input_chars/input_collapsed, suite hs2 679; deflusso gateway: sync 13 PAIRS, guardia sync dinamica, 21 casi gate adattati, make test-unit 389 OK, riga retry-cost README §Telemetria). ToDo: HT-004 e HT-006 [x] (flush in CHANGELOG). Restano aperti gated umani: N31 A/B run (kill criterion), N32 gold set, N34 run assemblaggio",
+  "brief": "rv 2026-11-09: N30 chiuso (opzione A approvata: /cycle hal_system2 + deflusso gateway), N33 chiuso; chain ferma a N31 gate umano (run A/B multi-ora)",
   "token_budget": 200
 }

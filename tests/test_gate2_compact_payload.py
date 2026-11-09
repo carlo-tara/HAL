@@ -41,8 +41,8 @@ class TestGate2CompactPayload(unittest.TestCase):
             p["source"] = source
         return p
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_payload_no_full_source_text(self, mock_perf, mock_epub):
         """Il payload non deve contenere il testo integrale della fonte."""
         mock_perf.side_effect = [100.0, 100.5]  # preflight latency
@@ -86,8 +86,8 @@ class TestGate2CompactPayload(unittest.TestCase):
             "Il payload non deve contenere sequenze lunghe del testo della fonte",
         )
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_payload_excerpt_within_configurable_limit(self, mock_perf, mock_epub):
         """L'estratto nel payload deve rispettare il tetto configurabile (default 1200)."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -161,8 +161,8 @@ class TestGate2CompactPayload(unittest.TestCase):
         self.assertIn("family", task_contract)
         self.assertIn("required_strategy", task_contract)
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_payload_contains_task_contract_metadata(self, mock_perf, mock_epub):
         """Il payload deve contenere il task_contract con metadati essenziali."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -198,8 +198,8 @@ class TestGate2CompactPayload(unittest.TestCase):
         # Deve avere strategia richiesta
         self.assertIn("required_strategy", tc)
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_payload_contains_complexity_and_format(self, mock_perf, mock_epub):
         """Il payload deve contenere complessità e formato."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -230,8 +230,8 @@ class TestGate2CompactPayload(unittest.TestCase):
         self.assertIsInstance(payload["state"]["complexity"], str)
         self.assertIsInstance(payload["state"]["format"], str)
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_result_preserves_source_and_output_format(self, mock_perf, mock_epub):
         """Il risultato deve preservare source e output_format."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -288,9 +288,9 @@ class TestGate2CompactPayload(unittest.TestCase):
         # Fonte lunga > CHARS_PER_A4_PAGE per attivare source_chunks
         mock_epub.return_value = "E" * 5000
 
-        with patch("benchmark.runner.benchmark_models.epub_text", mock_epub):
+        with patch("benchmark.runner.benchmark_parsing.epub_text", mock_epub):
             with patch(
-                "benchmark.runner.benchmark_models.time.perf_counter"
+                "benchmark.runner.benchmark_workflow.time.perf_counter"
             ) as mock_perf:
                 mock_perf.side_effect = [100.0, 100.5]
 
@@ -316,8 +316,8 @@ class TestGate2CompactPayload(unittest.TestCase):
 
                 self.assertEqual(payload["state"]["complexity"], "high")
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_complexity_medium_for_explicit_plan(self, mock_perf, mock_epub):
         """La complessità deve essere 'medium' quando la richiesta chiede un piano."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -355,9 +355,9 @@ class TestGate2CompactPayload(unittest.TestCase):
         mock_epub = MagicMock()
         mock_epub.return_value = full_source
 
-        with patch("benchmark.runner.benchmark_models.epub_text", mock_epub):
+        with patch("benchmark.runner.benchmark_parsing.epub_text", mock_epub):
             with patch(
-                "benchmark.runner.benchmark_models.time.perf_counter"
+                "benchmark.runner.benchmark_workflow.time.perf_counter"
             ) as mock_perf:
                 mock_perf.side_effect = [100.0, 100.5]
 
@@ -384,9 +384,9 @@ class TestGate2CompactPayload(unittest.TestCase):
         custom_limit = 500
         settings_custom = self._make_settings(laya_excerpt_max_chars=custom_limit)
 
-        with patch("benchmark.runner.benchmark_models.epub_text", mock_epub):
+        with patch("benchmark.runner.benchmark_parsing.epub_text", mock_epub):
             with patch(
-                "benchmark.runner.benchmark_models.time.perf_counter"
+                "benchmark.runner.benchmark_workflow.time.perf_counter"
             ) as mock_perf:
                 mock_perf.side_effect = [100.0, 100.5]
 

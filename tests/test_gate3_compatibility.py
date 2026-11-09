@@ -45,8 +45,8 @@ def _make_mock_response(family, strategy, mode, confidence=0.9):
 class TestGate3Compatibility(unittest.TestCase):
     """Verifica che il gate blocchi le combinazioni incompatibili famiglia/strategia/modalità."""
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_translation_rejects_extraction_strategy(self, mock_perf, mock_epub):
         """La famiglia translation non deve accettare la strategia grounded_extract (estrazione)."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -69,9 +69,9 @@ class TestGate3Compatibility(unittest.TestCase):
         self.assertEqual(result["strategy"], "faithful_translate")
         self.assertEqual(result["decision_source"], "local_task_gate")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_translation_rejects_source_chunks_mode(
         self, mock_perf, mock_epub, mock_analyze
     ):
@@ -112,13 +112,19 @@ class TestGate3Compatibility(unittest.TestCase):
         # La proposta incompatibile va registrata
         self.assertEqual(result["proposed_execution_mode"], "source_chunks")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
-    def test_translation_rejects_source_chunks_explicit(
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
+    def test_translation_keeps_source_chunks_forced_by_analysis(
         self, mock_perf, mock_epub, mock_analyze
     ):
-        """Se l'analisi forza source_chunks su una translation, il gate deve resettare a single_pass."""
+        """Se l'analisi forza source_chunks su una translation, la modalita' resta.
+
+        2026-11-09: la matrice canonica TASK_FAMILY_ALLOWED_MODES ammette ora
+        translation + source_chunks (chunking di fonti lunghe tradotte); il
+        rigetto gateway verso single_pass e' stato assorbito dal reverse port.
+        Il gate 3 continua a provare i rigetti reali nei test reasoning/source.
+        """
         mock_perf.side_effect = [100.0, 100.5]
         mock_epub.return_value = ""
 
@@ -152,14 +158,15 @@ class TestGate3Compatibility(unittest.TestCase):
 
         result = system1_guide(prompt, settings, mock_client)
 
-        # Il gate deve resettare a single_pass per translation
+        # Combinazione canonica ammessa: source_chunks preservato, decisione laya
         self.assertEqual(result["task_family"], "translation")
-        self.assertEqual(result["execution_mode"], "single_pass")
+        self.assertEqual(result["execution_mode"], "source_chunks")
+        self.assertEqual(result["decision_source"], "laya")
         self.assertEqual(result["proposed_execution_mode"], "source_chunks")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_valid_translation_combination_accepted(
         self, mock_perf, mock_epub, mock_analyze
     ):
@@ -197,8 +204,8 @@ class TestGate3Compatibility(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "single_pass")
         self.assertEqual(result["decision_source"], "laya")
 
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_source_family_rejects_translation_strategy(self, mock_perf, mock_epub):
         """La famiglia source (estrazione) non deve accettare la strategia faithful_translate."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -225,9 +232,9 @@ class TestGate3Compatibility(unittest.TestCase):
         self.assertEqual(result["strategy"], "grounded_extract")
         self.assertEqual(result["decision_source"], "local_task_gate")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_source_family_rejects_plan_then_solve(
         self, mock_perf, mock_epub, mock_analyze
     ):
@@ -267,9 +274,9 @@ class TestGate3Compatibility(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "single_pass")
         self.assertEqual(result["proposed_execution_mode"], "plan_then_solve")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_reasoning_rejects_source_chunks(self, mock_perf, mock_epub, mock_analyze):
         """La famiglia reasoning non deve accettare source_chunks come modalità."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -307,9 +314,9 @@ class TestGate3Compatibility(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "single_pass")
         self.assertEqual(result["proposed_execution_mode"], "source_chunks")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_coding_allows_plan_then_solve(self, mock_perf, mock_epub, mock_analyze):
         """La famiglia coding deve accettare plan_then_solve come modalità valida."""
         mock_perf.side_effect = [100.0, 100.5]
@@ -348,9 +355,9 @@ class TestGate3Compatibility(unittest.TestCase):
         self.assertEqual(result["proposed_execution_mode"], "plan_then_solve")
         self.assertEqual(result["decision_source"], "laya")
 
-    @patch("benchmark.runner.benchmark_models.analyze_prompt")
-    @patch("benchmark.runner.benchmark_models.epub_text")
-    @patch("benchmark.runner.benchmark_models.time.perf_counter")
+    @patch("benchmark.runner.benchmark_workflow.analyze_prompt")
+    @patch("benchmark.runner.benchmark_parsing.epub_text")
+    @patch("benchmark.runner.benchmark_workflow.time.perf_counter")
     def test_general_allows_source_chunks(self, mock_perf, mock_epub, mock_analyze):
         """La famiglia general deve accettare source_chunks come modalità valida."""
         mock_perf.side_effect = [100.0, 100.5]

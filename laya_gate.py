@@ -13,9 +13,12 @@ Telemetria di riferimento — laya_calls 2026-10-11→30 (8k chiamate):
 * la ``confidence`` del server è 1 - entropia normalizzata e dipende da k: a
   k=2 solo il 6-8% dei verdetti supera 0,8 benché il 54% abbia top1>0,8 — usarla
   come soglia fa escalation inutili;
-* il segnale corretto è il margine top1-top2: margin≥0,5 → accuracy 96,5% circa;
-* a k≥4 i margini alti convivono con masse disperse (top1≈0,6 nel 95% dei primi
-  pass): serve anche top1≥0,8 prima di accettare di prima acchitata.
+* il segnale corretto è il margine top1-top2: margin≥0,5 → accuracy 96,5% su
+  `noul`; sulle decision-family (choice/routing) NO — rv7 2026-11-05: n=94 voti,
+  37% anche a margin≥0,5/0,6 → k≥cap non è mai direttamente accettabile;
+* a k≥4 i margini alti convivono con masse disperse e over-confidence
+  misurata (rifactor a conf 0,99 errati): dal run rv7 il cap esclude `system1_direct`
+  a prescindere da top1 (eccezione top1≥0,8 del 2026-10-31 revocata dai dati).
 """
 
 from __future__ import annotations
@@ -36,6 +39,16 @@ ROUTE_SELF_CONSISTENT = float(os.environ.get("LAYA_ROUTE_SELF_CONSISTENT", "0.4"
 # top1 ≥ DIRECT_MIN_TOP1 (over-confidence misurata a k grande).
 DIRECT_CAP_OPTIONS = int(os.environ.get("LAYA_DIRECT_CAP_OPTIONS", "4"))
 DIRECT_MIN_TOP1 = float(os.environ.get("LAYA_DIRECT_MIN_TOP1", "0.8"))
+
+
+def family_forced_escalation(function_family: str | None) -> bool:
+    """rv8 f4 (C1'): LAYA_FAMILY_ESCALATION_OVERRIDES — lista virgolata di
+    famiglie (mcp_routing, mcp_choice, ...) forzate a escalate_system2 dai
+    binding. Lettura live dall'env: il gate si regola senza toccare codice."""
+    if not function_family:
+        return False
+    raw = os.environ.get("LAYA_FAMILY_ESCALATION_OVERRIDES", "")
+    return function_family in {item.strip() for item in raw.split(",") if item.strip()}
 
 
 def _answer_probs(response: Any, options: list[str]) -> dict[str, float] | None:
@@ -67,13 +80,16 @@ def verdict_directly_acceptable(
 ) -> bool:
     """True se il verdetto System 1 è accettabile senza seconda passata.
 
-    Con ``n_options`` ≥ ``DIRECT_CAP_OPTIONS`` non basta il margine: serve anche
-    ``top1`` ≥ ``DIRECT_MIN_TOP1``, perché margini alti a k grande convivono con
-    masse probabilistiche disperse (over-confidence misurata in telemetria).
+    Dal run rv7: con ``n_options`` ≥ ``DIRECT_CAP_OPTIONS`` il verdetto non è
+    mai diretto — la telemetria (voti outcome n=94) misura decision-family 37%
+    anche a margin≥0,6, con 29/56 errori dentro la zona direct; l'eccezione
+    top1≥``DIRECT_MIN_TOP1`` del 2026-10-31 non reggeva (refactor a conf 0,99
+    votati incorrect). ``top1`` resta in firma per compatibilità dei binding ma
+    non interviene più. Sotto il cap vale solo il margine.
     """
-    if margin < fast:
+    if n_options >= DIRECT_CAP_OPTIONS:
         return False
-    return n_options < DIRECT_CAP_OPTIONS or top1 >= DIRECT_MIN_TOP1
+    return margin >= fast
 
 
 def decision_recommendation(
