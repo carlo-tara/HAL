@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.6.3] - 2026-11-09
+
+### Changed
+
+- tool-pitfalls §«Parametri numerici»: evidenza #25 (hal_system2 `/graph -y` rv7 — `read_file` `start_line`/`end_line` respinto 3× `expected u32` anche con interi monolitici e ordine invertito, `terminal timeout_ms` respinto 2× `expected u64` → omissione, `sed -n`/`awk`; outline senza range riverificato anche su file di 94 righe). Nessuna regola nuova: classe già canonica (≥15ª sessione).
+
 ## [1.6.2] - 2026-11-09
 
 ### Changed
