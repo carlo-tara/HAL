@@ -1,5 +1,11 @@
 # Changelog — graph (L0)
 
+## [1.0.4] - 2026-11-09
+
+### Changed
+
+- Nota Tool builder/handoff: da workspace consumer il path canonico è `agents/scripts/harness-prompt-builder.sh` (symlink HAL), non `scripts/` del consumer — la nota rv9 era un path-miss. Bump originato dal canonico `commands/graph.md` (commit 2f37faf, `a-agentzero` 1.13.2); changelog del mirror aggiunto ora (mancava al rigenerato) + pin `tests/test_graph_rerun_rules.py` aggiornato. [sync:safe]
+
 ## [1.0.3] - 2026-10-30
 
 ### Changed

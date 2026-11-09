@@ -23,9 +23,19 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-EXTENDED = REPO / "agents" / "a-harness" / "competencies" / "graph" / "references" / "graph-extended.md"
+EXTENDED = (
+    REPO
+    / "agents"
+    / "a-harness"
+    / "competencies"
+    / "graph"
+    / "references"
+    / "graph-extended.md"
+)
 COMPETENCY = REPO / "agents" / "a-harness" / "competencies" / "graph" / "SKILL.md"
-COMPETENCY_CL = REPO / "agents" / "a-harness" / "competencies" / "graph" / "CHANGELOG.md"
+COMPETENCY_CL = (
+    REPO / "agents" / "a-harness" / "competencies" / "graph" / "CHANGELOG.md"
+)
 L0 = REPO / ".agents" / "skills" / "graph" / "SKILL.md"
 L0_CL = REPO / ".agents" / "skills" / "graph" / "CHANGELOG.md"
 
@@ -60,9 +70,9 @@ class TestVersioniBump(unittest.TestCase):
         self.assertIn("version: 1.4.2", COMPETENCY.read_text(encoding="utf-8"))
         self.assertIn("[1.4.2]", COMPETENCY_CL.read_text(encoding="utf-8"))
 
-    def test_l0_1_0_3_e_changelog(self) -> None:
-        self.assertIn("version: 1.0.3", L0.read_text(encoding="utf-8"))
-        self.assertIn("[1.0.3]", L0_CL.read_text(encoding="utf-8"))
+    def test_l0_1_0_4_e_changelog(self) -> None:
+        self.assertIn("version: 1.0.4", L0.read_text(encoding="utf-8"))
+        self.assertIn("[1.0.4]", L0_CL.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

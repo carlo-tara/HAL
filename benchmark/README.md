@@ -118,6 +118,8 @@ python3 scripts/generate_benchmark_report.py history/20261019_2 \
 Scrive `report.htm` dentro la cartella della run (grafici D3.js: token, tempi, qualità;
 con `--confronto` mostra i delta rispetto alla baseline nominata dalla cartella).
 
+- Gold set System 1 (HT-008): `python3 scripts/gold_set_scoring.py <gold.jsonl> <pred.jsonl>` — schema in `config/gold_set.schema.json`, fasce di margine con soglie prese da `laya_gate` (niente duplicazioni); le etichette reali restano voce ToDo `HT-005`.
+
 ## Storico incluso in `history/`
 
 | Cartella                                 | Contenuto                                                                                                                                                                                                                                                                                                                                                                                                                                             | Stato                                     |

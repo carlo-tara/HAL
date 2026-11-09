@@ -24,7 +24,7 @@
 ## 📁 Struttura del Workspace
 
 - `agents/`: Sorgenti canoniche di tutti gli agenti, skill, competenze e script.
-- `scripts/`: Script di utilità e gate CI (secret scanning, dependency audit, SAST audit, benchmark).
+- `scripts/`: Script di utilità e gate CI (secret scanning, dependency audit, SAST audit, benchmark, scoring gold set System 1).
 - `Makefile`: Platform API locale — gate di review specchio CI (`make ready-for-review`) e suite unit (`make test-unit`).
 - `tests/`: Suite completa dei test unitari e di integrazione (eseguita in CI da `.github/workflows/ready-for-review.yml`; dipendenze di sviluppo in `requirements-dev.txt`).
 - `benchmark/`: Runner, report e storico dei benchmark System 1/System 2; `hal_system2` è la sorgente canonica, vedi [benchmark/README.md](benchmark/README.md).

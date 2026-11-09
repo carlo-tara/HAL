@@ -1,8 +1,8 @@
 ---
 name: harness-hal
 extends: a-harness
-version: 1.0.4
-extends-version: 1.10.2
+version: 1.0.5
+extends-version: 1.10.3
 description: >-
   Delta harness per HAL Gateway: Platform API root (Makefile specchio CI), path
   artefatti, profile bootstrap standard, N/A documentati (int/e2e/parity),
@@ -97,14 +97,14 @@ version-chains/sync). `/steward` root non tocca `agents/Makefile` e viceversa.
 
 ## Bounded context attivi
 
-| Context                   | Path modulo                                            | Note                                        |
-| ------------------------- | ------------------------------------------------------ | ------------------------------------------- |
-| Gateway Core              | `gateway_core.py`, `global_config.py`                  | orchestrazione System 2, cache L1, provider |
-| System 1 / Laya           | `laya_service.py`, `router.py`, `system1_preflight.py` | gating Gate 1–7, triage/routing             |
-| Benchmark                 | `benchmark/`, `scripts/bench_hot_paths.py`             | token gating, run baseline                  |
-| Observability & Retention | docs `05`, `system2_metrics.sqlite3`                   | eventi, redaction, encryption               |
-| DevSecOps Tooling         | `scripts/check_*.py` + test validatori                 | CI-first, low-noise                         |
-| Agent Platform (bundle)   | `agents/`                                              | Platform API separata (`agents/Makefile`)   |
+| Context                   | Path modulo                                                                                                         | Note                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Gateway Core              | `gateway_core.py`, `global_config.py`                                                                               | orchestrazione System 2, cache L1, provider           |
+| System 1 / Laya           | `laya_service.py`, `router.py`, `system1_preflight.py`                                                              | gating Gate 1–7, triage/routing                       |
+| Benchmark                 | `benchmark/`, `scripts/bench_hot_paths.py`, `scripts/gold_set_scoring.py` + `benchmark/config/gold_set.schema.json` | token gating, run baseline, scoring gold set (HT-008) |
+| Observability & Retention | docs `05`, `system2_metrics.sqlite3`                                                                                | eventi, redaction, encryption                         |
+| DevSecOps Tooling         | `scripts/check_*.py` + test validatori                                                                              | CI-first, low-noise                                   |
+| Agent Platform (bundle)   | `agents/`                                                                                                           | Platform API separata (`agents/Makefile`)             |
 
 Dettagli e regole di import: `docs/bounded-contexts.md`.
 

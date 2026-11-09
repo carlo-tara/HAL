@@ -60,3 +60,7 @@ voce ToDo `HT-003` (A/B gated vs baseline `20261017_all` con kill criterion).
   non ciò che è dichiarato dal paper.
 - Eval raw con gold set etichettato: assente — è la voce ToDo `HT-005` (l'accuracy
   citata viene da voti outcome di produzione, n=94, non da dati con risposta nota).
+  L'infrastruttura di misura è pronta da HT-008: schema
+  `benchmark/config/gold_set.schema.json` + CLI `scripts/gold_set_scoring.py`
+  (hit-rate e accuracy per fascia di margine, soglie da `laya_gate`); mancano
+  solo le etichette umane.

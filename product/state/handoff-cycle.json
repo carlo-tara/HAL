@@ -1,17 +1,13 @@
 {
   "kind": "cycle",
   "cmd": "/cycle",
-  "ts": "2026-10-23T00:00:00Z",
-  "title": "P1: SQLite error_message migration",
-  "acceptance": "In _initialize, migrazione ALTER TABLE ... ADD COLUMN error_message TEXT quando la colonna manca; test su DB pre-G7 verifica record_event; sync_hal_system2.sh check exit 0.",
-  "files": [
-    "benchmark/runner/system2_metrics.py",
-    "tests/test_gate7_sqlite.py"
-  ],
-  "waiver": null,
-  "node_id": "",
-  "next": "",
-  "summary": "Migrazione DB storici implementata e testata; test specifici passano. Gate sync_hal_system2.sh fallisce.",
-  "brief": "RED: test pre-G7 riproduce OperationalError. GREEN: _initialize aggiunge error_message via ALTER TABLE se manca; test migration e record_event passano. Refactor: rimossi indici duplicati. Ready: test passati, sync gate fallisce (exit 1).",
-  "make_exit": 0
+  "ts": "2026-11-09T11:48:24Z",
+  "flags": {"y": false},
+  "acceptance": "schema gold set in benchmark/config + scoring hit-rate/fasce da soglie laya_gate + unit fixture sintetiche + inclusione via discovery test-unit e compileall pre-commit + make verde",
+  "files": "scripts/gold_set_scoring.py,benchmark/config/gold_set.schema.json,tests/test_gold_set_scoring.py",
+  "node_id": "HT-008",
+  "next": "— (ciclo chiuso; HT-003/005/007 restano gate umani)",
+  "summary": "RED(12 contratti, ModuleNotFound)→GREEN(12/12)→refactor skipped→READY: make test-unit 401 OK (MAKE_EXIT=0), pre-commit 0; collaterale: pin+changelog graph 1.0.4 completati (red preesistente introdotto da 2f37faf)",
+  "brief": "",
+  "token_budget": 200
 }

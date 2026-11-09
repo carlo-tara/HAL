@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-11-08T22:24:30Z",
+  "ts": "2026-11-09T10:59:11Z",
   "flags": {"y": false},
   "acceptance": "",
-  "files": "ToDo.md",
-  "node_id": "N12",
-  "next": "/slice HT-001 (cycle-closable)",
-  "summary": "flush 0 (Già fatto vuoto); ID HT-nnn introdotti con legenda; voce P2 unica divisa in HT-001 #cycle (riapertura cattura eventi gateway, TDD+Make) e HT-002 #human (≥5 sessioni reali + spike_m0 + annotazione cross-repo hal_system2); 2 aperte P2, dipendenza HT-002→HT-001 preservata",
-  "brief": "",
+  "files": "",
+  "node_id": "",
+  "next": "",
+  "summary": "/todo 2026-11-09: flush 0 (gia esaurito dal deflusso N30), 4 aperte (HT-003/005/007 + nuova HT-008 estratta dal triage). Triage cycle-vs-human: nessuna voce esistente richiudibile da sola con /cycle (nuclei: run A/B multi-ora su Ollama con GPU contesa per HT-003, etichettatura semantica ~200/famiglia per HT-005, run dedicata a bracci appaiati per HT-007). HT-008 = sola parte ciclabile (schema+scoring+make target su fixture sintetiche). System 1 consultato: human 3/3 anche sul prompt puro-repo (override System 2 documentato in HT-008).",
+  "brief": "aperte: HT-003 P1 run A/B gated vs 20261017_all con kill criterion (human); HT-005 P2 etichettatura gold set (human); HT-007 P2 run misura assemblaggio locale (human); HT-008 P2 infrastruttura gold set (cycle)",
   "token_budget": 200
 }
