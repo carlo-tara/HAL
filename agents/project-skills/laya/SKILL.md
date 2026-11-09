@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 1.8.0
+version: 1.9.0
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py, modulo Python router o come tool MCP in Zed (mcp_laya.py).
 ---
@@ -153,6 +153,7 @@ La telemetria (8.091 chiamate `laya_calls`, 2026-10-11→30; estesa rv7 a n=94 v
 
 - I tool MCP applicano già il gate: `recommendation` non emette `system1_direct` su primo pass k≥4 a massa dispersa; il payload espone `margin`, `probabilities` e `thresholds.direct_min_top1`.
 - **Sorgente canonico del gate**: soglie e helper (`verdict_directly_acceptable`, `decision_recommendation`) vivono in `laya_gate.py`; il gateway (`hal_gateway/laya_service.py`) lo importa via symlink, quindi CLI, tool MCP e gateway condividono per costruzione le stesse soglie.
+- **Sorgente canonico del protocollo choice** (rv9): `laya_protocol.py` possiede il testo del formato opzioni/completion — decoro `**choice**` (`CHOICE_DECORATION`), trim-set del matcher derivato (`OPTION_TRIM_CHARS`), `extract_completion_text`/`match_option`/`format_predict_as_text`/`systemone_result`; engine (`laya_service.py`) e layer HTTP (`server.py`) delegano via re-export: shape e parsing non possono più divergere per convenzione.
 - CLI `--json` su `routing`/`choice` espone `margin`, `top1_prob`, `recommendation`, `passes`, `request_hash`: usa quelli, non la `confidence`, per il branch.
 - **Voto implicito**: quando il percorso CLI/gateway escala a System 2 e L2 risponde, il suo verdetto viene registrato come outcome calibrato (`POST /outcome`: `correct` se concorde, `incorrect`+`correction` se no) sulla riga d'inferenza del primo pass. Disattivabile con `LAYA_IMPLICIT_VOTES=0`. L2 è configurabile via `SYSTEM2_URL`/`SYSTEM2_MODEL`/`SYSTEM2_API_KEY`; `_read_completion` + `_extract_completion_text` tollerano JSON e SSE fermandosi al terminatore del flusso (`[DONE]`/`finish_reason`): l'orchestratore locale (:8910) può tenere aperta la connessione anche dopo la fine della risposta, quindi non usare mai `response.read()` intero. Se L2 non risponde, nessun voto: comportamento atteso, non disservizio.
 
@@ -209,6 +210,7 @@ ctx = handle_context("richiesta utente con dettagli...")
 - Prima di dichiarare «servizio non raggiungibile»: verificare path canonico `/var/www/hal_system1/router.py` (il vecchio `/var/www/HAL` è morto), `GET http://127.0.0.1:8091/health`, `docker ps --filter name=laya-gpu`.
 - Righe `log.sqlite` con `error_message` `[Errno 32] Broken pipe` su `/systemone`: il client ha mollato per primo (timeout troppo basso vs inferenza GPU), non disservizio. Budget client ≥ p99 della funzione più lenta (`noul`: ~2 s media, picchi 3–30 s; hal_system2 `LAYA_TIMEOUT=3`).
 - Check GPU a 4 livelli: env `LAYA_DEVICE=cuda`; boot log `laya ready device=cuda` (nessun `falling back to cpu`); `/health` con `cuda.available=true` e `allocated_gb>0` (tensor nel processo server); util `nvidia-smi` >0% sotto carico.
+- `LAYA_K2_CPU` (default `0`): seam backend rv9 — con `1` le domande binarie k=2 sono deviate su CPU (GPU riservata a k≥3 e model load). Finché il gate umano non ha fatto benchmark + parity ≥20 casi il flag resta `0` = comportamento invariato; con `1` e backend CPU non inizializzato la richiesta risponde `500 {"error": "cpu backend not initialized…"}`: segnale atteso di gate, non disservizio — lato client trattalo come escalate.
 - `/health` con `device: "cpu"` = fallback attivo dopo carico CUDA fallito (`load_router` in `server.py`): indagare con `docker logs laya-gpu`.
 - **Contratto endpoint**: `/v1/predict` (richiede `Authorization: Bearer`) accetta solo nativo `{state,questions}` o shorthand `{text}` (→ intent-only); i campi `{task,routes,options,criteria}` sono lì ignorati → `invalid_*` NON è disservizio. Il task endpoint canonico è `POST /systemone` `{task_type,text,params}` (localhost, senza auth) → `{"result":{choice,confidence,probabilities},"request_hash"}`. Client HAL referenziale: `/var/www/hal_system1/laya_service.py` (nativo `{state:{notes,language},questions}` + atteso pesato per lo score).
 - **`score` by-pass**: `NON_DISCRIMINATIVE_TASKS` risponde `{"bypass":true,"reason":"score_not_discriminative"}` (misurato: distribuzione identica per testi benigni/iniettivi/harmful) → astensione documentata, mai fabricare punteggi.

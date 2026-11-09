@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.10.2] - 2026-11-01
+
+### Added
+
+- `makefile-template.mk` § Static analysis gate: nota «GUARD obbligatoria» con forma canonica shell-var (`@R="$(RUFF)"; if [ -z "$$R" ] ...`) per i target `lint`/`types` — make espande le variabili prima del parse di sh, quindi `@$(TOOL) ... || {...}` con tool assente produce SyntaxError (types) o comando fantasma (lint). Validato 2026-11-01 su hal_seo, hal_mcp_docs, hal_mcp_tools (stesso bootstrap, stesso bug; fix applicato ai due Makefile consumer) [sync:safe]
+
 ## [1.10.1] - 2026-10-31
 
 ### Added

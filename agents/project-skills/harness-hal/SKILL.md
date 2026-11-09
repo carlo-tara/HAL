@@ -1,8 +1,8 @@
 ---
 name: harness-hal
 extends: a-harness
-version: 1.0.3
-extends-version: 1.10.1
+version: 1.0.4
+extends-version: 1.10.2
 description: >-
   Delta harness per HAL Gateway: Platform API root (Makefile specchio CI), path
   artefatti, profile bootstrap standard, N/A documentati (int/e2e/parity),

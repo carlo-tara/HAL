@@ -1,5 +1,16 @@
 # Changelog — laya (System 1 Service)
 
+## [1.9.0] - 2026-11-09
+
+### Added
+
+- `laya_protocol.py` sorgente unico del protocollo choice: decoro `**choice**` e trim-set del matcher sono ora un contratto unico (la shape server e il parsing engine non possono divergere per convenzione); `laya_service`/`server` delegano via re-export — nessun cambio di payload per i consumatori
+- `LAYA_K2_CPU` (default `0`): seam di backend per domande binarie k=2 → CPU (GPU riservata a k≥3); lato consumatore il contratto non cambia, può cambiare la latenza solo quando l'operatore accende il flag dopo il gate umano (benchmark + parity ≥20 casi); con flag on e CPU non inizializzata: `500 {"error": "cpu backend not initialized…"}` strutturato
+
+### Changed
+
+- Refactor interno senza impatto sui contratti: `smart_choice`/`smart_route` orchestrator ≤40 righe + seam testabili (rv9 r3), test HTTP-driven su `_Probe` invece di bypass del costruttore (rv9 r1) [sync:safe]
+
 ## [1.8.0] - 2026-11-05
 
 ### Changed

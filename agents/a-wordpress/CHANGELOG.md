@@ -1,5 +1,11 @@
 # Changelog — a-wordpress
 
+## [1.4.3] - 2026-11-01
+
+### Changed
+
+- Sync L0 a-agentzero `extends-version` 1.13.0 → 1.13.1: voce pending = sola aggiunta documentale `references/extension-scaffold.md` §4–5 (contratto naming loader per skill L2: `name` kebab-case pari alla directory; nessun delta di protocollo) [sync:safe]; body L1 invariato
+
 ## [1.4.2] - 2026-10-30
 
 ### Changed

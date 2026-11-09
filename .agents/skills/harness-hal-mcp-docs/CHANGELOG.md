@@ -2,6 +2,16 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.1.0] - 2026-10-31
+
+### Added
+
+- Allineata allo stato post-M2: `test-int` attivo (contratto stdio su `app.server`), nuovi path artefatti (`docs/slices/`, `docs/spikes/`, `docs/benchmark-m1.md`, `scripts/bench_m1.py`, `product/state/`, layout chunk `<base>/<doc_id>/`), safety note Retrieval (Laya opzionale via `HAL_GATEWAY_ROOT`/`HAL_LAYA=off`, fallback `escalate`) e validazione `doc_id` anti-traversal [sync:safe]
+
+### Removed
+
+- N/A `test-int` (superato) e target `sync-assets` dal Platform API [sync:safe]
+
 ## [1.0.1] - 2026-10-31
 
 ### Changed

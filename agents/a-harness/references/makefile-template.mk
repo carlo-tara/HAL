@@ -36,6 +36,17 @@ sync-assets:
 	@true
 
 # -- Static analysis gate (policy L1 a-harness): adapter per lo stack reale --
+# GUARD obbligatoria quando si cabla un tool nel target: make espande le
+# variabili PRIMA del parse di sh — una riga `@$(TOOL) ... || { ... }` con
+# $(TOOL) vuoto diventa `||` senza comando → SyntaxError (tip: types) o
+# comando fantasma "not found" (tip: lint). Validato 2026-11-01 su hal_seo,
+# hal_mcp_docs e hal_mcp_tools (stesso bootstrap, stesso bug). Gli `ifeq` di
+# make NON bastano: l'espansione avviene comunque su tutta la riga.
+# Forma canonica (shell-var + diramazione in un unico shell):
+#   lint:
+#     @R="$(RUFF)"; if [ -z "$$R" ]; then echo "SKIP lint (tool assente)"; else $$R check $(SRC) --statistics || { [ "$(STRICT)" = 1 ] && exit 1 || echo "WARN lint (STRICT=1 per fail)"; }; fi
+#   types:
+#     @P="$(PYRIGHT)"; if [ -z "$$P" ]; then echo "SKIP types (tool assente)"; else $$P || { [ "$(STRICT)" = 1 ] && exit 1 || echo "WARN types (STRICT=1 per fail)"; }; fi
 
 lint:
 	@echo "Lint/format gate (es. ruff check --exit-non-zero-on-fix . && ruff format --check)"
