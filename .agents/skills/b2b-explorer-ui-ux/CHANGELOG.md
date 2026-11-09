@@ -1,8 +1,16 @@
 # Changelog — b2b-explorer-ui-ux
 
+## [1.0.31] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-copywriter 1.7.5: voce del padre solo infrastruttura L0/L1 (catene extends allineate), nessun delta L2 da adattare; bump patch del figlio.
+
 ## [Unreleased]
 
 ### Changed
+
+- 1.0.31 → **1.0.32** — Dedup `/sync <`: pattern guida («come leggere» a una riga, guide collassabili `<details>`, empty state azionabile) spostati in `wtp-ux-ui` § Explorer help & guide, qui solo puntatori + contenuto prodotto (STRATEGY_GUIDE, footer assunzioni); aggiornata description. Promozione L1 `a-design/uiux` delle parti generiche rinviata: padre dirty in catena parallela (mixed-scope) `[sync:safe]`
 
 - 1.0.28 → **1.0.29** — Sync padre: extends-version a-copywriter 1.6.0 → 1.6.1 `[sync:safe]`
 - 1.0.27 → **1.0.28** — Skill base a-copywriter HAL Gateway collegata; `extends-version` 1.5.5→1.6.0 `[sync:safe]`

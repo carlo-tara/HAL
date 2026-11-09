@@ -1,7 +1,7 @@
 ---
 name: wtp-ux-ui
 extends: a-uiux
-version: 1.3.67
+version: 1.3.68
 extends-version: 1.0.7
 description: >-
   Design System SurferDark (L2) + mapping Material Design 3 per Sales Coach / WTP App:
@@ -44,7 +44,7 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 | [tokens-dark.md](tokens-dark.md)           | Palette + naming target / shim                           |
 | [material3.md](material3.md)               | Mapping MD3 ↔ SurferDark (roles, shape, state, anti-MUI) |
 | [componenti.md](componenti.md)             | Primitives: classi, stati, a11y, do/don’t                |
-| [patterns.md](patterns.md)                 | Layout, shell, menubar, form, print                      |
+| [patterns.md](patterns.md)                 | Layout, shell, menubar, form, print, guida/affordance    |
 | [inventory-classi.md](inventory-classi.md) | Classi enrico vs Liste vs Explorer + drift               |
 | [migration-css.md](migration-css.md)       | Piano step 1–6 migrazione CSS (TDD-aware)                |
 | [CHANGELOG.md](CHANGELOG.md)               | Storia L2                                                |

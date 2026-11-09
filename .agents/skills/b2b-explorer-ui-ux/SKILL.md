@@ -1,11 +1,11 @@
 ---
 name: b2b-explorer-ui-ux
 extends: a-copywriter
-version: 1.0.30
-extends-version: 1.6.1
+version: 1.0.32
+extends-version: 1.7.5
 description: >-
   Microcopy/UX e delta chrome per l’explorer Cluster B2B score3 (`/explorer/b2b/`):
-  entrypoint, guide collassabili, pattern STRATEGY_GUIDE; token/menubar → wtp-ux-ui.
+  entrypoint, pattern STRATEGY_GUIDE; chrome e pattern guida (collassabili, empty state, «come leggere») → SoT wtp-ux-ui.
 ---
 
 # B2B Explorer — UI/UX microcopy
@@ -50,12 +50,7 @@ Canone L1 `a-copywriter` § Microcopy UI/dashboard. Delta explorer: **codici clu
 
 ### Guide grafiche (CHART_HELP / template help)
 
-- `Come leggere` deve diventare **una riga** (o due max) con 1 interazione chiave.
-- Legende/descrizioni devono includere:
-  - cosa rappresenta la vista (barre/heatmap)
-  - cosa fare per filtrare (click)
-
-Esempio target: “Passa il mouse… Clicca una barra per filtrare…”
+Pattern SoT in `wtp-ux-ui` § Explorer help & guide («come leggere» = 1 riga con interazione chiave; legenda = cosa rappresenta la vista + come si filtra). Qui vive solo il **contenuto** dei testi.
 
 ### Strategy guide (STRATEGY_GUIDE 1..8b)
 
@@ -65,17 +60,9 @@ Esempio target: “Passa il mouse… Clicca una barra per filtrare…”
   - `commercialUse`: 1 frase su come usarla in pratica
   - `relatesTo`: 1 riga con relazioni in elenco breve (es. “2 canale · 4 timing · 7 priorità · 8a/8b script”)
 
-## Empty state e affordance
+## Empty state e guide collassabili
 
-- Quando nessun utente è selezionato nel pannello dettaglio:
-  - mostra un blocco `detail-hint` con heading `<strong>…</strong>` e istruzione: “**Clicca una riga nella tabella**…”.
-
-## Guide collassabili (performance percepita)
-
-- Le sezioni di guida lunghe vanno chiuse di default tramite:
-  - `<details class="chart-help-wrap">`
-  - `<summary>` come trigger “Mostra guida / Nascondi guida”
-  - contenuto in `<div class="chart-help">…</div>`
+Pattern SoT in `wtp-ux-ui` § Explorer help & guide: `detail-hint` con azione «Clicca una riga…»; `<details>`/`<summary>` chiusi di default per la performance percepita. Qui contano solo le classi del template `b2b-score3-clusters.html`.
 
 ## Footer assunzioni
 

@@ -12,7 +12,10 @@ Solo **fabbrica** (Makefile, gate, regole, skill L2). Storia prodotto: `CHANGELO
 - 2026-10-25 `/bootstrap` profile **standard** (a-harness 1.8.1): Makefile root Platform API (specchio CI: check-secrets/deps/sast + `unittest discover`, quiet default con log ISO settimanale in `logs/`; tier int/e2e/parity/db dichiarati N/A in L2), L2 `harness-hal` (`agents/project-skills/`, symlink `.agents/skills/`), `docs/glossary.md`, `docs/bounded-contexts.md`, `product/state/harness-freeze.md`, `logs/` in `.gitignore`. Progress e learnings: esistenti in `product/state/` (niente duplicazione in docs/).
 
 ### Changed
+
+- 2026-11-09 dedup L2 da `/sync <` (DUP confermato su ≥2 progetti): i 4 pattern della shell (guide collassabili `<details>`, empty state azionabile, «come leggere» a una riga, click→risultato) promossi da `b2b-explorer-ui-ux` a SoT in `wtp-ux-ui/patterns.md` § «Explorer help & guide», sostituiti da puntatori; bump `wtp-ux-ui` 1.3.67→1.3.68 e `b2b-explorer-ui-ux` 1.0.31→1.0.32 (il 1.0.31 è il sync selettivo della catena parallela già nel file: extends verso `a-copywriter` 1.7.5, il cui push aspetta la propria catena; nessun test CI vincola la catena). Promozione L1 `a-design/uiux` delle parti generiche rinviata: padre dirty in catena parallela (mixed-scope); repliche: copie WTP_App e L1 al commit della catena.
 - —
 
 ### Removed
+
 - —

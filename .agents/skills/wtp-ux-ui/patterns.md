@@ -56,12 +56,12 @@ Classi OGGI: `.appbar`, `.appbar-brand`, `.appbar-version`, `.menu-*`, `.chrome-
 
 ## Bottoni e chip
 
-| Variante | Canone |
-|----------|--------|
-| Primary | bg accent, testo on-accent, radius **6px**, altezza utile ≥ 44px |
-| Secondary / quiet | bg soft white alpha o outline divider |
-| Outline featured | bordo accent, testo accent |
-| Chip stato | surface + bordo; non comunicare solo a colore |
+| Variante          | Canone                                                           |
+| ----------------- | ---------------------------------------------------------------- |
+| Primary           | bg accent, testo on-accent, radius **6px**, altezza utile ≥ 44px |
+| Secondary / quiet | bg soft white alpha o outline divider                            |
+| Outline featured  | bordo accent, testo accent                                       |
+| Chip stato        | surface + bordo; non comunicare solo a colore                    |
 
 OGGI: `.btn` / `.btn-primary` / `.btn-secondary` / `.btn-outline` / `.btn-sm` in `surferdark.css` (SoT).
 
@@ -125,6 +125,15 @@ OGGI: `.btn` / `.btn-primary` / `.btn-secondary` / `.btn-outline` / `.btn-sm` in
 - Pannelli `hidden` / `display:none`: in print/export forzare visibilità dei blocchi contenuto se servono al foglio.
 - Export raster/ZIP: layout **flat** nel DOM; non affidarsi solo a `@media print`.
 - **Carta intenzionale (Company/Customer continuous):** titoli sezione H2 + hairline; KV `dt` muted / `dd` forte; card/chip overview light; tabelle header statico + zebra (no sticky/hover dark); link scuri sottolineati; risk print-safe (verde/ambra/rosso) — **senza** spezzare in A4 (`break-inside` continuo).
+
+## Explorer help & guide (pattern chrome riutilizzabili)
+
+Promossi da `b2b-explorer-ui-ux` (dedup `/sync <` 2026-11-09): sono pattern della shell, non del solo explorer.
+
+- **Guide collassabili (performance percepita):** sezioni di guida lunghe chiuse di default — `<details class="chart-help-wrap">`, `<summary>` come trigger («Mostra guida / Nascondi guida»), contenuto in `<div class="chart-help">`.
+- **Empty state con azione:** pannello dettaglio senza selezione → blocco `detail-hint` con heading `<strong>` e istruzione operativa su cosa cliccare (mai sola descrizione).
+- **«Come leggere», una riga:** ogni aiuto grafico è 1 riga (2 max) con l'interazione chiave; le legende dicono cosa rappresenta la vista e come si filtra (hover/click → risultato).
+- **Click → risultato:** un'interazione che applica un filtro porta l'utente alla tab dove il risultato è visibile; nessun filtro «silenzioso».
 
 ## Cosa evitare
 

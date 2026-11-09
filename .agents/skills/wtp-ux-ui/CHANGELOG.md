@@ -4,6 +4,7 @@
 
 ### Changed
 
+- 1.3.67 → **1.3.68** — patterns.md § «Explorer help & guide (pattern chrome riutilizzabili)»: promossi da `b2b-explorer-ui-ux` guida collassabile `<details>`, empty state con azione, «come leggere» a una riga, click→risultato; riga patterns aggiornata nella tabella DS. Risolve il DUP segnalato da `/sync <` (chrome era già SoT qui) `[sync:safe]`
 - 1.3.66 → **1.3.67** — Rimossi riferimenti a Cursor: `.cursor/brands/` → `brands/` in SKILL.md e design-system.md `[sync:safe]`
 - 1.3.64 → **1.3.65** — Appreso da sessione: URL tab Company/Customer da mappa condivisa, restore dopo render, query/history e lazy-load deduplicati; puntatori ai contratti e README `[sync:safe]`
 - 1.3.63 → **1.3.64** — Skill base a-uiux HAL Gateway collegata; `extends-version` 1.0.5→1.0.7 `[sync:safe]`
