@@ -1,5 +1,12 @@
 # Changelog — a-agentzero
 
+## [1.13.2] - 2026-11-09
+
+### Changed
+
+- Comando L0 `graph` 1.0.3 → 1.0.4 (canonico `commands/graph.md`): nota Tool — da workspace consumer il builder handoff canonico è `agents/scripts/harness-prompt-builder.sh` (symlink HAL), non `scripts/` del consumer; la nota rv9 «builder non presente nel repo, brief a mano» in `product/state/work-graph.md` era un path-miss, non un'assenza (evidenza laya rv9 2026-11-08/09, /learn !). [sync:safe]
+- Skill `learn` 1.6.3 → 1.6.4: tool-pitfalls nuova sezione «Processi distaccati via tool MCP: timeout ≠ esito, mai fidarsi di pgrep» (evidenze h2b+d9 laya) + variante distruttiva tabelle padded e corollario writer canonico nei consumer. [sync:safe]
+
 ## [1.13.1] - 2026-10-31
 
 ### Added

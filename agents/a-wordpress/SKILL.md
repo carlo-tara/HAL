@@ -1,8 +1,8 @@
 ---
 name: a-wordpress
 extends: a-agentzero
-version: 1.4.3
-extends-version: 1.13.1
+version: 1.4.4
+extends-version: 1.13.2
 description: >-
   Reason why: senza un metodo condiviso per analizzare siti e consegnare plugin ordinati, ogni intervento WordPress diventa un pezzo isolato e fragile.
   Analizza installazioni WordPress specifiche e sviluppa, mantiene e revisiona plugin

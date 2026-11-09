@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.10.3] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-agentzero 1.13.2 (voci solo infrastruttura L0: nota Tool `graph` 1.0.4 — builder handoff da consumer in `agents/scripts/harness-prompt-builder.sh`, e tool-pitfalls learn 1.6.4): `extends-version` allineato, bump patch, nessun cambio al body.
+
 ## [1.10.2] - 2026-11-01
 
 ### Added

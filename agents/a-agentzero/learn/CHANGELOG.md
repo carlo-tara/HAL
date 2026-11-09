@@ -1,5 +1,13 @@
 # Changelog — learn
 
+## [1.6.4] - 2026-11-09
+
+### Added
+
+- tool-pitfalls: nuova sezione «Processi distaccati via tool MCP: timeout ≠ esito, mai fidarsi di pgrep» (timeout MCP orfanizza o uccide i subprocess: misura da artefatti, `setsid nohup` per deploy lunghi; pgrep -f self-match) — evidenza h2b 2026-11-05 + d9 2026-11-09, laya.
+- tool-pitfalls §tabelle padded: variante distruttiva rv9 (fuzzy su token `planned` che riscrive riga limitrofa, `new_text` con trailing `|` che genera celle vuote, `__underscore__` fuori backtick corrotto in bold; canone chirurgia python + verifica pipe su tutte le righe).
+- tool-pitfalls §Writer canonico + graph 1.0.4: builder handoff presente nei consumer via `agents/scripts/harness-prompt-builder.sh` (symlink HAL) — falsificazione «non presente nel repo» da path-miss rv9.
+
 ## [1.6.3] - 2026-11-09
 
 ### Changed
