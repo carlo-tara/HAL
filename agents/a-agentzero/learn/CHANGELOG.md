@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.6.7] - 2026-11-10
+
+### Changed
+
+- tool-pitfalls §«Parametri numerici respinti come stringhe»: evidenza #27 (brainbeez /learn !, newleads-enrichment 2026-11-10: `terminal timeout_ms` respinto 5× → omesso, `timeout` bounded in-shell; `read_file` range 2× → `sed -n`; classe già canonica, nessuna regola nuova). §«Processi distaccati»: variante **pkill** — il pattern nel `sh -c` chiamante matcha se stesso e `pkill -f` uccide la shell del comando composito (exit 1, zero output); usare `[p]attern` o chiamata isolata.
+
 ## [1.6.6] - 2026-11-09
 
 ### Changed
