@@ -1,13 +1,13 @@
 {
   "kind": "cycle",
   "cmd": "/cycle",
-  "ts": "2026-11-09T11:48:24Z",
-  "flags": {"y": false},
-  "acceptance": "schema gold set in benchmark/config + scoring hit-rate/fasce da soglie laya_gate + unit fixture sintetiche + inclusione via discovery test-unit e compileall pre-commit + make verde",
-  "files": "scripts/gold_set_scoring.py,benchmark/config/gold_set.schema.json,tests/test_gold_set_scoring.py",
-  "node_id": "HT-008",
-  "next": "— (ciclo chiuso; HT-003/005/007 restano gate umani)",
-  "summary": "RED(12 contratti, ModuleNotFound)→GREEN(12/12)→refactor skipped→READY: make test-unit 401 OK (MAKE_EXIT=0), pre-commit 0; collaterale: pin+changelog graph 1.0.4 completati (red preesistente introdotto da 2f37faf)",
+  "ts": "2026-11-10T11:27:32Z",
+  "flags": {"y": true},
+  "acceptance": "switch BENCHMARK_LOCAL_ASSEMBLY=0 -> braccio B reale verificato: smoke llama3.2:1b 1 ok 2189 tok 68.4s qualita 2/2, finish_reason stop, zero assemblaggio_locale; RED 2/694 -> hs2 suite 696 MAKE_EXIT=0; gateway apply + make test-unit GREEN + pre-commit 0",
+  "files": "hal_system2:app/benchmark_workflow.py,hal_system2:tests/test_benchmark_local_assembly_toggle.py,hal_system2:CHANGELOG.md,benchmark/runner/benchmark_workflow.py(mirror),events hs2: 20261109b_models/prompts h007",
+  "node_id": "HT-007-step0",
+  "next": "run A/B HT-007 (umano) + confronto; poi HT-003 kill criterion (b_gated 16/4 vs b_baseline 19/1, materiali pronti)",
+  "summary": "/cycle HT-007 step-0 CHIUSO e verificato: toggle bracci A/B in assemble_segments_locally (zona pulita del canonico, pattern env di laya_gate), 4 test, CHANGELOG hs2 [sync:safe], mirror gateway allineato e suite verde, smoke reale braccio B completato (assemblaggio via modello, qualita 2/2). HT-007 resta [ ] #human per le run A/B phi3+llama3.2:3b (comandi esatti nel ToDo, inclusi --models/--prompts necessari perche default ruotato e il loader vuole 5 prompt). hs2 commit pende sulla sessione parallela HT-004 (workflow+test+CHANGELOG nel suo tree).",
   "brief": "",
   "token_budget": 200
 }
