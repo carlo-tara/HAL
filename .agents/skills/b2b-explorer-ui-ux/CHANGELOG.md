@@ -10,6 +10,8 @@
 
 ### Changed
 
+- 1.0.32 → **1.0.33** — Promozione L1 eseguita (il rinvio per «padre dirty in catena parallela» è risolto: `a-design/uiux` verificato pulito con `git status`/`git diff`): puntatori guida/chrome retargettati a L1 `uiux` 1.1.0 § «Pattern guida & chrome comuni»; `wtp-ux-ui` resta SoT delle classi WTP; description e righi canone aggiornati [sync:safe]
+
 - 1.0.31 → **1.0.32** — Dedup `/sync <`: pattern guida («come leggere» a una riga, guide collassabili `<details>`, empty state azionabile) spostati in `wtp-ux-ui` § Explorer help & guide, qui solo puntatori + contenuto prodotto (STRATEGY_GUIDE, footer assunzioni); aggiornata description. Promozione L1 `a-design/uiux` delle parti generiche rinviata: padre dirty in catena parallela (mixed-scope) `[sync:safe]`
 
 - 1.0.28 → **1.0.29** — Sync padre: extends-version a-copywriter 1.6.0 → 1.6.1 `[sync:safe]`

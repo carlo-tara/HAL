@@ -1,8 +1,8 @@
 ---
 name: wtp-ux-ui
 extends: a-uiux
-version: 1.3.68
-extends-version: 1.0.7
+version: 1.3.69
+extends-version: 1.1.0
 description: >-
   Design System SurferDark (L2) + mapping Material Design 3 per Sales Coach / WTP App:
   foundation, componenti, pattern, MD3 roles, migrazione CSS (auth + Liste + Explorer).
@@ -14,7 +14,7 @@ disable-model-invocation: true
 
 Skill figlia. Eredita `a-agentzero` → `a-uiux` → **questo file**.
 
-Canoni a11y / stack statico M3 / layout editoriale generico → L1 `a-uiux`. Qui solo SurferDark, path WTP e checklist prodotto.
+Canoni a11y / stack statico M3 / layout editoriale / pattern guida-chrome generici → L1 `a-uiux`. Qui solo SurferDark, path WTP e checklist prodotto.
 
 ## Quando usarla
 

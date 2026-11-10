@@ -1,5 +1,6 @@
 ---
 name: wtp-brand-voice
+version: 1.0.0
 description: >-
   Alias legacy — contenuto convergente in a-copywriter-wtp. Usare a-copywriter
   con estensione .agents/skills/a-copywriter-wtp/SKILL.md in questo repo.

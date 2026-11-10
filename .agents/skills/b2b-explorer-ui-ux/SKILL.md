@@ -1,20 +1,20 @@
 ---
 name: b2b-explorer-ui-ux
 extends: a-copywriter
-version: 1.0.32
+version: 1.0.33
 extends-version: 1.7.5
 description: >-
   Microcopy/UX e delta chrome per l’explorer Cluster B2B score3 (`/explorer/b2b/`):
-  entrypoint, pattern STRATEGY_GUIDE; chrome e pattern guida (collassabili, empty state, «come leggere») → SoT wtp-ux-ui.
+  entrypoint, pattern STRATEGY_GUIDE; canone pattern guida/chrome → L1 `uiux` § Pattern guida, classi WTP → `wtp-ux-ui` § Explorer help & guide.
 ---
 
 # B2B Explorer — UI/UX microcopy
 
-Skill figlia di `a-copywriter`. Governa microcopy della dashboard score3 **e** delta chrome explorer; non usa `publication-types` JSON-first (newsletter/promo) né **5 Copy Blocks** / landing Pain→Promise→Proof (`references/five-copy-blocks.md` L1) — fuori scope di questa UI. Anti-AI guide → competenza **humanizer** L1. Copy Sales Coach (`.po`, prompt LLM) → `a-copywriter-wtp`. Token / menubar / shell SurferDark → `wtp-ux-ui` (non ridocumentare qui).
+Skill figlia di `a-copywriter`. Governa microcopy della dashboard score3 **e** delta chrome explorer; non usa `publication-types` JSON-first (newsletter/promo) né **5 Copy Blocks** / landing Pain→Promise→Proof (`references/five-copy-blocks.md` L1) — fuori scope di questa UI. Anti-AI guide → competenza **humanizer** L1. Copy Sales Coach (`.po`, prompt LLM) → `a-copywriter-wtp`. Token / menubar / shell SurferDark → `wtp-ux-ui` (non ridocumentare qui); pattern guida/chrome generici → L1 `uiux` § Pattern guida (non ridocumentare qui).
 
 ## Purpose
 
-Rendere le guide e i testi della dashboard **più leggibili e operativi** per il team commerciale, senza perdere la semantica dei cluster (codici e clusterId rimangono invariati). Microcopy: canone L1 `a-copywriter` § Microcopy UI/dashboard. Chrome suite: canone `wtp-ux-ui`.
+Rendere le guide e i testi della dashboard **più leggibili e operativi** per il team commerciale, senza perdere la semantica dei cluster (codici e clusterId rimangono invariati). Microcopy: canone L1 `a-copywriter` § Microcopy UI/dashboard. Chrome suite: pattern canone L1 `uiux` § Pattern guida, classi `wtp-ux-ui`.
 
 ## File entrypoint (invarianti)
 
@@ -50,7 +50,7 @@ Canone L1 `a-copywriter` § Microcopy UI/dashboard. Delta explorer: **codici clu
 
 ### Guide grafiche (CHART_HELP / template help)
 
-Pattern SoT in `wtp-ux-ui` § Explorer help & guide («come leggere» = 1 riga con interazione chiave; legenda = cosa rappresenta la vista + come si filtra). Qui vive solo il **contenuto** dei testi.
+Canone pattern in L1 `uiux` § «Pattern guida & chrome comuni (shell)» («come leggere» = 1 riga con interazione chiave; legenda = cosa rappresenta la vista + come si filtra). Qui vive solo il **contenuto** dei testi.
 
 ### Strategy guide (STRATEGY_GUIDE 1..8b)
 
@@ -62,7 +62,7 @@ Pattern SoT in `wtp-ux-ui` § Explorer help & guide («come leggere» = 1 riga c
 
 ## Empty state e guide collassabili
 
-Pattern SoT in `wtp-ux-ui` § Explorer help & guide: `detail-hint` con azione «Clicca una riga…»; `<details>`/`<summary>` chiusi di default per la performance percepita. Qui contano solo le classi del template `b2b-score3-clusters.html`.
+Canone pattern in L1 `uiux` § «Pattern guida & chrome comuni (shell)»; classi WTP in `wtp-ux-ui` § Explorer help & guide: `detail-hint` con azione «Clicca una riga…»; `<details>`/`<summary>` chiusi di default per la performance percepita. Qui contano solo le classi del template `b2b-score3-clusters.html`.
 
 ## Footer assunzioni
 
