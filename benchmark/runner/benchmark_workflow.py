@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import time
 from typing import Any
 
@@ -330,7 +331,13 @@ def assemble_segments_locally(
     concatenation, a single segment needs no merge, and a JSON extraction whose
     segments are all valid JSON is merged into one array. Returns None when only a
     model can assemble the result.
+    HT-007 braccio B: con ``BENCHMARK_LOCAL_ASSEMBLY=0`` nell'ambiente del
+    processo il merge meccanico e' disabilitato del tutto e l'assemblaggio passa
+    via modello, cosi' le run A/B dei due bracci sono producibili senza toccare
+    i test. Default invariato: merge locale attivo.
     """
+    if os.environ.get("BENCHMARK_LOCAL_ASSEMBLY", "1").strip() == "0":
+        return None
     if not artifacts:
         return None
     if len(artifacts) == 1:
