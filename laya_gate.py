@@ -40,6 +40,24 @@ ROUTE_SELF_CONSISTENT = float(os.environ.get("LAYA_ROUTE_SELF_CONSISTENT", "0.4"
 DIRECT_CAP_OPTIONS = int(os.environ.get("LAYA_DIRECT_CAP_OPTIONS", "4"))
 DIRECT_MIN_TOP1 = float(os.environ.get("LAYA_DIRECT_MIN_TOP1", "0.8"))
 
+# T-73140 (ok PO 2026-11-09): a k ≥ cap System 1 non è un decisore — il
+# ranking top-N è il suo output autoritativo, la scelta finale è System 2.
+SHORTLIST_TOP_N = 2
+
+
+def shortlist_forced(n_options: int) -> bool:
+    """True se il set di opzioni è troppo grande perché S1 scelga (T-73140)."""
+    return n_options >= DIRECT_CAP_OPTIONS
+
+
+def top_shortlist(probs: dict[str, float], n: int = SHORTLIST_TOP_N) -> list[dict[str, Any]]:
+    """Top-n {"option", "probability"} ordinate per probabilità (tie-break per
+    nome, deterministico). Vuoto se probs assente."""
+    if not probs:
+        return []
+    ranked = sorted(probs.items(), key=lambda kv: (-kv[1], kv[0]))
+    return [{"option": o, "probability": round(p, 3)} for o, p in ranked[:n]]
+
 
 def family_forced_escalation(function_family: str | None) -> bool:
     """rv8 f4 (C1'): LAYA_FAMILY_ESCALATION_OVERRIDES — lista virgolata di
@@ -95,9 +113,19 @@ def verdict_directly_acceptable(
 def decision_recommendation(
     n_options: int, top1: float, margin: float, fast: float, unclear: float
 ) -> str:
-    """Etichetta Strategy C: direct / caution / escalate dal gate k-aware."""
+    """Etichetta Strategy C: direct / caution / escalate dal gate k-aware.
+
+    T-73140 (ok PO 2026-11-09): a ``n_options`` ≥ ``DIRECT_CAP_OPTIONS`` la
+    banda ``accept_with_caution`` è soppressa — la telemetria rv7 mostra che
+    S1 su choice/routing k≥4 non discrimina (31–41% ≈ random, top-2 quasi
+    sempre contenente la risposta voluta): S1 ordina (``top_shortlist``), la
+    selezione finale è sempre System 2. Sotto il cap il comportamento è
+    invariato.
+    """
     if verdict_directly_acceptable(n_options, top1, margin, fast):
         return "system1_direct"
+    if shortlist_forced(n_options):
+        return "escalate_system2"
     if margin >= unclear:
         return "accept_with_caution"
     return "escalate_system2"

@@ -2,6 +2,12 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.1.2] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-harness 1.10.4: voce del padre solo infrastruttura L0/L1 (catene extends allineate), nessun delta L2 da adattare; bump patch del figlio.
+
 ## [1.1.0] - 2026-10-31
 
 ### Added

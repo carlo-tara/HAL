@@ -1,8 +1,8 @@
 ---
 name: b2b-explorer
 extends: a-b2b
-version: 1.2.4
-extends-version: 2.2.1
+version: 1.2.5
+extends-version: 2.3.5
 description: >-
   Delta progetto B2B in WTP App: guardrail pilota ICP 6–50 ∩ bacino Chiasso ~3h (Aug-Oct 2026),
   capacity 3+3/sett, GTM a quattro bucket, tre livelli modulari L1/L2/L3, welfare società IT,

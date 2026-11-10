@@ -1,5 +1,11 @@
 # Changelog — a-copywriter-wtp
 
+## [1.0.13] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-copywriter 1.7.5: voce del padre solo infrastruttura L0/L1 (catene extends allineate), nessun delta L2 da adattare; bump patch del figlio.
+
 ## [Unreleased]
 
 ### Changed

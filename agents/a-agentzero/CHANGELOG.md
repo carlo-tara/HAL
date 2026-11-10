@@ -1,5 +1,12 @@
 # Changelog — a-agentzero
 
+## [1.13.3] - 2026-11-09
+
+### Added
+
+- Comando L0 `commit`: passo 7 «Auto-voto post-commit» (T-33B98, ok steward esplicito 2026-11-09) — dopo commit esito 0, voto cieco `expected`+`source=commit` via `scripts/auto_vote_commit.py` sul `request_hash` ecoato dal choice di step 1 (ora con `--json`); best-effort: mai far fallire il commit, skip se non c'è hash reale; ground truth `laya_routing` = file modificato. Skill `laya` 1.9.1 (eccezione commit nel bullet Calibrazione). Prelazione nel guard implementata nel logger laya (stack rv9, waiver un meccanismo). [sync:safe]
+- Comando L0 `commit` **1.0.1**: front matter `version:` applicata al canonico — il file aveva un `---` orfano senza versione, quindi `command_version()` di link usava il default 1.0.0 e il bump del passo 7 restava invisibile negli specchi; specchi rigenerati via `link-workspace-skills.sh` (.agents/skills, .zed/prompts, product/adapters). [sync:safe]
+
 ## [1.13.2] - 2026-11-09
 
 ### Changed

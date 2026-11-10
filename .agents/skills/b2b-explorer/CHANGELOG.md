@@ -1,5 +1,11 @@
 # Changelog — b2b-explorer (L2)
 
+## [1.2.5] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-b2b 2.3.5: voce del padre solo infrastruttura L0/L1 (catene extends allineate), nessun delta L2 da adattare; bump patch del figlio.
+
 ## [Unreleased]
 
 ### Changed

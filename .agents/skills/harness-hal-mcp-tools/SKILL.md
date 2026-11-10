@@ -1,8 +1,8 @@
 ---
 name: harness-hal-mcp-tools
 extends: a-harness
-version: 1.2.1
-extends-version: 1.10.2
+version: 1.2.2
+extends-version: 1.10.4
 description: >-
   Reason why: senza Platform API e gate, il progetto delegato resterebbe uno script privo di uscita verificabile.
   Delta harness per hal_mcp_tools (MCP test-runner/analytics): Makefile Platform API, path artefatti, N/A documentati, safety note specifiche del servizio MCP/locale.

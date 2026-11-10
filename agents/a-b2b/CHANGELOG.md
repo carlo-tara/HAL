@@ -1,5 +1,11 @@
 # Changelog — a-b2b
 
+## [2.3.5] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-agentzero 1.13.3 (commit L0: passo 7 auto-voto post-commit T-33B98, gate steward risolto con ok esplicito): `extends-version` allineato, bump patch, nessun cambio al body.
+
 ## [2.3.4] - 2026-11-09
 
 ### Changed

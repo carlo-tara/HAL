@@ -1,8 +1,8 @@
 ---
 name: harness-hal-tts
 extends: a-harness
-version: 1.0.2
-extends-version: 1.10.2
+version: 1.0.3
+extends-version: 1.10.4
 description: >-
   Reason why: senza Platform API e gate, il progetto delegato resterebbe uno script privo di uscita verificabile.
   Delta harness per hal_tts (TTS locale piper1-gpl): Makefile Platform API, path artefatti, N/A documentati, safety note specifiche del servizio MCP/locale.

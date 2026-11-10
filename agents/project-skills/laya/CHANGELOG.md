@@ -1,5 +1,23 @@
 # Changelog — laya (System 1 Service)
 
+## [1.10.1] - 2026-11-09
+
+### Added
+
+- Bullet «Runtime container = py3.10» in Diagnosi rapida: i fix UP/lint dell'editor (target ≥3.11) non possono introdurre `datetime.UTC` nel container (3.10.12) — alias `_UTC` con `# noqa: UP017` su riga singola; `removesuffix` ok (3.9+). Appreso dal ciclo «fix errors and warnings» post-T-73140 (8 warning UP017/RUF100 da formatter che spezzava i noqa). [sync:safe]
+
+## [1.10.0] - 2026-11-09
+
+### Added
+
+- Inversione di ruolo k≥4 (T-73140, ok PO 2026-11-09): a `k >= DIRECT_CAP_OPTIONS` System 1 non decide — il payload (MCP `_run_decision` e verdetto CLI `smart_choice`/`smart_route`) porta il campo autoritativo `shortlist` top-2 ordinato con probabilità (tie-break per nome, `laya_gate.top_shortlist`) e la raccomandazione è sempre `escalate_system2` (banda `accept_with_caution` soppressa per quella famiglia); `selected`/`choice` restano per compatibilità come testa deprecata della shortlist. Descrizioni tool MCP e bullet gate/«Campi» aggiornati. Sotto il cap comportamento identico.
+
+## [1.9.1] - 2026-11-09
+
+### Changed
+
+- Bullet «Calibrazione»: unica eccezione al guard una-inferenza-un-voto — il voto post-commit `source='commit'` (verità esterna oggettiva, ok steward T-33B98 2026-11-09) sostituisce al massimo una volta un voto di autorità minore; per `laya_routing` il canale accetta `expected` = file/bersaglio realmente modificato. Nessun cambio di contratto sulle risposte. [sync:safe]
+
 ## [1.9.0] - 2026-11-09
 
 ### Added

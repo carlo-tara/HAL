@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.10.4] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-agentzero 1.13.3 (commit L0: passo 7 auto-voto post-commit T-33B98, gate steward risolto con ok esplicito): `extends-version` allineato, bump patch, nessun cambio al body.
+
 ## [1.10.3] - 2026-11-09
 
 ### Changed

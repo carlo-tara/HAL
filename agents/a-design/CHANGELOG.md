@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a questo agente sono documentate in questo file.
 Formato: [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 Versionamento: [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.2.6] - 2026-11-09
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-agentzero 1.13.3 (commit L0: passo 7 auto-voto post-commit T-33B98, gate steward risolto con ok esplicito): `extends-version` allineato, bump patch, nessun cambio al body.
+
 ## [1.2.5] - 2026-11-09
 
 ### Changed

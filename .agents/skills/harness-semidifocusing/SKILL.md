@@ -1,8 +1,8 @@
 ---
 name: harness-semidifocusing
 extends: a-harness
-version: 2.1.0
-extends-version: 1.7.3
+version: 2.1.1
+extends-version: 1.10.4
 description: >-
   Delta harness per semidifocusing: Makefile Platform API (pnpm monorepo, Vitest,
   Playwright, partner-smoke), glossario, bounded contexts, workflow stg-carlo,

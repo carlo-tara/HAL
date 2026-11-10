@@ -1,8 +1,8 @@
 ---
 name: a-product
 extends: a-agentzero
-version: 2.2.4
-extends-version: 1.13.2
+version: 2.2.5
+extends-version: 1.13.3
 description: >-
   Reason why: senza un punto unificato di prodotto, discovery, PO, ricerca utente e BDD frammentano il lavoro.
   Agente L1 Product Management: discovery, PO (PRD, Lean Canvas, priorità, validazione), JTBD, Personas e BDD Spec.

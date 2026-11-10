@@ -1,8 +1,8 @@
 ---
 name: a-copywriter-wtp
 extends: a-copywriter
-version: 1.0.12
-extends-version: 1.6.1
+version: 1.0.13
+extends-version: 1.7.5
 description: >-
   Estensione locale di a-copywriter per Sales Coach (WTP App): perimetro repo, voce
   educazione finanziaria consapevole, locale, prompt LLM, product-stories, export.

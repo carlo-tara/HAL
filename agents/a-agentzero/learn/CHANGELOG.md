@@ -1,5 +1,17 @@
 # Changelog — learn
 
+## [1.6.6] - 2026-11-09
+
+### Changed
+
+- tool-pitfalls §«Parametri numerici respinti come stringhe»: evidenza #26 (hal_system2 `/learn !` HT-003 2026-11-09: `terminal timeout_ms` respinto 2× (`120000`, `300000`, `expected u64`) → omesso; nessuna regola nuova, classe già canonica).
+
+## [1.6.5] - 2026-11-09
+
+### Added
+
+- tool-pitfalls: nuova sezione «Chiamate parallele su stato condiviso» (scritture/gate/bump seriale; MAKE_EXIT da processo non da pipe; casi (a)-(d) sessione laya 2026-11-09, cicli T-6C1B2→T-73140) + sub-emendamento «commenti con prefisso direttiva» (`# pyright:` in prosa = 3 errori, candidato ≥2 sessioni).
+
 ## [1.6.4] - 2026-11-09
 
 ### Added
