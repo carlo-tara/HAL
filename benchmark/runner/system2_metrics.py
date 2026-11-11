@@ -311,7 +311,7 @@ class System2Metrics:
                 FROM system2_workflow_events
                 {where}
                 {"AND" if where else "WHERE"} tokens_in IS NOT NULL
-                """,
+                """,  # noqa: S608 - {where} e frammento costante, valori in params
                 params,
             ).fetchone()
         requests = int(row["requests_with_usage"] or 0)

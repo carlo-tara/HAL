@@ -18,7 +18,11 @@ from typing import Any
 import httpx
 
 from .benchmark_calls import benchmark_call, local_translation, translation_result
-from .benchmark_parsing import extract_html_document, prompt_message, safe_path_component
+from .benchmark_parsing import (
+    extract_html_document,
+    prompt_message,
+    safe_path_component,
+)
 from .benchmark_quality import evaluate_quality
 from .benchmark_report import (
     apply_llm_model_override,
@@ -29,7 +33,6 @@ from .benchmark_report import (
     summary,
 )
 from .benchmark_settings import Settings, utc_now, write_json
-from .benchmark_system2 import system2_workflow_call
 from .system2_metrics import System2Metrics
 
 
@@ -184,21 +187,12 @@ def run_benchmark(
                                 f"    Metriche SQLite non registrate: {type(exc).__name__}"
                             )
                 else:
-                    guide = (system1_guides or {}).get(prompt["id"])
-                    if guide is None:
-                        result.update(benchmark_call(model, prompt, config, client))
-                    else:
-                        result.update(
-                            system2_workflow_call(
-                                model,
-                                prompt,
-                                config,
-                                client,
-                                guide,
-                                metrics=metrics,
-                                run_id=run_id,
-                            )
-                        )
+                    # HT-009 via (a): il guide System 1 e' sola telemetria. La
+                    # generazione passa sempre da benchmark_call (wire identico
+                    # al braccio senza --system1); i segmenti/decisioni del
+                    # workflow restano raggiungibili solo via chiamata diretta
+                    # (regola deterministica opt-in, non middleware del gate).
+                    result.update(benchmark_call(model, prompt, config, client))
             except httpx.HTTPStatusError as exc:
                 result.update(
                     status="error",
@@ -254,6 +248,7 @@ def run_benchmark(
     log_final_summary(report)
     return report
 
+
 def filter_models(
     models: list[dict], provider: str | None, names: list[str] | None
 ) -> list[dict]:
@@ -266,6 +261,7 @@ def filter_models(
     if not selected:
         raise ValueError("Nessun modello corrisponde ai filtri --provider/--model")
     return selected
+
 
 def filter_prompts(prompts: list[dict], ids: list[str] | None) -> list[dict]:
     if not ids:

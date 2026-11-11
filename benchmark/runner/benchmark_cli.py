@@ -44,7 +44,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--system1",
         action="store_true",
-        help="Usa il gate task-aware Laya/System 2 (le metriche SQLite si registrano anche senza)",
+        help=(
+            "Registra il preflight task-aware Laya/System 2 come sola telemetria "
+            "(dal 2026-11-10 esito HT-009: non altera prompt né workflow; "
+            "metriche SQLite si registrano anche senza)"
+        ),
     )
     parser.add_argument(
         "--metrics-db",
@@ -220,6 +224,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 130
     return 2
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
