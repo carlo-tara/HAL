@@ -1,5 +1,30 @@
 # Changelog — learn
 
+## [1.6.11] - 2026-11-14
+
+### Changed
+
+- Evidenze #30 in `references/tool-pitfalls.md`: §«Parametri numerici» occorrenze brainbeez 2026-11-12 (`read_file` range 2×, `timeout_ms` 2× — nessuna regola nuova); §«Tool call paralleli» variante **doppio side-effect identico** (stesso comando con effetto emesso due volte in un blocco parallelo → deployment gemello REMOVED; audit via `railway deployment list`). Fonte: catena header colonna 0.10.3 + chore .railway (/learn ! #30).
+
+## [1.6.10] - 2026-11-13
+
+### Added
+
+- Nuova modalità **redigi** (`/learn! redigi <file> per <target>`): redazione comunicativa di documenti con quattro regole non negoziabili (niente nome/costi fornitore interno verso l'esterno, terzi anonimizzati senza autorità, fedeltà al canone del documento, claim ancorati ai file citati) + sweep CJK/mojibake obbligatorio a chiusura. Nata nella catena 0.11.0 (redazione partnership-perfills: «fornitore che vende a noi non si nomina a chi potrebbe comprarlo da noi»; il refuso `副作用` scappato proprio durante una redazione è l'evidenza scatenante). La redazione non è apprendimento: non innesca di per sé `/learn !`.
+
+## [1.6.9] - 2026-11-13
+
+### Changed
+
+- tool-pitfalls: appendite evidenze **/learn ! #28** (catena /cycle AGG → /todo flush → /version 0.10.4 → push/deploy): §«Parametri numerici» (read_file ×2 → `sed -n`; timeout_ms ×3 → omesso, budget `for … sleep`); §«Frammenti CJK» **nuova variante di generazione** — escapes `\uXXXX` scritti a mano nel JSON di `edit_file` (non più solo heredoc): `già文档ato`/`功能` arrivati fin dentro HEAD committato e pushato; rimedio: carattere diretto, assert pre-scrittura `any('\u4e00'<=c<='\u9fff')` sull'oggetto in memoria, sweep solo con `grep -P` (con `-oE` il range escaped fallisce); §«Tool call paralleli» (estensione della classe `MAKE_EXIT` da pipe a `git push`: PUSH_EXIT=0 su push respinto; catena producer→consumer python→`git commit -F` emessa parallela → exit 128 — **parziale duplicazione dichiarata** con la variante cross-tool già consolidata dalla sessione parallela in 1.6.8/#29: stessa classe, istanze diverse); §«Processi distaccati» (riverifica timeout≠esito: `test_run make test-unit` in context timeout ma il gate completò davvero ec=0 — non ri-lanciare, pollare artefatti).
+- Dichiarazione di gara: il numero #28 è stato attribuito dopo il #29 della sessione parallela ruoli/digest (stesso giorno, HAL condiviso) — disordine cronologico dei contatori, non collisione; le appendute sono in sezioni diverse o su istanze distinte.
+
+## [1.6.8] - 2026-11-13
+
+### Changed
+
+- tool-pitfalls §«Parametri numerici respinti come stringhe»: evidenza #29 (brainbeez catena ruoli/digest 2026-11-13: `timeout_ms` 3× respinto → omesso; `read_file` range 4× → `sed -n`; classe già canonica). §«Tool call paralleli»: variante **cross-tool** (seconda evidenza della classe producer→consumer) — `write_file`+`terminal` dipendente, `edit_file`+`git commit`, `edit_file`+lint nella stessa batch: 3 casi reali con esito (ENOENT, commit pre-edit pushato, check obsoleto); regola: ogni chiamata che dipende da una scrittura della stessa risposta va rinviata alla successiva. §tabelle padded: variante append riga su decision-log PRD (àncora di fine-riga con padding ignoto; chirurgia python con width dall'ultima riga e padding PRIMA del pipe; rimozione cella via `sed` per riga). §«Frammenti CJK»: variante **mojibake latino** (`perchÃ©` da byte UTF-8 ri-encodati) + artefatto fuzzy-a-catena sul testo corrotto; sweep esteso a `grep -nP 'Ã|Â'`.
+
 ## [1.6.7] - 2026-11-10
 
 ### Changed
