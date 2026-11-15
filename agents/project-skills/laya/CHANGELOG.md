@@ -1,5 +1,17 @@
 # Changelog — laya (System 1 Service)
 
+## [1.11.0] - 2026-11-15
+
+### Added
+
+- Provenienza A/B `_expand_vague_prompt` (T-9A4F7): i client annotano `meta.expanded` sulle richieste espanse, strip-meta server-side mantiene il norm-hash identico, `make telemetry-report` stampa i delta di verdetto per braccio. Dato utile dal deploy 2026-11-15 (al report odierno: nessuna riga espansa — maturazione in corso).
+- Loop voti commit LIVE in produzione (T-33B98): step 7 del protocollo `/commit` + `scripts/auto_vote_commit.py` (`source='commit'`, voto cieco `--expected`, best-effort mai bloccante)attivo dal re-deploy 2026-11-15 con guard di prelazione `_vote_guard` in `laya_logger`; coverage 4,0% al primo report — la finestra del gate temporale (recheck ~2026-11-23) riparte da oggi.
+- Bullet «Qualità dei voti» (T-6C1B2): `outcome_source` separa accuracy (verità esterne `explicit|commit`) e agreement (`implicit_s2`); i voti legacy escono dalla calibrazione.
+
+### Changed
+
+- Release 1.11.0 taglia lo stack rv9+3 (working tree dal 2026-11-09): gate shortlist k≥4 + prelazione voti + meta A/B + steward gate `make ready-for-review`; MAKE_EXIT 0 osservato 2026-11-15 (302 test + 78 mcp, check-paths/check-secrets clean). [sync:safe]
+
 ## [1.10.1] - 2026-11-09
 
 ### Added
