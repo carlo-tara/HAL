@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 1.11.0
+version: 1.13.0
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py, modulo Python router o come tool MCP in Zed (mcp_laya.py).
 ---
@@ -110,6 +110,8 @@ Oltre alla CLI, Laya è esposta in Zed come **context server MCP**: `mcp_laya.py
 - **Campi rv7/rv8 nel payload**: `degraded_context` (true quando `usage.truncated`/`state_tokens_dropped` — verdetto computato su contesto ridotto), `calibrated_confidence` (accuracy empirica per famiglia×banda dalla tabella di `make telemetry-report ARGS=--write-table`, `LAYA_CALIBRATION_TABLE`; `null` se tabella assente o voti insufficienti — la grezza resta nel campo `margin`/`probabilities`), `flipped` (solo a 2 pass), `shortlist` (k≥4: top-2 ordinata, campo autoritativo per S2 — T-73140). Le risposte cache-hit del servizio espongono `retried`; i corpi freschi riportano il `model` richiesto (rv8 f2).
 - **Igiene stdio**: stdout trasporta solo frame JSON-RPC; i warning di `laya_service` vanno su stderr. Su errore di qualsiasi tool, chiamare `laya_health` prima di dichiarare disservizio (Diagnosi ABSTAIN).
 - **Gate**: `make mcp-test` (unit tool + setup JSONC + contratto di questa sezione); suite completa del servizio con `make test`.
+- **Blind-eval (h4h, 1.12.0)**: `make blind-eval` esegue il set umano congelato `benchmarks/blind-set.jsonl` (famiglie `commit-type`/`routing`, casi `{id, family, text, options, expected, verified_by, frozen_at}`) sul percorso prod `POST /systemone` e giudica per famiglia con la stessa soglia random+ε dei gate alert (costanti importate da `analyze_telemetry`, mai duplicate). Esito onesto: set assente = `NOT-MEASURED` exit 0 (mai green silenzioso), schema invalido exit 2, famiglia sotto soglia con n≥ALERT_MIN_N exit 1. Artefatto `benchmarks/blind-eval-latest.json` = input del prossimo gate auto-regolante (T-A57AA). Finché il set non è authorato, il comando è pronto ma non misura.
+- **A/B preliminare middleware (ab1, 1.13.0)**: `make expand-ab-probe` replaya la superficie di innesco reale del corpus congelato (`s1-corpus.jsonl`, regola NON duplicata: metodo importato da `laya_service`) e confronta i bracci OFF/ON con un singolo pass `/systemone` (ON via System 2; senza S1 o S2 = exit 2 dichiarato, corpus assente = 3): prima run 2026-11-16 su 434 candidati → 40 innescati, **flip_rate 0,35** e medio |Δmargin| 0,33 — il middleware NON è inerte sui prompt vaghi. Numero di IMPATTO, non accuracy (la verità esterna resta il gate prod `meta.expanded`, T-9A4F7); artefatto `benchmarks/expand-ab-latest.json`.
 
 ## Best Practices per Agenti (Ottimizzazione L1)
 

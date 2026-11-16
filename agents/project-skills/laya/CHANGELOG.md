@@ -1,5 +1,17 @@
 # Changelog — laya (System 1 Service)
 
+## [1.13.0] - 2026-11-16
+
+### Added
+
+- Bullet «A/B preliminare middleware» + capability `make expand-ab-probe` (nodo ab1, T-9A4F7 metà d'impatto): runner `scripts/expand_ab_probe.py` — candidati dal corpus congelato giudicati con la regola reale di `laya_service._expand_vague_prompt` (single-source, i non-innescati non costano nulla), bracci OFF/ON via `POST /systemone` single-pass con ON via System 2; flip_rate 0,35 e medio |Δmargin| 0,33 alla prima run reale (434 candidati, 40 innescati, 2026-11-16). Esiti onesti 2/3 mai green silenziosi; dichiarazione IMPATTO-non-accuracy nel report; artefatto `benchmarks/expand-ab-latest.json` consumabile dal gate T-A57AA. 15 contratti fixture-driven senza servizio né GPU. [sync:safe]
+
+## [1.12.0] - 2026-11-16
+
+### Added
+
+- Bullet «Blind-eval» + capability `make blind-eval` (nodo h4h, metà ingegneristica di T-08CA8): runner `scripts/blind_eval.py` su set umano `benchmarks/blind-set.jsonl` via `POST /systemone`, soglia mean(1/k)+ε importata da `analyze_telemetry` (single-source), esiti onesti (NOT-MEASURED senza set / exit 2 schema / exit 1 sotto soglia), artefatto `benchmarks/blind-eval-latest.json` preposto al gate T-A57AA. 14 contratti fixture-driven senza servizio né GPU. L'authoring dei ≥50 casi resta umano: fino ad allora il gate misura nulla, dichiarandolo. [sync:safe]
+
 ## [1.11.0] - 2026-11-15
 
 ### Added
