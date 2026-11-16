@@ -28,6 +28,25 @@ set -euo pipefail
 
 die() { echo "agent-commit: $*" >&2; exit 1; }
 
+# Restituisce gli elementi del file-soggetti $1 non coperti dalla allow-list $2,
+# dove ogni voce della lista e' un path esatto OPPURE un prefisso di directory
+# (allow-list "docs/newleads/outreach" ammette i file sotto di essa — bug scoperto
+# al dogfood brainbeez 2026-11-16: la guardia esatta bloccava i commit di batch).
+fuori_lista() {
+  local subj="$1" allow="$2" f a ok
+  while IFS= read -r f; do
+    if [[ -z "$f" ]]; then continue; fi
+    ok=0
+    while IFS= read -r a; do
+      if [[ -z "$a" ]]; then continue; fi
+      a="${a%/}"
+      if [[ "$f" == "$a" || "$f" == "$a/"* ]]; then ok=1; break; fi
+    done < "$allow"
+    if [[ $ok -eq 0 ]]; then printf '%s\n' "$f"; fi
+  done < "$subj"
+  return 0
+}
+
 usage() {
   sed -n '2,28p' "$0" | sed 's/^# \{0,1\}//'
 }
@@ -85,7 +104,7 @@ git add -A -- "${PATHS[@]}"
 # Guardia PRE: sullo staged non deve esserci nulla fuori allow-list.
 printf '%s\n' "${PATHS[@]}" | sort -u > "$TMP/allow"
 git diff --cached --name-only | sort -u > "$TMP/staged"
-unexpected="$(comm -23 "$TMP/staged" "$TMP/allow")"
+unexpected="$(fuori_lista "$TMP/staged" "$TMP/allow")"
 [[ -z "$unexpected" ]] || die "GUARDIA PRE: staged fuori allow-list:
 $unexpected"
 
@@ -98,7 +117,7 @@ if [[ ${#EXTRA[@]} -gt 0 ]]; then
 else
   cp "$TMP/allow" "$TMP/whitelist"
 fi
-stray="$(comm -23 "$TMP/committed" "$TMP/whitelist")"
+stray="$(fuori_lista "$TMP/committed" "$TMP/whitelist")"
 if [[ -n "$stray" ]]; then
   echo "AUDIT POST: il commit $(git rev-parse --short HEAD) contiene path inattesi:" >&2
   echo "$stray" >&2
@@ -115,7 +134,7 @@ echo "agent-commit: OK $(git rev-parse --short HEAD) — ${nfiles} file, index c
 # 2026-11-16). Rimetto in parità i SOLI path committati (work-tree == nuovo HEAD);
 # mai `git reset` su repo condiviso: cancellerebbe le entry stageate dagli altri.
 # shellcheck disable=SC2086
-env -u GIT_INDEX_FILE git update-index --add --remove -- "${PATHS[@]}"
+env -u GIT_INDEX_FILE git add -A -- "${PATHS[@]}"
 
 if [[ "$PUSH" -eq 1 ]]; then
   local_sha="$(git rev-parse HEAD)"

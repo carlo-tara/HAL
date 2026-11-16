@@ -8,6 +8,9 @@
 
 - Comando L0 `commit` **1.1.1** (fix scoperta al dogfood dello 1.1.0, stesso giorno): dopo il commit su index privato, l'index CONDIVISO restava al vecchio HEAD; un `git commit` ingenuo di una sessione parallela lo avrebbe committato come revert-fantasma dei path appena pubblicati. Lo script chiude ora con `env -u GIT_INDEX_FILE git update-index --add --remove -- <P>` (parità sui soli path committati, mai `reset` su repo condiviso); contratto esteso con asserzione statica + funzionale (dopo il commit, il path committato non deve risultare staged vs HEAD). [sync:safe]
 
+- Comando L0 `commit` **1.1.2** (seconda fix al dogfood, stessa catena: esecuzione brainbeez D): le guardie pre/post confrontavano staged/committed con la allow-list per uguaglianza ESATTA ⇒ un path-directory in allow-list («docs/newleads/outreach») faceva scattare «GUARDIA PRE» su tutti i suoi file (falso positivo, riprodotto). Guardie ora prefix-aware (path esatto o prefisso directory); realineamento finale dell'index condiviso passato da `update-index --add` (rifiuta le directory: «is a directory - add files inside instead») a `git add -A`; contratto esteso con caso funzionale directory + assert sul primitivo `env -u GIT_INDEX_FILE` (non sull'implementazione). Scoperta collaterale: `[[ ]] && cmd` dentro funzione con `set -e` ammazza silenziosamente il command-substitution ⇒ condizioni interne ora `if…fi`. [sync:safe]
+
+
 ## [1.13.3] - 2026-11-09
 
 ### Added

@@ -25,8 +25,8 @@ grep -q "ls-remote" "$CMD" \
 #     dopo il commit su index privato, i path committati non devono restare "staged"
 #     contro il nuovo HEAD (un commit ingenuo altrui committerebbe il vecchio index).
 if [[ -f "$SH" ]]; then
-  grep -q "update-index" "$SH" \
-    || { echo "FAIL: agent-commit.sh non riallinea l'index condiviso (update-index)" >&2; fail=1; }
+  grep -qE "env -u GIT_INDEX_FILE git (add|update-index)" "$SH" \
+    || { echo "FAIL: agent-commit.sh non riallinea l'index condiviso post-commit" >&2; fail=1; }
 fi
 
 # 2) Lo script esiste, è eseguibile e parsato.
@@ -64,6 +64,16 @@ if [[ -x "$SH" && $fail -eq 0 ]]; then
     if echo "$(git diff --cached --name-only)" | grep -qx "mine.txt"; then
       echo "FAIL: index condiviso non riallineato (mine.txt ancora staged vs HEAD)" >&2; exit 1
     fi
+    # caso directory (scoperta 2026-11-16, brainbeez D): allow-list che passa una
+    # DIRECTORY deve ammettere gli staged sotto quel prefisso, non far scattare la guardia
+    mkdir -p batch_dir
+    echo one > batch_dir/one.txt
+    echo two > batch_dir/two.txt
+    printf 'feat: batch di directory\n' > msg2.txt
+    bash "$SH" -m msg2.txt -- batch_dir >/dev/null || { echo "FAIL: guardia Pre su allow-list a directory" >&2; exit 1; }
+    committed2="$(git show --name-only --format= HEAD | sed '/^$/d' | sort)"
+    echo "$committed2" | grep -qx "batch_dir/one.txt" || { echo "FAIL: batch dir — one.txt mancante" >&2; exit 1; }
+    echo "$committed2" | grep -qx "batch_dir/two.txt" || { echo "FAIL: batch dir — two.txt mancante" >&2; exit 1; }
     staged="$(git diff --cached --name-only)"
     echo "$staged" | grep -qx "foreign.txt" \
       || { echo "FAIL: index condiviso manomesso (foreign non più stageato)" >&2; exit 1; }
