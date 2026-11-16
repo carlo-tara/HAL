@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.6.18] - 2026-11-16
+
+### Added
+
+- `references/tool-pitfalls.md` §«Sessioni parallele sullo stesso repo»: **seconda evidenza AGG-10 nella direzione simmetrica** (commit che assorbe lo staged altrui — brainbeez release 0.14.0, mirror commit con 9 file WIP parallelo) + nuova regola «revert fantasma da commit out-of-band» (l'index privato lascia il condiviso al vecchio HEAD: riallineare con `update-index`/`--cacheinfo` sui soli path committati, mai `reset`) + puntatore alla contromisura canonica `agent-commit.sh` (L0 `/commit` 1.1.0/1.1.1, HAL 2cdcc33/d22ceaf, stessa data). Nota di trasparenza: il worktree aveva un ripristino stale di questa sezione (rimuoveva l'evidenza #34 già committata in aa74375) — il blob è costruito da `git show HEAD` senza assorbirlo, come da regola della sezione stessa. [sync:safe]
+
 ## [1.6.17] - 2026-11-16
 
 ### Changed
