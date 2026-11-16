@@ -94,3 +94,8 @@ seed-data:
 - Se dual-canon **non** applicabile: lascia `check-parity` / `sync-assets` come `@true` o rimuovili e documenta in L2
 - Flag env: helper tipo `envFlagEnabled` — mai `Boolean(process.env…)` (vedi competenza `platform-api`)
 - `ready-for-review` è il gate **sustainable-pace** — non rimuovere senora motivo documentato
+- Runner in container: disattivare il **sync implicito** delle dipendenze a ogni invocazione effimera (uv: `UV_NO_SYNC=1` nell'env del service; cache dei pacchetti su volume nominale) — costo misurato 3–9 s × decine di gate. Il sync esplicito (`make sync`) va eseguito sul **container persistente** dei gate (`exec`): in `run --rm` le modifiche al venv evaporano col contenitore (green silently rotto dopo un cambio di dipendenze; dimenticanza = ImportError visibile, non silenzio).
+- La build dell'immagine dev'essere **pinnata al lockfile** (`COPY` di uv.lock/package-lock.json + sync sul lock): risoluzione fresca a ogni build = deriva silenziosa fra immagine, lock committato e host.
+- Lane di test parallele (es. backend ‖ frontend): lock per lane (`LOCK_*` dedicati) + un lock ombrello solo per chi crea contenitori; exit reali letti da file `.ec` scritti dalle lane (`sh -c '…; echo $? > lane.ec'`), mai dalla pipe (L1 «Verità del gate»); log completi fuori contesto (file) e in stdout solo i riepiloghi — che devono esserci anche su pipe (L1 §Quiet, punto 3).
+- Prevedere un target di loop mirato (es. `test-file F=<spec>`) **senza** runner parallelo: l'avvio dei worker è costo fisso che paga solo sulla suite completa; la suite intera resta il gate finale (ready/pre-push), non il ciclo RED→GREEN.
+

@@ -5,6 +5,12 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.10.5] - 2026-11-16
+
+### Added
+
+- Promozione `/sync <` [sync:safe] da L2 harness-brainbeez 1.5.33 (catena brainbeez S131-bis/S132, 2026-11-16, su ordine owner «porta 1 2 3 4 5 a L1»): policy **«Costo del gate (policy L1)»** in SKILL.md (sync implicito nei container effimeri, `make sync` sul container persistente, build pinnata al lockfile, fixture template+clone per worker, lane parallele con exit `.ec`, loop TDD mirato senza runner parallelo); corollario **«stdout=file»** alla policy Verità del gate (runner TTY-adaptive: pytest `-qq` sopprime il riepilogo, reporter `dot` di node senza totali su non-TTY → `spec`; discriminare runner da pipeline con redirect dentro il container); §Quiet test execution punti 3–4 in `harness-extended.md`; quattro Note in `makefile-template.mk` (container persistente, lockfile in build, lane `.ec`, test-file). Contratto RGR: `product/contracts/check-gate-hygiene.sh` (RED 8/8 assenze → GREEN, coverage dichiarata 8 asserzioni, guard anti vacuous-pass sui file). Misure d'evidenza: `uv run` 11,0s→2,6s; suite api 5'15"→76"; `make test-unit` ≈7'→1'18" (brainbeez 0.13.3, commit 0eb9217).
+
 ## [1.10.4] - 2026-11-09
 
 ### Changed

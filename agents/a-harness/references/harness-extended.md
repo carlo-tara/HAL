@@ -124,6 +124,13 @@ Per tutti i progetti gestiti da `a-harness`, l'esecuzione dei test (`make test-u
    - **Rate limit orario**: i test browser pesanti (Playwright, Gherkin E2E) sono differiti se rieseguiti entro 60 minuti da un esito verde (`DEFERRED: ran X mins ago (< 1h)`). Forzabile solo con `FORCE=1` o `--force`.
    - **Concurrency guard (Mutex)**: lockfile esclusivo basato su PID (`logs/.test-e2e.lock`) per impedire a pipeline o sotto-agenti paralleli di collidere eseguendo test E2E simultaneamente (`SKIP / CONCURRENT`).
 
+3. **Prova del verde su stdout non-TTY (`stdout=file`) — anti TTY-adaptive** (promossa da brainbeez S131/S132, 2026-11-16): quando la prova del gate è il log file, il reporter/quiet deve emettere il riepilogo anche su pipe:
+   - non duplicare `-q` tra config (`addopts`) e riga di comando: in pytest 9.2 `-qq` **sopprime** la riga «N passed» — gate apparentemente verde ma mai dimostrabile (osservato: summary presente sul terminale, assente nel log byte a byte, `od -c` alla mano);
+   - node:test: reporter `dot` non stampa i totali su stdout non-TTY → usare `spec` per i log dei gate;
+   - discriminare prima l'infrastruttura dal runner: un redirect **dentro** il container (fuori dal flusso multiplexato di `docker exec -T`) che perda il summary indica il runner, non la pipeline;
+   - l'exit code resta dai file `.ec` / `ec=$?`, mai dalla pipe (policy L1 «Verità del gate»).
+4. **Costo della fixture di isolamento** (promossa da brainbeez S132, 2026-11-16): se il fixture per-test costa più del test (osservato: `migrate()` ~400 ms × 595 test = suite a 5'15"), migrare/costruire un **template migrato una volta** per worker di sessione e clonare per-test (es. Postgres `CREATE DATABASE … TEMPLATE` ~20-30 ms). Guarda tecniche: nomi template unici per worker+uuid (sessioni concorrenti non si pestano), sgancio dei lettori residui prima del DROP (`pg_terminate_backend`) — un fd dimenticato tramuterebbe il cleanup in falsi fallimenti; concorrenza sul servizio condiviso già serializzata dove esiste (advisory lock).
+
 ### `/cycle`
 
 **Template Method / Hollywood Principle:** `/cycle` è lo **skeleton** fisso (slice → red → green → refactor → ready → flush); Make, hooks e permission-modes “chiamano” l’agente nei punti di estensione — non il contrario (Hollywood: _don’t call us, we’ll call you_). Le fasi TDD e le competenze on-demand sono i **hook** del template; non inventare un secondo loop fuori da questo skeleton.
