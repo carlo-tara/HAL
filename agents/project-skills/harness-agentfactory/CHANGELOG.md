@@ -1,5 +1,11 @@
 # Changelog — harness-agentfactory (L2)
 
+## [1.1.34] - 2026-11-16
+
+### Changed
+
+- Allineato a a-harness 1.10.5 (`extends-version` 1.10.2 → 1.10.5: «Costo del gate» + corollario «stdout=file», fcfbd88) e riallineo della catena L2 per la chiusura del gate `make test-unit` (version-chains trovava STALE il pin); nessuna modifica al delta L2. Chiusura debito dichiarato nel commit canonico 1.10.5, che verificava solo `pre-commit`. [sync:safe]
+
 ## [1.1.32] - 2026-10-31
 
 ### Changed

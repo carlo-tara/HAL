@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [Unreleased]
+
+### Added
+
+- Comando L0 `commit` **1.1.0** — sezione «Isolamento index (gare multi-sessione)» + script `scripts/agent-commit.sh`: `git commit` legge l'index CONDIVISO, quindi con sessioni parallele il commit assorbe i file altrui già stageati (evidenza: brainbeez release 0.14.0, 2026-11-16 — mirror commit con 9 file WIP parallelo) o arriva vuoto per reset altrui (AGG-10, già in tool-pitfalls). Il script: index privato `GIT_INDEX_FILE` seminato da `read-tree HEAD`, `flock` cooperativo, guardia pre (`staged ⊆ allow-list`), audit post (`committed ⊆ allow ∪ extra-hook`), push con verifica `ls-remote` + retry; fallback documentato: `git commit -F <msg> -- <pathspec>` + audit. Limiti dichiarati: protegge l'index non il work-tree (stesso file in due mani ⇒ write set disgiunti / `git worktree`). Contratto RGR: `product/contracts/check-harness-commit-index.sh` (RED 2026-11-16: 4 asserzioni + funzionale ⇒ GREEN, test dogfood in repo usa-e-getti con file alieno stageato). Nessuna SKILL.md toccata: la catena L1 resta su 1.13.3, `commit` è versionato sull'asse proprio del comando; [sync:safe] ⇒ riallineo figli opzionale (chiusura completa a bundle, precedenti 5e8d4d9/2f37faf). Specchi rigenerati via `link-workspace-skills.sh` (`.agents/skills/commit`, `.zed/prompts/commit.md`).
+
 ## [1.13.3] - 2026-11-09
 
 ### Added
