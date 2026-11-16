@@ -109,6 +109,14 @@ fi
 nfiles="$(wc -l < "$TMP/committed")"
 echo "agent-commit: OK $(git rev-parse --short HEAD) — ${nfiles} file, index condiviso non toccato"
 
+# Riallineamento: l'index CONDIVISO è rimasto al vecchio HEAD (il commit è avvenuto su
+# index privato). Se lo si lasciasse così, un `git commit` ingenuo di un'altra sessione
+# committerebbe l'index vecchio = revert fantasma del mio lavoro (scoperta al dogfood
+# 2026-11-16). Rimetto in parità i SOLI path committati (work-tree == nuovo HEAD);
+# mai `git reset` su repo condiviso: cancellerebbe le entry stageate dagli altri.
+# shellcheck disable=SC2086
+env -u GIT_INDEX_FILE git update-index --add --remove -- "${PATHS[@]}"
+
 if [[ "$PUSH" -eq 1 ]]; then
   local_sha="$(git rev-parse HEAD)"
   git push origin "HEAD:refs/heads/${BRANCH}" || die "push fallito (recupera a mano)"

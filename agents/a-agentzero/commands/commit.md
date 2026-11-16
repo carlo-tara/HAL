@@ -1,5 +1,5 @@
 ---
-version: 1.1.0
+version: 1.1.1
 ---
 
 # Pre-commit (L0)
@@ -35,7 +35,7 @@ Verificare che le modifiche siano pronte per il commit nel **repository corrente
 `git commit` legge **l'index condiviso** del repository, non «ciò che ho aggiunto io». Con più sessioni agente sullo stesso worktree si osservano le due facce della gara: il reset altrui azzera l'add mio (commit vuoto/parziale, AGG-10) e il mio commit assorbe i file altrui già stageati (recidiva brainbeez release 0.14.0, 2026-11-16: 9 file WIP parallelo finiti nel mirror commit). Protocollo:
 
 1. **Allow-list P**: decidere PRIMA i path esatti del proprio slice (delta-only); mai `git add -A` selvaggio su repo condiviso.
-2. **Commit con `scripts/agent-commit.sh`**: index privato (`GIT_INDEX_FILE` seminato da `git read-tree HEAD`), `flock` cooperativo, guardia pre-commit (`staged ⊆ P`), audit post-commit (`committed ⊆ P ∪ extra`), push con verifica `git ls-remote` (il «Everything up-to-date» bug: fidarsi solo del confronto remote-sha == local-sha, retry 1x). Gli hook git ereditano l'ambiente: un pre-commit che rigenera file (`git add` in hook) scrive nell'index privato — dichiararlo con `-a <path>`.
+2. **Commit con `scripts/agent-commit.sh`**: index privato (`GIT_INDEX_FILE` seminato da `git read-tree HEAD`), `flock` cooperativo, guardia pre-commit (`staged ⊆ P`), audit post-commit (`committed ⊆ P ∪ extra`), push con verifica `git ls-remote` (il «Everything up-to-date» bug: fidarsi solo del confronto remote-sha == local-sha, retry 1x). Gli hook git ereditano l'ambiente: un pre-commit che rigenera file (`git add` in hook) scrive nell'index privato — dichiararlo con `-a <path>`. In chiusura lo script riallinea l'index condiviso con `update-index` sui soli path committati: un commit out-of-band lascia l'index al vecchio HEAD e un `git commit` ingenuo altrui commetterebbe un revert-fantasma (scoperta al dogfood, 2026-11-16). Mai `git reset` su repo condiviso: cancellerebbe lo staged altrui.
 3. **Fallback senza script**: `git commit -F <msg> -- <path>...` (pathspec-limited: impegna il work-tree dei propri path e ignora l'index altrui) + audit manuale `git diff-tree --no-commit-id --name-only -r HEAD ⊆ P`. Limite del fallback: legge il work-tree, quindi edit paralleli *sugli stessi file* restano un rischio.
 4. **Recupero dichiarato** se l'audit becca file inattesi: `git reset --soft HEAD^` (muove solo il ref; l'index condiviso altrui resta intatto) e ritentare con allow-list corretta. Mai `reset --hard` su repo condiviso.
 5. **Limiti residuali**: l'isolamento protegge l'index, non il work-tree. Stesso file in due mani ⇒ discipline a monte (write set disgiunti tra deleghe, o `git worktree` per sessione). Il `flock` serializza solo chi passa di qui: regola di adozione, non garanzia assoluta.

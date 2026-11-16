@@ -21,6 +21,14 @@ grep -q "GIT_INDEX_FILE" "$CMD" \
 grep -q "ls-remote" "$CMD" \
   || { echo "FAIL: manca la verifica del push (ls-remote) nel canonico" >&2; fail=1; }
 
+# 1b) Riallineamento index condiviso (anti revert-fantasma, scoperta al dogfood 2026-11-16):
+#     dopo il commit su index privato, i path committati non devono restare "staged"
+#     contro il nuovo HEAD (un commit ingenuo altrui committerebbe il vecchio index).
+if [[ -f "$SH" ]]; then
+  grep -q "update-index" "$SH" \
+    || { echo "FAIL: agent-commit.sh non riallinea l'index condiviso (update-index)" >&2; fail=1; }
+fi
+
 # 2) Lo script esiste, è eseguibile e parsato.
 [[ -x "$SH" ]] || { echo "FAIL: manca agents/a-agentzero/scripts/agent-commit.sh (o non è eseguibile)" >&2; fail=1; }
 if [[ -f "$SH" ]]; then
@@ -51,6 +59,10 @@ if [[ -x "$SH" && $fail -eq 0 ]]; then
     if echo "$committed" | grep -qx "foreign.txt"; then
       echo "FAIL: sweep — il file altrui stageato è finito nel MIO commit" >&2
       exit 1
+    fi
+    # anti revert-fantasma: l'index condiviso deve essere pari al nuovo HEAD sui MIEI path
+    if echo "$(git diff --cached --name-only)" | grep -qx "mine.txt"; then
+      echo "FAIL: index condiviso non riallineato (mine.txt ancora staged vs HEAD)" >&2; exit 1
     fi
     staged="$(git diff --cached --name-only)"
     echo "$staged" | grep -qx "foreign.txt" \
