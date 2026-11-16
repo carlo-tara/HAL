@@ -1,10 +1,34 @@
 # Changelog — learn
 
+## [1.6.15] - 2026-11-16
+
+### Changed
+
+- `references/tool-pitfalls.md`: §Writer canonico, bullet «Schema fisso, niente fusione» (hal_system1 rv10 2026-11-16: chiavi non passate azzerate, chiavi fuori schema cadono, `--dir` inesistente nel builder — contraddizione con la nota di fusione 2026-10-30 marcata da riverificare, non cancellata); §sh/dash, bullet heredoc-con-comando-dopo-EOF (3 run hal_system1 11-15/16 + rimedio script-in-file); §Batch edit_file, variante «batch abortito CON reflow» (esito tool ≠ contenuto applicato: sonda grep + `git diff -w`; celle solo via python anchor assertito); §CJK, estensione del rimedio (a) pre-scrittura dalle escapes JSON alle stringhe python di heredoc (2 occorrenze corrette prima della persistenza). Bump frontmatter via `agent-version.sh`; entry CHANGELOG integrata a mano con dichiarazione (lo script non tocca il CHANGELOG).
+
+## [1.6.14] - 2026-11-16
+
+### Added
+
+- `references/tool-pitfalls.md` nuova sezione «Sessioni parallele sullo stesso repo: index git condiviso e file di stato in gara» — promozione di AGG-10 via `/sync <` (evidenze: brainbeez S123 2026-11-15, staging selettivo via blob da HEAD trovato indipendentemente; brainbeez rv18 release 0.13.2 2026-11-16, index azzerato tra add e commit → regola `add && commit` in un'unica invocazione + verifica a risposta separata; /learn ! #33 2026-11-16, file HAL sovrascritto tra scrittura e verifica → non riaprire la corsa sul file). Contesto: §shell marcata «già canonica in HAL» (terza evidenza presente nel reference; il marker HOLD nel report `/sync <` era obsoleto). Entry CHANGELOG integrata a mano con dichiarazione — `agent-version.sh` bumpa solo il frontmatter (1.6.13→1.6.14).
+
+## [1.6.13] - 2026-11-16
+
+### Changed
+
+- Evidenze #33 in `references/tool-pitfalls.md` (frontmatter bumpato via `agent-version.sh` 1.6.12→1.6.13; entry CHANGELOG redatta a mano con dichiarazione: lo script non scrive l'entry — suo `cd` relativo — e una sessione parallela HAL ha sovrascritto il file tra la mia prima stesura e la verifica, caso live della classe §Tool call paralleli): §«Parametri numerici» occorrenze brainbeez rv18 resume+release 2026-11-16 (`read_file` range 2× `expected u32` identici al retry, `terminal timeout_ms=180000` 1× `expected u64` → omettere, default retto anche su gate+hook; nessuna regola nuova); §«Tool call paralleli» **quarta evidenza** cross-tool — verifica emessa nello stesso batch di una scrittura = falsi negativi ricorrenti (ImportError fantasma su helper `_queue.py` già su disco, `grep -c` 0 su righe appena appese, `awk` «not found» su entry appena aggiunta): mai ri-applicare l'edit sulla base di una verifica stesso-batch, e mai fidarsi del «successful» dello strumento: rilettura in risposta successiva; §«Shell sh/dash» **terza evidenza** `diff <(...)` sotto sh nel taglio chirurgico del CHANGELOG di release → file in /tmp, promozione già ammissibile. Fonte: rv18 N131–N136 + release 0.13.2 (brainbeez /learn ! #33). Candidati ToDo HOLD AGG-10 (git index condiviso multi-sessione: `add && commit` atomico + blob chirurgico mixed-[Unreleased]) e AGG-11 (voto MCP: `auto_vote_commit.py` no-vote su hash da `laya_choice` ⇒ `laya_outcome(expected=…)`) — evidenza singola, non in HAL.
+
+## [1.6.12] - 2026-11-15
+
+### Changed
+
+- Evidenze/varianti #32 in `references/tool-pitfalls.md`: §«Parametri numerici» occorrenze brainbeez 2026-11-15 (`read_file` range ~5×, `timeout_ms` 1×, `head_lines`/`tail_lines` 2× — nessuna regola nuova); §«Batch `edit_file` non atomico» **variante format-on-save** (lo strumento ri-wrappa il proprio `new_text` nello stesso turno: àncore dei follow-up da rileggere dal file, mai dalla stringa inviata); §«Tool call paralleli» terza evidenza brainbeez + variante red transiente mid-save di sessione terza (ri-eseguire prima di attribuire); §«Frammenti CJK» **sottoclasse byte: BOM U+FEFF invisibile agli sweep CJK/mojibake** → `od -c`/grep `EF BB BF` sulle righe toccate da inserzioni in header di stato, e nota sugli sweep con token CJK intenzionali tra virgolette (conteggio dichiarato, non azzerato). Fonte: audit codebase + catena S114 (brainbeez /learn ! #32).
+
 ## [1.6.11] - 2026-11-14
 
 ### Changed
 
-- Evidenze #30 in `references/tool-pitfalls.md`: §«Parametri numerici» occorrenze brainbeez 2026-11-12 (`read_file` range 2×, `timeout_ms` 2× — nessuna regola nuova); §«Tool call paralleli» variante **doppio side-effect identico** (stesso comando con effetto emesso due volte in un blocco parallelo → deployment gemello REMOVED; audit via `railway deployment list`). Fonte: catena header colonna 0.10.3 + chore .railway (/learn ! #30).
+- Evidenze #31 in `references/tool-pitfalls.md`: §«Parametri numerici» occorrenze brainbeez 2026-11-12 (`read_file` range 2×, `timeout_ms` 2× — nessuna regola nuova); §«Tool call paralleli» variante **doppio side-effect identico** (stesso comando con effetto emesso due volte in un blocco parallelo → deployment gemello REMOVED; audit via `railway deployment list`). Fonte: catena header colonna 0.10.3 + chore .railway (/learn ! #31).
 
 ## [1.6.10] - 2026-11-13
 

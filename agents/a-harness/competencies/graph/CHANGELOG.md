@@ -8,6 +8,12 @@ Formato Keep a Changelog + Semantic Versioning. Tag sync sul padre `a-harness`.
 
 - Rimossi riferimenti a Cursor nei percorsi: `.cursor/skills/` → `.agents/skills/`, `.cursor/product/` → `product/`, `.cursor/brands/` → `brands/`. Versioni: `graph` 1.3.2 [sync:safe]
 
+## [1.4.3] - 2026-11-16
+
+### Fixed
+
+- `references/graph-extended.md`: esempio `handoff-write graph` — `--dir` (flag inesistente: «unknown arg», builder attuale) → `--out product/state/handoff-graph.json` + campo `files`; canone era già corretto in `graph/SKILL.md`, drift extended confermato su 2 progetti (brainbeez 2026-10-27, hal_system1 rv10 2026-11-16). Nota «handoff-write fonde i campi» sostituita da «schema fisso, niente fusione» con segnalazione di contraddizione rispetto all'osservazione 2026-10-30 (da riverificare). Bump via agent-version.sh, entry a mano con dichiarazione. Versione: graph 1.4.3 [sync:safe]
+
 ## [1.4.2] - 2026-10-30
 
 ### Added

@@ -28,8 +28,8 @@ Orchestrazione (flag strip, next pointer, handoff) = **deterministica** — non 
    `bash scripts/harness-prompt-builder.sh render --max-tokens 200 --set goal='…' --set source='context|file|request' -- " /graph source={source} goal={goal}. Emit work-graph + handoff only."`
 2. **Niente dump** — non incollare transcript, `ToDo.md` intero, né `work-graph.md` completo nel prompt; passa solo titoli/P0–P1 o il nodo `next`.
 3. **Handoff compatto** — dopo Write, aggiorna `product/state/handoff-graph.json`:
-   `bash scripts/harness-prompt-builder.sh handoff-write graph --dir product/state --field node_id=… --field next=… --field y=true|false --field brief='…'`
-   (il `--dir` è obbligatorio: il default del tool è `product/` e genera shadow copy fuori canone — caso 2026-10-27, vedi `learn/references/tool-pitfalls.md` § Writer canonico; `handoff-write` **fonde i campi**: `date`, `brief` e `acceptance` non passati restano dalla scrittura precedente → passare sempre `--field date=YYYY-MM-DD` e i campi semantici aggiornati, caso 2026-10-30: handoff-todo conservava il brief di rv5)
+   `bash scripts/harness-prompt-builder.sh handoff-write graph --out product/state/handoff-graph.json --field files=ToDo.md --field node_id=… --field next=… --field y=true|false --field brief='…'`
+   (da consumer passare **sempre** `--out product/state/handoff-graph.json`: il default si risolve dalla root HAL e genera shadow copy — caso 2026-10-27; il flag `--dir` NON esiste nel builder: «unknown arg». **Schema fisso, niente fusione** (rv10 2026-11-16; osservazione in contraddizione con la «fonde i campi» del 2026-10-30, da riverificare): le chiavi di schema non passate tornano stringa vuota e le chiavi fuori schema (`date`, `source`) cadono → passare ogni campo semantico utile nella stessa invocazione; la data è `ts`, auto-compilato)
 4. **Multi-cycle (`-y`)** — ogni nodo: leggi **solo** `handoff-graph.json` + riga nodo in `work-graph.md`; non riaprire il contesto chat della `/graph` iniziale.
 
 ## Pipeline (`/graph`)
