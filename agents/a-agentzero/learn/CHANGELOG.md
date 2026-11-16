@@ -1,5 +1,13 @@
 # Changelog — learn
 
+## [1.6.17] - 2026-11-16
+
+### Changed
+
+- `references/tool-pitfalls.md`: §Output lunghi, nuovo bullet «Evidenza numerica in artefatti persistenti ≠ display» (hal_system2 `/graph -y` rv8 N31: rate 0,788 e 1.460 voti scritti in ToDo/grafo da output troncato/mescolato fra finestre — reali 0,999 su 1.038 voti e 6 voti; corretta solo con rimisurazione in container, /learn ! #34); §sh/dash, variante `docker exec` senza `-i` (heredoc scartato → exit 0 con output vuoto, fallimento silenzioso; canone: script in `/tmp` + `docker cp` + `-e PYTHONPATH=/app`, one-liner `python3 -c`); §Batch edit_file, ribadita la variante «esito ≠ applicato» (reflow padding-only su work-graph con `git diff -w` vuoto; àncora ricostruita a memoria fallita — evidenza della regola già canonica); §Parametri numerici, evidenza #34 (`read_file` range 4× `expected u32` → `sed -n`; `timeout_ms` 1× `expected u64` → omesso; nessuna regola nuova).
+- `references/learn-guidelines.md`: nuova regola 9 di scrittura «Evidenza numerica — verbatim o rimisura» (operazionalizza il lato scrittura della voce «Escludi: metriche non verificate»: citare solo dal risultato tool che ha prodotto il numero nella stessa chiamata, altrimenti rimisurare bounded).
+- Nota di trasparenza: al momento di questo `/learn !` il frontmatter era già 1.6.16 senza entry omonima in CHANGELOG (bump di sessione parallela non riverificato qui); `agent-version.sh bump patch` ha portato 1.6.16→1.6.17. Entry redatta a mano con dichiarazione — lo script non tocca il CHANGELOG.
+
 ## [1.6.15] - 2026-11-16
 
 ### Changed
