@@ -47,11 +47,15 @@ class TestGatePassivoRilascio(unittest.TestCase):
         self.assertIn("misura diretta", text)
 
 
-class TestHandoffFondeCampi(unittest.TestCase):
-    def test_extended_contiene_regola_fusione_campi(self) -> None:
+class TestHandoffSchemaFisso(unittest.TestCase):
+    """rv10 (2026-11-16): la nota «fonde i campi» del 2026-10-30 è stata
+    sostituita da «Schema fisso, niente fusione» — chiave `date` fuori schema
+    che cade; il guard blocca l'esempio vecchio per non reintrodurla."""
+
+    def test_extended_contiene_regola_schema_fisso(self) -> None:
         text = EXTENDED.read_text(encoding="utf-8")
-        self.assertIn("fonde i campi", text)
-        self.assertIn("--field date=YYYY-MM-DD", text)
+        self.assertIn("Schema fisso, niente fusione", text)
+        self.assertNotIn("--field date=YYYY-MM-DD", text)
 
 
 class TestVerificaTabelleReRun(unittest.TestCase):
@@ -66,9 +70,9 @@ class TestVerificaTabelleReRun(unittest.TestCase):
 
 
 class TestVersioniBump(unittest.TestCase):
-    def test_competenza_1_4_2_e_changelog(self) -> None:
-        self.assertIn("version: 1.4.2", COMPETENCY.read_text(encoding="utf-8"))
-        self.assertIn("[1.4.2]", COMPETENCY_CL.read_text(encoding="utf-8"))
+    def test_competenza_1_4_3_e_changelog(self) -> None:
+        self.assertIn("version: 1.4.3", COMPETENCY.read_text(encoding="utf-8"))
+        self.assertIn("[1.4.3]", COMPETENCY_CL.read_text(encoding="utf-8"))
 
     def test_l0_1_0_4_e_changelog(self) -> None:
         self.assertIn("version: 1.0.4", L0.read_text(encoding="utf-8"))

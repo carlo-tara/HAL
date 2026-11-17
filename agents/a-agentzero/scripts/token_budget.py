@@ -37,6 +37,40 @@ SESSION_FILE = EVENTS_DIR / "token-budget-session.json"
 DEFAULT_OUTPUT_TARGET = 500  # token max output per sessione
 DEFAULT_CONTEXT_TARGET = 50000  # token max context caricato
 DEFAULT_S1_S2_RATIO = 3.0  # rapporto minimo S1:S2
+# Soglie dei gate strutturali (env-override per chiamata, default = protocollo
+# SKILL.md):   TOKEN_BUDGET_LAZY_MAX_LINES — lettura completa oltre questa
+# soglia di righe è una violazione del lazy-load (regola "mai file interi
+# > 100 righe").   TOKEN_BUDGET_S1_GATE — 1 (default): ogni s2_call senza
+# almeno una s1_call nella sessione registra la violazione del gate System 1
+# pre-System 2.
+
+
+def _lazy_max_lines():
+    try:
+        return max(1, int(os.environ.get("TOKEN_BUDGET_LAZY_MAX_LINES", "100")))
+    except ValueError:
+        return 100
+
+
+def _s1_gate_enabled():
+    return os.environ.get("TOKEN_BUDGET_S1_GATE", "1").strip().lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
+
+
+def _auto_violation(session, vtype):
+    """Violazione registrata dal gate, non dall'operatore: stesso canale
+    delle violazioni manuali (sessione + evento JSONL)."""
+    session["violations"].append(vtype)
+    _append_event("violation", {
+        "type": vtype,
+        "auto": True,
+        "total": len(session["violations"]),
+    })
+
 
 
 def _ensure_events_dir():
@@ -126,6 +160,10 @@ def cmd_log(args):
 
     elif event_type == "s2_call":
         session["s2_calls"] += 1
+        if _s1_gate_enabled() and session["s1_calls"] == 0:
+            # Strategia S1-as-gate: la sessione usa System 2 senza mai
+            # triage-are con System 1 (telemetria 2026-11: s1_s2_ratio 0.0).
+            _auto_violation(session, "s1_skipped_before_s2")
         _append_event("s2_call", {"count": session["s2_calls"]})
 
     elif event_type == "file_read" and len(args) >= 3:
@@ -133,6 +171,11 @@ def cmd_log(args):
         lines = int(args[2])
         session["files_read"] += 1
         session["total_lines_read"] += lines
+        if lines > _lazy_max_lines():
+            # Lazy-load strutturale: la lettura completa di un file oltre
+            # soglia è la violazione che il protocollo già vieta (opt-out via
+            # lettura a sezioni + log lazy_load).
+            _auto_violation(session, f"file_read_full_over_limit:{path}:{lines}")
         _append_event("file_read", {"path": path, "lines": lines})
 
     elif event_type == "diff_read" and len(args) >= 2:
