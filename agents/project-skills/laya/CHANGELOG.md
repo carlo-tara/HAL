@@ -1,5 +1,16 @@
 # Changelog — laya (System 1 Service)
 
+## [2.0.0] - 2026-11-17
+
+### Added
+
+- **S1 Boundary hints**: `mcp_laya.BOUNDARY_RULES` inietta la regola di discriminate nelle istruzioni di entrambe le passate quando due label confusibili (skill↔docs, feat↔refactor, …) sono entrambe tra le opzioni — la confusion matrix delle verità esterne (docs→skill 20, refactor→feat 16, escludi→skill 10) è un confine definitorio, non di tono. [sync:safe]
+- **S4 Verdetto end-to-end**: `laya_logger.update_verdict` persiste `recommendation`/`shortlist`/`passes`/`flipped` sulla riga di inferenza dal layer MCP (guard una-riga-un-verdetto, mai cache_hit, best-effort). Il DB misura ora il circuito S1→S2. [sync:safe]
+- **S3 KPI copertura top-2**: `analyze_telemetry.top2_coverage` sulle verità esterne + soglia `SHORTLIST_COVERAGE_FLOOR=0,80` nei gate alert con hint `LAYA_FAMILY_ESCALATION_OVERRIDES` — misura al 2026-11-16: 30–36%, il presupposto «top-2 quasi sempre contenente» è falsificato. [sync:safe]
+- **S5 Cache decision-family opt-in**: `LAYA_CACHE_NOTES_SIMILARITY` (default 0 = spento) + `LAYA_CACHE_NOTES_SCAN` abilitano il replay per similarità delle note con fingerprint questions identico; headroom stampato da `make telemetry`; righe `fresh` mai sorgente di replay. [sync:safe]
+- **S2 Voto routing automatizzato**: `scripts/auto_vote_routing.py` (verità esterna = file modificato, `source='routing'`, mai bloccante) + `--source` su `auto_vote_commit.py` + protocollo `/commit` 1.2.0 passo 1 (glosse di confine) e passo 7 (voto routing). [sync:safe]
+- **S7 A/B di modello**: `blind_eval` accetta `--model` e `--compare-models` (target `make blind-eval-models`, artefatto `blind-eval-model-ab.json`); telemetria report aggiunge le sezioni coverage/headroom. [sync:safe]
+
 ## [1.13.0] - 2026-11-16
 
 ### Added
@@ -69,7 +80,6 @@
 
 - Trasporto L2 per il voto implicito: `_read_completion` legge gli SSE frame-by-frame fino a `[DONE]`/`finish_reason` (l'orchestratore :8910 non chiude il socket dopo la risposta → `response.read()`Whole-body andava in timeout); validato live end-to-end: verdetto S2 registrato come outcome sulla riga d'inferenza (`smart_option` `incorrect`/`correction`).
 
-
 ## [1.7.1] - 2026-10-31
 
 ### Added
@@ -77,7 +87,6 @@
 - `laya_gate.py`: modulo canonico delle soglie e degli helper k-aware del gate — il gateway lo importa via symlink, CLI/tool/gateway condividono per costruzione le stesse soglie (niente più mirror manuale).
 - Sezione «votes by family» in `scripts/analyze_telemetry.py` (`make telemetry`): i verdetti calibrati sono raggruppati `noul` vs `decision-family` vs `other` — è l'accettazione della P1 di monitoraggio del gate (decision-family ≥ 20/settimana).
 - Voto implicito configurabile end-to-end: `SYSTEM2_URL`/`SYSTEM2_MODEL` in `hal_system1/.env` puntano l'orchestratore locale e `_extract_completion_text` tollera risposte JSON e SSE (`chat.completion.chunk`).
-
 
 ## [1.7.0] - 2026-10-31
 
@@ -90,7 +99,6 @@
 
 - Strategy C: la soglia non è più la `confidence` entropica (inaffidabile: media 0,34 con top1 0,79 a k=2) ma `margin`/`top1_prob`; `router.py routing/choice --json` espone `margin`, `top1_prob`, `recommendation`, `passes`, `request_hash`.
 - Voto implicito System 2: l'escalation di `smart_choice`/`smart_route` registra l'esito L2 su `/outcome` (`LAYA_IMPLICIT_VOTES=0` disattiva); `record_outcome` non sovrascrive verdetti esistenti (una inferenza = un voto).
-
 
 ## [1.5.1] - 2026-10-30
 
