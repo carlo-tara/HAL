@@ -1,7 +1,7 @@
 # Token Budget — Protocollo di riduzione token (L0)
 
-**Versione riferimento:** 1.0.0  
-**Data:** 2026-10-21  
+**Versione riferimento:** 1.1.0  
+**Data:** 2026-11-17 (1.0.0: 2026-10-21)  
 **Livello:** L0 (globale, non sovrascrivibile)
 
 ---
@@ -20,6 +20,19 @@ Ridurre l'output token degli agenti HAL senza perdere informazioni né qualità,
 | File per slice | ≤ 4 | Permission mode, waiver se >4 |
 | Diff letto | ≤ 150 righe | Tiering automatico |
 | Preambolo narrativo | 0 | Regola enforced |
+
+---
+
+## Schema eventi (dalla 1.1.0)
+
+Ogni riga di `events/token-budget.jsonl` porta: `ts`, `type`, `session` e i
+dati propri dell'evento. `session` = `session_id` (hex 16) generato da `init`
+in `events/token-budget-session.json`; è `null` per gli eventi scritti con
+sessioni create prima del campo (legacy). Coorte di una metrica = numero di
+valori distinti non-null di `session` filtrati per `type`, es.:
+
+    jq -r 'select(.type=="s2_call") | .session' events/token-budget.jsonl \
+      | sort -u | wc -l
 
 ---
 

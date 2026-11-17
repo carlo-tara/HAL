@@ -13,6 +13,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -106,6 +107,101 @@ class TokenBudgetGateTest(unittest.TestCase):
             self.assertEqual(auto[0]["total"], 1)
         finally:
             os.chdir(old_cwd)
+
+
+class TokenBudgetSessionIdTest(unittest.TestCase):
+    """Contratto A1/A2: `session_id` in init + campo `session` su OGNI evento.
+
+    Motiva: la coorte dell'esperimento `impersonate` (ToDo P1 hal_mcp_tools)
+    deve essere contabile per sessioni DISTINTE, non per cluster orari (proxy).
+    """
+
+    def setUp(self):
+        ctx = tempfile.TemporaryDirectory()
+        self.addCleanup(ctx.cleanup)
+        self.tmp = ctx.name
+
+    def _chdir(self):
+        old_cwd = os.getcwd()
+        os.chdir(self.tmp)
+        return old_cwd
+
+    def _events(self):
+        return [
+            json.loads(line)
+            for line in (Path("events") / "token-budget.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+
+    def test_init_genera_session_id_valido(self):
+        tb = _load_tb()
+        old = self._chdir()
+        try:
+            tb.cmd_init()
+            session = json.loads(
+                (Path("events") / "token-budget-session.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertRegex(session["session_id"], r"^[0-9a-f]{16}$")
+        finally:
+            os.chdir(old)
+
+    def test_log_stampa_session_su_ogni_evento(self):
+        tb = _load_tb()
+        old = self._chdir()
+        try:
+            tb.cmd_init()
+            sid = json.loads(
+                (Path("events") / "token-budget-session.json").read_text(
+                    encoding="utf-8"
+                )
+            )["session_id"]
+            tb.cmd_log(["s2_call"])
+            tb.cmd_log(["output", "120"])
+            events = self._events()
+            self.assertGreaterEqual(len(events), 2)
+            for e in events:
+                self.assertIn("session", e)
+                self.assertEqual(e["session"], sid)
+        finally:
+            os.chdir(old)
+
+    def test_due_sessioni_distinte_contano_due(self):
+        """Coorte esatta: due cicli init+log → esattamente 2 session id distinti."""
+        tb = _load_tb()
+        old = self._chdir()
+        try:
+            tb.cmd_init()
+            tb.cmd_log(["s2_call"])
+            tb.cmd_init()
+            tb.cmd_log(["s2_call"])
+            sids = {
+                e["session"] for e in self._events() if e.get("type") == "s2_call"
+            }
+            self.assertEqual(len(sids), 2)
+            self.assertTrue(all(re.fullmatch(r"[0-9a-f]{16}", s or "") for s in sids))
+        finally:
+            os.chdir(old)
+
+    def test_sessione_legacy_senza_id_degrada_a_none(self):
+        """A2: SESSION_FILE pre-bump (senza session_id) → log non crasha, `session` null."""
+        tb = _load_tb()
+        old = self._chdir()
+        try:
+            tb.cmd_init()
+            sfile = Path("events") / "token-budget-session.json"
+            legacy = json.loads(sfile.read_text(encoding="utf-8"))
+            legacy.pop("session_id", None)
+            sfile.write_text(json.dumps(legacy), encoding="utf-8")
+            tb.cmd_log(["s2_call"])
+            events = self._events()
+            last = events[-1]
+            self.assertIsNone(last["session"])
+        finally:
+            os.chdir(old)
 
 
 if __name__ == "__main__":

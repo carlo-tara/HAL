@@ -25,6 +25,7 @@ Uso:
 import json
 import os
 import sys
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -95,10 +96,16 @@ def _write_session(data):
 
 
 def _append_event(event_type, data):
-    """Aggiunge un evento al file JSONL."""
+    """Aggiunge un evento al file JSONL.
+
+    Ogni evento è attribuito alla sessione attiva (`session` = `session_id`
+    del SESSION_FILE; `null` per sessioni create prima del campo, così i
+    writer esistenti che leggono con .get() non si rompono).
+    """
     _ensure_events_dir()
     event = {
         "ts": datetime.now(timezone.utc).isoformat(),
+        "session": (_read_session() or {}).get("session_id"),
         "type": event_type,
         **data,
     }
@@ -109,6 +116,10 @@ def _append_event(event_type, data):
 def cmd_init():
     """Inizia una nuova sessione di tracciamento."""
     session = {
+        # id stabile di sessione: gli eventi JSONL lo riportano nel campo
+        # `session`, così una coorte (es. experiment gate) è contabile per
+        # sessioni distinte e non per proxy di orario
+        "session_id": uuid.uuid4().hex[:16],
         "started_at": datetime.now(timezone.utc).isoformat(),
         "s1_calls": 0,
         "s2_calls": 0,
@@ -126,7 +137,7 @@ def cmd_init():
         "context_saved_estimates": 0,
     }
     _write_session(session)
-    print(f"Sessione iniziata: {session['started_at']}")
+    print(f"Sessione iniziata: {session['session_id']} ({session['started_at']})")
     print(f"Log: {TOKEN_BUDGET_FILE}")
 
 
