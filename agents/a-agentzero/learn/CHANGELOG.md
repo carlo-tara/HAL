@@ -1,5 +1,17 @@
 # Changelog — learn
 
+## [1.6.19] - 2026-11-17
+
+### Changed
+
+- `references/tool-pitfalls.md` §«Tool call paralleli»: **nuova variante della classe** «batch intra-sessione con dipendenze interne» (catena brainbeez /impersonate → release 0.16.0, 2026-11-17) in forma composta — batch parallelo con dipendenze interne (producer/consumer su /tmp, errore taciuto da `2>/dev/null` + fallback `||`, bashism `<( )` fuori da `bash -c`) + regola nuova **mai citare sha non ancora esistenti** (mirror con placeholder scartato con `reset --soft` prima del push; guardie autrici del blocco: script + pre-push). [sync:safe]
+
+### Added
+
+- `references/tool-pitfalls.md` §«Parametri numerici respinti come stringhe»: bullet sui formati taciuti dai helper — `auto_vote_routing --options` è **virgolettato**, spaziato ⇒ no-vote con exit 0; prima occorrenza della classe «exit 0 ≠ voto registrato». [sync:safe]
+
+Nota di trasparenza: il worktree portava ripristini stale di CHANGELOG e tool-pitfalls (rimuovevano 1.6.17/1.6.18) — blob costruito da `git show HEAD`, non assorbito, come prescrive la sezione «Sessioni parallele» del reference stesso.
+
 ## [1.6.18] - 2026-11-16
 
 ### Added
