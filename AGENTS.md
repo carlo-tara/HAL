@@ -32,7 +32,7 @@ L'utilizzo di OrcaRouter per ciascun agente è condizionato tramite tre parametr
 
 La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzato Zed (`.zed/prompts`, `.agents/skills`):
 
-- Eseguire sempre `bash agents/scripts/link-workspace-skills.sh` dopo aver aggiunto o modificato comandi o skill.
+- Eseguire sempre `bash agents/scripts/link-workspace-skills.sh` dopo aver aggiunto o modificato comandi o skill. La rigenerazione è ammessa **solo da hal_gateway**: lo script rifiuta (guardia realpath, «Guardia HAL») ogni scrittura che risolverebbe fuori dal workspace fisico — nei consumer che montano `.agents`/`.zed`/`agents` via symlink non va eseguito: il canonico si legge da `$HAL_ROOT` (path assoluto o MCP).
 - Lo script crea i link simbolici verso `.zed/prompts/`.
 
 ## Multi-sessione: worktree + branch per slice

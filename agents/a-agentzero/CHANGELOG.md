@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.10] - 2026-11-18
+
+### Added
+
+- Guardia anti-collisione (de-racing step 1) in `scripts/link-workspace-skills.sh`: preflight su `.agents`, `.zed/prompts`, `product/adapters` e verifica su ogni singola destinazione — il path reale (realpath con camminata per componenti, fail sui symlink dangling) deve restare dentro il workspace fisico; altrimenti «Guardia HAL» e exit 1 PRIMA di qualunque scrittura. Due varietà per tipo di scrittura: foglia per i writer di contenuto (python `open('w')`, `rm -f`+ricreazione, `mkdir -p`) e contenitore per `ln -sfn` (sostituire un vecchio mount con un link locale è l'uso legittimo). `deploy-all.sh` e `a-seozoom/deploy.sh` ereditano la guardia (delegano allo script). Evidenze: le tre topologie di mount osservate sul campo (symlink totale `.agents`, wrapper-skill in fuga, `.zed` condivisa) e il Red proof con script di HEAD: senza guardia un consumer esce 0 e scrive `.agents/commands/` nel tree di gateway. Test: `tests/test_link_workspace_skills_guard.py` (5 casi: canonico verde+idempotente, rifiuto con tree intatto ×3, scrittura locale ammessa). AGENTS.md recepisce: rigenerazione ammessa solo da hal_gateway.
+
 ## [1.13.9] - 2026-11-18
 
 ### Added
@@ -10,7 +16,6 @@
 
 - Regola 14 estesa fino a git: il flush riuscito su master è transazione che si chiude nello stesso turno con commit+push dei soli file toccati; `commands/todo.md` e AGENT-PROTOCOL §Multi-sessione recepiscono (evidenza hal_system2: chiusura T1-03 flushata-non-committata ≈ 15 chiamate di forensics+rebase il giorno dopo).
 - Regole 15-16 in `references/worktree-land.md` (confine di slice = contratto; foto di apertura del turno); AGENT-PROTOCOL: nuovo § «Layout canonico» (topologia HAL.git app+registry, symlink consumer, `.wt/`); conteggio regole 13→16 allineato nei due riferimenti.
-
 
 ## [1.13.8] - 2026-11-18
 

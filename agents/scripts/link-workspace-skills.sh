@@ -18,6 +18,88 @@ AGENT_IDS=(
 )
 L0_COMMANDS=(version document review improve commit todo slice cycle graph)
 
+# --- Guardia anti-collisione (de-racing) -------------------------------------
+# Un consumer che monta l'albero di hal_gateway (.agents/.zed via symlink,
+# wrapper-skill in fuga) NON deve mai rigenerare qui: ogni scrittura
+# atterrerebbe nel working tree condiviso dell'altro repo (gare cross-sessione
+# + git sporco cross-repo). Regola: il percorso reale di OGNI destinazione
+# (realpath strict, che fallisce sui symlink rotti) deve restare dentro il
+# workspace fisico. Due varietà, secondo la scrittura:
+#   - foglia: i writer di CONTENUTO (python open 'w', rm -f + ricreazione,
+#     mkdir -p) seguono i symlink → si valuta il path completo;
+#   - contenitore: `ln -sfn` sostituisce la VOCE link, non ciò a cui punta →
+#     si valuta la directory contenitrice (sostituire un vecchio mount con un
+#     link locale è l'uso legittimo, non una collisione).
+# WORKSPACE_ROOT fisico risolto lazy a ogni chiamata: i test source-ano lo
+# script e sovrascrivono WORKSPACE_ROOT prima di invocare le funzioni.
+workspace_phys() {
+  ( cd "${WORKSPACE_ROOT}" 2>/dev/null && pwd -P )
+}
+
+resolve_real() {
+  # Dove finirebbe fisicamente una scrittura su $1: risolve il primo
+  # componente esistente (realpath) e riapplica il resto del path.
+  # Fallisce (exit 1) SOLO su symlink dangling o file usato come directory:
+  # in quei casi non è prevedibile dove scriverrebbe mkdir/open.
+  python3 -c '
+import os, sys
+path = os.path.abspath(sys.argv[1])
+rest = []
+anchor = path
+while not (os.path.islink(anchor) or os.path.exists(anchor)):
+    head, tail = os.path.split(anchor)
+    if head == anchor:
+        break
+    rest.insert(0, tail)
+    anchor = head
+if os.path.islink(anchor) and not os.path.exists(anchor):
+    sys.exit(1)
+if os.path.isdir(anchor) or (os.path.isfile(anchor) and not rest):
+    real = os.path.realpath(anchor)
+else:
+    sys.exit(1)
+print(os.path.join(real, *rest) if rest else real)
+' "$1" 2>/dev/null
+}
+
+require_inside_workspace() {
+  local path="$1" phys ws_phys
+  ws_phys="$(workspace_phys)" || {
+    echo "Guardia HAL: workspace non raggiungibile: ${WORKSPACE_ROOT}" >&2
+    return 1
+  }
+  if ! phys="$(resolve_real "${path}")"; then
+    echo "Guardia HAL: ${path} è irraggiungibile (symlink rotto o target inesistente)" >&2
+    return 1
+  fi
+  if [[ "${phys}" != "${ws_phys}" && "${phys}" != "${ws_phys}/"* ]]; then
+    echo "Guardia HAL: la destinazione ${path} risolve fuori dal workspace:" >&2
+    echo "  workspace reale: ${ws_phys}" >&2
+    echo "  scrittura reale: ${phys}" >&2
+    echo "Questo progetto monta l'albero di un altro repo (symlink verso hal_gateway?)." >&2
+    echo "Esegui la rigenerazione SOLO da hal_gateway; nei consumer il canonico si legge" >&2
+    echo 'da $HAL_ROOT (path assoluto o MCP), non si rigenera.' >&2
+    return 1
+  fi
+}
+
+require_inside_workspace_container() {
+  require_inside_workspace "$(dirname "$1")"
+}
+
+preflight_destination_roots() {
+  local root
+  for root in \
+    "${WORKSPACE_ROOT}/.agents" \
+    "${WORKSPACE_ROOT}/.agents/skills" \
+    "${WORKSPACE_ROOT}/.agents/commands" \
+    "${WORKSPACE_ROOT}/.zed/prompts" \
+    "${WORKSPACE_ROOT}/product/adapters/agents" \
+    "${WORKSPACE_ROOT}/product/adapters/commands"; do
+    require_inside_workspace "${root}" || exit 1
+  done
+}
+
 link_path() {
   local source="$1" target="$2" destination="$3"
   if [[ ! -e "${source}" ]]; then
@@ -28,6 +110,8 @@ link_path() {
     echo "Refusing to replace existing non-symlink: ${destination}" >&2
     return 1
   fi
+  # ln -sfn sostituisce la voce di link: basta che il CONTENITORE sia locale.
+  require_inside_workspace_container "${destination}" || return 1
   mkdir -p "$(dirname "${destination}")"
   ln -sfn "${target}" "${destination}"
 }
@@ -38,6 +122,7 @@ link_zed_prompt() {
     echo "Missing source: ${source}" >&2
     return 1
   fi
+  require_inside_workspace "${target}" || return 1
   mkdir -p "$(dirname "${target}")"
   rm -f "${target}"
   python3 -c "
@@ -69,6 +154,7 @@ link_zed_skill() {
   local skill_dir="${WORKSPACE_ROOT}/.agents/skills/${name}"
   local version
   version="$(command_version "${source}")"
+  require_inside_workspace "${skill_dir}/SKILL.md" || return 1
   mkdir -p "${skill_dir}"
   python3 -c "
 import re
@@ -89,6 +175,9 @@ with open('${skill_dir}/SKILL.md', 'w', encoding='utf-8') as f:
 if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
   return 0
 fi
+
+# Stop prima di qualunque scrittura: mai rigenerare dentro un mount altrui.
+preflight_destination_roots
 
 for agent in "${AGENT_IDS[@]}"; do
   link_path "${AGENTS_ROOT}/${agent}" "../../agents/${agent}" "${WORKSPACE_ROOT}/.agents/skills/${agent}"
