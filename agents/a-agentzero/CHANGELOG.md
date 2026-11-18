@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.7] - 2026-11-18
+
+### Added
+
+- `agent-worktree.sh new` supporta il tracciato `.wt-extra` alla radice del repo: un file per riga (commenti `#` ignorati) di path untracked necessari al checkout (es. `.env`) viene symlinkato dal MAIN nel nuovo worktree; sorgente assente = warning non-fatale, file già presente nel checkout = salto. Documento nel ciclo di vita di `references/worktree-land.md` e in AGENT-PROTOCOL §Multi-sessione; `.wt-extra` del gateway dichiara `.env`. 3 smoke test in `tests/test_agent_worktree.py` (repo scratch con origin bare: symlink valido, assenza file non rotta, sorgente mancante degradata).
+
 ## [1.13.6] - 2026-11-18
 
 ### Changed

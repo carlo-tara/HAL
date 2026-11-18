@@ -20,7 +20,7 @@ branch_name() { case "$1" in slice/*) printf '%s' "$1" ;; *) printf 'slice/%s' "
 wt_path() { local b="${1#slice/}"; printf '%s/.wt/%s-%s' "$PARENT" "$(basename "$MAIN")" "$b"; }
 
 cmd_new() {
-  local nome="${1:-s$(date +%m%d%H%M)-$$}" b dir
+  local nome="${1:-s$(date +%m%d%H%M)-$$}" b dir p
   b="$(branch_name "$nome")"; dir="$(wt_path "$b")"
   git -C "$MAIN" fetch --quiet origin || die "fetch fallito (rete?)"
   ensure_rerere
@@ -30,6 +30,22 @@ cmd_new() {
   if [ -x "$MAIN/agents/.tools/shellcheck" ]; then
     mkdir -p "$dir/agents/.tools"
     cp "$MAIN/agents/.tools/shellcheck" "$dir/agents/.tools/shellcheck"
+  fi
+  # file untracked necessari al repo (es. .env): dichiarati in .wt-extra tracciato
+  # alla radice, uno per riga (righe vuote e commenti # ignorati) → symlink dal main.
+  if [ -f "$MAIN/.wt-extra" ]; then
+    while IFS= read -r p || [ -n "$p" ]; do
+      p="${p#"${p%%[![:space:]]*}"}"
+      case "$p" in ''|'#'*) continue ;; esac
+      if [ ! -e "$MAIN/$p" ]; then
+        echo "wt-extra: sorgente assente: $p (saltata)" >&2
+        continue
+      fi
+      if [ -e "$dir/$p" ]; then continue; fi
+      mkdir -p "$(dirname "$dir/$p")"
+      ln -s "$MAIN/$p" "$dir/$p"
+      echo "wt-extra: collegato $p dal main" >&2
+    done < "$MAIN/.wt-extra"
   fi
   echo "worktree: $dir"
   echo "branch:   $b"
