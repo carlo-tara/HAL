@@ -1,8 +1,8 @@
 ---
 name: harness-hal-mcp-docs
 extends: a-harness
-version: 1.1.2
-extends-version: 1.10.4
+version: 1.1.3
+extends-version: 1.11.2
 description: >-
   Reason why: senza Platform API e gate, il progetto delegato resterebbe uno script privo di uscita verificabile.
   Delta harness per hal_mcp_docs (MCP estrazione documenti): Makefile Platform API, path artefatti, N/A documentati, safety note specifiche del servizio MCP/locale.

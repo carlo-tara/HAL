@@ -1,8 +1,8 @@
 ---
 name: harness-wtp
 extends: a-harness
-version: 1.1.7
-extends-version: 1.10.4
+version: 1.1.8
+extends-version: 1.11.2
 description: >-
   Delta harness per WTP App: Makefile root, path, gate Make (whitelist, scope,
   coverage/dead-code/secrets audits); non riesporre ciclo TDD/slash L1.

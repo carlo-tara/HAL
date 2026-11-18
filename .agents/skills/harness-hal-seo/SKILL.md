@@ -1,8 +1,8 @@
 ---
 name: harness-hal-seo
 extends: a-harness
-version: 0.1.3
-extends-version: 1.10.4
+version: 0.1.4
+extends-version: 1.11.2
 description: >-
   Reason why: senza Platform API e gate, il progetto delegato resterebbe uno script privo di uscita verificabile.
   Delta harness per hal_mcp_seo (MCP QA deterministica copywriting & SEO): Makefile Platform API, path artefatti, N/A documentati, safety note e conflitti di sessione parallela.

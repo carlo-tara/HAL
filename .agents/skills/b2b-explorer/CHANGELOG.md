@@ -1,5 +1,11 @@
 # Changelog — b2b-explorer (L2)
 
+## [1.2.6] - 2026-11-18
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-b2b 2.3.5→2.3.7: voci del padre solo sync infrastrutturali L0 (dichiarato nei bump 2.3.6/2.3.7), nessun impatto sul body L2. `extends-version` allineata, bump patch via `agent-version.sh`.
+
 ## [1.2.5] - 2026-11-09
 
 ### Changed
