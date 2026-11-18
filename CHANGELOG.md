@@ -36,6 +36,7 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Regola System 1 task-vs-batch per workload ad alto volume · System 1 (Laya)
 - Promozioni `/sync <` — contratto naming L2 nel L0 `references/extension-scaffold.md` §4–5 (`a-agentzero` 1.13.1: `name` kebab-case pari alla directory, sanificazione degli underscore allo scaffold, «su disco ≠ in catalogo» come sintomo) e policy L1 «Copertura gate» in `a-harness` 1.10.1 (scan a zero match = vacuous pass, fallire a zero); `harness-agentfactory` 1.1.32 riduce i due bullet a puntatore (anti-DUP) · Agent Skills
 - Contratto RED→GREEN `product/contracts/check-harness-skill-naming.sh`; creati `CHANGELOG.md` per `harness-hal` (1.0.3) e le 4 L2 rinominate (1.0.1), catene riallineate su `a-harness@1.10.1` · Harness
+- Strumento di etichettatura gold set HT-005: workbook rigenerabile `benchmark/gold_set/HT-005_labeling.xlsx` (800 semi sulle 4 famiglie Laya, fogli Istruzioni + Copertura) ed esportatore XLSX→JSONL con validazione contratto HT-008 (`benchmark/scripts/make_gold_set_workbook.py`, `benchmark/scripts/gold_set_xlsx_to_jsonl.py`); draft `gold_set.jsonl` di 123 casi con label umane da confermare (choice 31, routing 32, score 30, noul 30) — 1822d3e/f1cdb94 · Benchmark
 
 ### Changed
 
