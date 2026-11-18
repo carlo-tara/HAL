@@ -79,6 +79,18 @@ git rev-parse --verify -q HEAD >/dev/null \
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 [[ "$BRANCH" != "HEAD" ]] || die "staccato da un branch: checkout del branch prima di committare"
 
+# lib anti-hang delle push (canone 2026-11-18): mai un prompt interattivo in
+# una land/commit — fallimento rapido + fallback helper gh. Se la lib non è
+# raggiungibile (registry parziale), degrada alla push nuda.
+GPA="$ROOT/agents/scripts/git-push-auth.sh"
+if [[ -f "$GPA" ]]; then
+  # shellcheck source=/dev/null
+  . "$GPA"
+else
+  push_with_gh_fallback() { git push "$@"; }
+fi
+
+
 TMP="$(mktemp -d)"
 IDX="$GITDIR/agent-commit-index.$$"
 cleanup() { rm -rf "$TMP"; rm -f "$IDX"; }
@@ -138,11 +150,11 @@ env -u GIT_INDEX_FILE git add -A -- "${PATHS[@]}"
 
 if [[ "$PUSH" -eq 1 ]]; then
   local_sha="$(git rev-parse HEAD)"
-  git push origin "HEAD:refs/heads/${BRANCH}" || die "push fallito (recupera a mano)"
+  push_with_gh_fallback origin "HEAD:refs/heads/${BRANCH}" || die "push fallito (recupera a mano)"
   remote_sha="$(git ls-remote origin "refs/heads/${BRANCH}" | cut -f1)"
   if [[ "$remote_sha" != "$local_sha" ]]; then
     echo "agent-commit: remote=$remote_sha != local=$local_sha — retry del push" >&2
-    git push origin "HEAD:refs/heads/${BRANCH}" || true
+    push_with_gh_fallback origin "HEAD:refs/heads/${BRANCH}" || true
     remote_sha="$(git ls-remote origin "refs/heads/${BRANCH}" | cut -f1)"
     [[ "$remote_sha" == "$local_sha" ]] || die "PUSH FAIL: remote ancora su $remote_sha"
   fi

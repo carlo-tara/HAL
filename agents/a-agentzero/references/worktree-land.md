@@ -46,7 +46,7 @@ Strumentali (codice): 6. Transazione bump↔changelog chiusa da `agents/scripts/
 riga da 7k char è un conflitto intero manuale. Le righe-evidenza vanno tenute
 un-item-per-bullet (split verificato: `split_monsters.py`). 8. Il lock single-writer per `/learn !` non serve più come pretesa: i registri
 **si mergeano** (union/rerere), il claim sopravvive solo sul land (flock). 9. Il land è sequenza unica: preview → rebase → guardie → `make -C agents
-   pre-commit` → push ff-only + verifica `ls-remote` → allineamento main +
+   pre-commit` → push ff-only **non interattiva** (`git-push-auth.sh`: `GIT_TERMINAL_PROMPT=0`, fallback helper gh — incidente 2026-11-18) + verifica `ls-remote` → allineamento main +
 link-mirror → cleanup worktree/branch. 10. Un branch, un slice, un turno: mai due slice aperte nella stessa sessione;
 land entro il turno. 11. I registry sono **progettati per il merge**: `merge=union` sui puri
 append-only (`.gitattributes`), `rerere.enabled` per i pattern ripetuti

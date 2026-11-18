@@ -11,6 +11,18 @@ MAIN="$(git worktree list --porcelain | awk '/^worktree /{print substr($0,10); e
 [ -n "${MAIN:-}" ] || die "main worktree non individuato"
 PARENT="$(dirname "$MAIN")"
 
+# lib anti-hang delle push (canone 2026-11-18): mai un prompt interattivo in
+# una land/commit — fallimento rapido + fallback helper gh. Se la lib non è
+# raggiungibile (registry parziale), degrada alla push nuda.
+GPA="$MAIN/agents/scripts/git-push-auth.sh"
+if [ -f "$GPA" ]; then
+  # shellcheck source=/dev/null
+  . "$GPA"
+else
+  push_with_gh_fallback() { git push "$@"; }
+fi
+
+
 ensure_rerere() {
   # rerere impara le risoluzioni ripetute (header di versione, extends-version)
   git -C "$MAIN" config rerere.enabled true
@@ -119,7 +131,7 @@ land_locked() {
   make -C "$root/agents" pre-commit
 
   # land ff-only + verifica reale (mai fidarsi di "Everything up-to-date")
-  git push origin "HEAD:master"
+  push_with_gh_fallback origin "HEAD:master" || die "spinta fallita — causa sul stderr (git-push-auth)"
   local remote local_sha
   remote="$(git ls-remote origin master | awk '{print $1}')"
   local_sha="$(git rev-parse HEAD)"

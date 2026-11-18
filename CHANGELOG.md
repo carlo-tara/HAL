@@ -9,6 +9,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ### Added
 
+- Anti-hang delle push (canone L0 `git-push-auth.sh` + config `credential.helper=gh`): nessun land/commit attende più un prompt di credenziali https — fallimento rapido, fallback keyring gh su causa auth, degradazione controllata; 3 test dedicati. Evidenza: incidente reale del 2026-11-18 durante `/sync !`.
+
 - `/sync !` allineamento 8 catene L2 consumer [sync:safe] (conferma umana): 7 figli di a-harness 1.10.4→1.11.2 (policy additive, zero collisione verificata via grep sui figli) + `b2b-explorer` ←a-b2b 2.3.5→2.3.7 (infra); bump patch + `extends-version` + CHANGELOG per figlio; scoperta di doc-bug: `sync-agents.sh --dry-run` senza `--projects` non scansiona le catene L2 consumer → falso negativo da 0 STALE, documentato nel commit.
 
 - /sync < 2026-11-18 — taglio DUP completato (catena risolvibile): `wtp-ux-ui` `extends: a-uiux` (dangling) → `a-design` @1.2.8 + puntatori `uiux`; `b2b-explorer-ui-ux` `extends-version` 1.7.5→1.7.7 [sync:safe] (STALE segnalato da `agent-version.sh chain`) + canone microcopy con path `references/copywriter-extended.md`; nomenclatura `a-uiux`→`uiux` nei docs correnti (playbook, operativo, bounded-contexts, discovery-pipeline; CHANGELOG storici intatti). NEED-N `a-copywriter-wtp`→`wtp-brand-voice` già unificato con 4520094.

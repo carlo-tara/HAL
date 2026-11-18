@@ -33,7 +33,7 @@ SHELL_SCRIPTS := \
 	$(ROOT)/a-knowledge/deploy.sh
 
 SHELL_SCRIPTS += $(ROOT)/scripts/agent-worktree.sh $(ROOT)/scripts/check-version-changelog.sh \
-	$(ROOT)/scripts/check-line-length.sh
+	$(ROOT)/scripts/check-line-length.sh $(ROOT)/scripts/git-push-auth.sh
 
 L2_HARNESS := $(ROOT)/project-skills/harness-agentfactory/SKILL.md
 
