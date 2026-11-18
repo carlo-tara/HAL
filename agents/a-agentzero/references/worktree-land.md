@@ -15,6 +15,7 @@ bash agents/scripts/agent-worktree.sh land <nome>    # preview → rebase → gu
 
 - `new` crea anche `<wt>/.tmp/`: lo stato temporaneo vive lì, **mai** `/tmp`
   condiviso (gara di nomi prevedibili: 2026-11-18, `/tmp/learn_state.txt`).
+- `new` riusa il tooling non-tracked dal main (`.tools/shellcheck`): un gate che pretende binari assenti renderebbe il land invariabilmente rosso.
 - Ogni `land` prende il **flock cooperativo `agent-commit.lock`** (già usato da
   `agent-commit.sh`): il land è l'unico punto di serializzazione su master.
 - Il gate del land: `make -C agents pre-commit` (include `check-registry`) —

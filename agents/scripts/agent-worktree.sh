@@ -26,6 +26,11 @@ cmd_new() {
   ensure_rerere
   git worktree add -b "$b" "$dir" origin/master >&2
   mkdir -p "$dir/.tmp"   # stato temporaneo session-scoped: mai /tmp condiviso (regola 3)
+  # tooling non-tracked (binario shellcheck): riusalo dal main, il gate del land lo pretende
+  if [ -x "$MAIN/agents/.tools/shellcheck" ]; then
+    mkdir -p "$dir/agents/.tools"
+    cp "$MAIN/agents/.tools/shellcheck" "$dir/agents/.tools/shellcheck"
+  fi
   echo "worktree: $dir"
   echo "branch:   $b"
   echo "apri qui la sessione Zed (write-set = diff del branch, regola 12)"

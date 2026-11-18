@@ -372,6 +372,14 @@ Gerarchia scrittura: L2 > file dati > rules > L1 (solo su richiesta esplicita). 
 
 ---
 
+## Multi-sessione (worktree + branch per slice)
+
+Sessioni concorrenti NON condividono il main checkout: `bash agents/scripts/agent-worktree.sh new <nome>` crea worktree+branch da `origin/master` (sotto `.wt/` del genitore del main); il lavoro si chiude nello stesso turno (un branch, un slice, un turno). `agent-worktree.sh land <nome>` esegue la sequenza seriale: lock `agent-commit.lock` condiviso con `agent-commit.sh`, preview `merge-tree`, rebase con rerere, guardie `check-registry`, gate bundle, push ff-only verificato via `ls-remote`, cleanup. Il write-set di una slice è il diff del branch (allow-list dichiarata, non audit a valle); i registri append-only si uniscono con `merge=union`, i pattern ripetuti (header di versione, `extends-version`) passano da `rerere`; gli stati temporanei vivono nel worktree (`.tmp/`), mai in `/tmp` con nomi prevedibili.
+
+Protocollo completo (13 regole): [`references/worktree-land.md`](references/worktree-land.md).
+
+---
+
 ## Sync agenti (`/sync`)
 
 Skill L0 dedicata: [`sync/SKILL.md`](sync/SKILL.md). Script: [`scripts/sync-agents.sh`](scripts/sync-agents.sh).  
