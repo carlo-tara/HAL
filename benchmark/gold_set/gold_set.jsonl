@@ -1,0 +1,123 @@
+{"id": "c001", "family": "choice", "instruction": "Prima del deploy degli agenti: dry-run di verifica o deploy diretto", "label": "report_prima", "candidates": ["report_prima", "deploy_diretto"]}
+{"id": "c002", "family": "choice", "instruction": "Nuova feature AI senza set di valutazione: shippare o attendere baseline", "label": "attendere_baseline", "candidates": ["attendere_baseline", "ship_subito"]}
+{"id": "c003", "family": "choice", "instruction": "Il gate A/B mostra +85% token contro baseline: dismettere o ottimizzare", "label": "dismissione", "candidates": ["dismissione", "ottimizzare"]}
+{"id": "c004", "family": "choice", "instruction": "Slice con RED per modulo mancante: implementare il modulo o mockare il test", "label": "implementare", "candidates": ["implementare", "mockare"]}
+{"id": "c005", "family": "choice", "instruction": "Drift su file generato (changelog mirror): pin manuale o rigenerare", "label": "pin_manuale", "candidates": ["pin_manuale", "rigenerare"]}
+{"id": "c006", "family": "choice", "instruction": "Il task richiede due edit in aree non sovrapposte: un solo agente o delega parallela", "label": "delega_parallela", "candidates": ["unico_agente", "delega_parallela"]}
+{"id": "c007", "family": "choice", "instruction": "Laya chiede escalate_system2 su una decisione banale: deferire a System 2 o accettare il top", "label": "deferire_S2", "candidates": ["deferire_S2", "accettare_top"]}
+{"id": "c008", "family": "choice", "instruction": "Un verdetto S1 era sbagliato: recordare outcome incorrect o ignorare", "label": "registrare_voto", "candidates": ["registrare_voto", "ignorare"]}
+{"id": "c009", "family": "choice", "instruction": "Preparare un benchmark con GPU occupata: rimandare o run su CPU", "label": "rimandare", "candidates": ["rimandare", "run_cpu"]}
+{"id": "c010", "family": "choice", "instruction": "Il gold set ha label ambigua tra due opzioni: scegliere o astenersi", "label": "forzare_scelta", "candidates": ["forzare_scelta", "astensione_documentata"]}
+{"id": "c011", "family": "choice", "instruction": "Aggiungere una soglia duplicata in uno script o importare da laya_gate", "label": "importare_gate", "candidates": ["importare_gate", "duplicare"]}
+{"id": "c012", "family": "choice", "instruction": "Il ToDo e' #human ma con estratto ciclabile: /cycle l'estratto o bloccare tutto", "label": "ciclo_extract", "candidates": ["ciclo_extract", "blocco_umano"]}
+{"id": "c013", "family": "choice", "instruction": "Serve un subagent per leggere 3 file indipendenti: spawn parallelo o lettura seriale", "label": "spawn_parallelo", "candidates": ["spawn_parallelo", "lettura_seriale"]}
+{"id": "c014", "family": "choice", "instruction": "Il file grande va letto tutto o solo la sezione con start/end line", "label": "lettura_targeted", "candidates": ["lettura_targeted", "lettura_integra"]}
+{"id": "c015", "family": "choice", "instruction": "La modifica tocca 5 file e il vincolo di slice e' 4: WAIVER o spezzare lo slice", "label": "waiver", "candidates": ["waiver", "spezzare"]}
+{"id": "c016", "family": "choice", "instruction": "Il prompt engine del benchmark va cambiato con la run in corso: in coda o subito", "label": "in_coda", "candidates": ["in_coda", "subito"]}
+{"id": "c017", "family": "choice", "instruction": "Il test esterno preesistente e' rosso: chiuderlo come collaterale o ignoralo", "label": "chiudere_collaterale", "candidates": ["chiudere_collaterale", "ignorare"]}
+{"id": "c018", "family": "choice", "instruction": "Nella scelta tra bracci con token zero su entrambi: dichiarare N/A o misurare comunque", "label": "dichiarare_NA", "candidates": ["dichiarare_NA", "misurare_comunque"]}
+{"id": "c019", "family": "choice", "instruction": "Il commit contiene solo mirror rigenerati: commitato separato o insieme", "label": "insieme", "candidates": ["separato", "insieme"]}
+{"id": "c020", "family": "choice", "instruction": "Il subagent deve solo leggere o anche scrivere file: lettura o lettura+edit", "label": "solo_lettura", "candidates": ["solo_lettura", "lettura_edit"]}
+{"id": "c021", "family": "choice", "instruction": "Il seed del gold set e reale o sintetico: ancorare al CHANGELOG o inventare", "label": "ancorare_reale", "candidates": ["ancorare_reale", "sintetico"]}
+{"id": "c022", "family": "choice", "instruction": "Con k>=4 Laya shortlist solo top-2: usare la shortlist o richiedere scelta piena", "label": "usa_shortlist", "candidates": ["usa_shortlist", "richiedi_scelta"]}
+{"id": "c023", "family": "choice", "instruction": "Il margine e basso ma la scelta e banale: comunque S2 o diretta con cautela", "label": "comunque_S2", "candidates": ["comunque_S2", "diretta_cautela"]}
+{"id": "c024", "family": "choice", "instruction": "Il ToDo HT-005 e umano: fare solo lo strumento o anche etichettare", "label": "solo_strumento", "candidates": ["solo_strumento", "etichetta_agent"]}
+{"id": "c025", "family": "choice", "instruction": "La telemetria mostra 39% unclear zone: abbassare soglia o piu dati", "label": "piu_dati", "candidates": ["abbassare_soglia", "piu_dati"]}
+{"id": "c026", "family": "choice", "instruction": "Il mirror symlink non risolve su CI: copia tracciata con guardia drift o niente mirror", "label": "copia_guardata", "candidates": ["copia_guardata", "niente_mirror"]}
+{"id": "c027", "family": "choice", "instruction": "Il refusal di un tool MCP per missing duckdb: degradare a stderr o errore duro", "label": "degradare", "candidates": ["degradare", "errore_duro"]}
+{"id": "c028", "family": "choice", "instruction": "Il fixture sintetico basta per il contratto o serve traffico reale", "label": "fixture_ok", "candidates": ["fixture_ok", "traffico_reale"]}
+{"id": "c029", "family": "choice", "instruction": "Il gate e pronto ma il dataset no: gate NOT-MEASURED o green silenzioso", "label": "not_measured", "candidates": ["not_measured", "green_silenzioso"]}
+{"id": "c030", "family": "choice", "instruction": "La label deve essere della singola opzione o della shortlist ordinata", "label": "opzione_unica", "candidates": ["opzione_unica", "shortlist"]}
+{"id": "c031", "family": "choice", "instruction": "Serve il voto di calibrazione per un verdetto cache-hit: votare o saltare", "label": "saltare_cache", "candidates": ["saltare_cache", "votare"]}
+{"id": "r001", "family": "routing", "instruction": "Il cliente vuole impostare un pilota B2B con ICP 6-50 dipendenti nel bacino di Chiasso", "label": "a-b2b", "candidates": ["a-b2b", "a-product", "a-seozoom"]}
+{"id": "r002", "family": "routing", "instruction": "Serve il copy SEO per la scheda prodotto della categoria casco da ciclismo", "label": "a-copywriter", "candidates": ["a-copywriter", "a-seozoom", "a-wordpress"]}
+{"id": "r003", "family": "routing", "instruction": "Audit di accessibilita WCAG della landing page del sito statico", "label": "a-design", "candidates": ["a-design", "a-copywriter", "a-wordpress"]}
+{"id": "r004", "family": "routing", "instruction": "Trasformare un PDF tecnico in una skill interrogabile on-demand", "label": "a-knowledge", "candidates": ["a-knowledge", "a-agentzero", "a-product"]}
+{"id": "r005", "family": "routing", "instruction": "Coordinare discovery, PRD e priorita del roadmap del prodotto", "label": "a-product", "candidates": ["a-product", "a-b2b", "a-knowledge"]}
+{"id": "r006", "family": "routing", "instruction": "Sviluppare e revisionare un plugin WordPress per la migrazione dati", "label": "a-wordpress", "candidates": ["a-wordpress", "a-design", "a-harness"]}
+{"id": "r007", "family": "routing", "instruction": "Analizzare le metriche SeoZoom e costruire topic cluster", "label": "a-seozoom", "candidates": ["a-seozoom", "a-copywriter", "a-product"]}
+{"id": "r008", "family": "routing", "instruction": "Aprire uno slice TDD con gate Make e ciclo red-green-refactor", "label": "a-harness", "candidates": ["a-harness", "a-agentzero", "a-design"]}
+{"id": "r009", "family": "routing", "instruction": "Generare un'illustrazione hero coerente con lo stile del brand", "label": "a-design", "candidates": ["a-design", "a-copywriter", "a-knowledge"]}
+{"id": "r010", "family": "routing", "instruction": "Verificare la sincronizzazione dei bundle agenti L0/L1 del workspace", "label": "a-agentzero", "candidates": ["a-agentzero", "a-harness", "a-seozoom"]}
+{"id": "r011", "family": "routing", "instruction": "L'utente digita /sync ? per controllare gli agenti fuori fase", "label": "sync", "candidates": ["sync", "version", "todo"]}
+{"id": "r012", "family": "routing", "instruction": "L'utente digita /cycle chiudendo una voce ToDo marcate #cycle", "label": "cycle", "candidates": ["cycle", "todo", "graph"]}
+{"id": "r013", "family": "routing", "instruction": "L'utente digita /graph -y per rigenerare il work graph", "label": "graph", "candidates": ["graph", "cycle", "slice"]}
+{"id": "r014", "family": "routing", "instruction": "L'utente digita /impersonate karpathy sul gateway", "label": "impersonate", "candidates": ["impersonate", "review", "improve"]}
+{"id": "r015", "family": "routing", "instruction": "L'utente digita /flush per spostare le voci chiuse nel CHANGELOG", "label": "todo", "candidates": ["todo", "commit", "cycle"]}
+{"id": "r016", "family": "routing", "instruction": "Commit che aggiunge una nuova skill L2 al bundle", "label": "fix", "candidates": ["feat", "fix", "docs", "chore"]}
+{"id": "r017", "family": "routing", "instruction": "Commit che corregge un parsing errato nel router", "label": "fix", "candidates": ["fix", "feat", "refactor", "test"]}
+{"id": "r018", "family": "routing", "instruction": "Commit che riallinea un changelog mirror senza toccare codice", "label": "docs", "candidates": ["docs", "chore", "fix", "refactor"]}
+{"id": "r019", "family": "routing", "instruction": "Commit che rinomina una funzione interna senza cambiare comportamento", "label": "refactor", "candidates": ["refactor", "chore", "feat", "fix"]}
+{"id": "r020", "family": "routing", "instruction": "Commit che aggiunge unittest al gate pre-commit", "label": "test", "candidates": ["test", "feat", "chore", "fix"]}
+{"id": "r021", "family": "routing", "instruction": "Un file in benchmark/runner/ della mappa residui va a quale bounded context?", "label": "Benchmark", "candidates": ["Benchmark", "Observability & Retention", "System 1 (Laya)"]}
+{"id": "r022", "family": "routing", "instruction": "Una modifica a laya_gate.py appartiene a quale contesto?", "label": "System 1 (Laya)", "candidates": ["System 1 (Laya)", "Benchmark", "Observability & Retention"]}
+{"id": "r023", "family": "routing", "instruction": "Un aggiornamento a docs/28_laya_model_card.md e' di quale dominio?", "label": "System 1 (Laya)", "candidates": ["System 1 (Laya)", "Product docs", "Benchmark"]}
+{"id": "r024", "family": "routing", "instruction": "La richiesta e' triage di lead HubSpot con gate ICP: quale skill?", "label": "enrichment", "candidates": ["enrichment", "a-b2b", "a-product"]}
+{"id": "r025", "family": "routing", "instruction": "Bisogna scrivere scenari Gherkin da JTBD seeds per l'handoff", "label": "gherkin", "candidates": ["gherkin", "jtbd", "a-product"]}
+{"id": "r026", "family": "routing", "instruction": "Mappare unmet needs con intervista timeline e Four Forces", "label": "jtbd", "candidates": ["jtbd", "personas", "gherkin"]}
+{"id": "r027", "family": "routing", "instruction": "Definire personas da PRD e verificare journey coherence", "label": "personas", "candidates": ["personas", "jtbd", "a-design"]}
+{"id": "r028", "family": "routing", "instruction": "Scegliere il tipo di grafico per una serie temporale KPI", "label": "charts", "candidates": ["charts", "a-design", "uiux"]}
+{"id": "r029", "family": "routing", "instruction": "Microcopy dell'explorer B2B score3 con pattern STRATEGY_GUIDE", "label": "b2b-explorer-ui-ux", "candidates": ["b2b-explorer-ui-ux", "uiux", "a-copywriter"]}
+{"id": "r030", "family": "routing", "instruction": "Un task e' preliminare euristico: System 1 o System 2?", "label": "laya", "candidates": ["laya", "a-harness", "a-agentzero"]}
+{"id": "r031", "family": "routing", "instruction": "Il PDF della liberatoria cliente va archiviato: che tipo di richiesta?", "label": "document", "candidates": ["document", "todo", "review"]}
+{"id": "r032", "family": "routing", "instruction": "Revisionare il diff di una PR prima del merge", "label": "review", "candidates": ["review", "improve", "commit"]}
+{"id": "s001", "family": "score", "instruction": "refactor del parser choice in router.py che tocca il fallback legacy", "label": "alto", "criteria": "rischio_regressione"}
+{"id": "s002", "family": "score", "instruction": "modifica puramente doc nel CHANGELOG mirror", "label": "basso", "criteria": "rischio_regressione"}
+{"id": "s003", "family": "score", "instruction": "cambio di threshold in laya_gate.py senza nuovi test", "label": "alto", "criteria": "rischio_regressione"}
+{"id": "s004", "family": "score", "instruction": "nuovo test file che aggiunge coperture senza toccare codice", "label": "basso", "criteria": "rischio_regressione"}
+{"id": "s005", "family": "score", "instruction": "switch BENCHMARK_LOCAL_ASSEMBLY=0 nel workflow di run", "label": "medio", "criteria": "rischio_regressione"}
+{"id": "s006", "family": "score", "instruction": "fix del bug di serializzazione LayaOutcome in router.py --json", "label": "medio", "criteria": "rischio_regressione"}
+{"id": "s007", "family": "score", "instruction": "duplicazione di soglie di banda in uno script nuovo", "label": "basso", "criteria": "aderenza_architettura"}
+{"id": "s008", "family": "score", "instruction": "uso di laya_choice per decidere un commit type", "label": "alto", "criteria": "aderenza_architettura"}
+{"id": "s009", "family": "score", "instruction": "il agente System 2 che decide senza consultare Laya su scelta discreta", "label": "basso", "criteria": "aderenza_architettura"}
+{"id": "s010", "family": "score", "instruction": "etichette gold set generate da modello senza verifica umana", "label": "basso", "criteria": "validita_metodo"}
+{"id": "s011", "family": "score", "instruction": "run di regressione agganciata a make target esistente", "label": "alto", "criteria": "validita_metodo"}
+{"id": "s012", "family": "score", "instruction": "kill criterion dichiarato nel report history", "label": "alto", "criteria": "validita_metodo"}
+{"id": "s013", "family": "score", "instruction": "ricalibrazione soglie su traffico prod anziche oro etichettato", "label": "basso", "criteria": "validita_metodo"}
+{"id": "s014", "family": "score", "instruction": "casi gold sintetici al posto di casi reali HAL", "label": "basso", "criteria": "rappresentativita_campione"}
+{"id": "s015", "family": "score", "instruction": "200 casi per famiglia con label per 4 famiglie", "label": "alto", "criteria": "completezza_target"}
+{"id": "s016", "family": "score", "instruction": "gold set da 30 casi x famiglia", "label": "basso", "criteria": "completezza_target"}
+{"id": "s017", "family": "score", "instruction": "l'utente chiede fix the bug senza contesto", "label": "basso", "criteria": "chiarezza_contesto"}
+{"id": "s018", "family": "score", "instruction": "il task e' chiudere HT-005 con lo strumento e i seed documentati", "label": "alto", "criteria": "chiarezza_contesto"}
+{"id": "s019", "family": "score", "instruction": "richiesta: prepara spreadsheet per HT-005 con schema gia pronto", "label": "alto", "criteria": "chiarezza_contesto"}
+{"id": "s020", "family": "score", "instruction": "azienda IT di Lugano 18 dipendenti senza budget dichiarato", "label": "medio", "criteria": "aderenza_ICP"}
+{"id": "s021", "family": "score", "instruction": "software house 40 dipendenti nel bacino Chiasso con budget attivo", "label": "alto", "criteria": "aderenza_ICP"}
+{"id": "s022", "family": "score", "instruction": "agenzia marketing Milano 5 dipendenti fuori raggio 3h", "label": "basso", "criteria": "aderenza_ICP"}
+{"id": "s023", "family": "score", "instruction": "startup fintech Zurigo 60 dipendenti fuori ICP 6-50", "label": "basso", "criteria": "aderenza_ICP"}
+{"id": "s024", "family": "score", "instruction": "il diff aggiunge 2 righe e toglie un test", "label": "basso", "criteria": "prontezza_merge"}
+{"id": "s025", "family": "score", "instruction": "PR verde con CHANGELOG e ToDo aggiornati e gate a 0", "label": "alto", "criteria": "prontezza_merge"}
+{"id": "s026", "family": "score", "instruction": "run gated che vince 4/16 coppie con rubrica tie", "label": "alto", "criteria": "convinzione_esito"}
+{"id": "s027", "family": "score", "instruction": "esito negativo ex kill criterion con causa ereditata riverificata", "label": "alto", "criteria": "convinzione_esito"}
+{"id": "s028", "family": "score", "instruction": "il report non contiene i numeri della run", "label": "basso", "criteria": "completezza_artefatto"}
+{"id": "s029", "family": "score", "instruction": "workbook con istruzioni, seed, copertura e label vuota", "label": "alto", "criteria": "completezza_artefatto"}
+{"id": "s030", "family": "score", "instruction": "n=94 voti insufficiente per revocare eccezione top1", "label": "basso", "criteria": "sufficienza_dati"}
+{"id": "n001", "family": "noul", "instruction": "il cliente vuole capire se il pilota B2B funziona ma non sa confrontare i dati", "label": "score"}
+{"id": "n002", "family": "noul", "instruction": "sincronizza gli agenti e poi controlla le versioni", "label": "choice"}
+{"id": "n003", "family": "noul", "instruction": "il cliente vuole piu visibilita sul sito senza budget ne scadenze", "label": "astensione"}
+{"id": "n004", "family": "noul", "instruction": "normalizza: sistemiamo le robe del gateway", "label": "astensione"}
+{"id": "n005", "family": "noul", "instruction": "il cliente vuole che il copy suoni meno robotico", "label": "routing"}
+{"id": "n006", "family": "noul", "instruction": "aggiungi test al gold set scoring", "label": "routing"}
+{"id": "n007", "family": "noul", "instruction": "il agente sbaglia sempre la scelta del modello, rivedi tutto", "label": "astensione"}
+{"id": "n008", "family": "noul", "instruction": "esporta i lead da Apollo e filtrali per ICP", "label": "routing"}
+{"id": "n009", "family": "noul", "instruction": "voglio sapere perche il benchmark e andato male ieri", "label": "score"}
+{"id": "n010", "family": "noul", "instruction": "crea un grafico delle conversioni settimanali", "label": "routing"}
+{"id": "n011", "family": "noul", "instruction": "il cliente vuole vendere di piu con l AI", "label": "astensione"}
+{"id": "n012", "family": "noul", "instruction": "dammi una mano col sito", "label": "astensione"}
+{"id": "n013", "family": "noul", "instruction": "verifica se la soglia del gate va cambiata", "label": "score"}
+{"id": "n014", "family": "noul", "instruction": "scrivi le FAQ della categoria caschi mtb", "label": "routing"}
+{"id": "n015", "family": "noul", "instruction": "il agente product deve parlare con quello design, decidi tu", "label": "routing"}
+{"id": "n016", "family": "noul", "instruction": "sistemiamo il deploy: prima la verifica o direttamente?", "label": "choice"}
+{"id": "n017", "family": "noul", "instruction": "il run non parte, capisci", "label": "astensione"}
+{"id": "n018", "family": "noul", "instruction": "ho un pdf di 300 pagine e mille domande", "label": "routing"}
+{"id": "n019", "family": "noul", "instruction": "il lead non risponde da 3 settimane, va tenuto?", "label": "choice"}
+{"id": "n020", "family": "noul", "instruction": "controlla se i mirror degli agenti puntano a posto", "label": "routing"}
+{"id": "n021", "family": "noul", "instruction": "il cliente chiede una landing + blog + ads insieme", "label": "astensione"}
+{"id": "n022", "family": "noul", "instruction": "devo capire se Laya e accesa o spenta", "label": "choice"}
+{"id": "n023", "family": "noul", "instruction": "il grafico e confuso, rifallo", "label": "astensione"}
+{"id": "n024", "family": "noul", "instruction": "l eval del gate e una sensazione o un numero?", "label": "choice"}
+{"id": "n025", "family": "noul", "instruction": "fai tutto tu e non rompermi niente", "label": "astensione"}
+{"id": "n026", "family": "noul", "instruction": "il run A e B dicono due cose opposte, quale credo", "label": "choice"}
+{"id": "n027", "family": "noul", "instruction": "abbiamo 8000 chiamate ma non so cosa misurano", "label": "astensione"}
+{"id": "n028", "family": "noul", "instruction": "il cliente vuole il plugin wordpress ma anche l SEO e non so", "label": "routing"}
+{"id": "n029", "family": "noul", "instruction": "normalizza: fix the thing nel parser", "label": "astensione"}
+{"id": "n030", "family": "noul", "instruction": "il prompt di scelta ha opzioni quasi uguali, quale?", "label": "choice"}
