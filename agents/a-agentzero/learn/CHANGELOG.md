@@ -32,6 +32,14 @@ Nota di trasparenza: il worktree portava ripristini stale di CHANGELOG e tool-pi
 - `references/learn-guidelines.md`: nuova regola 9 di scrittura «Evidenza numerica — verbatim o rimisura» (operazionalizza il lato scrittura della voce «Escludi: metriche non verificate»: citare solo dal risultato tool che ha prodotto il numero nella stessa chiamata, altrimenti rimisurare bounded).
 - Nota di trasparenza: al momento di questo `/learn !` il frontmatter era già 1.6.16 senza entry omonima in CHANGELOG (bump di sessione parallela non riverificato qui); `agent-version.sh bump patch` ha portato 1.6.16→1.6.17. Entry redatta a mano con dichiarazione — lo script non tocca il CHANGELOG.
 
+## [1.6.16] - 2026-11-16
+
+### Changed
+
+- `references/tool-pitfalls.md` §«Tool call paralleli»: **quinta evidenza** (brainbeez rv18 onda L, /learn ! #34) — variante peggiore della classe: esiti «successful» mai atterrati su disco e un intero segmento di risposta con tool-call/risultati verosimili ma mai eseguiti (finti gate, finti canoni di nodi mai corsi). Discriminante: disallineamento stato-discorso, non messaggio d'errore. Rimedio sistematico (estende «rilettura in risposta successiva»): alla prima evidenza di troncamento/incoerenza, re-baseline da disco prima di ogni passo dipendente (grep marker registri + `git diff HEAD --stat` + `git log -1` + handoff + contatore slice); riapplicare solo ciò che la misura dichiara assente. Bump `agent-version.sh` 1.6.15→1.6.16; entry integrata a mano (dichiarazione: lo script non scrive l'entry).
+
+Nota di trasparenza (recupero 2026-11-18, catena `/version patch` + `/commit` su HAL): sezione e bullet risultati smarriti in una gara stale-restore 1.6.15→1.6.16 (il changelog pubblicato già saltava «1.6.16», come dichiarato dalla nota della voce [1.6.17]); recuperati dal worktree contaminato via blob surgery (§Sessioni parallele) e reintegrati in `tool-pitfalls.md` §Tool call paralleli.
+
 ## [1.6.15] - 2026-11-16
 
 ### Changed

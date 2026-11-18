@@ -4,13 +4,11 @@ Backlog rinfrescabile (≠ Progress append-only). Igiene: `/todo`.
 
 Convention: ID stabile `HT-nnn` (non cambia a seguito di riordino); tag di chiusura — `#cycle` = richiudibile con `/cycle` (slice → red → green → refactor sotto gate Make), `#human` = richiede intervento umano (sessioni reali, step cross-repo, validazione).
 
-Delta 2026-11-09 da `/impersonate karpathy hal_gateway` (lente registry `hal_mcp_tools`): le 5 voci sotto (HT-003…HT-007) derivano dai finding della lettura; praise «modello-usato-come-funzione» (`system1_preflight.TaskContract`/`PreflightDecision`) e «calibrazione da telemetria» (`laya_gate.py`) sono già architetture consolidate, senza voce.
+Delta 2026-11-09 da `/impersonate karpathy hal_gateway` (lente registry `hal_mcp_tools`): le voci HT-003…HT-007 derivano dai finding della lettura (residuo aperto al 2026-11-16: solo HT-005 e HT-007; HT-003/004/006/008/009 chiuse, esiti in CHANGELOG); praise «modello-usato-come-funzione» (`system1_preflight.TaskContract`/`PreflightDecision`) e «calibrazione da telemetria» (`laya_gate.py`) sono già architetture consolidate, senza voce.
 
 ## P0
 
 ## P1
-
-
 
 ## P2
 

@@ -1,13 +1,13 @@
 {
   "kind": "todo",
   "cmd": "/todo",
-  "ts": "2026-11-09T10:59:11Z",
+  "ts": "2026-11-16T15:13:43Z",
   "flags": {"y": false},
-  "acceptance": "",
+  "acceptance": "residuo ToDo = solo gate umani N32/N34; re-run /graph -y riverifica gate passivi con misura diretta",
   "files": "",
   "node_id": "",
   "next": "",
-  "summary": "/todo 2026-11-09: flush 0 (gia esaurito dal deflusso N30), 4 aperte (HT-003/005/007 + nuova HT-008 estratta dal triage). Triage cycle-vs-human: nessuna voce esistente richiudibile da sola con /cycle (nuclei: run A/B multi-ora su Ollama con GPU contesa per HT-003, etichettatura semantica ~200/famiglia per HT-005, run dedicata a bracci appaiati per HT-007). HT-008 = sola parte ciclabile (schema+scoring+make target su fixture sintetiche). System 1 consultato: human 3/3 anche sul prompt puro-repo (override System 2 documentato in HT-008).",
-  "brief": "aperte: HT-003 P1 run A/B gated vs 20261017_all con kill criterion (human); HT-005 P2 etichettatura gold set (human); HT-007 P2 run misura assemblaggio locale (human); HT-008 P2 infrastruttura gold set (cycle)",
+  "summary": "/todo flush 2026-11-16: flush deterministico 0 voci (buffer «Già fatto» vuoto, HT-003/004/006/008/009 già in CHANGELOG); 2 aperte entrambe #human già mappate N32/N34 nel work-graph rv 2026-11-16, nessuna parte ciclabile residua; prune header: nota karpathy corretta da «5 voci sotto» a «residuo HT-005/HT-007, chiuse in CHANGELOG». N/A: nessuna voce nuova, P0/P1 vuoti.",
+  "brief": "aperte: HT-005 P2 human gold set ~200 casi/famiglia + ricalibrazione laya_gate + regressione (infra HT-008 consegnata, dati assenti); HT-007 P2 human run bracci appaiati h07A/h07B in hal_system2 (comandi nel ToDo, smoke B ok)",
   "token_budget": 200
 }
