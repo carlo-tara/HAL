@@ -17,7 +17,7 @@ Se MD3 e LOCK SurferDark confliggono → **vince SurferDark LOCK**.
 ## 1. Perché MD3 qui
 
 - Vocabolario condiviso (primary / on-primary / surface-container / outline / state layer) per review e migrazione token.
-- Allineamento a competenze L1 `a-uiux` / `static-stack` (custom properties M3-ready, no framework).
+- Allineamento a competenze L1 `uiux` / `static-stack` (custom properties M3-ready, no framework).
 - Evitare drift “inventiamo un terzo sistema” quando si parla di elevation, shape scale, typography roles.
 
 **Non significa:** reintrodurre React MUI, `sx`, `variant="filled"`, o CSS Material precompilato.

@@ -50,7 +50,7 @@ Path product (ordine di lookup): `.claude/product/` → `product/`.
 | `a-po` | Authoring prodotto/GTM (intake, canvas, PRD, offer, prioritize) | Non scrive `.feature` né codice |
 | `a-product` | Orchestra product multi-step (delega specialisti; § Profilo B2B per piloti) | Non authora PRD; non esegue enrichment/BDD |
 | `a-b2b` | Facade ingresso B2B → a-product § Profilo B2B (delega a-po / personas / jtbd / enrichment) | Non authora package/PRD; non esegue enrichment |
-| `a-uiux` | Page shell statica (stack M3, a11y, layout editoriale) | Non encoding grafici (`a-charts`) né microcopy (`a-copywriter`) |
+| `uiux` | Page shell statica (stack M3, a11y, layout editoriale) | Non encoding grafici (`a-charts`) né microcopy (`a-copywriter`) |
 
 ---
 

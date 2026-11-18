@@ -1,8 +1,8 @@
 ---
 name: b2b-explorer-ui-ux
 extends: a-copywriter
-version: 1.0.34
-extends-version: 1.7.5
+version: 1.0.35
+extends-version: 1.7.7
 description: >-
   Microcopy/UX e delta chrome per l’explorer Cluster B2B score3 (`/explorer/b2b/`):
   entrypoint, pattern STRATEGY_GUIDE; canone pattern guida/chrome → L1 `uiux` § Pattern guida, classi WTP → `wtp-ux-ui` § Explorer help & guide.
@@ -14,7 +14,7 @@ Skill figlia di `a-copywriter`. Governa microcopy della dashboard score3 **e** d
 
 ## Purpose
 
-Rendere le guide e i testi della dashboard **più leggibili e operativi** per il team commerciale, senza perdere la semantica dei cluster (codici e clusterId rimangono invariati). Microcopy: canone L1 `a-copywriter` § Microcopy UI/dashboard. Chrome suite: pattern canone L1 `uiux` § Pattern guida, classi `wtp-ux-ui`.
+Rendere le guide e i testi della dashboard **più leggibili e operativi** per il team commerciale, senza perdere la semantica dei cluster (codici e clusterId rimangono invariati). Microcopy: canone L1 `a-copywriter` § Microcopy UI/dashboard (`references/copywriter-extended.md`). Chrome suite: pattern canone L1 `uiux` § Pattern guida, classi `wtp-ux-ui`.
 
 ## File entrypoint (invarianti)
 
@@ -44,7 +44,7 @@ SoT chrome/token/menubar/radius/focus: **`wtp-ux-ui`**. Qui solo override prodot
 
 ## Principi (non negoziabili)
 
-Canone L1 `a-copywriter` § Microcopy UI/dashboard. Delta explorer: **codici cluster invariati** (`1_playbook_b2b`, `decisore_light_hot`, …); HTML minimo (`<strong>`/`<em>` solo se serve).
+Canone L1 `a-copywriter` § Microcopy UI/dashboard (`references/copywriter-extended.md`). Delta explorer: **codici cluster invariati** (`1_playbook_b2b`, `decisore_light_hot`, …); HTML minimo (`<strong>`/`<em>` solo se serve).
 
 ## Pattern UI & copy
 

@@ -122,7 +122,7 @@ Oltre a `extends:` (un solo padre), gli agenti possono dichiarare moduli in `com
 | a-po | `po-interviewer`, `triage-request`, `problem-framing`, `lean-canvas`, `prd-authoring`, `positioning-offer`, `evidence-probe`, `slice-prioritization`, `growth-loops`, `market-public-data` | sì (`po-interviewer`); resto L1-only |
 | a-enrichment | — (pattern + references; handoff a-copywriter) | — |
 | a-harness | TDD/DDD/Steward competencies (vedi `a-harness/competencies/`) | no |
-| a-uiux | `static-stack`, `accessibility`, `editorial-layout` | no |
+| uiux | `static-stack`, `accessibility`, `editorial-layout` | no |
 
 Override L2: `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta). Check: `agent-version.sh competency-chain <path>`.
 
@@ -182,7 +182,7 @@ Le skill figlie **non** stanno in HAL. Si creano nel repo del sito/blog/WP.
 | po | L2 `po-*` + `product/` (vedi `a-po/extension-template.md`) |
 | enrichment | L2 `enrichment-*` o path da `b2b-*` (vedi `a-enrichment/extension-template.md`) |
 | harness | L2 `harness-{progetto}` (vedi `a-harness/extension-template.md`) |
-| uiux | L2 `uiux-*` / legacy `uiux-designer` → preferire `extends: a-uiux` (vedi `a-uiux/extension-template.md`); playbook DUP [`playbook-l2-dup-cut.md`](playbook-l2-dup-cut.md) |
+| uiux | L2 `uiux-*` / legacy `uiux-designer` → preferire `extends: uiux` (vedi `uiux/extension-template.md`); playbook DUP [`playbook-l2-dup-cut.md`](playbook-l2-dup-cut.md) |
 
 6. Opzionale: override competenze in `.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta; vedi `extension-template.md` del dominio)
 7. `CHANGELOG.md` figlio da template L0
@@ -299,7 +299,7 @@ Vedi anche slash command `/snapshot` in `.cursor/commands/snapshot.md`.
 | PO / Product shape | `a-po/SKILL.md` | `agents/a-po.md` | `extension-template.md` |
 | Enrichment | `a-enrichment/SKILL.md` | `agents/a-enrichment.md` | `extension-template.md` |
 | Harness | `a-harness/SKILL.md` | `agents/a-harness.md` | `extension-template.md` |
-| UI/UX | `a-uiux/SKILL.md` | `agents/a-uiux.md` | `extension-template.md` |
+| UI/UX | `uiux/SKILL.md` | `agents/uiux.md` | `extension-template.md` |
 
 ### Discovery (a-personas / a-jtbd / a-gherkin)
 

@@ -1,7 +1,7 @@
 ---
 name: harness-wtp
 extends: a-harness
-version: 1.1.6
+version: 1.1.7
 extends-version: 1.10.4
 description: >-
   Delta harness per WTP App: Makefile root, path, gate Make (whitelist, scope,
@@ -177,7 +177,7 @@ Decomposizione BE / ladder microservizi: `docs/backend-decomposition.md`.
 - **Liste WTP (static):** path unici sotto `/wtp/` — es. `/sintesi/:jobId`, `/lista/:jobId/:listSlug`; router History in `src/wtp/frontend/js/router.js`. **Scheda cliente:** SoT = prodotto **Customer 360** `/customer/<userId>` (UID Mongo only; **niente `jobId` nel path** prodotto). Da Liste: link con query `?jobId=` (+ opz. `listId` / `returnUrl`) per tab Suggerimenti + back alla lista/sintesi (`buildCustomerSheetPath`); senza query = entry home `/customer/`. Se manca `jobId` in URL ma esiste `wtp-ui-session` con job/lista (stesso tab), recuperare il contesto e `replaceState` sull’URL — **non** latchare forever lo empty-state `SuggestionsNeedListeJob`. Redirect legacy `/wtp/customer.html` → `/customer/<userId>` **deve preservare** `jobId`/`listId`/`returnUrl`. Liste = **consumatore**: link + opz. `GET /api/customer/:userId` (export ZIP); **non** hostare scheda/UI Person 360 interna.
 - **Nuovo prodotto suite (deploy):** oltre catalogo/chrome/verify: (1) `COPY src/<id>/` in `Dockerfile.railway` + `docker/api/Dockerfile`, (2) `location ^~ /<path>/` (+ redirect senza slash) in `docker/railway/nginx.conf.template`, (3) test `layoutHygiene` — Express mount da solo ≠ raggiungibile dietro nginx Railway.
 - **test-unit flake PG:** fallimenti sparsi `InitProcess` / cache job sotto carico = spesso Postgres test saturo **o suite parallele**; vedi § Note gate (gate esclusivo + isolamento). Poi `make db-up` + retry prima di incolpare il diff prodotto.
-- **SurferDark CSS gate:** runbook TDD/CSS → `wtp-ux-ui` checklist **#12**; dual-alias token → L1 `a-uiux`/`static-stack`; Make = glob auth in `test-unit`.
+- **SurferDark CSS gate:** runbook TDD/CSS → `wtp-ux-ui` checklist **#12**; dual-alias token → L1 `uiux`/`static-stack`; Make = glob auth in `test-unit`.
 - **LLM:** catalogo unico `llmProfileCatalog` (incl. `orcarouter` → modello `auto`; default temperatura **0.6**); storico uso in Postgres `auth.*`.
 - **HTML product shells (`wantsHtml`):** path `/risk/`, `/profile/`, `/customer/` (e Explorer) senza `Accept: text/html` → redirect login, non JSON 401. Gate: `wtpExplorerAuth.test.js`. Nuovo prodotto HTML sotto nginx: aggiungere il path in `wantsHtml` nello stesso slice.
 - **Auth ≠ Profile:** Auth = magic-link / sessione / `/me` / logout (`/api/auth/*`). Preferenze operatore (LLM, API key, HubSpot/Voxloud/**OpenAPI**, quota UI) = **solo** `/api/profile/*` — non reintrodurre shim settings su Auth (404 atteso). Dettaglio BC: `docs/bounded-contexts.md`.

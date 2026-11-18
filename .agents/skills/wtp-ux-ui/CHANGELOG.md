@@ -1,5 +1,11 @@
 # Changelog — wtp-ux-ui
 
+## [1.3.71] - 2026-11-18
+
+### Fixed
+
+- Catena /sync < chiusa in modo risolvibile: `extends: a-uiux` non esiste come directory e `agent-version.sh` cerca `HAL_AGENTS_ROOT/<padre>` → `extends: a-design @ 1.2.8` (la cui skill `uiux` 1.2.0 è il canone reale dei pattern guida/chrome). Puntatori in prosa e `material3.md`: `a-uiux` → `uiux`. Corpo invariato (delta SurferDark, zero duplicati dal padre).
+
 ## [Unreleased]
 
 ### Changed

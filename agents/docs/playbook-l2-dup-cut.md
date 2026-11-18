@@ -23,7 +23,7 @@ Dopo un report `/sync <`, applicare **solo** con conferma e RGR nel repo consume
 
 | Azione | Dove |
 |--------|------|
-| Tagliare DUP UI verso L1 | L2 `uiux-*` / `uiux-designer` → puntatori `a-uiux` (stack/a11y/layout già L1; extension-template) |
+| Tagliare DUP UI verso L1 | L2 `uiux-*` / `uiux-designer` → puntatori `uiux` (`extends: a-design` per catena risolvibile; stack/a11y/layout già L1; extension-template) |
 | Tagliare microcopy DUP | `WTP_App` `b2b-explorer-ui-ux` → puntatore `a-copywriter` § Microcopy UI (delta chrome/cluster ok) |
 | Chart rules | rimando `a-charts` da UI L2 |
 

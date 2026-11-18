@@ -1,5 +1,11 @@
 # Changelog — harness-wtp (L2)
 
+## [1.1.7] - 2026-11-18
+
+### Changed
+
+- Nomenclatura canone UI: `a-uiux` → `uiux` (skill L1 in `a-design`, catena `wtp-ux-ui` riagganciata a `a-design`).
+
 ## [1.1.6] - 2026-11-09
 
 ### Changed

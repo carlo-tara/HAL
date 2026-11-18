@@ -1,5 +1,11 @@
 # Changelog — b2b-explorer-ui-ux
 
+## [1.0.35] - 2026-11-18
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-copywriter 1.7.5→1.7.7 (voci del padre solo sync infrastrutturali L0, nessun contratto rotto): `extends-version` allineata, `pending=0`. Riferimento al canone microcopy reso risolvibile: § Microcopy UI/dashboard vive in `references/copywriter-extended.md`. Contenuto già slim dal taglio /sync < (pattern guida → `uiux`, classi → `wtp-ux-ui`, copy Sales Coach → `wtp-brand-voice`).
+
 ## [1.0.31] - 2026-11-09
 
 ### Changed

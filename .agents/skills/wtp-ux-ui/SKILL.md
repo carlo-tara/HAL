@@ -1,20 +1,20 @@
 ---
 name: wtp-ux-ui
-extends: a-uiux
-version: 1.3.70
-extends-version: 1.1.0
+extends: a-design
+version: 1.3.71
+extends-version: 1.2.8
 description: >-
   Design System SurferDark (L2) + mapping Material Design 3 per Sales Coach / WTP App:
   foundation, componenti, pattern, MD3 roles, migrazione CSS (auth + Liste + Explorer).
-  Runtime CSS surferdark.css; no MUI. Extends a-uiux (a11y/stack editoriale → L1).
+  Runtime CSS surferdark.css; no MUI. Extends a-design (skill `uiux`: a11y/stack editoriale → L1).
 disable-model-invocation: true
 ---
 
 # SurferDark — Design System (L2)
 
-Skill figlia. Eredita `a-agentzero` → `a-uiux` → **questo file**.
+Skill figlia. Eredita `a-agentzero` → `uiux` → **questo file**.
 
-Canoni a11y / stack statico M3 / layout editoriale / pattern guida-chrome generici → L1 `a-uiux`. Qui solo SurferDark, path WTP e checklist prodotto.
+Canoni a11y / stack statico M3 / layout editoriale / pattern guida-chrome generici → L1 `uiux`. Qui solo SurferDark, path WTP e checklist prodotto.
 
 ## Quando usarla
 
@@ -31,7 +31,7 @@ Prima di proporre o committare layout, colori, tipografia, chrome, componenti sh
 **SurferDark** è il design system unico della suite (dark-first, vanilla HTML/CSS).
 Ex skin “Enrico”: stesso look (`#0e0e0e` / `#ffd400`), nome e struttura DS aggiornati.
 
-Integra **Material Design 3** come mappatura di ruoli (color / shape / type / state layers) — vedi [material3.md](material3.md). **Non** introduce MUI né Material Web (allinea non-goals L1 `a-uiux`).
+Integra **Material Design 3** come mappatura di ruoli (color / shape / type / state layers) — vedi [material3.md](material3.md). **Non** introduce MUI né Material Web (allinea non-goals L1 `uiux`).
 
 Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). Piano storico: [migration-css.md](migration-css.md) (step 1–6 **Done**).
 
@@ -55,7 +55,7 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 2. Radius canone 6–8px (allineare chrome da 0)
 3. Token target `--surferdark-*` only (`:root` short shims removed in Fine E45)
 4. Light solo print/PDF
-5. Menubar ordine File→Preferiti→Prodotti; touch → L1 `a-uiux` / checklist #6
+5. Menubar ordine File→Preferiti→Prodotti; touch → L1 `uiux` / checklist #6
 6. MD3 = mapping/roles only; conflitti → vince SurferDark LOCK; **no** MUI / Material runtime
 
 ## Checklist pre-commit UI (slim)
@@ -63,16 +63,16 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 1. Token SurferDark / vars — no hex nuovi salvo D3/print; ruoli MD3 solo via [material3.md](material3.md)
 2. Dark default; print invert light
 3. Section shell: surface + divider + radius 8; **no card-in-card**
-4. CTA SurferDark: primary **gold** + sentence case — classi in [componenti.md](componenti.md); una CTA / hit ≥44px → L1 `a-uiux`
+4. CTA SurferDark: primary **gold** + sentence case — classi in [componenti.md](componenti.md); una CTA / hit ≥44px → L1 `uiux`
 5. Radius input/btn 6; panel 8; no 0 legacy su nuovi controlli; no corner MD3 large/XL
-6. Menubar ordine WTP File→Preferiti→Prodotti; touch target → L1 `a-uiux`
+6. Menubar ordine WTP File→Preferiti→Prodotti; touch target → L1 `uiux`
 7. Nuovi blocchi: preferire `.panel` / `.field` / `.tab` SoT (alias legacy ok in migrazione); product homes = `.product-layout` / `.product-content`
-8. Focus-visible SurferDark: **2px accent**; state layers MD3 ok **con** focus ring; contrasto AA → L1 `a-uiux`
+8. Focus-visible SurferDark: **2px accent**; state layers MD3 ok **con** focus ring; contrasto AA → L1 `uiux`
 
 9. PDF disabilitato finché contenuto chiave non pronto; export in File→Salva (canone L1 `uiux` § Pattern guida)
 10. Grafici: palette SurferDark; dettagli → `a-charts`
 11. Dopo cambi FE: preview `http://127.0.0.1:8181/wtp/` (o `:3000`) + hard refresh — preferire `127.0.0.1` a `localhost` (IPv4-only + cookie sessione host-bound)
-12. Tocchi a `surferdark.css`/HTML skin: RED→GREEN; gate = contract test CSS (`src/auth/js/surferdarkAppbarCss.test.js`, `surferdarkPrimitivesCss.test.js`); rename path CSS = no blanket replace su assert negativi; assert «non ridichiarare» / no-hex: **suite-wide** tollerare assenza `<style>` (`pageCss = style ? style[1] : ''` **oppure** `doesNotMatch(html, /<style/)`); helper `ruleBody` = match standalone/comma-group only — **no** `(?:^|[,\\s])` che cattura discendenti (`.product-content .panel` ≠ `.panel`); **token opt-in GREEN:** dual-alias soft-assert → L1 `a-uiux`/`static-stack` regola 6 — shim WTP `--(?:bg|panel|muted|…|surferdark-*)` nello **stesso** slice
+12. Tocchi a `surferdark.css`/HTML skin: RED→GREEN; gate = contract test CSS (`src/auth/js/surferdarkAppbarCss.test.js`, `surferdarkPrimitivesCss.test.js`); rename path CSS = no blanket replace su assert negativi; assert «non ridichiarare» / no-hex: **suite-wide** tollerare assenza `<style>` (`pageCss = style ? style[1] : ''` **oppure** `doesNotMatch(html, /<style/)`); helper `ruleBody` = match standalone/comma-group only — **no** `(?:^|[,\\s])` che cattura discendenti (`.product-content .panel` ≠ `.panel`); **token opt-in GREEN:** dual-alias soft-assert → L1 `uiux`/`static-stack` regola 6 — shim WTP `--(?:bg|panel|muted|…|surferdark-*)` nello **stesso** slice
 
 13. i18n UI (chrome + Liste + customer/`data-i18n`): niente msgid a schermo — `uiT` / fallback se `t(key)===key`; IT/EN fissi in AppBar; msgid SoT da `.po`; product homes → `applyDomI18n` (canone L1 `uiux` § Pattern guida)
 14. Liste Input: primary/advanced come [patterns.md](patterns.md) § Liste Input; payload Zod completo
