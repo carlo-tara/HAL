@@ -22,7 +22,7 @@ bash agents/scripts/agent-worktree.sh land <nome>    # preview → rebase → gu
 - Il gate del land: `make -C agents pre-commit` (include `check-registry`) —
   se il pre-commit del branch è verde, main resta verde per costruzione.
 
-## Le 13 regole
+## Le 16 regole
 
 Disciplina (zero codice):
 
@@ -61,7 +61,20 @@ non un gesto di lavoro: `agent-todo.py` rifiuta i branch slice (le voci
 chiuse restano nel ToDo di branch e le trasporta il merge per ID) e scrive
 su master sotto il flock cooperativo `agent-commit.lock` condiviso con
 commit/land. Il rebuild `merge_unreleased` non è merge-friendly _by design_:
-si rigenera, non si fonde.
+si rigenera, non si fonde. La transazione non si chiude sul disco: un flush riuscito su master è commit+push nello stesso turno (`git add ToDo.md CHANGELOG.md && git commit` in un'unica invocazione, push dei soli file toccati dal flush) — un `[x]` flushato ma non committato è interesse sul conflitto (evidenza hal_system2 2026-11-18: la chiusura T1-03 rimasta nel worktree è costata ~15 chiamate di forensics e rebase il giorno dopo).
+
+15. Il **confine della slice è il contratto, non l'idea**: più massime, test
+    e comandi che servono lo stesso contratto stanno in un solo branch, un
+    solo land (pagare la coda del land per micro-idee costa ~8 chiamate per
+    turno — evidenza 2026-11-18); il bug scoperto a metà lavoro merita
+    branch proprio: il costo della scoperta è già pagato e il write-set ne
+    esce omogeneo.
+16. **Foto di apertura del turno**: chi tocca stato condiviso apre con
+    `agent-worktree.sh status` + `git status --porcelain` + `fetch` (il trio
+    behind/ahead/dirty in una chiamata) e rinfresca prima di verifiche e
+    pull — la base invecchia in minuti, non in ore: ogni coda di sessione
+    finita in rebase autostash nasceva da un modello della base vecchio di
+    pochi minuti.
 
 ## Residui del modello — massime dal campo (hal_system2, 2026-11-18)
 

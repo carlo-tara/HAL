@@ -1,5 +1,8 @@
 # Changelog — learn
 
+## [1.6.25] - 2026-11-18
+- turno hal_system2 «strategie 1-7» (2026-11-18): le recidive documentate come **estensioni di sezioni esistenti**, non nuove massime — il collo di bottiglia non era l'assenza di dottrina ma il non ripescarla al momento dell'uso: §Parametri numerici (client che serializza i numerici, ~20ª occorrenza), §Tool call paralleli (variante «dipendenza autoinflitta»: 4 occorrenze nel turno stesso che implementava la regola), §Path dei comandi L0 (topologia HAL.git app+registry, cd via symlink consumer, worktree appena creato invisibile ai file tool). Referenza canonica nuova: AGENT-PROTOCOL § «Layout canonico»; regole 15-16 in worktree-land.
+
 ## [1.6.24] - 2026-11-18
 - `/learn !` brainbeez rv19/chiusura S149 (2ª sessione `/learn` del giorno, dopo 1.6.23): consolidate le **2 promozioni pending dichiarate nell'entry #37** del registro progetto, entrambe verificate una 2ª volta oggi: (1) §Sessioni parallele — gate pre-commit che legge il disco ⇒ commit in `git worktree add --detach`; (2) §Sessioni parallele — lane di test parallele condividono il DB dev del compose ⇒ red transitori da attribuire con lock di riga.
 - Nota di gara: collisioni odierne sui registri (etichetta S148→S149, voce S146 cancellata a metà in CHANGELOG, worktree HAL in M/M) — le due regole chiudono il cerchio appena aperto.

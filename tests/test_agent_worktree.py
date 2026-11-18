@@ -1,135 +1,69 @@
-"""Smoke del protocollo worktree (regola `.wt-extra`): `new` deve rendere
-disponibili i file untracked necessari ai gate del repo (es. `.env`), che il
-checkout del worktree non contiene. Evidenza: hal_system2 2026-11-18, test e
-deploy dal worktree senza `.env`.
+"""Smoke del protocollo worktree sul builder riusabile `wt_scratch`.
+
+I test sono asserzioni sul comportamento di `agent-worktree.sh new` (.wt-extra,
+registry symlinkata dei consumer, assenza file); il plumbing git vive in
+`wt_scratch.make_scratch` (strategia 4: ~5 chiamate/turno di reinvenzione del
+fixture evitate — evidenza hal_system2 2026-11-18: remote mancante → push 128,
+symlink non tracciata → falso negativo).
 """
 
 from __future__ import annotations
 
-import os
-import subprocess
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[1] / "agents" / "scripts" / "agent-worktree.sh"
-
-GIT_ENV = {
-    **os.environ,
-    "GIT_AUTHOR_NAME": "t",
-    "GIT_COMMITTER_NAME": "t",
-    "GIT_AUTHOR_EMAIL": "t@t",
-    "GIT_COMMITTER_EMAIL": "t@t",
-}
+from wt_scratch import git_out, make_scratch, new_slice
 
 
-def _git(cwd, *args):
-    subprocess.run(
-        ("git", *args),
-        cwd=str(cwd),
-        check=True,
-        capture_output=True,
-        text=True,
-        env=GIT_ENV,
-    )
+def test_scratch_builder_provides_clone_origin_env_and_extra(tmp_path):
+    """Il builder costruisce: origin bare, clone con untracked, .wt-extra."""
+    s = make_scratch(tmp_path, wt_extra=True)
+    assert (s.clone / "README.md").is_file()
+    assert (s.clone / ".env").read_text(encoding="utf-8") == "SECRET=1\n"
+    assert (s.origin / "HEAD").is_file()
+    assert git_out(s.clone, "remote", "get-url", "origin") == str(s.origin)
+    assert (s.clone / ".wt-extra").read_text(encoding="utf-8").endswith(".env\n")
 
 
-def _scratch(tmp_path, with_extra):
-    origin = tmp_path / "origin.git"
-    _git(tmp_path, "init", "--bare", "-q", str(origin))
-    main = tmp_path / "app"
-    main.mkdir()
-    _git(main, "init", "-q", "-b", "master")
-    (main / ".gitignore").write_text(".env\n", encoding="utf-8")
-    (main / "README.md").write_text("scratch\n", encoding="utf-8")
-    if with_extra:
-        (main / ".wt-extra").write_text(
-            "# file untracked da symlinkare nei worktree\n.env\n",
-            encoding="utf-8",
-        )
-    (main / ".env").write_text("SECRET=1\n", encoding="utf-8")  # ignored, mai committato
-    _git(main, "add", "-A")
-    _git(main, "commit", "-q", "-m", "base")
-    _git(main, "push", "-q", str(origin), "master")
-    clone = tmp_path / "clone"
-    _git(tmp_path, "clone", "-q", str(origin), str(clone))
-    # l'ambiente del checkout principale: i file untracked (es. .env) vivono qui,
-    # non nel seed — è da MAIN (il checkout chiamante) che il worktree li symlinka.
-    (clone / ".env").write_text("SECRET=1\n", encoding="utf-8")
-    return main, clone
-
-
-def _new(clone, name):
-    r = subprocess.run(
-        ("bash", str(SCRIPT), "new", name),
-        cwd=str(clone),
-        check=True,
-        capture_output=True,
-        text=True,
-        env=GIT_ENV,
-    )
-    for ln in r.stdout.splitlines():
-        if ln.startswith("worktree: "):
-            return Path(ln.split("worktree: ", 1)[1].strip())
-    raise AssertionError(f"stdout privo di worktree: {r.stdout!r}")
+def test_scratch_builder_registry_symlink_tracked(tmp_path):
+    """Variante consumer: `agents` è symlink TRACCIATA verso registry condivisa."""
+    s = make_scratch(tmp_path, registry_symlink=True)
+    assert s.ext is not None
+    assert (s.clone / "agents").is_symlink()
+    assert (s.clone / "agents").resolve() == s.ext.resolve()
+    assert (s.ext / ".tools/shellcheck").is_file()
 
 
 def test_new_symlinks_wt_extra_files(tmp_path):
-    main, clone = _scratch(tmp_path, with_extra=True)
-    wt = _new(clone, "s1")
+    s = make_scratch(tmp_path, wt_extra=True)
+    wt = new_slice(s.clone, "s1")
     assert (wt / ".tmp").is_dir()
     link = wt / ".env"
     assert link.is_symlink()
-    assert link.resolve() == (clone / ".env").resolve()
-    assert link.read_text(encoding="utf-8") == "SECRET=1\n"
-    assert (wt / "README.md").is_file()  # il checkout normale non è toccato
+    assert link.resolve() == (s.clone / ".env").resolve()
+    assert (wt / "README.md").is_file()
 
 
 def test_new_without_wt_extra_is_not_broken(tmp_path):
-    _, clone = _scratch(tmp_path, with_extra=False)
-    wt = _new(clone, "s2")
+    s = make_scratch(tmp_path)
+    wt = new_slice(s.clone, "s2")
     assert wt.is_dir()
     assert not (wt / ".env").exists()
 
 
 def test_wt_extra_missing_source_skipped_with_warning(tmp_path):
-    _, clone = _scratch(tmp_path, with_extra=True)
-    (clone / ".wt-extra").write_text(
+    s = make_scratch(tmp_path, wt_extra=True)
+    (s.clone / ".wt-extra").write_text(
         ".env\nno-absente.txt\n", encoding="utf-8"
     )  # dichiarazione nel MAIN chiamante: la riga buona vale, la mancante degrada
-    wt = _new(clone, "s3")
+    wt = new_slice(s.clone, "s3")
     assert (wt / ".env").is_symlink()
     assert not (wt / "no-absente.txt").exists()
 
 
-def _scratch_symlinked_registry(tmp_path):
-    """Come i consumer HAL: `agents` è una symlink TRACCIATA verso una registry
-    condivisa (inode unico main↔worktree); il `.env` untracked resta nel MAIN."""
-    origin = tmp_path / "origin.git"
-    _git(tmp_path, "init", "--bare", "-q", str(origin))
-    ext = tmp_path / "shared-registry"
-    (ext / ".tools").mkdir(parents=True)
-    sc = ext / ".tools" / "shellcheck"
-    sc.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
-    os.chmod(sc, 0o755)
-    main = tmp_path / "app"
-    main.mkdir()
-    _git(main, "init", "-q", "-b", "master")
-    (main / ".gitignore").write_text(".env\n", encoding="utf-8")
-    (main / "README.md").write_text("consumer\n", encoding="utf-8")
-    (main / "agents").symlink_to(ext, target_is_directory=True)  # tracciata come symlink
-    _git(main, "add", "-A")
-    _git(main, "commit", "-q", "-m", "base")
-    _git(main, "push", "-q", str(origin), "master")
-    clone = tmp_path / "clone"
-    _git(tmp_path, "clone", "-q", str(origin), str(clone))
-    (clone / ".env").write_text("SECRET=1\n", encoding="utf-8")
-    return ext, clone
-
-
 def test_new_survives_registry_symlinked_to_main(tmp_path):
-    """cp same-file (dest==source via symlink tracciata) non deve abortare new."""
-    ext, clone = _scratch_symlinked_registry(tmp_path)
-    wt = _new(clone, "s4")
+    """Consumer con registry via symlink tracciata: cp same-file non aborta new."""
+    s = make_scratch(tmp_path, registry_symlink=True)
+    wt = new_slice(s.clone, "s4")
     assert wt.is_dir()
-    assert Path(wt / "agents").resolve(strict=False) == ext.resolve()
-    assert not (wt / "agents").is_symlink() or True  # il checkout può portare la symlink
+    assert (wt / "agents").resolve() == s.ext.resolve()
     assert (wt / "README.md").is_file()

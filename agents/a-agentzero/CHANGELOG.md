@@ -1,5 +1,17 @@
 # Changelog — a-agentzero
 
+## [1.13.9] - 2026-11-18
+
+### Added
+
+- Builder riusabile per i test di protocollo: `tests/wt_scratch.py` (`make_scratch`: origin bare + seed pushato + clone con untracked d'ambiente, opzioni `.wt-extra` e registry-symlink; `new_slice`: esegue il vero `agent-worktree.sh new`) e refactor di `tests/test_agent_worktree.py` sul builder con 2 self-test (6 verdi, refactor senza cambio di comportamento).
+
+### Changed
+
+- Regola 14 estesa fino a git: il flush riuscito su master è transazione che si chiude nello stesso turno con commit+push dei soli file toccati; `commands/todo.md` e AGENT-PROTOCOL §Multi-sessione recepiscono (evidenza hal_system2: chiusura T1-03 flushata-non-committata ≈ 15 chiamate di forensics+rebase il giorno dopo).
+- Regole 15-16 in `references/worktree-land.md` (confine di slice = contratto; foto di apertura del turno); AGENT-PROTOCOL: nuovo § «Layout canonico» (topologia HAL.git app+registry, symlink consumer, `.wt/`); conteggio regole 13→16 allineato nei due riferimenti.
+
+
 ## [1.13.8] - 2026-11-18
 
 ### Fixed

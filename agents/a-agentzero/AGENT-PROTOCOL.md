@@ -372,11 +372,30 @@ Gerarchia scrittura: L2 > file dati > rules > L1 (solo su richiesta esplicita). 
 
 ---
 
+## Layout canonico (topologia che fa risparmiare chiamate)
+
+Il git root della registry è `/var/www/hal_gateway` (repo `HAL.git`, remote
+origin): contiene **app e registry insieme** — `router.py`, `scripts/`,
+`tests/` e la sottodirectory `agents/` con `a-agentzero`, `scripts/agent-*.sh`,
+`Makefile`. I consumer symlinkano il pezzo, non la root: `<consumer>/agents`
+→ `…/hal_gateway/agents`, `<consumer>/.agents` → `…/hal_gateway/.agents`
+(mirror generati). Conseguenze operative: (1) dal cwd del consumer il path
+corretto è `agents/scripts/…`, dal cwd dentro `agents/` è `scripts/…` —
+ri-includere `agents/` produce falsi «file non esistente»; (2) il terminale
+confinato al workspace entra nel git root fuori-workspace passando per il
+symlink consumer (git risolve lo stesso repo da qualsiasi sottodirectory);
+(3) i worktree del protocollo vivono sotto `<parent-di-main>/.wt/` (riga di
+gitignore nei consumer) e un worktree appena creato fuori-workspace non è
+enumerato dai file tool (lista fatta a inizio sessione): spostarlo dentro
+`.wt/` del progetto o operare da terminale.
+
+---
+
 ## Multi-sessione (worktree + branch per slice)
 
-Sessioni concorrenti NON condividono il main checkout: `bash agents/scripts/agent-worktree.sh new <nome>` crea worktree+branch da `origin/master` (sotto `.wt/` del genitore del main); il lavoro si chiude nello stesso turno (un branch, un slice, un turno). `agent-worktree.sh land <nome>` esegue la sequenza seriale: lock `agent-commit.lock` condiviso con `agent-commit.sh`, preview `merge-tree`, rebase con rerere, guardie `check-registry`, gate bundle, push ff-only verificato via `ls-remote`, cleanup. Il write-set di una slice è il diff del branch (allow-list dichiarata, non audit a valle); i registri append-only si uniscono con `merge=union`, i pattern ripetuti (header di versione, `extends-version`) passano da `rerere`; gli stati temporanei vivono nel worktree (`.tmp/`), mai in `/tmp` con nomi prevedibili; i file untracked necessari (es. `.env`) sono dichiarati nel tracciato `.wt-extra` e symlinkati da `new`. Il flush `[x]`→CHANGELOG è transazione di consolidamento (regola 14): solo su master post-land, sotto il flock cooperativo `agent-commit.lock`; su slice le voci chiuse restano nel ToDo di branch e le trasporta il merge.
+Sessioni concorrenti NON condividono il main checkout: `bash agents/scripts/agent-worktree.sh new <nome>` crea worktree+branch da `origin/master` (sotto `.wt/` del genitore del main); il lavoro si chiude nello stesso turno (un branch, un slice, un turno). `agent-worktree.sh land <nome>` esegue la sequenza seriale: lock `agent-commit.lock` condiviso con `agent-commit.sh`, preview `merge-tree`, rebase con rerere, guardie `check-registry`, gate bundle, push ff-only verificato via `ls-remote`, cleanup. Il write-set di una slice è il diff del branch (allow-list dichiarata, non audit a valle); i registri append-only si uniscono con `merge=union`, i pattern ripetuti (header di versione, `extends-version`) passano da `rerere`; gli stati temporanei vivono nel worktree (`.tmp/`), mai in `/tmp` con nomi prevedibili; i file untracked necessari (es. `.env`) sono dichiarati nel tracciato `.wt-extra` e symlinkati da `new`. Il flush `[x]`→CHANGELOG è transazione di consolidamento (regola 14): solo su master post-land, sotto il flock cooperativo `agent-commit.lock`; su slice le voci chiuse restano nel ToDo di branch e le trasporta il merge. La transazione si chiude in git nello stesso turno (flush ⇒ commit+push dei soli file toccati, regola 14); il turno apre con la foto dello stato condiviso (`status` + porcelain + `fetch`, regola 16) e il confine della slice è il contratto, non l'idea (regola 15).
 
-Protocollo completo (13 regole): [`references/worktree-land.md`](references/worktree-land.md).
+Protocollo completo (16 regole): [`references/worktree-land.md`](references/worktree-land.md).
 
 ---
 
