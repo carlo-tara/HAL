@@ -12,3 +12,7 @@ events/
 # Igiene: bytecode Python mai in tracking
 __pycache__/
 *.pyc
+
+# Protocollo worktree/land: stati temporanei di sessione (regola 3)
+.tmp/
+.tmp_*

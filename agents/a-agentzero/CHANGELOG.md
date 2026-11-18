@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.5] - 2026-11-18
+
+### Changed
+
+- Header di convalida (check-version-changelog.sh --fix): il bump era nel frontmatter senza registro — voce da integrare a mano.
+
 ## [Unreleased]
 
 ### Added

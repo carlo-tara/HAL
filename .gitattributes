@@ -1,0 +1,11 @@
+# Protocollo worktree/land (riferimento: agents/a-agentzero/references/worktree-land.md)
+# I registri puramente append-only si mergeano con union: due slice che aggiungono
+# bullet diversi li conservano entrambi; le righe MODIFICATE in comune restano un
+# conflitto reale (union non maschera gli edit, solo le append).
+CHANGELOG.md merge=union
+product/session-learnings.md merge=union
+product/state/agent-progress.md merge=union
+agents/*/CHANGELOG.md merge=union
+agents/*/*/CHANGELOG.md merge=union
+# NOTE: ToDo.md ESCLUSO di proposito — backlog rinfrescabile (≠ append-only):
+# l'union sui rewrite duplicherebbe le voci chiuse.

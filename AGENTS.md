@@ -34,3 +34,7 @@ La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzato Z
 
 - Eseguire sempre `bash agents/scripts/link-workspace-skills.sh` dopo aver aggiunto o modificato comandi o skill.
 - Lo script crea i link simbolici verso `.zed/prompts/`.
+
+## Multi-sessione: worktree + branch per slice
+
+Sessioni concorrenti NON lavorano sul main checkout: `bash agents/scripts/agent-worktree.sh new <nome>` crea worktree+branch da `origin/master`; il lavoro si chiude con `agent-worktree.sh land <nome>` (preview `merge-tree`, rebase con rerere, guardie `check-registry`, push ff-only verificato, cleanup). Il main resta verde per costruzione; i consumer (symlink `agents/`, mirror `.agents/skills`) vedono solo il landed. Protocollo completo: `agents/a-agentzero/references/worktree-land.md`.
