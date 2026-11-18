@@ -44,7 +44,8 @@ HEADERS = (
 # I candidati rispettano il canone Laya: label corta <30 char; k>=4 => System 1
 # produce solo shortlist (T-73140), la label gold rimane una sola opzione.
 
-ROUTING_SEEDS: list[tuple[str, list[str], str]] = [
+Seed = tuple[str, list[str] | str, str]
+ROUTING_SEEDS: list[Seed] = [
     (
         "Il cliente vuole impostare un pilota B2B con ICP 6-50 dipendenti nel bacino di Chiasso",
         ["a-b2b", "a-product", "a-seozoom"],
@@ -207,7 +208,7 @@ ROUTING_SEEDS: list[tuple[str, list[str], str]] = [
     ),
 ]
 
-CHOICE_SEEDS: list[tuple[str, list[str], str]] = [
+CHOICE_SEEDS: list[Seed] = [
     (
         "Prima del deploy degli agenti: dry-run di verifica o deploy diretto",
         ["report_prima", "deploy_diretto"],
@@ -365,7 +366,7 @@ CHOICE_SEEDS: list[tuple[str, list[str], str]] = [
     ),
 ]
 
-SCORE_SEEDS: list[tuple[str, str, str]] = [
+SCORE_SEEDS: list[Seed] = [
     (
         "refactor del parser choice in router.py che tocca il fallback legacy",
         "rischio_regressione",
@@ -517,11 +518,11 @@ NOUL_SEEDS: list[tuple[str, str]] = [
     ("il prompt di scelta ha opzioni quasi uguali, quale?", "ambiguita S1"),
 ]
 
-SEEDS: dict[str, list[tuple]] = {
+SEEDS: dict[str, list[Seed]] = {
     "routing": ROUTING_SEEDS,
     "choice": CHOICE_SEEDS,
     "score": SCORE_SEEDS,
-    "noul": NOUL_SEEDS,
+    "noul": [(instruction, "", fonte) for instruction, fonte in NOUL_SEEDS],
 }
 
 
@@ -530,6 +531,10 @@ def build_workbook(out_path: Path) -> dict[str, int]:
 
     # --- foglio Istruzioni ---------------------------------------------------
     ws = wb.active
+    if (
+        ws is None
+    ):  # Workbook() nasce sempre con un foglio attivo; guardia per il tipe checker
+        ws = wb.create_sheet()
     ws.title = "Istruzioni"
     header_font = Font(bold=True)
     wrap = Alignment(wrap_text=True, vertical="top")
@@ -677,22 +682,19 @@ def build_workbook(out_path: Path) -> dict[str, int]:
             fam_cell = ws.cell(row=row, column=2, value=family)
             dv_family.add(fam_cell)
             if i < len(seeds):
-                seed = seeds[i]
-                instruction = seed[0]
-                candidates = seed[1] if family in ("choice", "routing") else None
-                criteria = seed[1] if family == "score" else None
-                fonte = (
-                    seed[2]
-                    if len(seed) > 2 and family != "noul"
-                    else (seed[1] if family == "noul" else "")
-                )
+                instruction, second, fonte = seeds[i]
                 ws.cell(row=row, column=3, value=instruction).alignment = wrap
                 if family in ("choice", "routing"):
+                    candidates = second if isinstance(second, list) else []
                     ws.cell(
                         row=row, column=4, value=" | ".join(candidates)
                     ).alignment = wrap
                 if family == "score":
-                    ws.cell(row=row, column=5, value=criteria)
+                    ws.cell(
+                        row=row,
+                        column=5,
+                        value=second if isinstance(second, str) else "",
+                    )
                 ws.cell(row=row, column=7, value=fonte).alignment = wrap
             lc = ws.cell(row=row, column=6)
             lc.fill = label_fill
