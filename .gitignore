@@ -16,3 +16,6 @@ __pycache__/
 # Protocollo worktree/land: stati temporanei di sessione (regola 3)
 .tmp/
 .tmp_*
+
+# lockfile di LibreOffice/Office attorno agli xlsx (recidiva 1822d3e: assorbiti dal prefisso di directory)
+*~lock*#*
