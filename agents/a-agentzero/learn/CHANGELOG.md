@@ -5,6 +5,13 @@
 - `/learn !` hal_gateway (sessione HT-005→HT-010, stesso giorno, seconda consolidazione): consolidati in `tool-pitfalls.md` §Sessioni parallele — (1) prefisso di directory nell'allow-list assorbe i transitori nati tra `status` e `add` (lockfile LibreOffice pushato in 1822d3e; recupero senza reset: blob surgery con `rm --cached` su index privato, 9ceb108 — `git add` non stagea la cancellazione di un file ancora su disco); (2) verde preso in prestito: origin può restare rosso da bump meccanico corrotto altrui (`c3599e2` `versenversion:`) mentre il worktree condiviso è già a posto per la sorella — rieseguire il gate che legge i file bumpati e verificare `git diff` sui file letti dal gate prima di chiamarlo «CI verde»; `sync !`/deploy-all pubblica lo stato del worktree. §Tool call paralleli: sesta evidenza (tre ricadute producer→consumer autoinflitte, nessuna regola nuova). Carta `docs/28_laya_model_card.md`: N/A «eval raw assente» → prima eval misurata su oro confermato (hit_rate 0.276, direct band 0.523, caveat vocabolario noul/bypass score), adozione soglie gated `HT-011`. Esclusi (anti-grasso): auto-vote commit-type 3/4 incorrect (già nel loop telemetria Laya), coercizione parametri numerici (già 1.6.25), warning estensioni DV openpyxl (osservazione singola).
 
 
+## [1.7.0] - 2026-11-18
+
+### Added
+
+- `tool-pitfalls.md` §Sessioni parallele: ricetta «`pull --rebase --autostash` in worktree condiviso con sorella attiva» — conflitto del proprio commit si risolve tenendo entrambe le modifiche, il UU su file ALTRUI si riporta a HEAD (`git reset -- <file> && git checkout -- <file>`) lasciando lo stash autostash intatto; mai drop del lavoro altrui.
+- `tool-pitfalls` §Frammenti CJK: evidenza di ieri (assorbito `吸收` nel session-learnings generato in /learn !, sweep `grep -rP` post-scrittura ha preso il refuso prima del commit).
+
 ## [1.6.27] - 2026-11-18
 
 ### Changed

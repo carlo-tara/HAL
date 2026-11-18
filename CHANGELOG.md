@@ -39,7 +39,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Strumento di etichettatura gold set HT-005: workbook rigenerabile `benchmark/gold_set/HT-005_labeling.xlsx` (800 semi sulle 4 famiglie Laya, fogli Istruzioni + Copertura) ed esportatore XLSX→JSONL con validazione contratto HT-008 (`benchmark/scripts/make_gold_set_workbook.py`, `benchmark/scripts/gold_set_xlsx_to_jsonl.py`); draft `gold_set.jsonl` di 123 casi con label umane da confermare (choice 31, routing 32, score 30, noul 30) — 1822d3e/f1cdb94 · Benchmark
 
 ### Changed
-### Changed
+
+- `learn` 1.6.27→1.7.0 (`bump minor` via `agent-version.sh`): in `tool-pitfalls.md` §Sessioni parallele la ricetta «`pull --rebase --autostash` in worktree condiviso» e un'evidenza CJK (2026-11-18) nella catena esistente; session-learnings HAL e harness-CHANGELOG registrati. [sync:safe]
 
 - Sync selettivo `[sync:safe]` 8 figli L1←a-agentzero 1.13.9 chiuso con riallineamento di `a-harness` (1.11.1→1.11.2, extends-version 1.13.9): il fix 516146c aveva recuperato 7 skill su 8, la ottava era rimasta indietro.
 - `uiux` L1 1.1.0→1.2.0: canoni chrome generici (slot brand vs meta di pagina; azioni di output nel menu File della suite; copy UI da origine i18n con fallback) promossi dalle L2 `wtp-ux-ui` 1.3.69→1.3.70 e `b2b-explorer-ui-ux` 1.0.33→1.0.34, che restano con override di progetto + puntatore — dedup `/sync <` su richiesta esplicita. [sync:safe]

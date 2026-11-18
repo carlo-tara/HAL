@@ -204,3 +204,12 @@
 - Chiusura [sync:safe] 8 L1←a-agentzero 1.13.9: dopo il fix 516146c (decodifica `versenversion:` in 7 skill) `a-harness` era rimasta indietro — riallineata 1.11.2/1.13.9 in questo flusso. Regola già registrata in tool-pitfalls §Sessioni parallele («rieseguire il gate che legge i file bumpati») — qui rispettata in chiusura, non ri-appresa. [sync:review]
 - `uiux` L1 1.2.0 assorbe 3 canoni chrome dalle L2 `wtp-ux-ui`/`b2b-explorer-ui-ux` (puntatori + override restanti): prima promozione L1 con trigger esplicito dell'utente su report `/sync <` (regola ≥2 progetti soddisfatta da due superfici dello stesso DS WTP). [sync:safe]
 
+
+## 2026-11-18 — pipeline /learn ! + /sync + /version minor + /document → HAL (sessione)
+
+### HAL
+
+- Consolidamento: voce `tool-pitfalls.md` §Sessioni parallele su `pull --rebase --autostash` in worktree condiviso (ricetta reset+checkout-sullo-stash-altrui) + terza evidenza CJK → `learn` 1.6.27→1.7.0 (bump minor via `agent-version.sh bump minor`). [sync:safe]
+- Chiuso il debito 2026-11-09 «Promozione L1 uiux delle parti generiche rinviata»: `a-design/uiux` 1.2.0 con i 3 canoni chrome (slot brand/meta, output nel menu File, copy da origine i18n) e L2 ridotte a puntatore+override; registrato in `docs/harness-CHANGELOG.md` §Changed. [sync:safe]
+- Esclusi (anti-grasso): brace-expansion sh (candidato già in ToDo HAL, unica sessione), `versenversion:`/verde preso in prestito (già voce sorella in tool-pitfalls §Sessioni parallele).
+
