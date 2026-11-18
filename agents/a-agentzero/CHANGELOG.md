@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.8] - 2026-11-18
+
+### Fixed
+
+- `agent-worktree.sh new` non aborta più sui consumer con registry via symlink tracciata (hal_system2, brainbeez…): il riuso `.tools/shellcheck` copia solo se il path non è già valido nel worktree — prima il `cp` same-file sotto `set -e` uccideva il comando a metà (evidenza: adoption hal_system2 2026-11-18; test `test_new_survives_registry_symlinked_to_main` con seed a registry symlinkata).
+
 ## [1.13.7] - 2026-11-18
 
 ### Added

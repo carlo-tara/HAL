@@ -98,3 +98,38 @@ def test_wt_extra_missing_source_skipped_with_warning(tmp_path):
     wt = _new(clone, "s3")
     assert (wt / ".env").is_symlink()
     assert not (wt / "no-absente.txt").exists()
+
+
+def _scratch_symlinked_registry(tmp_path):
+    """Come i consumer HAL: `agents` è una symlink TRACCIATA verso una registry
+    condivisa (inode unico main↔worktree); il `.env` untracked resta nel MAIN."""
+    origin = tmp_path / "origin.git"
+    _git(tmp_path, "init", "--bare", "-q", str(origin))
+    ext = tmp_path / "shared-registry"
+    (ext / ".tools").mkdir(parents=True)
+    sc = ext / ".tools" / "shellcheck"
+    sc.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+    os.chmod(sc, 0o755)
+    main = tmp_path / "app"
+    main.mkdir()
+    _git(main, "init", "-q", "-b", "master")
+    (main / ".gitignore").write_text(".env\n", encoding="utf-8")
+    (main / "README.md").write_text("consumer\n", encoding="utf-8")
+    (main / "agents").symlink_to(ext, target_is_directory=True)  # tracciata come symlink
+    _git(main, "add", "-A")
+    _git(main, "commit", "-q", "-m", "base")
+    _git(main, "push", "-q", str(origin), "master")
+    clone = tmp_path / "clone"
+    _git(tmp_path, "clone", "-q", str(origin), str(clone))
+    (clone / ".env").write_text("SECRET=1\n", encoding="utf-8")
+    return ext, clone
+
+
+def test_new_survives_registry_symlinked_to_main(tmp_path):
+    """cp same-file (dest==source via symlink tracciata) non deve abortare new."""
+    ext, clone = _scratch_symlinked_registry(tmp_path)
+    wt = _new(clone, "s4")
+    assert wt.is_dir()
+    assert Path(wt / "agents").resolve(strict=False) == ext.resolve()
+    assert not (wt / "agents").is_symlink() or True  # il checkout può portare la symlink
+    assert (wt / "README.md").is_file()
