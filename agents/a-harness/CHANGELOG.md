@@ -5,6 +5,20 @@ Tutte le modifiche rilevanti a **a-harness** sono documentate in questo file.
 Formato basato su Keep a Changelog e Semantic Versioning.
 Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.11.1] - 2026-11-18
+
+### Changed
+
+- Sync con L0 (`/sync !`): `extends-version` allineata 1.13.3→1.13.5; le voci pending del padre sono solo tooling (comando L0 `commit` 1.1.1/1.1.2, telemetria `token_budget` session_id) — nessun delta sul body di `a-harness`, ricetta `[sync:safe]` §Versionamento (comandi/deploy non toccano il body L1). Bump patch via `agent-version.sh`; entry integrata a mano con dichiarazione (lo script non scrive il CHANGELOG).
+
+## [1.11.0] - 2026-11-18
+
+### Added
+
+- Policy L1 **«Chiusura outcome-driven»**: il sistema premia ciò che registra — prima dell'Act dichiarare l'outcome (per chi, con quale metrica, baseline se misurabile gratis); alla chiusura registrare l'apprendimento misurato (mosso / non mosso / ignoto con motivo: la dichiarazione onesta di «ignoto» è parte del rituale, non una falla); ogni taglio release porta una riga sotto il tag del CHANGELOG «cosa è cambiato per chi, quale metrica muove, quando la leggiamo». Promozione da L2 consumer brainbeez al /sync < 2026-11-17 (Perri ③/AGG-01, righe Outcome native su tutte le release dalla 0.10.4, contatore saturato).
+
+Nota di trasparenza (recupero 2026-11-18, `/sync !`): voce mai scritta — il commit 6c817e5 aveva applicato la policy nel body e il bump 1.10.5→1.11.0 del frontmatter, registrando solo il CHANGELOG radice; entry ripristinata fedelmente dal body §policy.
+
 ## [1.10.5] - 2026-11-16
 
 ### Added

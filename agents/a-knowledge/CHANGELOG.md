@@ -1,5 +1,11 @@
 # Changelog — a-knowledge
 
+## [1.1.8] - 2026-11-18
+
+### Changed
+
+- Sync con L0 (`/sync !`): `extends-version` allineata 1.13.3→1.13.5; le voci pending del padre sono solo tooling (comando L0 `commit` 1.1.1/1.1.2, telemetria `token_budget` session_id) — nessun delta sul body di `a-knowledge`, ricetta `[sync:safe]` §Versionamento (comandi/deploy non toccano il body L1). Bump patch via `agent-version.sh`; entry integrata a mano con dichiarazione (lo script non scrive il CHANGELOG).
+
 ## [1.1.7] - 2026-11-09
 
 ### Changed

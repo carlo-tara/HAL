@@ -1,8 +1,8 @@
 ---
 name: a-knowledge
 extends: a-agentzero
-version: 1.1.7
-extends-version: 1.13.3
+version: 1.1.8
+extends-version: 1.13.5
 description: >-
   Reason why: senza una pipeline locale e a disclosure progressiva, ogni libro
   tecnico riletto consuma CPU/GPU e token a ogni domanda.
