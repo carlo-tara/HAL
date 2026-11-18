@@ -1,7 +1,7 @@
 ---
 name: a-seozoom
 extends: a-agentzero
-versenversion: 1.10.8
+version: 1.10.8
 extends-version: 1.13.9
 competencies:
   - seo-import

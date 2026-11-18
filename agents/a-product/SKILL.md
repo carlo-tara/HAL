@@ -1,7 +1,7 @@
 ---
 name: a-product
 extends: a-agentzero
-versenversion: 2.2.7
+version: 2.2.7
 extends-version: 1.13.9
 description: >-
   Reason why: senza un punto unificato di prodotto, discovery, PO, ricerca utente e BDD frammentano il lavoro.

@@ -1,7 +1,7 @@
 ---
 name: a-copywriter
 extends: a-agentzero
-versenversion: 1.7.7
+version: 1.7.7
 extends-version: 1.13.9
 competencies:
   - tono-di-voce

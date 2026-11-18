@@ -1,7 +1,7 @@
 ---
 name: a-design
 extends: a-agentzero
-versenversion: 1.2.8
+version: 1.2.8
 extends-version: 1.13.9
 description: >-
   Reason why: senza coerenza tra interfaccia, infografica e identità visiva, l'esperienza utente risulta frammentata. Agente L1 Design & Visual Experience: unifica layout e accessibilità (uiux), grafici e data visualization (charts) e asset illustrativi (illustrator). Eredita da a-agentzero. Usare per UI, layout statici, WCAG, grafici, dashboard e illustrazioni di brand.
