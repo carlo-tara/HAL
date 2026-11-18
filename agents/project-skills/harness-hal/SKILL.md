@@ -1,8 +1,8 @@
 ---
 name: harness-hal
 extends: a-harness
-version: 1.0.5
-extends-version: 1.10.3
+version: 1.0.7
+extends-version: 1.11.1
 description: >-
   Delta harness per HAL Gateway: Platform API root (Makefile specchio CI), path
   artefatti, profile bootstrap standard, N/A documentati (int/e2e/parity),
@@ -85,6 +85,13 @@ version-chains/sync). `/steward` root non tocca `agents/Makefile` e viceversa.
    Default cambiati → aggiornare i test contratto (`test_compose_ollama`,
    `test_models_catalog`). Dettagli: `docs/operativo.md` § «.env = soli secret»
    e § «Cataloghi modelli».
+7. **Rebuild Laya/orchestrator (il runtime è in container, non in questo repo):** `laya-gpu` è
+   built da `/var/www/hal_system1` (Dockerfile `COPY *.py .`: include il mirror gateway
+   `global_config.py`/`router.py`), l'orchestratore uvicorn:8910 da `/var/www/hal_system2`. Modificare
+   un `.py` in `hal_gateway` **non** raggiunge il container vivo: `cd /var/www/<repo-build> &&
+   docker compose up -d --build`, poi verifica `GET /health` (`laya_health`: `ok`, `device=cuda`,
+   VRAM). `providers.yaml`/`docker-compose.yml` vivono nell'immagine; `runtime.env` host non è letto
+   (coerente con la regola 6). Evidenza: sessione `/version patch`→`/learn` 2026-11-18.
 
 ## Effort
 

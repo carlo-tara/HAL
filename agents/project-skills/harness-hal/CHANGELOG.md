@@ -2,6 +2,18 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.0.7] - 2026-11-18
+
+### Added
+
+- Regola L2 7 «Rebuild Laya/orchestrator»: runtime in container built dai repo fratelli (`laya-gpu` da `/var/www/hal_system1`, orchestratore da `/var/www/hal_system2`); le modifiche a `hal_gateway` non raggiungono il servizio vivo senza `docker compose up -d --build` nel repo di build e verifica `/health`. Da `/learn !` sessione 2026-11-18.
+
+## [1.0.6] - 2026-11-18
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-harness 1.11.1 (`/sync !`): `extends-version` allineata 1.10.3→1.11.1; voci pending 1.10.4 (sync L0 tooling), 1.10.5 (policy «Costo del gate» + corollario «stdout=file»: eredità dal body L1, target N/A del L2 già allineati alla §Verità del gate), 1.11.0 (policy «Chiusura outcome-driven»: eredità pulita) e 1.11.1 (allineamento L0 tooling) — nessun cambio al body L2. Bump patch via `agent-version.sh`; entry integrata a mano con dichiarazione (lo script non scrive il CHANGELOG).
+
 ## [1.0.5] - 2026-11-09
 
 ### Added

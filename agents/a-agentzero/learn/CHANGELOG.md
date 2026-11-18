@@ -1,5 +1,10 @@
 # Changelog — learn
 
+## [1.6.21] - 2026-11-18
+
+- `/learn !` in gara (sessione /learn parallela): consolidata l'evidenza del batch multi-edit non atomico nel bullet «Variante cross-tool» di §Tool call paralleli — applicato **solo il primo edit** della chiamata (il file era cambiato tra lettura e scrittura); i due edit successivi (falso positivo su ricerca di stringa già presente, duplicazione di un bullet) non atterrati. Rimedio: sostituzioni Python mirate con assert, pulizia di 2 blank line residue tra bullet fratelli. Verifica post-scrittura in risposta separata: la regola di §Verifica dopo scrittura ha funzionato, ed è il motivo per cui la gara è stata rilevata.
+- Nuova bullet in §Sessioni paralleli: **collisione `/tmp` tra sessioni parallele** — `read_file` di `/tmp/learn_state.txt` restituiva contenuto della sessione gemella; rimedio: stato intermedio nel root del progetto (`.tmp_*`), non `/tmp`. La classe «parametri numerici passati come stringhe» (`read_file end_line`, `terminal timeout_ms`) risulta già documentata in §Parametri numerici: nessun aggiornamento della catena d'evidenza è stato tentato per non scrivere sul bullet condiviso da 7k carattere in gara (rischio > valore informativo).
+
 ## [1.6.20] - 2026-11-17
 
 ### Changed
