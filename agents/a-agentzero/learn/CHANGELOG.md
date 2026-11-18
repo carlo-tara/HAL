@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.6.20] - 2026-11-17
+
+### Changed
+
+- `references/tool-pitfalls.md` §terminal/pytest: unificazione del wording «Verità del gate» — la formula autoritativa è la policy L1 `a-harness` §Verità del gate; il bullet pitfall resta come ricetta operativa con puntatore. Origine: /sync < 2026-11-17, AGG-05 (brainbeez).
+
 ## [1.6.19] - 2026-11-17
 
 ### Changed

@@ -9,6 +9,7 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ### Added
 
+- Skill canon: §Isolamento index di `a-agentzero/commands/commit.md` (1.3.0) incassa il sub-caso **blob surgery per registri misti [Unreleased]** (punto 6) e la guardia `git status <file>` post-recupero (punto 4) — promote da brainbeez AGG-10, terza prova cross-sessione. • `a-harness` 1.10.5→1.11.0: nuova policy L1 **Chiusura outcome-driven** ( outcome dichiarato prima dell'Act, apprendimento misurato alla chiusura, riga sotto il tag release) — promozione AGG-01/Perri ③ al /sync < 2026-11-17, contatore native saturo su 14 release. • `learn` 1.6.19→1.6.20: wording «Verità del gate» unificato alla formula L1 in tool-pitfalls §terminal/pytest.
 - Gate k-aware System 1 sul client gateway: choice/routing/preflight con probabilità verificano il verdetto con self-consistency (k≥4 mai diretto senza top1≥0,8), astensione `low_margin` quando non accettabile — soglie e helper ora nel modulo canonico `laya_gate.py` (symlink verso hal_system1), niente mirror manuale.
 - Chiave Cache L1 a due livelli: prefix stabile + suffix append-only · Gateway Core
 - Catalogo skill compatto con System 1 (Laya) come tool-search · System 1 (Laya) + Agent Platform
