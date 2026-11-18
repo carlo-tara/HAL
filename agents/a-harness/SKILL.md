@@ -1,7 +1,7 @@
 ---
 name: a-harness
 extends: a-agentzero
-versenversion: 1.11.2
+version: 1.11.2
 extends-version: 1.13.9
 description: >-
   Reason why: senza test, gate Make e ritmi sostenibili, lo sviluppo non ha uscita verificabile né qualità stabile.
