@@ -7,13 +7,26 @@ Sposta in `## [Unreleased]` del CHANGELOG le voci `- [x]` (con le loro
 sotto-voci) e quelle della sezione `## Già fatto`, mappando il tag nella
 sezione KaC (bug → Fixed, feature → Added, altri → Changed). Le sezioni
 `### ...` dentro «Già fatto» fissano la sezione KaC delle voci che contengono.
+
+Contratto di consolidamento (protocollo multi-sessione, worktree-land regola 14):
+il flush è una transazione di master/main — su branch slice rifiuta (le voci
+`[x]` restano nel ToDo di branch e le porta il merge; `--force` per eccezioni
+umane) e scrive sotto il flock cooperativo `agent-commit.lock`, lo stesso di
+`agent-commit.sh` e di `agent-worktree.sh land`. Fuori da una repo git le
+guardie degradano a no-op (comportamento storico).
 """
 
 from __future__ import annotations
 
+import fcntl
 import re
+import subprocess
 import sys
+import time
 from pathlib import Path
+
+MAIN_BRANCHES = {"master", "main"}
+LOCK_TIMEOUT_DEFAULT_S = 60.0
 
 SECTION_ORDER = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"]
 DONE_HEADING = "## Già fatto"
@@ -145,28 +158,87 @@ def merge_unreleased(changelog: str, entries: list[tuple[str, str]]) -> str:
     return changelog[: match.end()] + rebuilt + ("\n" + tail if tail else "")
 
 
-def flush(root: Path = Path(".")) -> int:
-    todo_path, log_path = root / "ToDo.md", root / "CHANGELOG.md"
-    if not todo_path.exists():
-        print("Nessun ToDo.md trovato.")
+def _git_out(root: Path, *args: str) -> str | None:
+    """Output di un comando git in root, o None se root non è una repo (degrado)."""
+    try:
+        r = subprocess.run(
+            ("git", "-C", str(root), *args),
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        return r.stdout.strip() if r.returncode == 0 else None
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+
+
+def _branch(root: Path) -> str | None:
+    return _git_out(root, "rev-parse", "--abbrev-ref", "HEAD")
+
+
+def _common_dir(root: Path) -> Path | None:
+    out = _git_out(root, "rev-parse", "--path-format=absolute", "--git-common-dir")
+    return Path(out) if out else None
+
+
+def flush(
+    root: Path = Path("."),
+    force: bool = False,
+    lock_wait_s: float = LOCK_TIMEOUT_DEFAULT_S,
+) -> int:
+    branch = _branch(root)
+    if branch is not None and branch not in MAIN_BRANCHES and not force:
+        print(
+            f"agent-todo: flush rifiutato su branch '{branch}' — il consolidamento "
+            "[x]→CHANGELOG è transazione di master/main post-land: lascia le voci "
+            "chiuse nel ToDo di branch (le porta il merge) e rilancia il flush su "
+            "master (--force solo se sai cosa fai)."
+        )
+        return 2
+    lock_fh = None
+    if branch is not None:
+        cdir = _common_dir(root)
+        if cdir is not None:
+            lock_fh = open(cdir / "agent-commit.lock", "a+")
+            deadline = time.monotonic() + max(lock_wait_s, 0.0)
+            while True:
+                try:
+                    fcntl.flock(lock_fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    break
+                except OSError:
+                    if time.monotonic() >= deadline:
+                        lock_fh.close()
+                        print(
+                            "agent-todo: agent-commit.lock occupato "
+                            "(commit/land di altra sessione in corso) — riprova."
+                        )
+                        return 3
+                    time.sleep(0.1)
+    try:
+        todo_path, log_path = root / "ToDo.md", root / "CHANGELOG.md"
+        if not todo_path.exists():
+            print("Nessun ToDo.md trovato.")
+            return 0
+        new_todo, entries = split_todo(todo_path.read_text(encoding="utf-8"))
+        if not entries:
+            print("Nessun elemento da flushare in CHANGELOG.md.")
+            return 0
+        if log_path.exists():
+            changelog = log_path.read_text(encoding="utf-8")
+        else:
+            changelog = "# Changelog\n\n## [Unreleased]\n\n"
+        merged = merge_unreleased(changelog, entries)
+        log_path.write_text(merged, encoding="utf-8")
+        todo_path.write_text(new_todo.rstrip("\n") + "\n", encoding="utf-8")
+        print(f"Flushate {len(entries)} voci in CHANGELOG.md.")
         return 0
-    new_todo, entries = split_todo(todo_path.read_text(encoding="utf-8"))
-    if not entries:
-        print("Nessun elemento da flushare in CHANGELOG.md.")
-        return 0
-    if log_path.exists():
-        changelog = log_path.read_text(encoding="utf-8")
-    else:
-        changelog = "# Changelog\n\n## [Unreleased]\n\n"
-    merged = merge_unreleased(changelog, entries)
-    log_path.write_text(merged, encoding="utf-8")
-    todo_path.write_text(new_todo.rstrip("\n") + "\n", encoding="utf-8")
-    print(f"Flushate {len(entries)} voci in CHANGELOG.md.")
-    return 0
+    finally:
+        if lock_fh is not None:
+            lock_fh.close()
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "flush":
-        sys.exit(flush())
-    print("Usage: python3 agents/a-agentzero/scripts/agent-todo.py flush")
+        sys.exit(flush(force="--force" in sys.argv))
+    print("Usage: python3 agents/a-agentzero/scripts/agent-todo.py flush [--force]")
     sys.exit(2)

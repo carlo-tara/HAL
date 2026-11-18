@@ -1,14 +1,19 @@
 from __future__ import annotations
 
+import fcntl
 import importlib.util
+import os
+import subprocess
+import time
 from pathlib import Path
 
 SPEC = importlib.util.spec_from_file_location(
-    "agent_todo", Path(__file__).resolve().parents[1]
+    "agent_todo",
+    Path(__file__).resolve().parents[1]
     / "agents"
     / "a-agentzero"
     / "scripts"
-    / "agent-todo.py"
+    / "agent-todo.py",
 )
 agent_todo = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(agent_todo)
@@ -82,3 +87,63 @@ def test_flush_is_idempotent_and_deduplicates(tmp_path):
     log = (tmp_path / "CHANGELOG.md").read_text(encoding="utf-8")
     assert code == 0
     assert log.count("Già presente.") == 1
+
+
+def _git(repo, *args):
+    subprocess.run(
+        ("git", *args),
+        cwd=repo,
+        check=True,
+        capture_output=True,
+        text=True,
+        env={
+            **os.environ,
+            "GIT_AUTHOR_NAME": "t",
+            "GIT_COMMITTER_NAME": "t",
+            "GIT_AUTHOR_EMAIL": "t@t",
+            "GIT_COMMITTER_EMAIL": "t@t",
+        },
+    )
+
+
+def _repo(tmp_path):
+    _git(tmp_path, "init", "-q", "-b", "master")
+    (tmp_path / "ToDo.md").write_text(
+        "## P1\n\n- [x] Voce da consolidare `#infra` · P1\n  - Esito: ok.\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "CHANGELOG.md").write_text(CHANGELOG, encoding="utf-8")
+    _git(tmp_path, "add", "-A")
+    _git(tmp_path, "commit", "-q", "-m", "base")
+    return tmp_path
+
+
+def test_flush_refuses_on_slice_branch_and_force_overrides(tmp_path):
+    """Regola di consolidamento: su slice le [x] restano nel ToDo; il flush è di master."""
+    repo = _repo(tmp_path)
+    _git(repo, "checkout", "-q", "-b", "slice/t104")
+    assert agent_todo.flush(repo) != 0
+    assert "- [x]" in (repo / "ToDo.md").read_text(encoding="utf-8")
+    assert "consolidare" not in (repo / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert agent_todo.flush(repo, force=True) == 0
+    assert "- [x]" not in (repo / "ToDo.md").read_text(encoding="utf-8")
+
+
+def test_flush_serializes_on_agent_commit_lock(tmp_path):
+    """Stesso flock cooperativo di agent-commit.sh/land: mai due scritture concorrenti."""
+    repo = _repo(tmp_path)
+    holder = open(repo / ".git" / "agent-commit.lock", "a+")
+    fcntl.flock(holder, fcntl.LOCK_EX)
+    try:
+        assert agent_todo.flush(repo, lock_wait_s=0.2) != 0
+    finally:
+        fcntl.flock(holder, fcntl.LOCK_UN)
+        holder.close()
+    assert agent_todo.flush(repo, lock_wait_s=2) == 0
+
+
+def test_flush_still_works_outside_git(tmp_path):
+    """Degrado grazioso: senza repo (guardia e lock saltati) il flush è quello storico."""
+    code, _, log = run(tmp_path, "## P1\n\n- [x] Fuori repo `#infra` · P1\n")
+    assert code == 0
+    assert "Fuori repo" in log
