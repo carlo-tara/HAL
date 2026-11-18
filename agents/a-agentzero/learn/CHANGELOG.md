@@ -1,5 +1,10 @@
 # Changelog — learn
 
+## [1.6.22] - 2026-11-18
+
+- Consolidamento `/learn !` (brainbeez rv19, catena commit S146/V4 in gara con sessione parallela). 3 bullet nuovi in `references/tool-pitfalls.md` §Sessioni paralleli: hook che rigenerano file da disco (commit in worktree pulito su HEAD), affermazioni di assunzione/perdita misurate solo su `git show HEAD:<path>`, guardia-base che blocca ⇒ rifare il merge sulla nuova HEAD; marcati «in attesa di conferma su seconda sessione» (sessione singola, evidenza riproducibile). 1 bullet in §Parametri numerici: classi sorelle di validazione-schema (`terminal` senza `cd` → `missing field cd`; MCP laya `options` come stringa → «at least two distinct options are required»). 1 variante in §Shell di lavoro: heredoc non quotato con prosa parentetata. Controparti specifiche di progetto persistite in L2 `harness-brainbeez` (1.5.38). Nota di gara: la voce 1.6.21 è stata committata dal gemello parallelo (commit 28d4a59); la 1.6.22 (questa) resta l'unica non committata nella tree di hal_gateway.
+
+
 ## [1.6.21] - 2026-11-18
 
 - `/learn !` in gara (sessione /learn parallela): consolidata l'evidenza del batch multi-edit non atomico nel bullet «Variante cross-tool» di §Tool call paralleli — applicato **solo il primo edit** della chiamata (il file era cambiato tra lettura e scrittura); i due edit successivi (falso positivo su ricerca di stringa già presente, duplicazione di un bullet) non atterrati. Rimedio: sostituzioni Python mirate con assert, pulizia di 2 blank line residue tra bullet fratelli. Verifica post-scrittura in risposta separata: la regola di §Verifica dopo scrittura ha funzionato, ed è il motivo per cui la gara è stata rilevata.
