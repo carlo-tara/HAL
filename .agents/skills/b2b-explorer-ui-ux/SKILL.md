@@ -1,7 +1,7 @@
 ---
 name: b2b-explorer-ui-ux
 extends: a-copywriter
-version: 1.0.33
+version: 1.0.34
 extends-version: 1.7.5
 description: >-
   Microcopy/UX e delta chrome per l’explorer Cluster B2B score3 (`/explorer/b2b/`):
@@ -33,11 +33,11 @@ SoT chrome/token/menubar/radius/focus: **`wtp-ux-ui`**. Qui solo override prodot
 
 - **Implementazione:** template `b2b-score3-clusters.html` + `src/explorer/b2b/wtp-app-chrome.js` (wrap `/auth/js/chrome.js`); modello testabile `scripts/lib/b2bAppChromeModel.js` (`npm run test:app-chrome`).
 - **Brand AppBar (LOCK):** `.appbar-brand` = **Sales Coach** (`ListsWtpTitle`); `.appbar-version` = semver UI. Non «Explorer B2B» / «Cluster» nello slot brand.
-- **Meta dataset:** contatori / “generato…” sotto `</header>` (`#header-meta` / `.page-dataset-meta`), non dentro `.appbar-title`.
-- **File:** `Stampa…` + `Esporta CSV` (utenti filtrati della tabella corrente).
+- **Meta dataset:** → canone L1 `uiux` § Pattern guida (meta fuori dallo slot brand); nel template: `#header-meta` / `.page-dataset-meta` sotto `</header>`.
+- **File:** → canone L1 `uiux` § Pattern guida (azioni di output nel menu File); override explorer: stampa/esporta sugli utenti filtrati della tabella corrente.
 - **Prodotti:** parity con `src/wtp/shared/wtpProductCatalog.js` (`listWtpProducts()`); non inventare href/label locali.
 - **Preferiti:** `localStorage` key `wtp-b2b-explorer-favorites-v1` (vista: strategia / filtro / ricerca); **non** condividere IndexedDB Preferiti di Liste WTP.
-- **i18n:** locale suite da `src/auth/locales/{it,en}.po` (serviti anche come `/auth/locales/`).
+- **i18n:** → canone L1 `uiux` § Pattern guida (copy da origine i18n) + SoT `.po` in `wtp-ux-ui` #13; qui solo il path `/auth/locales/`.
 - **Destra AppBar:** email da `/api/auth/me` + link Profilo → `/wtp/`.
 - **Layout denso:** tab secondarie **Panoramica | Grafici | Utenti**; KPI compatti; strategie a chip; un solo lavoro per tab. Click su barra/heatmap che applica filtro → apre tab Utenti.
 - **Edit UI:** solo template (+ `wtp-app-chrome.js`) + regenerate (vedi entrypoint sopra).

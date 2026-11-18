@@ -84,3 +84,9 @@
 - 1.0.9 → 1.0.10 — Appreso da sessione: dialog densi (Profilo) = stesso linguaggio shell/overline/chip delle schermate dense `[sync:safe]`
 - 1.0.8 → 1.0.9 — Appreso da sessione: schermate dense a tab secondarie; File→Salva contestuale; print/ZIP vs pannelli nascosti; preview Docker = rebuild UI `[sync:safe]`
 - 1.0.7 → 1.0.8 — Appreso da sessione: chrome Enrico (#0e0e0e / #ffd400 / system UI) come palette runtime Sales Coach; Tara resta solo riferimento marketing `[sync:safe]`
+## [1.3.70] - 2026-11-18
+
+### Changed
+
+- Canoni chrome generici saliti a L1 `uiux` 1.2.0 (§ Pattern guida): checklist #9 e #13 conservano l'implementazione WTP e rimandano al canone.
+

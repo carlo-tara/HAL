@@ -39,6 +39,12 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - Strumento di etichettatura gold set HT-005: workbook rigenerabile `benchmark/gold_set/HT-005_labeling.xlsx` (800 semi sulle 4 famiglie Laya, fogli Istruzioni + Copertura) ed esportatore XLSX→JSONL con validazione contratto HT-008 (`benchmark/scripts/make_gold_set_workbook.py`, `benchmark/scripts/gold_set_xlsx_to_jsonl.py`); draft `gold_set.jsonl` di 123 casi con label umane da confermare (choice 31, routing 32, score 30, noul 30) — 1822d3e/f1cdb94 · Benchmark
 
 ### Changed
+### Changed
+
+- Sync selettivo `[sync:safe]` 8 figli L1←a-agentzero 1.13.9 chiuso con riallineamento di `a-harness` (1.11.1→1.11.2, extends-version 1.13.9): il fix 516146c aveva recuperato 7 skill su 8, la ottava era rimasta indietro.
+- `uiux` L1 1.1.0→1.2.0: canoni chrome generici (slot brand vs meta di pagina; azioni di output nel menu File della suite; copy UI da origine i18n con fallback) promossi dalle L2 `wtp-ux-ui` 1.3.69→1.3.70 e `b2b-explorer-ui-ux` 1.0.33→1.0.34, che restano con override di progetto + puntatore — dedup `/sync <` su richiesta esplicita. [sync:safe]
+- `learn` 1.6.26→1.6.27: ritirato il wording di dismissione AgentFactory dalle routing references (`learn-guidelines.md`, `consolidation-targets.md`) — il routing HAL ora punta solo a file che esistono. [sync:safe]
+- `a-seozoom` 1.10.8→1.10.9: docstring `seozoom_lib.load_project_manifest` allineata al comportamento reale (nessun path AgentFactory). [sync:safe]
 
 - HT-009 via (a) — deflusso mirror: `benchmark/runner/benchmark_runner.py` e `benchmark_cli.py` allineati al canonico post-dismissione gate (generazione sempre `benchmark_call`, `--system1` sola telemetria); sync check 13/13, `make test-unit` 402 OK exit 0; § Prerequisiti/Telemetria del README benchmark aggiornati; dettaglio completo nella voce `HT-009` del ToDo e nel CHANGELOG di `hal_system2`. [sync:safe]
 - Allineare al gate 1 il gate `laya_recommended` del runner benchmark `#system1-gating #benchmark`
@@ -97,6 +103,10 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 - `HT-009` — Dismissione dello strato preflight System 1 nel benchmark (conseguenza del kill criterion di HT-003) · Benchmark
 - `HT-010` — Chiusura eval gold set System 1: runner `pred.jsonl` sul percorso prod + regressione `gold_set_scoring` su make target + proposta di ricalibrazione soglie `laya_gate` (estratto ciclabile di `HT-005`) · System 1 (Laya) — runner `benchmark/scripts/gold_set_pred_runner.py` (percorso prod reale, margin via `laya_gate._answer_probs`/`_top_and_margin` senza duplicazioni, astensioni `score_not_discriminative` null+reason, resume idempotente) + 13 test (`tests/test_gold_set_pred_runner.py`) verdi dentro discovery `test-unit` — suite 426 OK (skipped 0 con pred presente), pre-commit 0. Primo run reale 2026-11-18 su oro confermato (n=123): hit_rate 0.276; decision-family 34/63 = .540; by_band direct .523 / caution .643 / escalate .031; curva margin→accuracy debole e non monotona (.55 a ≥0.8, .81 solo a ≥0.95 con n=16). Conclusione onesta: al draft attuale **nessuna soglia giustifica di toccare `laya_gate`**; il margin alto non discrimina sulle decision-family (corrobora rv7 e il modello card). Due concause aperte: modello debole su prompt decisionali vs label non riviste a campione; e gap di strumento: noul risponde {uncertain, refuse,…} → vocabolario oro da allineare (0/30 sistematico), score families bypassata. Adozione soglie → `HT-011` #human.
 
+
+### Removed
+
+- Skill L2 `project-skills/harness-agentfactory` rimossa dal canone (repo sorgente definitivamente fuori uso): eliminati i symlink consumer (`hal_gateway`, `brainbeez`, `InnerCircle`, `hal_system1`, `liberating.it`), ritirati `MIGRATION.md` e i 15 symlink rotti `~/.cursor/agents/*.md`; riferimenti operativi sostituiti con HAL in AGENTS.md root/agents, README, `docs/operativo.md` (gate mapping→`harness-hal`, brand→`brands/hal.md`), `bounded-contexts.md`, `glossary.md`. Registro storico (CHANGELOG, session-learnings) intatto. [sync:safe]
 ### Fixed
 
 - Recupero post-gara `learn` 1.6.16: voce `[1.6.16]` e bullet «quinta evidenza» §Tool call paralleli re-iniettati via blob surgery dal worktree contaminato (smarriti in una gara stale-restore; la nota [1.6.17] già li dava assenti nel changelog pubblicato) con nota di trasparenza in `learn/CHANGELOG.md`; mirror L0 di `commit` allineati al canonico 1.3.0 (`.zed/prompts` assorbiti in `cb05a7a`, `SKILL.md` frontmatter 1.2.0→1.3.0 via `link-workspace-skills.sh`); nodo N31 marcato done nel work-graph rv 2026-11-16.

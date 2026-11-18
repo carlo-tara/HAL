@@ -111,9 +111,6 @@ for skill in charts illustrator uiux; do
   link_path "${AGENTS_ROOT}/a-design/${skill}" "../../agents/a-design/${skill}" "${WORKSPACE_ROOT}/.agents/skills/${skill}"
 done
 
-link_path "${AGENTS_ROOT}/project-skills/harness-agentfactory" "../../agents/project-skills/harness-agentfactory" \
-  "${WORKSPACE_ROOT}/.agents/skills/harness-agentfactory"
-
 link_path "${AGENTS_ROOT}/project-skills/laya" "../../agents/project-skills/laya" \
   "${WORKSPACE_ROOT}/.agents/skills/laya"
 

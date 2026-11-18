@@ -75,7 +75,7 @@ HAL = sorgente canonica skill (meta-repo), non app consumer.
 
 ## Note
 
-- Naming directory agenti: `a-{dominio}` (L0/L1); L2: `{dominio}-{progetto}` (es. `harness-agentfactory`).
+- Naming directory agenti: `a-{dominio}` (L0/L1); L2: `{dominio}-{progetto}` (es. `harness-hal`).
 - Owner termini ambigui: Protocol/L0 per eredità/sync; Docs/Harness meta per Slice/ready/Platform API; Domain Agents `a-po` per Backlog slice.
 - **Slice** ≠ **Backlog slice**: il primo è perimetro file harness; il secondo è prioritizzazione prodotto.
 - Non inventare stack app (npm/pytest) in questo glossario.

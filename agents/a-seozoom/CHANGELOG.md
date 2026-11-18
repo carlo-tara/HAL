@@ -6,6 +6,13 @@
 
 - Sync selettivo [sync:safe] da a-agentzero 1.13.5→1.13.9 (`/sync !`, conferma umana): voci pending solo infrastruttura L0 — regola 14 flush-transazione (commit+push dei soli file toccati su master), `.wt-extra` e fix registry-symlink in `agent-worktree.sh new`, builder test `wt_scratch` con self-test, regole 15-16 e § «Layout canonico» in AGENT-PROTOCOL. Nessun impatto sul body di a-seozoom: `extends-version` allineata, bump patch, nessuna ricetta locale.
 
+
+## [1.10.9] - 2026-11-18
+
+### Changed
+
+- `seozoom_lib.load_project_manifest`: docstring allineato al comportamento reale (fallback al manifest canonico della skill; nessun path AgentFactory).
+
 ## [1.10.7] - 2026-11-18
 
 ### Changed

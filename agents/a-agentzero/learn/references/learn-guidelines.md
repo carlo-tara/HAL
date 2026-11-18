@@ -30,7 +30,7 @@
 ## Ambito: Progetto vs HAL
 
 - **Progetto:** Convenzione/preferenza del repo consumer (o delta L2 locale). (Es. `.agents/skills/...`, brands, rules, `./ToDo.md` consumer).
-- **HAL:** Protocollo / L0 / L1 canonici / harness meta-repo (Es. `a-*/`, `harness-agentfactory`, docs AF, `./ToDo.md` AF).
+- **HAL:** Protocollo / L0 / L1 canonici / harness meta-repo (Es. `a-*/`, docs HAL, `./ToDo.md` HAL).
 
 ## Regole di scrittura
 

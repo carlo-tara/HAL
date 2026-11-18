@@ -9,7 +9,7 @@ Mappa operativa per `/learn !`: dove persistere ogni tipo di apprendimento nel r
 
 **Anti-grasso L2:** non consolidare nel figlio ciò che è già nel padre L0/L1 — usa puntatore. Se trovi duplicazione, taglia il L2 invece di arricchirlo.
 
-**Ambito changelog (`/learn !`):** ogni voce consolidata va in `### Progetto` o `### HAL` in `product/session-learnings.md`. Progetto = L2/brand/rules/CONTRIBUTING/`./ToDo.md`/`docs/` del consumer; HAL = `a-*/`, protocollo L0, harness meta-repo, ToDo/docs AF.
+**Ambito changelog (`/learn !`):** ogni voce consolidata va in `### Progetto` o `### HAL` in `product/session-learnings.md`. Progetto = L2/brand/rules/CONTRIBUTING/`./ToDo.md`/`docs/` del consumer; HAL = `a-*/`, protocollo L0, harness meta-repo, ToDo/docs HAL.
 
 **Routing:** preferenza permanente → skill/brand/rules; residuo actionable → `./ToDo.md` (**se necessario**); spiegazione/UL/BC/howto → `docs/` o README (**se necessario**). Vedi tabella Destinazione in `learn/SKILL.md`.
 
@@ -41,9 +41,9 @@ Mappa operativa per `/learn !`: dove persistere ogni tipo di apprendimento nel r
 
 | Tipo                         | Target                                                              |
 | ---------------------------- | ------------------------------------------------------------------- |
-| Brand / tono HAL             | `brands/agentfactory.md`                                    |
+| Brand / tono HAL             | `brands/hal.md`                                    |
 | Comandi Cursor L0 (baseline) | `a-agentzero/commands/*.md` (pubblicati da `/sync !`)               |
-| Comandi Cursor override AF   | `.cursor/commands/*.md`                                             |
+| Comandi Cursor override HAL   | `.cursor/commands/*.md`                                             |
 | Protocollo agenti            | `a-agentzero/AGENT-PROTOCOL.md`, `SKILL.md`                         |
 | Skill L1 dominio             | `a-{dominio}/SKILL.md` + `CHANGELOG.md`                             |
 | Piani decisionali            | `.cursor/plans/`                                                    |

@@ -69,7 +69,7 @@ def competitor_project_from_env(env: dict[str, str]) -> str | None:
 
 
 def load_project_manifest(project_root: Path) -> dict[str, Any]:
-    """Load per-project export manifest; fallback to AgentFactory default."""
+    """Load per-project export manifest; fallback to bundled default manifest default."""
     project_manifest = project_root / "seo" / "export-manifest.json"
     if project_manifest.is_file():
         return load_json(project_manifest)

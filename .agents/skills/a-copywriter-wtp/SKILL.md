@@ -14,7 +14,7 @@ disable-model-invocation: true
 
 Estensione **locale** di `a-copywriter` per questo monorepo. Contiene tutto ciò che era in `wtp-brand-voice` (fonte unica convergente).
 
-**Base obbligatoria:** `~/.agents/skills/a-copywriter/SKILL.md` (AgentFactory / `/sync`).
+**Base obbligatoria:** `~/.agents/skills/a-copywriter/SKILL.md` (canone HAL via `/sync`).
 
 **Brand:** `brands/wtp-app.md`.
 
@@ -111,7 +111,7 @@ Task Progress WTP:
 
 ## Reference locali (sotto-scope WTP)
 
-Aggiungere solo in `references/` di questa cartella (non duplicare la base AgentFactory):
+Aggiungere solo in `references/` di questa cartella (non duplicare la base del canone):
 
 - `export-pdf-copy.md` — titoli/sezioni export
 - `locale-patterns.md` — pattern msgid/msgstr

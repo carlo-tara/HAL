@@ -13,6 +13,7 @@ Delta 2026-11-18 (sessione HT-005): consegnati strumento e draft oro — `benchm
 ## P1
 
 ## P2
+- [ ] sh (shell dei tool Zed) non espande i pattern brace `{a,b}`: `ls` e `git commit --` con pathspec a parentesi ricevono il pattern letterale (`pathspec did not match`). Espandere esplicitamente o usare loop. Osservazione 2026-11-18 (brainbeez, 2 ricadute intra-sessione: `ls agents/a-{...}`, commit [sync:safe]) — promotre a `tool-pitfalls.md` alla seconda sessione. #infra
 
 - [ ] `HT-005` — Gold set etichettato per l'eval raw di Laya (~200 casi/famiglia task) `#human` · P2 · System 1 (Laya)
   - STATO 2026-11-18: infrastruttura e strumento consegnati (HT-008 schema+scoring; workbook con 800 id/famiglia e workflow nel foglio Istruzioni, export `benchmark/scripts/gold_set_xlsx_to_jsonl.py`). Draft versionato in `benchmark/gold_set/gold_set.jsonl`: 123 casi validati (choice 31, routing 32, score 30, noul 30) con label **confermate da umano il 2026-11-18** (`f1cdb94`). Residuo umano: (a) confermare/rettificare le 123 label — **FATTO 2026-11-18** (conferma in sessione Zed; note del workbook aggiornate a «confermata»), (b) redigere i casi mancanti fino a ~200/famiglia, re-esportando dopo ogni sessione di etichettatura. La parte automatizzata dell'acceptance è estratta in `HT-010` (sull'orma dell'estratto `HT-008`).

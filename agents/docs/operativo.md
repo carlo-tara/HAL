@@ -2,7 +2,7 @@
 
 Documentazione di lavoro per sviluppo, deploy e versionamento degli agenti L0/L1. Per la specifica formale vedi [`a-agentzero/AGENT-PROTOCOL.md`](../a-agentzero/AGENT-PROTOCOL.md).
 
-**RGR:** ogni update ad agenti/skill segue Red→Green→Refactor — [`AGENTS.md`](../AGENTS.md). Gate: `make ready-for-review` (Platform API in `Makefile`; mapping in [`project-skills/harness-agentfactory/SKILL.md`](../project-skills/harness-agentfactory/SKILL.md)).
+**RGR:** ogni update ad agenti/skill segue Red→Green→Refactor — [`AGENTS.md`](../AGENTS.md). Gate: `make ready-for-review` (Platform API in `Makefile`; mapping in [`project-skills/harness-hal/SKILL.md`](../project-skills/harness-hal/SKILL.md)).
 
 ---
 
@@ -149,7 +149,7 @@ make version-chains
 bash a-agentzero/scripts/sync-agents.sh --dry-run
 ```
 
-L2 fabbrica: `.agents/skills/harness-agentfactory/` (oggi **1.1.0**, `extends` a-harness). STALE L2 consumer ≠ debito fabbrica — `make sync-consumer-stale`.
+L2 fabbrica: `.agents/skills/harness-hal/` (oggi **1.1.0**, `extends` a-harness). STALE L2 consumer ≠ debito fabbrica — `make sync-consumer-stale`.
 
 Pipeline discovery: [`docs/discovery-pipeline.md`](discovery-pipeline.md). Export Claude stand-alone: `bash scripts/export-discovery-claude.sh`.
 
@@ -223,8 +223,8 @@ HAL non ha una suite unittest centralizzata. I test dei siti consumer restano ne
 
 | Path | Contenuto |
 |------|-----------|
-| `brands/agentfactory.md` | Tono e lessico per copy su HAL |
-| `.cursor/commands/` | Override slash AF (`/commit`, `/document`, `/sync`, `/version`, …) |
+| `brands/hal.md` | Tono e lessico per copy su HAL |
+| `.cursor/commands/` | Override slash HAL (`/commit`, `/document`, `/sync`, `/version`, …) |
 | `.cursor/plans/` | Piani storici (es. protocollo versionamento) |
 
 Baseline L0 condivisa: [`a-agentzero/commands/`](../a-agentzero/commands/) → `~/.cursor/commands/` via `/sync !`. In conflitto vince l'override in `.cursor/commands/`.

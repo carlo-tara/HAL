@@ -6,6 +6,13 @@
 
 - Sync selettivo [sync:safe] da a-copywriter 1.7.5: voce del padre solo infrastruttura L0/L1 (catene extends allineate), nessun delta L2 da adattare; bump patch del figlio.
 
+
+## [1.0.34] - 2026-11-18
+
+### Changed
+
+- Dedup verso L1 `uiux` 1.2.0 (§ Pattern guida): bullet chrome File/Meta/i18n ridotti a puntatore + override explorer.
+
 ## [Unreleased]
 
 ### Changed

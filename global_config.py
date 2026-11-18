@@ -33,7 +33,6 @@ AGENT_EXTERNAL_MODELS: dict[str, str] = {
     "charts": "orcarouter/qwen/qwen3.8-flash",
     "illustrator": "orcarouter/qwen/qwen3.8-flash",
     "uiux": "orcarouter/qwen/qwen3.8-flash",
-    "harness-agentfactory": "orcarouter/deepseek/deepseek-v4.1-flash",
     "learn": "orcarouter/openai/gpt-4o-mini",
     "sync": "orcarouter/deepseek/deepseek-v4-flash",
 }

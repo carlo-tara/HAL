@@ -15,4 +15,4 @@ Fonte unica: [`.agents/skills/a-copywriter-wtp/SKILL.md`](../a-copywriter-wtp/SK
 
 Agente: [`.cursor/agents/a-copywriter.md`](../../agents/a-copywriter.md)
 
-Install base: AgentFactory `a-copywriter` in `~/.agents/skills/` (via `/sync`).
+Install base: canone HAL `a-copywriter` in `~/.agents/skills/` (via `/sync`).

@@ -41,8 +41,6 @@ for skill in charts illustrator uiux; do
   check_link "${WORKSPACE_ROOT}/.agents/skills/${skill}" "${AGENTS_ROOT}/a-design/${skill}"
 done
 
-check_link "${WORKSPACE_ROOT}/.agents/skills/harness-agentfactory" \
-  "${AGENTS_ROOT}/project-skills/harness-agentfactory"
 check_link "${WORKSPACE_ROOT}/.agents/skills/laya" \
   "${AGENTS_ROOT}/project-skills/laya"
 
@@ -78,7 +76,7 @@ if catalog.get("execution_model") != "SystemTwoEngine.ACTIVE_MODEL_NAME":
 
 entrypoints = sorted(expected | {
     "enrichment", "personas", "jtbd", "gherkin", "charts", "illustrator", "uiux",
-    "learn", "sync", "harness-agentfactory", "laya",
+    "learn", "sync", "laya",
 })
 for name in entrypoints:
     skill = workspace / ".agents" / "skills" / name / "SKILL.md"

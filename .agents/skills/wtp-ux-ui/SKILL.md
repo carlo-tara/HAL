@@ -1,7 +1,7 @@
 ---
 name: wtp-ux-ui
 extends: a-uiux
-version: 1.3.69
+version: 1.3.70
 extends-version: 1.1.0
 description: >-
   Design System SurferDark (L2) + mapping Material Design 3 per Sales Coach / WTP App:
@@ -69,12 +69,12 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 7. Nuovi blocchi: preferire `.panel` / `.field` / `.tab` SoT (alias legacy ok in migrazione); product homes = `.product-layout` / `.product-content`
 8. Focus-visible SurferDark: **2px accent**; state layers MD3 ok **con** focus ring; contrasto AA → L1 `a-uiux`
 
-9. PDF disabilitato finché contenuto chiave non pronto; export in File→Salva
+9. PDF disabilitato finché contenuto chiave non pronto; export in File→Salva (canone L1 `uiux` § Pattern guida)
 10. Grafici: palette SurferDark; dettagli → `a-charts`
 11. Dopo cambi FE: preview `http://127.0.0.1:8181/wtp/` (o `:3000`) + hard refresh — preferire `127.0.0.1` a `localhost` (IPv4-only + cookie sessione host-bound)
 12. Tocchi a `surferdark.css`/HTML skin: RED→GREEN; gate = contract test CSS (`src/auth/js/surferdarkAppbarCss.test.js`, `surferdarkPrimitivesCss.test.js`); rename path CSS = no blanket replace su assert negativi; assert «non ridichiarare» / no-hex: **suite-wide** tollerare assenza `<style>` (`pageCss = style ? style[1] : ''` **oppure** `doesNotMatch(html, /<style/)`); helper `ruleBody` = match standalone/comma-group only — **no** `(?:^|[,\\s])` che cattura discendenti (`.product-content .panel` ≠ `.panel`); **token opt-in GREEN:** dual-alias soft-assert → L1 `a-uiux`/`static-stack` regola 6 — shim WTP `--(?:bg|panel|muted|…|surferdark-*)` nello **stesso** slice
 
-13. i18n UI (chrome + Liste + customer/`data-i18n`): niente msgid a schermo — `uiT` / fallback se `t(key)===key`; IT/EN fissi in AppBar; msgid SoT da `.po`; product homes → `applyDomI18n`
+13. i18n UI (chrome + Liste + customer/`data-i18n`): niente msgid a schermo — `uiT` / fallback se `t(key)===key`; IT/EN fissi in AppBar; msgid SoT da `.po`; product homes → `applyDomI18n` (canone L1 `uiux` § Pattern guida)
 14. Liste Input: primary/advanced come [patterns.md](patterns.md) § Liste Input; payload Zod completo
 15. Liste Output: Sintesi = summary doc + charts; scheda lista = sub-tab + campi snake_case; progress job = lightbox bloccante ([patterns.md](patterns.md) § Liste Output, [componenti.md](componenti.md) § Progress)
 16. `<style>` pagina = **evitare** su HTML prodotto (densità in SoT); **no** ridichiarare `.field`/`.btn*`/`.tab`/`.progress*`/`.empty-state` con hex — SoT `surferdark.css`. **Zero `<style>` page-local:** Explorer, Profile, Risk, Customer/Company homes+sheets, Liste `index` / `artifacts` / legacy `customer.html` (E13–E18). Print/PDF LOCK light ok; se print CSS entra in SoT → **scope** (es. `body:has(#customer-main-content)`), non regole globali `body`/`.appbar`; export HTML può avere style isolato

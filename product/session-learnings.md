@@ -184,3 +184,23 @@
 - Infra HAL: `hal_mcp_docs`, `hal_mcp_tools`, `hal_translate`, `hal_tts` hanno `.agents` symlink → `/var/www/hal_gateway/.agents` (stesso inode) — le loro L2 vivono come directory reali sotto `.agents/skills/` di questo repo; listando quei progetti si vede il contenuto di HAL, non è duplicazione. [sync:safe]
 - Concorrenza: `harness-wtp/SKILL.md` mutato 1.1.4→1.1.5 (bump di sessione parallela) tra due letture nel turno → evidenza accodata a `tool-pitfalls.md`, learn 1.5.13→1.5.14. Seconda conferma parametri numerici (`read_file` range 2× → `sed -n`) NON accodata: evidenza orcarouter già registrata in 1.5.13 per la stessa giornata (anti-grasso). [sync:safe]
 - Esclusi dalla consolidazione: catene STALE note (`harness-hal` 1.9.2, `wtp`/`semidifocusing` 1.7.3 vs `a-harness` 1.10.0 — bump di competenza consumer via `sync-consumer-stale`); `sed -i` terminale su file fuori progetto riuscito (osservazione singola, aprire voce alla seconda sessione). [sync:safe]
+
+## 2026-11-18 — HT-005 oro + HT-010 prima eval raw misurata → HAL (sessione)
+
+### HAL
+
+- `tool-pitfalls.md` §Sessioni parallele: prefisso di directory nell'allow-list P assorbe i transitori nati tra `git status` e l'add — lockfile LibreOffice del workbook HT-005 committato e pushato (1822d3e «4 file» attesi 3); recupero documentato senza reset su repo condiviso (blob surgery 9ceb108; `git add` non stagea la cancellazione di un file ancora su disco, serve `rm --cached`). Pattern `*~lock*#*` in `.gitignore`. [sync:safe]
+- `tool-pitfalls.md` §Sessioni parallele (verde preso in prestito): `c3599e2` della sorella ha pushato bump meccanico corrotto (`versenversion:` su 8 L1) — `test_a_harness_static_policy` rosso su origin ma verde locale perché il worktree condiviso aveva già il revert WIP della sorella. Regole: ri-eseguire il gate che legge i file bumpati prima di chiudere un flusso `[sync:safe]`; verificare `git diff --stat HEAD` sui file letti dal gate prima di dichiarare CI verde; il deploy `sync !` pubblica lo stato del worktree, borrowed green compreso. Non riaprire la corsa sul file sporco altrui. [sync:review]
+- `tool-pitfalls.md` §Tool call paralleli: sesta evidenza, direzione autoinflitta — generator+export, edit+`todo_flush`, status+append emessi nello stesso batch (3 ricadute, tutte autorigenate alla rilancia); nessuna regola nuova. [sync:safe]
+- `docs/28_laya_model_card.md`: l'N/A «eval raw con gold set assente» diventa **prima misura** (HT-010, run 2026-11-18 su 123 oro confermati): hit_rate 0.276, decision-family .540, banda direct .523, curva debole non monotona; caveat strumento (score by-pass 30/30 by design; noul {uncertain, refuse} vs vocabolario oro → allineamento nel residuo HT-005). Nessuna soglia mossa; adozione gated su copertura piena → `HT-011` #human. Comandi di riproduzione incorporati nella carta. [sync:review]
+- Esclusi dalla consolidazione: auto-vote commit-type 3/4 incorrect di oggi (veri nella telemetria Laya tramite il loop `request_hash` — un solo posto canonico, anti-grasso); coercizione `timeout_ms`/`start_line` (già registrata in 1.6.25, nessuna nuova occorrenza-regola); warning `Data Validation extension` openpyxl su xlsx ri-salvati da LibreOffice (osservazione singola: load+save openpyxl la elimina, eventualmente alla seconda). [sync:safe]
+
+
+## 2026-11-18 — AgentFactory fuori dal canone + [sync:safe] completato + dedup chrome UX → HAL (sessione brainbeez)
+
+### HAL
+
+- Decisione d'inventario (utente, 2026-11-18): AgentFactory non tornerà → rimossa la skill L2 `harness-agentfactory` (canone + 5 symlink consumer), `MIGRATION.md`, i 15 symlink rotti in `~/.cursor/agents` (bersaglio `/var/www/AgentFactory/` inesistente); wording di dismissione ritirato da AGENTS/README/docs/routing learn; docstring `seozoom_lib` allineata. I riferimenti nei registri storici (CHANGELOG, session-learnings) restano: sono record, non istruzioni. [sync:safe]
+- Chiusura [sync:safe] 8 L1←a-agentzero 1.13.9: dopo il fix 516146c (decodifica `versenversion:` in 7 skill) `a-harness` era rimasta indietro — riallineata 1.11.2/1.13.9 in questo flusso. Regola già registrata in tool-pitfalls §Sessioni parallele («rieseguire il gate che legge i file bumpati») — qui rispettata in chiusura, non ri-appresa. [sync:review]
+- `uiux` L1 1.2.0 assorbe 3 canoni chrome dalle L2 `wtp-ux-ui`/`b2b-explorer-ui-ux` (puntatori + override restanti): prima promozione L1 con trigger esplicito dell'utente su report `/sync <` (regola ≥2 progetti soddisfatta da due superfici dello stesso DS WTP). [sync:safe]
+

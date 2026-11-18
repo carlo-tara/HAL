@@ -3,7 +3,7 @@
 Il test legge solo i file della skill L1: nessuna dipendenza esterna, nessuno
 scaffold System 2 dentro hal_gateway. I token cercati sono limitati al body di
 SKILL.md (sotto il frontmatter) per evitare falsi positivi, come da rituale
-RGR di harness-agentfactory.
+RGR del canone HAL.
 """
 
 from __future__ import annotations

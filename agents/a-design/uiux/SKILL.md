@@ -1,7 +1,7 @@
 ---
 name: uiux
 parent: a-design
-version: 1.1.0
+version: 1.2.0
 competencies:
   - static-stack
   - accessibility
@@ -32,3 +32,6 @@ Pattern tema-indipendenti della shell pagina, validati su due consumer (WTP App:
 - **Empty state con azione:** pannello senza selezione → heading + istruzione operativa su cosa cliccare per popolarlo; mai sola descrizione passiva.
 - **«Come leggere», una riga:** ogni aiuto grafico è 1 riga (2 max) con l'interazione chiave; la legenda dice cosa rappresenta la vista e come si filtra (hover/click → risultato).
 - **Click → risultato:** un'interazione che applica un filtro porta l'utente dove il risultato è visibile; nessun filtro «silenzioso».
+- **Slot brand vs meta di pagina:** lo slot brand dell'AppBar porta identità del prodotto e versione; i metadati di pagina (contatori, "generato…") stanno sotto l'header, mai dentro il titolo brand.
+- **Azioni di output nel menu File della suite:** stampa/export sono voci del menu File e operano sulla vista corrente filtrata; niente pulsanti di export inventati per singola pagina.
+- **Copy UI da origine i18n:** le stringhe a schermo derivano da un'unica origine i18n (msgid SoT) con fallback per chiave mancante; nessun msgid grezzo a schermo.
