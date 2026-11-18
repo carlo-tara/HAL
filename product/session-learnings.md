@@ -213,3 +213,8 @@
 - Chiuso il debito 2026-11-09 «Promozione L1 uiux delle parti generiche rinviata»: `a-design/uiux` 1.2.0 con i 3 canoni chrome (slot brand/meta, output nel menu File, copy da origine i18n) e L2 ridotte a puntatore+override; registrato in `docs/harness-CHANGELOG.md` §Changed. [sync:safe]
 - Esclusi (anti-grasso): brace-expansion sh (candidato già in ToDo HAL, unica sessione), `versenversion:`/verde preso in prestito (già voce sorella in tool-pitfalls §Sessioni parallele).
 
+
+### HAL (addenda unificazione copy WTP)
+
+- NEED-N risolto per via 1-bis della regola (richiesta esplicita): unificazione `a-copywriter-wtp`→`wtp-brand-voice` con **inversione del verso dell'alias** (la tana vuota diventa fonte, il corpo diventa guscio) per non rompere i 12 symlink consumer; catena L2 dichiarata solo sul vero sorgente. Ricetta riutilizzabile ogni qualvolta il canone di naming vorrebbe il nome X ma i link vivi puntano Y. [sync:safe]
+- Auto-evidenza CJK: il mio stesso writer ha generato `逆流` dentro il body (classe Frammenti CJK, rimedio sweep pre-commit). Il canone si autoverifica: lo sweep post-scrittura resta il gate di chiusura di ogni `/learn !`. [sync:safe]

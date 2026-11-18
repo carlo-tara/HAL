@@ -40,6 +40,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ### Changed
 
+- Unificazione NEED-N `/sync <` (richiesta esplicita utente): corpo copy Sales Coach migrato integralmente `a-copywriter-wtp` → `wtp-brand-voice` 1.0.0→2.0.0 (frontmatter dichiarato: `extends: a-copywriter`, `extends-version: 1.7.7` — si chiude anche la catena stale 1.7.5 dell'ex sorgente); `a-copywriter-wtp` 1.0.13→1.0.14 resta guscio alias (12 symlink consumer attivi in /var/www/*, zero rotture); puntatori vivi ripuntati (`b2b-explorer-ui-ux`, `wtp-ux-ui`+`design-system.md`, `harness-wtp`); `l2-analyzer.py` privato del candidato hardcoded. Sweep CJK ha colto e corretto un mio refuso «逆流» nel body generato — terza recidiva personale della classe, rimedio a valle valido. [sync:safe]
+
 - `learn` 1.6.27→1.7.0 (`bump minor` via `agent-version.sh`): in `tool-pitfalls.md` §Sessioni parallele la ricetta «`pull --rebase --autostash` in worktree condiviso» e un'evidenza CJK (2026-11-18) nella catena esistente; session-learnings HAL e harness-CHANGELOG registrati. [sync:safe]
 
 - Sync selettivo `[sync:safe]` 8 figli L1←a-agentzero 1.13.9 chiuso con riallineamento di `a-harness` (1.11.1→1.11.2, extends-version 1.13.9): il fix 516146c aveva recuperato 7 skill su 8, la ottava era rimasta indietro.

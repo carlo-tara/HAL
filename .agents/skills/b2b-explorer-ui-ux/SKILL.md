@@ -10,7 +10,7 @@ description: >-
 
 # B2B Explorer — UI/UX microcopy
 
-Skill figlia di `a-copywriter`. Governa microcopy della dashboard score3 **e** delta chrome explorer; non usa `publication-types` JSON-first (newsletter/promo) né **5 Copy Blocks** / landing Pain→Promise→Proof (`references/five-copy-blocks.md` L1) — fuori scope di questa UI. Anti-AI guide → competenza **humanizer** L1. Copy Sales Coach (`.po`, prompt LLM) → `a-copywriter-wtp`. Token / menubar / shell SurferDark → `wtp-ux-ui` (non ridocumentare qui); pattern guida/chrome generici → L1 `uiux` § Pattern guida (non ridocumentare qui).
+Skill figlia di `a-copywriter`. Governa microcopy della dashboard score3 **e** delta chrome explorer; non usa `publication-types` JSON-first (newsletter/promo) né **5 Copy Blocks** / landing Pain→Promise→Proof (`references/five-copy-blocks.md` L1) — fuori scope di questa UI. Anti-AI guide → competenza **humanizer** L1. Copy Sales Coach (`.po`, prompt LLM) → `wtp-brand-voice` (fonte unica; ex `a-copywriter-wtp` = alias). Token / menubar / shell SurferDark → `wtp-ux-ui` (non ridocumentare qui); pattern guida/chrome generici → L1 `uiux` § Pattern guida (non ridocumentare qui).
 
 ## Purpose
 

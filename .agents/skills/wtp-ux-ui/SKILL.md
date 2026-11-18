@@ -24,7 +24,7 @@ Prima di proporre o committare layout, colori, tipografia, chrome, componenti sh
 - `src/wtp/frontend/` (Liste)
 - `src/explorer/b2b/` (Explorer)
 
-**Non** usarla per microcopy (→ `a-copywriter-wtp`) né encoding grafici (→ `a-charts`).
+**Non** usarla per microcopy (→ `wtp-brand-voice`, fonte unica) né encoding grafici (→ `a-charts`).
 
 ## Cos’è
 
@@ -87,7 +87,7 @@ Runtime CSS SoT: `src/auth/css/surferdark.css` (shim `enrico.css` **rimosso**). 
 
 | Fuori scope                      | Dove                                               |
 | -------------------------------- | -------------------------------------------------- |
-| Microcopy / locale / brand voice | `a-copywriter-wtp`, `brands/`, `src/auth/locales/` |
+| Microcopy / locale / brand voice | `wtp-brand-voice` (fonte unica), `brands/`, `src/auth/locales/` |
 | Encoding D3                      | `a-charts`                                         |
 | Microcopy Explorer               | `b2b-explorer-ui-ux` (deve consumare SurferDark)   |
 

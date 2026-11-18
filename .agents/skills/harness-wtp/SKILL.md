@@ -114,7 +114,7 @@ Decomposizione BE / ladder microservizi: `docs/backend-decomposition.md`.
 | PRD / US / slice product | `a-po`                                |
 | Suite Gherkin            | `a-gherkin`                           |
 | Pilota B2B / explorer    | `a-b2b` + L2 `b2b-explorer`           |
-| Copy Sales Coach         | `a-copywriter` + `a-copywriter-wtp`   |
+| Copy Sales Coach         | `a-copywriter` + `wtp-brand-voice`   |
 | Copy explorer            | `b2b-explorer-ui-ux` + `a-copywriter` |
 | Enrichment cascade       | `a-enrichment`                        |
 

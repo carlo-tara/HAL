@@ -71,12 +71,6 @@ def analyze():
             print(f"- **Perché:** Sovrapposizione potenziale con `a-design/uiux` o `wtp-ux-ui`. Unificare pattern di accessibilità e layout.")
             duplicates_found = True
 
-        if name == "a-copywriter-wtp":
-            print(f"### 2. [L1|NEED-N] {name}")
-            print(f"- **Dove:** `{skill['path']}`")
-            print(f"- **Cosa:** Regole di copy specifiche per WTP")
-            print(f"- **Perché:** Se le regole di WTP Brand Voice sono applicate a più micro-servizi, estrarre in competenza L1 o unificare in `wtp-brand-voice`.")
-            duplicates_found = True
 
     if not duplicates_found:
         print("Nessun duplicato evidente identificato programmaticamente.")

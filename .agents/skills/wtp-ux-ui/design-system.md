@@ -37,7 +37,7 @@ SurferDark
 | Layout / dense UI / print         | —                                      | `patterns.md`                                     |
 | Piano migrazione runtime          | —                                      | `migration-css.md`                                |
 | Activation + gate pre-commit      | —                                      | `SKILL.md`                                        |
-| Brand voice / microcopy           | —                                      | `brands/`, `a-copywriter-wtp` (**fuori scope**)   |
+| Brand voice / microcopy           | —                                      | `brands/`, `wtp-brand-voice (fonte unica; alias: a-copywriter-wtp)` (**fuori scope**)   |
 | Grafici D3                        | CDN + JS charts                        | `a-charts` (**fuori scope** encoding)             |
 
 ## Boundary
@@ -50,7 +50,7 @@ SurferDark
 
 **Non vive qui:**
 
-- Stringhe UI / empty copy → `a-copywriter` + `a-copywriter-wtp` + `src/auth/locales/`
+- Stringhe UI / empty copy → `wtp-brand-voice` (fonte unica; base `a-copywriter`) + `src/auth/locales/`
 - Encoding grafici → `a-charts` (usa solo palette SurferDark referenziata)
 - Brand corpus narrativo → `brands/wtp-app.md`
 - Microcopy Explorer → `b2b-explorer-ui-ux` (deve **consumare** foundation SurferDark, non inventare palette)
