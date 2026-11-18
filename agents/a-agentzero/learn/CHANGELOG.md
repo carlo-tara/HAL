@@ -1,5 +1,8 @@
 # Changelog — learn
 
+## [1.6.26] - 2026-11-18
+- `/learn !` hal_system2 2026-11-18 (catena T1-03 → strategie anti-frizione → sync): §Batch `edit_file` non atomico — **promossa a canone** la variante «duplicazione da batch a cascata con doppio success» (candidato 2 del 2026-11-17, seconda osservazione raggiunta: `_t103_recon.py`, contatori raddoppiati con entrambi gli edit «Edited successfully»); §Sessioni parallele — file messaggio di `agent-commit.sh -m` risolto dalla ROOT dopo il `cd` interno (rc 128, evidenza 78caae0). Candidati 1 (`write_file` backslash) e 3 (propagazione `ls-remote`) **rinviati con dichiarazione**: le occorrenze odierne appartengono ad altre classi (enumerazione worktree a inizio sessione; dipendenze tra tool call) e non costituiscono seconda osservazione della stessa classe. Nessuna promozione per «blob chirurgico»: già canonico in §Sessioni parallele.
+
 ## [1.6.25] - 2026-11-18
 - turno hal_system2 «strategie 1-7» (2026-11-18): le recidive documentate come **estensioni di sezioni esistenti**, non nuove massime — il collo di bottiglia non era l'assenza di dottrina ma il non ripescarla al momento dell'uso: §Parametri numerici (client che serializza i numerici, ~20ª occorrenza), §Tool call paralleli (variante «dipendenza autoinflitta»: 4 occorrenze nel turno stesso che implementava la regola), §Path dei comandi L0 (topologia HAL.git app+registry, cd via symlink consumer, worktree appena creato invisibile ai file tool). Referenza canonica nuova: AGENT-PROTOCOL § «Layout canonico»; regole 15-16 in worktree-land.
 
