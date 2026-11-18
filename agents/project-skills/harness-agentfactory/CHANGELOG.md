@@ -1,5 +1,11 @@
 # Changelog — harness-agentfactory (L2)
 
+## [1.1.35] - 2026-11-18
+
+### Changed
+
+- Sync selettivo [sync:safe] da a-harness 1.11.1 (`/sync !`): `extends-version` allineata 1.10.5→1.11.1; voci pending 1.11.0 (policy «Chiusura outcome-driven»: eredità pulita, nessun delta AF in conflitto) e 1.11.1 (allineamento L0 tooling) — nessun cambio al body L2. Bump patch via `agent-version.sh`; entry integrata a mano con dichiarazione (lo script non scrive il CHANGELOG).
+
 ## [1.1.34] - 2026-11-16
 
 ### Changed

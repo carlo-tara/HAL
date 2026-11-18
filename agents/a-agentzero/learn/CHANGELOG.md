@@ -1,5 +1,12 @@
 # Changelog — learn
 
+## [1.6.24] - 2026-11-18
+- `/learn !` brainbeez rv19/chiusura S149 (2ª sessione `/learn` del giorno, dopo 1.6.23): consolidate le **2 promozioni pending dichiarate nell'entry #37** del registro progetto, entrambe verificate una 2ª volta oggi: (1) §Sessioni parallele — gate pre-commit che legge il disco ⇒ commit in `git worktree add --detach`; (2) §Sessioni parallele — lane di test parallele condividono il DB dev del compose ⇒ red transitori da attribuire con lock di riga.
+- Nota di gara: collisioni odierne sui registri (etichetta S148→S149, voce S146 cancellata a metà in CHANGELOG, worktree HAL in M/M) — le due regole chiudono il cerchio appena aperto.
+
+## [1.6.23] - 2026-11-18
+- `/learn !` brainbeez rv19 (catena S149 «cluster vs company + tab Aziende», slice rinumerata da S148 per collisione): 2 nuovi bullet in §Sessioni paralleli di `tool-pitfalls.md` — (1) etichette di slice in gara: next SNN/QNN = max(HEAD, worktree), riverifica prima del primo write, rinumerazione two-phase con validazione completa prima di scrivere; (2) baseline rossa da WIP altrui: attribuire con `git diff HEAD` e dichiarare, mai riapplicare Act non propri (evidenze: 3 `KeyError: 'lead_score'` da staged removal di altra sessione, 11 rossi web da revert V4 non mio). Chiude i due PENDING dichiarati nell'entry #37 del registro progetto.
+
 ## [1.6.22] - 2026-11-18
 
 - Consolidamento `/learn !` (brainbeez rv19, catena commit S146/V4 in gara con sessione parallela). 3 bullet nuovi in `references/tool-pitfalls.md` §Sessioni paralleli: hook che rigenerano file da disco (commit in worktree pulito su HEAD), affermazioni di assunzione/perdita misurate solo su `git show HEAD:<path>`, guardia-base che blocca ⇒ rifare il merge sulla nuova HEAD; marcati «in attesa di conferma su seconda sessione» (sessione singola, evidenza riproducibile). 1 bullet in §Parametri numerici: classi sorelle di validazione-schema (`terminal` senza `cd` → `missing field cd`; MCP laya `options` come stringa → «at least two distinct options are required»). 1 variante in §Shell di lavoro: heredoc non quotato con prosa parentetata. Controparti specifiche di progetto persistite in L2 `harness-brainbeez` (1.5.38). Nota di gara: la voce 1.6.21 è stata committata dal gemello parallelo (commit 28d4a59); la 1.6.22 (questa) resta l'unica non committata nella tree di hal_gateway.
