@@ -4,8 +4,6 @@ version: 1.0.0
 description: Command slice for HAL workspace.
 ---
 
----
-
 # Slice (L0)
 
 ## Objective

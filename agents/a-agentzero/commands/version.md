@@ -1,5 +1,5 @@
 ---
-version: 1.3.1
+version: 1.3.2
 ---
 
 # /version <tipo> — Incremento versione file e documenti modificati (L0)
@@ -38,13 +38,13 @@ Il comando `/version` (es. `/version patch`, `/version minor`, `/version major`)
 
 3. **Applicazione (Deterministica):**
    Usa lo script CLI senza modificare a mano frontmatter e changelog:
-   `bash agents/a-agentzero/scripts/agent-version.sh bump <patch|minor|major> <file>`
+   `bash /var/www/hal_gateway/agents/a-agentzero/scripts/agent-version.sh bump <patch|minor|major> <file>`
    Questo calcola e applica l'incremento preservando la gerarchia YAML e appendendo al CHANGELOG.
 
 4. **Verifica post-bump:**
    - Per gli agenti HAL, verifica la catena di versione e lo stato con gli script di supporto:
      ```bash
-     bash agents/a-agentzero/scripts/agent-version.sh chain <SKILL.md>
+     bash /var/www/hal_gateway/agents/a-agentzero/scripts/agent-version.sh chain <SKILL.md>
      ```
    - Esegue la sincronizzazione o il report finale.
 
@@ -54,7 +54,7 @@ Il comando `/version` (es. `/version patch`, `/version minor`, `/version major`)
 
 - **Delta only:** non modificare la versione di file che non hanno subito modifiche effettive nella sessione o nel diff corrente.
 - **Isolamento L0/L1/L2:** non incrementare la versione di `a-agentzero` (L0) per modifiche locali confinate in skill L2 o documentazione di progetto consumer.
-- **L0 command — canonico vs mirror:** `.agents/skills/<cmd>/SKILL.md`, `.zed/prompts/<cmd>.md` e `product/adapters/commands/<cmd>.md` sono rigenerati da `agents/a-agentzero/commands/<cmd>.md` via `link-workspace-skills.sh`/`/sync !`: il bump va applicato al canonico e il mirror rigenerato subito, mai solo sul mirror (verrebbe annullato — caso graph 1.0.3, 2026-10-30).
+- **L0 command — canonico vs specchi:** lo specchi vivi sono la skill globale `~/.agents/skills/<cmd>/SKILL.md` (pubblicata da `agents/scripts/publish-global-commands.sh`) e i mirror di hal_gateway (`.agents/skills/<cmd>`, `.zed/prompts/<cmd>.md`, `product/adapters/commands/<cmd>.md`): tutto rigenerato dal canonico `agents/a-agentzero/commands/<cmd>.md` via `/sync !`. Il bump va applicato al canonico e rigenerato subito, mai sugli specchi (verrebbero annullati — caso graph 1.0.3, 2026-10-30).
 - **Tracciabilità:** ogni bump deve essere accompagnato da una riga nel changelog pertinente (es. `CHANGELOG.md` del modulo o registro di sessione).
 
 ---

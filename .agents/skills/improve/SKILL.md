@@ -4,8 +4,6 @@ version: 1.0.0
 description: Command improve for HAL workspace.
 ---
 
----
-
 # Miglioramenti (L0)
 
 ## Objective

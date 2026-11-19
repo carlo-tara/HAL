@@ -152,12 +152,14 @@ def build_fence(ver: str) -> str:
             "## HAL — contratto consumer",
             "",
             f"- HAL canonico: `{HAL}` (repo `hal_gateway`). **Da questo progetto**: mai modificare",
-            "  `agents/` del canonico, mai eseguire `link-workspace-skills.sh` / `deploy-all.sh`",
-            "  (lo script lo rifiuta: «Guardia HAL»), mai ricreare symlink HAL verso",
-            "  `.agents`/`agents`/`.zed`/`product` — i mount sono rimossi (de-racing).",
+            "  `agents/` del canonico, mai eseguire `link-workspace-skills.sh` / `deploy-all.sh` /",
+            "  `publish-global-commands.sh` (guardie: «Guardia HAL» e path assoluto), mai ricreare",
+            "  symlink HAL verso `.agents`/`agents`/`.zed`/`product` — i mount sono rimossi (de-racing).",
             f"- Script L0: invocarli con path assoluto, es. `bash {HAL}/agents/a-agentzero/scripts/<script>.sh`.",
-            f"- Comandi L0: {cmds} — per ora via prompt locale `.zed/prompts/` o `read`",
-            f"  di `{HAL}/agents/a-agentzero/commands/<cmd>.md` (comandi globali: step 4).",
+            f"- Comandi L0 {cmds}: pubblicati come skill globali (`~/.agents/skills/`,",
+            "  rigenerate solo da hal_gateway via `publish-global-commands.sh`); una skill locale",
+            "  omonima ha priorità. Lettura del canone: `read`",
+            f"  `{HAL}/agents/a-agentzero/commands/<cmd>.md`.",
             "- Le skill `.agents/skills/` presenti in questo repo sono L2 di questo progetto.",
             "",
             "### Catalogo HAL (generato — non editare a mano)",
@@ -214,7 +216,7 @@ def fence_state(md: Path, ver: str) -> str:
     m = re.search(r"<!-- BEGIN hal-contract: generato da a-agentzero (\S+)", text)
     if not m:
         return "append"
-    return "current" if m.group(1).rstrip("…").rstrip(" —").endswith(ver) else "refresh"
+    return "current" if m.group(1) == ver else "refresh"
 
 
 def install_fence(md: Path, ver: str, apply: bool) -> str:

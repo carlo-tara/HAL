@@ -1,5 +1,3 @@
----
-
 # Slice (L0)
 
 ## Objective

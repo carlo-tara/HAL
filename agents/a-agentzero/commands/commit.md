@@ -1,5 +1,5 @@
 ---
-version: 1.3.0
+version: 1.3.1
 ---
 
 # Pre-commit (L0)
@@ -22,7 +22,7 @@ Verificare che le modifiche siano pronte per il commit nel **repository corrente
    - lint/test del linguaggio in uso
    - doc operativa se cambiano contratti pubblici
 5. Se il repo ha skill agenti HAL: allineamento `version` / `extends-version` / `CHANGELOG` se il diff tocca skill (vedi anche `/version`, `/sync`).
-6. Generare messaggio di commit (conventional) ed eseguire il commit **a index isolato** (§Isolamento index): `bash agents/a-agentzero/scripts/agent-commit.sh -m <msg-file> [-a <extra-hook>] [--push] -- <path>...` (da workspace consumer: `.agents/skills/a-agentzero/scripts/agent-commit.sh`). Su repo mono-sessione il classico `git add … && git commit -F <msg-file>` resta ammesso, ma la whitelist dei path va comunque dichiarata esplicita (mai `git add -A`, mai `git commit -a`).
+6. Generare messaggio di commit (conventional) ed eseguire il commit **a index isolato** (§Isolamento index): `bash /var/www/hal_gateway/agents/a-agentzero/scripts/agent-commit.sh -m <msg-file> [-a <extra-hook>] [--push] -- <path>...` — path assoluto del canonico: invocazione identica da hal_gateway e da qualunque consumer (i mount `.agents`/`agents` non esistono più). Su repo mono-sessione il classico `git add … && git commit -F <msg-file>` resta ammesso, ma la whitelist dei path va comunque dichiarata esplicita (mai `git add -A`, mai `git commit -a`).
 
 7. **Auto-voto post-commit (T-33B98, approvato con ok steward esplicito 2026-11-09):** dopo che `git commit` è riuscito con esito 0, registra la verità esterna sul loop di calibrazione Laya:
    - `python3 /var/www/hal_system1/scripts/auto_vote_commit.py --hash <request_hash del passo 1> --expected <prefisso realmente scritto>` — voto cieco con `source='commit'`: il server calcola `correct|incorrect` dal confronto con la scelta archiviata e il voto sostituisce, una sola volta, un eventuale voto implicito S2 di autorità minore (mai un altro commit).
@@ -79,5 +79,5 @@ Messaggio in **frasi complete**, lingua coerente col resto del repo.
 ## Notes
 
 - Baseline L0: `a-agentzero/commands/commit.md`.
-- Override progetto: `{repo}/.agents/commands/commit.md` se presente.
+- Fonte: canonico hal_gateway, pubblicato come skill globale `~/.agents/skills/commit` (priorità: skill di progetto > globale). Override progetto: file reale `{repo}/.agents/skills/commit/SKILL.md`.
 - Per snapshot stato repo usare `/snapshot` se disponibile nel progetto.

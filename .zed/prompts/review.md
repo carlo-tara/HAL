@@ -1,5 +1,3 @@
----
-
 # Code review (L0)
 
 ## Objective

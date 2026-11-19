@@ -5,7 +5,8 @@ Sorgente canonica dei comandi condivisi: `version`, `document`, `review`, `impro
 | Livello                        | Path                                                    | Ruolo                                                         |
 | ------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------- |
 | **L0 (canone)**                | `a-agentzero/commands/*.md`                             | Baseline generica                                             |
-| **Workspace (skills/prompts)** | `.agents/commands/`, `.agents/skills/`, `.zed/prompts/` | Symlink generati da `agents/scripts/link-workspace-skills.sh` |
+| **Global (skill Zed per tutti i progetti)** | `~/.agents/skills/<cmd>/SKILL.md` | Pubblicati da `agents/scripts/publish-global-commands.sh` (solo hal_gateway) |
+| **Mirror gateway** | `.agents/commands/`, `.agents/skills/`, `.zed/prompts/` | Generati da `agents/scripts/link-workspace-skills.sh` (solo hal_gateway) |
 | **Progetto**                   | `{repo}/.agents/commands/`                              | Override: se presente, vince sul comando standard             |
 
 ## Pubblicazione

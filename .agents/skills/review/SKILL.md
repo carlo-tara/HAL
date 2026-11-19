@@ -4,8 +4,6 @@ version: 1.0.0
 description: Command review for HAL workspace.
 ---
 
----
-
 # Code review (L0)
 
 ## Objective
