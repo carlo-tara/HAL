@@ -22,7 +22,7 @@ if [[ "${AGENTS_PHYS}" != "${CANON}/agents" ]]; then
 fi
 
 TARGET_HOME="${HOME}/.agents/skills"
-COMMANDS=(version document review improve commit todo slice cycle graph)
+COMMANDS=(version document review improve commit todo slice cycle graph sync learn)
 L0_SRC="${AGENTS_PHYS}/a-agentzero/commands"
 LAYA_SRC="${AGENTS_PHYS}/project-skills/laya/commands/laya.md"
 
@@ -58,6 +58,10 @@ PUBLISHED=()
 for cmd in "${COMMANDS[@]}"; do
   tmp="$(gen_skill "${L0_SRC}/${cmd}.md" "$cmd")"
   dest="${TARGET_HOME}/${cmd}"
+  # Guardia anti-through-write: un symlink residuo (modello utility del 2026-11-19
+  # mattina) farebbe scrivere il wrapper ATTRAVERSO il link, corrompendo il SKILL.md
+  # canonico nel bundle. Il link va sostituito da una directory reale.
+  if [[ -L "$dest" ]]; then rm "$dest"; fi
   mkdir -p "$dest"
   if ! cmp -s "$tmp" "${dest}/SKILL.md"; then
     mv "$tmp" "${dest}/SKILL.md"
@@ -81,25 +85,10 @@ if [[ -f "$LAYA_SRC" ]]; then
   PUBLISHED+=("laya-cmd")
 fi
 
-# Utility canoniche già in formato SKILL.md (sync, learn): symlink al
-# bundle, come il mirror di gateway. Niente rigenerazione: gli aggiornamenti
-# del canone sono visibili a costo zero. Il marker di prune non le tocca
-# (i SKILL.md canonici non lo contengono) e il progetto le può overrideare
-# con una skill locale omonima.
-for util in sync learn; do
-  src="${AGENTS_PHYS}/a-agentzero/${util}"
-  [[ -f "${src}/SKILL.md" ]] || { echo "MANCANTE: ${src}/SKILL.md" >&2; exit 1; }
-  link="${TARGET_HOME}/${util}"
-  if [[ -L "$link" && "$(readlink -f "$link")" == "$(cd "$src" && pwd -P)" ]]; then
-    echo "unchanged: ${util} (symlink)"
-  else
-    [[ -e "$link" || -L "$link" ]] && rm -rf "${link:?}"
-    ln -s "$src" "$link"
-    echo "published: ${util} (symlink -> ${src})"
-  fi
-done
+# (sync e learn dal 2026-11-19 sono comandi L0 canonici in COMMANDS: entry point
+# sottile che carica la skill utility deep nel bundle — niente piu blocco symlink.)
 
-# Prune: rimuove dai globali i comandi HAL non più pubblicati (solo quelli
+# Prune: rimuove dai globali i comandi HAL non piú pubblicati (solo quelli
 # con marker nel description, per non toccare skill altrui).
 for d in "$TARGET_HOME"/*/; do
   n="$(basename "$d")"

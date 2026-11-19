@@ -1,5 +1,11 @@
 # Changelog — sync
 
+## [1.2.2] - 2026-11-19
+
+### Changed
+
+- Le modalita `?`/`!`/`<` sono ora esposte dal comando L0 canonico `a-agentzero/commands/sync.md` (v1.0.0): wrapper generato nel mirror di gateway e nelle skill globali, superficie d'invocazione + routing agli script con path assoluti. Il canone operativo resta questa skill (references e CHANGELOG proprî, edit diretto). Nota di pubblicazione §Notes aggiornata: la regola del mirror ora vale anche per sync/learn.
+
 ## [Unreleased]
 
 

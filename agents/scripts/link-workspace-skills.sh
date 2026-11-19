@@ -16,7 +16,7 @@ AGENT_IDS=(
   a-seozoom
   a-wordpress
 )
-L0_COMMANDS=(version document review improve commit todo slice cycle graph)
+L0_COMMANDS=(version document review improve commit todo slice cycle graph sync learn)
 
 # --- Guardia anti-collisione (de-racing) -------------------------------------
 # Un consumer che monta l'albero di hal_gateway (.agents/.zed via symlink,
@@ -153,6 +153,13 @@ link_zed_skill() {
   local name="$2"
   local skill_dir="${WORKSPACE_ROOT}/.agents/skills/${name}"
   local version
+  # Guardia anti-through-write: se la destinazione è un symlink (vecchio
+  # modello utility o collisione di nome), scriverei il wrapper ATTRAVERSO
+  # il link corrompendo il canone. Si rifiuta; il link va rimosso a mano.
+  if [[ -L "${skill_dir}" ]]; then
+    echo "Refusing to write through symlink: ${skill_dir}" >&2
+    return 1
+  fi
   version="$(command_version "${source}")"
   require_inside_workspace "${skill_dir}/SKILL.md" || return 1
   mkdir -p "${skill_dir}"
@@ -182,10 +189,6 @@ preflight_destination_roots
 for agent in "${AGENT_IDS[@]}"; do
   link_path "${AGENTS_ROOT}/${agent}" "../../agents/${agent}" "${WORKSPACE_ROOT}/.agents/skills/${agent}"
   link_path "${AGENTS_ROOT}/${agent}/agents/${agent}.md" "../../../agents/${agent}/agents/${agent}.md" "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md"
-done
-
-for skill in learn sync; do
-  link_path "${AGENTS_ROOT}/a-agentzero/${skill}" "../../agents/a-agentzero/${skill}" "${WORKSPACE_ROOT}/.agents/skills/${skill}"
 done
 
 link_path "${AGENTS_ROOT}/gdrive-sync-safe" "../../agents/gdrive-sync-safe" "${WORKSPACE_ROOT}/.agents/skills/gdrive-sync-safe"

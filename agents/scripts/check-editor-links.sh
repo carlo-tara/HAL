@@ -8,7 +8,7 @@ AGENT_IDS=(
   a-agentzero a-b2b a-copywriter a-design a-harness
   a-knowledge a-product a-seozoom a-wordpress
 )
-L0_COMMANDS=(version document review improve commit todo slice cycle graph)
+L0_COMMANDS=(version document review improve commit todo slice cycle graph sync learn)
 
 check_link() {
   local link="$1" source="$2"
@@ -28,9 +28,9 @@ for agent in "${AGENT_IDS[@]}"; do
   check_link "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md" "${AGENTS_ROOT}/${agent}/agents/${agent}.md"
 done
 
-for skill in learn sync; do
-  check_link "${WORKSPACE_ROOT}/.agents/skills/${skill}" "${AGENTS_ROOT}/a-agentzero/${skill}"
-done
+# sync e learn dal 2026-11-19 sono comandi L0: nel mirror non sono piu symlink
+# al bundle ma wrapper generati (link_zed_skill) — coperti dal loop L0_COMMANDS
+# sotto e dal controllo entrypoints in fondo allo script.
 check_link "${WORKSPACE_ROOT}/.agents/skills/enrichment" "${AGENTS_ROOT}/a-b2b/enrichment"
 
 for skill in personas jtbd gherkin; do

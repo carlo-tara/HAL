@@ -83,6 +83,8 @@ COMMANDS = [
     "slice",
     "cycle",
     "graph",
+    "sync",
+    "learn",
     "laya",
 ]
 
