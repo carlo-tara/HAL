@@ -42,7 +42,7 @@ CONSUMERS = [
     "/var/www/InnerCircle",
 ]
 SCAN_DIRS = ["agents", ".agents", ".zed", "product"]
-BEGIN = "<!-- BEGIN hal-contract: generato da a-agentzero {ver} — NON EDITARE TRA I FENCE -->"
+BEGIN = "<!-- BEGIN hal-contract: generato da a-agentzero {ver} · tpl 2 — NON EDITARE TRA I FENCE -->"
 END = "<!-- END hal-contract -->"
 
 L1 = [
@@ -162,6 +162,11 @@ def build_fence(ver: str) -> str:
             "  rigenerate solo da hal_gateway via `publish-global-commands.sh`); una skill locale",
             "  omonima ha priorità. Lettura del canone: `read`",
             f"  `{HAL}/agents/a-agentzero/commands/<cmd>.md`.",
+            "- **Delega MCP (scelta voce per voce)**: agenti L1 e skill embedded (jtbd, gherkin,",
+            "  enrichment, uiux, charts, illustrator, personas, laya…) NON sono globali né montati:",
+            "  il progetto le usa solo se servono, caricandole on-demand dai tool MCP del server",
+            "  hal_gateway (`skills_list` per il catalogo, `skill_read` per il SKILL.md integrale o",
+            "  un reference con `file`); fallback senza MCP: `read` del path in catalogo.",
             "- Le skill `.agents/skills/` presenti in questo repo sono L2 di questo progetto.",
             "",
             "### Catalogo HAL (generato — non editare a mano)",
@@ -218,7 +223,10 @@ def fence_state(md: Path, ver: str) -> str:
     m = re.search(r"<!-- BEGIN hal-contract: generato da a-agentzero (\S+)", text)
     if not m:
         return "append"
-    return "current" if m.group(1) == ver else "refresh"
+    if m.group(1) != ver:
+        return "refresh"
+    # tpl 2: la riga di delega MCP richiede il refresh anche a versione invariata
+    return "current" if "· tpl 2" in text else "refresh"
 
 
 def install_fence(md: Path, ver: str, apply: bool) -> str:
