@@ -81,6 +81,24 @@ if [[ -f "$LAYA_SRC" ]]; then
   PUBLISHED+=("laya-cmd")
 fi
 
+# Utility canoniche già in formato SKILL.md (sync, learn): symlink al
+# bundle, come il mirror di gateway. Niente rigenerazione: gli aggiornamenti
+# del canone sono visibili a costo zero. Il marker di prune non le tocca
+# (i SKILL.md canonici non lo contengono) e il progetto le può overrideare
+# con una skill locale omonima.
+for util in sync learn; do
+  src="${AGENTS_PHYS}/a-agentzero/${util}"
+  [[ -f "${src}/SKILL.md" ]] || { echo "MANCANTE: ${src}/SKILL.md" >&2; exit 1; }
+  link="${TARGET_HOME}/${util}"
+  if [[ -L "$link" && "$(readlink -f "$link")" == "$(cd "$src" && pwd -P)" ]]; then
+    echo "unchanged: ${util} (symlink)"
+  else
+    [[ -e "$link" || -L "$link" ]] && rm -rf "${link:?}"
+    ln -s "$src" "$link"
+    echo "published: ${util} (symlink -> ${src})"
+  fi
+done
+
 # Prune: rimuove dai globali i comandi HAL non più pubblicati (solo quelli
 # con marker nel description, per non toccare skill altrui).
 for d in "$TARGET_HOME"/*/; do
