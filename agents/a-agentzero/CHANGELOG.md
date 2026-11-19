@@ -1,16 +1,16 @@
 # Changelog — a-agentzero
 
+## [1.13.12] - 2026-11-19
+
+### Added
+
+- De-racing step 3: `scripts/hal-contract.py` — contratto consumer idempotente (dry-run di default, `--apply` per eseguire): rimuove i symlink HAL residui nelle dir note dei consumer (`.agents`, `agents`, `.zed`, `product`) riconoscendoli dal target che risolve dentro l'albero fisico di hal_gateway (os.walk senza followlinks, niente rimozione di directory reali) e installa/aggiorna il fence «hal-contract» nell'AGENTS.md di ciascun consumer: regole d'ingaggio (canonico non scrivibile da qui, script L0 con path assoluto, L2 = contenuto locale) + catalogo L1/comandi generato dai frontmatter del canonico (righe corte: il fence è iniettivo). Adozione applicata: 11 consumer (hal_system1 9a081a6*, hal_system2 9d3472a, hal_mcp_tools c64e2a8, hal_mcp_docs 51d449d, hal_seo 2f76932, hal_translate 909ec51, hal_tts de4186a, semidifocusing 43fc1bf, brainbeez 01ee283, WTP_App 1d1855e, InnerCircle f9c55ab*); * commit non pushati (commit altrui non pushati sulla branch: mai pubblicare lavoro di altri). Re-scan: 0 mount residui, fence `current` ovunque. AGENTS.md documenta lo strumento.
+
 ## [1.13.11] - 2026-11-19
 
 ### Changed
 
 - De-racing step 2: le 13 skill L2 di progetto non risiedono più nel mirror di hal_gateway (`.agents/skills/`), dove erano file reali tracciati nel repo sbagliato e mescolavano il WIP di progetti diversi nello stesso index (recidive brainbeez/AGG-10 in commit.md). Rimosse e d'ora in poi versionate nei repo proprietari, con gli mount `.agents`/`.agents/skills` verso gateway staccati: harness-wtp, a-copywriter-wtp, wtp-brand-voice, wtp-ux-ui, b2b-explorer, b2b-explorer-ui-ux → WTP_App (e654075); harness-hal-mcp-tools + impersonate → hal_mcp_tools (f94d400); harness-hal-mcp-docs → hal_mcp_docs (c49cfda); harness-hal-seo → hal_seo (97930d2); harness-hal-translate → hal_translate (b0388a6); harness-hal-tts → hal_tts (02c0e94); harness-semidifocusing → semidifocusing (7ec25d6+2b08daf, push verificato ls-remote). La catena extends-version continua a risolvere i padri L1 via HAL_AGENTS_ROOT (agent-version.sh, path assoluto). Incidenti dogfood: in semidifocusing il pattern nudo `skills` nel .gitignore catturava `.agents/skills` → ancorato a `/skills`; il riallineamento dell'index condiviso di agent-commit è morto su `index.lock` di un processo esterno (sync file esterna sul repo) — recupero con `git add -A` sui soli path di slice (mai reset), coerente con §Isolamento index. `link-workspace-skills.sh` non ricrea le L2 (non sono nel perimetro del mirror) → rimozione stabile; editor-links e frontmatter-all verdi.
-## [1.13.11] - 2026-11-18
-
-### Added
-
-- Modulo `agents/scripts/git-push-auth.sh` (L0, canone anti-hang): spinta non interattiva con `GIT_TERMINAL_PROMPT=0`, classificazione auth-vs-strutturale dello stderr e retry solo-per-auth con helper `gh` (keyring) quando `gh auth status` è ok; degradazione a push nuda se il modulo non è raggiungibile. Integrato in `agent-worktree.sh land` e `agent-commit.sh --push`, aggiunto al lint `SHELL_SCRIPTS`; `worktree-land.md` regola 9 e tool-pitfalls aggiornati. Evidenza: incidente reale land t107 (2026-11-18, prompt username a metà `/sync !`). 3 test in `tests/test_git_push_auth.py` (RED→GREEN, timeout a guardia dell'hang).
-
 
 ## [1.13.10] - 2026-11-18
 
