@@ -1,5 +1,11 @@
 # Changelog — a-copywriter
 
+## [1.7.8] - 2026-11-19
+
+### Changed
+
+- Sync selettivo [sync:safe] con a-agentzero 1.13.11: assorbite le regole di governance 1.13.9 (regola 14 flush→commit+push nello stesso turno; regole 15-16 worktree-land e § «Layout canonico» AGENT-PROTOCOL), la guardia 1.13.10 di `link-workspace-skills.sh` (rigenerazione ammessa solo da hal_gateway) e la rimozione 1.13.11 delle L2 di progetto dal mirror (ora nei repo proprietari). Policy additiva: collisione assente per grep, nessun passaggio del testo L1 toccato.
+
 ## [1.7.7] - 2026-11-18
 
 ### Changed

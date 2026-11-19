@@ -1,5 +1,13 @@
 # Changelog — a-seozoom
 
+## [1.10.10] - 2026-11-19
+
+### Changed
+
+- Sync selettivo [sync:safe] con a-agentzero 1.13.11: assorbite le regole di governance 1.13.9 (regola 14 flush→commit+push nello stesso turno; regole 15-16 worktree-land e § «Layout canonico» AGENT-PROTOCOL), la guardia 1.13.10 di `link-workspace-skills.sh` (rigenerazione ammessa solo da hal_gateway) e la rimozione 1.13.11 delle L2 di progetto dal mirror (ora nei repo proprietari). Policy additiva: collisione assente per grep, nessun passaggio del testo L1 toccato.
+  Nota operativa: `deploy.sh` richiama `link-workspace-skills.sh`, ora eseguibile solo da hal_gateway (guardia 1.13.10).
+
+
 ## [1.10.8] - 2026-11-18
 
 ### Changed

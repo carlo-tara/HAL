@@ -1,8 +1,8 @@
 ---
 name: a-b2b
 extends: a-agentzero
-version: 2.3.7
-extends-version: 1.13.9
+version: 2.3.8
+extends-version: 1.13.11
 description: >-
   Reason why: senza un ingresso B2B stabile, discovery e go-to-market si disallineano.
   Agente L1 per piloti B2B e contact/account research: orchestra il profilo B2B e include la skill enrichment per ricerca ICP, CRM cascade e lead validation.
