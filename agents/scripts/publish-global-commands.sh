@@ -42,9 +42,11 @@ with open(source, encoding="utf-8") as f:
     content = f.read()
 content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, count=1, flags=re.DOTALL)
 with open(target, "w", encoding="utf-8") as f:
+    # ATTENZIONE: lo scalar `description` non deve contenere la sequenza ": "
+    # (non quotato = YAML invalido: "mapping values are not allowed here").
     f.write(
         f"---\nname: {name}\nversion: {ver}\n"
-        f"description: Command {name} for HAL workspace (global, source: hal_gateway).\n---\n\n"
+        f"description: Command {name} for HAL workspace (global, published by hal_gateway).\n---\n\n"
         + content
     )
 PYSTRIP
@@ -83,7 +85,7 @@ fi
 # con marker nel description, per non toccare skill altrui).
 for d in "$TARGET_HOME"/*/; do
   n="$(basename "$d")"
-  if [[ -f "${d}SKILL.md" ]] && grep -q "source: hal_gateway" "${d}SKILL.md"; then
+  if [[ -f "${d}SKILL.md" ]] && grep -q "published by hal_gateway" "${d}SKILL.md"; then
     keep=0
     for p in "${PUBLISHED[@]}"; do [[ "$p" = "$n" ]] && keep=1; done
     if [[ "$keep" = "0" ]]; then rm -r "$d"; echo "pruned: $n"; fi
