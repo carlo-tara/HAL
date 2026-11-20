@@ -9,6 +9,8 @@ e questo progetto aderisce a [Semantic Versioning](https://semver.org/lang/it/).
 
 ### Added
 
+- Fonte unica consumer: `agents/consumers.list` (21 repo) letta da `hal-contract.py`, `prune-local-commands.py` e `sync-consumer-stale.sh` — aggiungere un repo è una riga lì, non una modifica di tre script; report `make -C agents consumers-list`; contratto documentato in AGENTS.md e `agents/docs/operativo.md`; bundle `a-agentzero` 1.13.14 (commit 14d9d8a). HT-014 a registro per l'applicazione ai 21 repo.
+
 - Anti-hang delle push (canone L0 `git-push-auth.sh` + config `credential.helper=gh`): nessun land/commit attende più un prompt di credenziali https — fallimento rapido, fallback keyring gh su causa auth, degradazione controllata; 3 test dedicati. Evidenza: incidente reale del 2026-11-18 durante `/sync !`.
 
 - `/sync !` allineamento 8 catene L2 consumer [sync:safe] (conferma umana): 7 figli di a-harness 1.10.4→1.11.2 (policy additive, zero collisione verificata via grep sui figli) + `b2b-explorer` ←a-b2b 2.3.5→2.3.7 (infra); bump patch + `extends-version` + CHANGELOG per figlio; scoperta di doc-bug: `sync-agents.sh --dry-run` senza `--projects` non scansiona le catene L2 consumer → falso negativo da 0 STALE, documentato nel commit.
