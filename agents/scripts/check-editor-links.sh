@@ -28,9 +28,10 @@ for agent in "${AGENT_IDS[@]}"; do
   check_link "${WORKSPACE_ROOT}/product/adapters/agents/${agent}.md" "${AGENTS_ROOT}/${agent}/agents/${agent}.md"
 done
 
-# sync e learn dal 2026-11-19 sono comandi L0: nel mirror non sono piu symlink
-# al bundle ma wrapper generati (link_zed_skill) — coperti dal loop L0_COMMANDS
-# sotto e dal controllo entrypoints in fondo allo script.
+# sync e learn sono comandi L0 con sede-skill unica globale (~/.agents/skills,
+# publish-global-commands.sh): nessun wrapper locale in .agents/skills. Il loop
+# L0_COMMANDS sotto copre i symlink comando; l'assenza dei mirror è verificata
+# in fondo allo script.
 check_link "${WORKSPACE_ROOT}/.agents/skills/enrichment" "${AGENTS_ROOT}/a-b2b/enrichment"
 
 for skill in personas jtbd gherkin; do
@@ -76,7 +77,7 @@ if catalog.get("execution_model") != "SystemTwoEngine.ACTIVE_MODEL_NAME":
 
 entrypoints = sorted(expected | {
     "enrichment", "personas", "jtbd", "gherkin", "charts", "illustrator", "uiux",
-    "learn", "sync", "laya",
+    "laya",
 })
 for name in entrypoints:
     skill = workspace / ".agents" / "skills" / name / "SKILL.md"
@@ -111,5 +112,20 @@ for name in entrypoints:
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name) or len(name) > 64:
         raise SystemExit(f"FAIL: non-portable Agent Skills name: {name}")
 
-print("editor-links OK (Zed skills, product adapters, catalog)")
+# Invariante 2026-11-20: i comandi L0 NON hanno più skill locale nel workspace
+# (la sede unica è globale); un mirror residuo shadowa il globale con una copia
+# che qui non viene più rigenerata.
+COMMAND_WRAPPER_NAMES = {
+    "version", "document", "review", "improve", "commit", "todo",
+    "slice", "cycle", "graph", "sync", "learn", "laya-cmd",
+}
+for name in sorted(COMMAND_WRAPPER_NAMES):
+    stale = workspace / ".agents" / "skills" / name / "SKILL.md"
+    if stale.exists():
+        raise SystemExit(
+            f"FAIL: {stale}: wrapper locale di comando L0; sede unica = "
+            "~/.agents/skills (pota: bash agents/scripts/link-workspace-skills.sh)"
+        )
+
+print("editor-links OK (Zed skills, product adapters, catalog, no local L0 wrappers)")
 PY

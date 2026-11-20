@@ -1,5 +1,10 @@
 # Changelog — a-agentzero
 
+## [1.14.0] - 2026-11-20
+
+### Changed
+
+- Comandi L0 — sede unica delle skill-comando: la globale `~/.agents/skills/`. `scripts/link-workspace-skills.sh` dismette `link_zed_skill` e introduce `prune_command_skill_wrapper` (pota i mirror residui marcati, guardie through-symlink/fuori-workspace); `scripts/check-editor-links.sh` inverte l'invariante (assenza dei 12 wrapper + entrypoint learn/sync rimossi); `scripts/sync-agents.sh` non pretende più il symlink locale di learn/sync. Canoni comando: `sync.md` 1.0.1, `version.md` 1.3.3 («canonico vs specchi» senza mirror), `learn.md` 1.0.1 (refuso di sweep — la frase identica era già corretta in sync.md: grepare le auto-descrizioni, non ricordarle); nuovo `commands/CHANGELOG.md` canonico accoglie la storia dei mirror (graph/cycle/version) + i bump senza registro. Sync selettivo [sync:safe]: 8 figli L1 re-pinnati 1.13.11→1.14.0 (chiusura catena STALE post-HT-014; per a-design/a-knowledge solo pin, bump in transazione parallela) + harness-hal 1.0.8 su a-harness 1.11.4. Test: `test_graph_rerun_rules` ripuntato al canone (pin dinamico, era RED preesistente 1.0.4≠1.0.5), `test_link_workspace_skills` riscritto sul contratto prune, fixture `COMMANDS` 9→11 nel guard (RED preesistente da bf67d62). Canoni doc allineati alla sede unica: `sync/SKILL.md` 1.3.0 (bullet mirror→specchi), `references/agentzero-extended-rules.md` (publish = copia reale per tutti i comandi, nessun symlink sync/learn), `commands/README.md` (riga workspace). [sync:safe]
 ## [1.13.15] - 2026-11-20
 
 ### Added

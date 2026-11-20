@@ -85,13 +85,97 @@ solo la versione del canone; una modifica al SOLO template del fence non
 avrebbe rigenerato nessun consumer. Fix tpl 2 (commit 719b278): marcatore di
 template nel fence e refresh forzato a versione invariata. Regola generale:
 quando un artefatto derivato è cachato da una chiave di versione, la chiave
-deve coprire template + sorgente (o serve un marcatore template dedicato).
+devono coprire template + sorgente (o servire un marcatore template dedicato).
+
+### 6. Lista consumer: tre liste hardcode divergenti → fonte unica
+
+**Classe nuova (governance dati)**: l'insieme dei repo consumer era hardcodato
+in tre posti in disaccordo — `hal-contract.py` (11 repo),
+`prune-local-commands.py` (11), `sync-consumer-stale.sh` (10) → 19 unici,
+intersezioni parziali. Il dry-run di `hal-contract.py` ha misurato i mount
+reali non coperti da nessuna lista: **pickwaise 41 symlink, liberating.it 18,
+gDrive_ops 2** — i consumer con più drift erano invisibili al fence.
+
+**Canone operativo:**
+
+1. Fonte unica `agents/consumers.list` (un path per riga, `#` commento,
+   hal_gateway escluso) + loader `agents/scripts/consumers_list.py`
+   (`load_consumers()`; CLI `--strict` / `--paths`).
+2. `hal-contract.py` e `prune-local-commands.py` importano il loader;
+   `sync-consumer-stale.sh` carica `PROJECTS` con `mapfile` dallo stesso
+   file. Guardia sul canone («canone, mai toccato») ora presente in entrambi
+   gli applicatori — prima solo in prune.
+3. Gate: `make -C agents consumers-list` (report; `STRICT=1` → exit 1 su
+   path mancante). NON in pre-commit: i repo consumer possono mancare su
+   altre macchine.
+4. Aggiungere/rimuovere un consumer = UNA riga nella lista, non tre script.
+
+**Evidenza:** sessione de-racing HAL 2026-11-20 — conteggi da tool result
+(dry-run hal-contract, verifica ad-hoc delle liste, `make consumers-list`
+exit 0 su 21/21).
+
+### 7. Claim nata da decodifica parziale: ed è FINITA in un artefatto spedito
+
+**Estensione della classe «Percorsi citati come evidenza vanno verificati»**
+(2ª occorrenza; la 1ª restava in chat/ToDo, qui il fatto falso è stato
+persistito): ricucendo output terminaltroncati/base64 ho «letto» un
+inesistente `/var/www/semidifosing` in hal-contract.py e l'ho scritto come
+prova di drift nel docstring di `consumers_list.py`. Un `grep -rn` autoritativo
+su tutto l'albero ha mostrato che la stringa esisteva **solo nel mio file**:
+una fabbricazione da decodifica — e spedirla in un sorgente la rende persistente.
+
+**Canone operativo:**
+
+1. Ogni fatto (path, nome, numero) prima di essere scritto in un artefatto
+   durevole va riverificato con un comando read-only sull'albero reale — la
+   decodifica di un output di trasporto NON è evidenza.
+2. Se il tool restituisce output monchi o una singola riga spuria al posto
+   del contenuto (visto su `sync-agents.sh` e `agents/Makefile`), la via è
+   `base64 -w0` o `json.dumps` del testo — e comunque riverificare con grep
+   mirato prima di asserire.
+3. Regola 9 di `learn-guidelines.md` (numeri: verbatim o rimisura) estesa ai
+   fatti stringuali.
+
+### 8. `grep --include=*.py` non quotato: la shell lo espande
+
+**Variante di §Shell di lavoro sh/dash**: `sh` espande i glob NON quotati sul
+CWD prima di passarli a grep. `grep -rn "..." --include=*.py --include=*.sh .`
+con un `.py` presente in root ha cercato SOLO quel file, producendo un
+negativo plausibile ma FALSO («nessun altro riferimento»). Rischio
+particolare: il negativo finisce in una conclusione o in un ToDo.
+
+**Canone operativo:** quotare sempre i pattern (`--include='*.py'`); prima di
+asserire un'assenza, positive control con una stringa che DEVE esserci.
+
+### 9. Stato condiviso dentro la stessa batch di tool call
+
+**Variante di §Tool call paralleli + §Sessioni parallele (campo /tmp)**:
+(a) `python3 verify-x.py` e `delete_path verify-x.py` emessi nella STESSA
+risposta: il re-read successivo restituiva output vuoto perché il delete
+era già avvenuto — «exit 0 senza stdout» sembrava «script muto». (b) file
+`/tmp/l6.txt` scritto dalla chiamata-1 e rileto dalla chiamata-2 parallela:
+«non esiste» — le chiamate parallele non sono ordinate fra loro. (c) gli
+script usa-e-getta scritti in root di repo SENZA prefisso `.tmp_` sono
+entrati nel `git status` condiviso con la sessione parallela (pericolo di
+assorbimento in allow-list — cfr. HT-012).
+
+**Canone operativo:** stesso artefatto → chiamate SEQUENZIALI (run, POI
+delete); stato intermedio → `.tmp_*` nel root del progetto, rimosso subito;
+`/tmp` grezzo solo per dump one-shot riletti nella stessa chiamata che li
+produce.
 
 ## Changelog HAL (da riversare in `product/session-learnings.md` §HAL)
 
 - 2026-11-19/20 — de-racing completo hal_gateway↔consumer: guardia realpath
   su rigenerazione (1.13.10), L2 nei repo proprietari (1.13.11), contratto
-  + catalogo fence `hal-contract.py` (1.13.12), comandi L0 globali
-  `~/.agents/skills` + sync/learn promossi a comandi (67f365f), delega MCP
-  `skills_list`/`skill_read` per L1/embedded (hal_mcp_tools 1.10.0). Appresi
-  i canoni 1–5 di questa nota.
+  - catalogo fence `hal-contract.py` (1.13.12), comandi L0 globali
+    `~/.agents/skills` + sync/learn promossi a comandi (67f365f), delega MCP
+    `skills_list`/`skill_read` per L1/embedded (hal_mcp_tools 1.10.0). Appresi
+    i canoni 1–5 di questa nota.
+- 2026-11-20 (step B) — fonte unica consumer: `agents/consumers.list` +
+  loader `consumers_list.py`; hal-contract/prune/sync-consumer-stale
+  de-hardcodati (21 consumer, includeva pickwaise e gDrive_ops invisibili
+  alle tre liste); gate `make -C agents consumers-list` (`STRICT=1`);
+  guardia canone aggiunta a hal-contract.py. Consolidati: §6 (AGENTS.md +
+  `agents/docs/operativo.md`), nati §7-§9 (riversamento §7-§9 → tool-pitfalls
+  vincolato a HT-012); residue applicativo → HT-014.

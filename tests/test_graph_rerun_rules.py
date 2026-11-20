@@ -19,6 +19,7 @@ Il test legge solo i file delle skill: nessuna dipendenza esterna.
 
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -36,8 +37,11 @@ COMPETENCY = REPO / "agents" / "a-harness" / "competencies" / "graph" / "SKILL.m
 COMPETENCY_CL = (
     REPO / "agents" / "a-harness" / "competencies" / "graph" / "CHANGELOG.md"
 )
-L0 = REPO / ".agents" / "skills" / "graph" / "SKILL.md"
-L0_CL = REPO / ".agents" / "skills" / "graph" / "CHANGELOG.md"
+# 2026-11-20: i mirror .agents/skills/<cmd> non esistono più (sede unica
+# skill-comando: globale); il contratto legge il canone e il changelog
+# canonico dei comandi L0.
+L0 = REPO / "agents" / "a-agentzero" / "commands" / "graph.md"
+L0_CL = REPO / "agents" / "a-agentzero" / "commands" / "CHANGELOG.md"
 
 
 class TestGatePassivoRilascio(unittest.TestCase):
@@ -74,9 +78,13 @@ class TestVersioniBump(unittest.TestCase):
         self.assertIn("version: 1.4.3", COMPETENCY.read_text(encoding="utf-8"))
         self.assertIn("[1.4.3]", COMPETENCY_CL.read_text(encoding="utf-8"))
 
-    def test_l0_1_0_4_e_changelog(self) -> None:
-        self.assertIn("version: 1.0.4", L0.read_text(encoding="utf-8"))
-        self.assertIn("[1.0.4]", L0_CL.read_text(encoding="utf-8"))
+    def test_l0_version_e_changelog(self) -> None:
+        text = L0.read_text(encoding="utf-8")
+        m = re.search(r"^version: (\d+\.\d+\.\d+)$", text, re.MULTILINE)
+        self.assertIsNotNone(m, "campo version assente in commands/graph.md")
+        assert m is not None  # stringimento pyright (assertIsNotNone non è TypeGuard)
+        self.assertGreaterEqual(tuple(int(x) for x in m.group(1).split(".")), (1, 0, 4))
+        self.assertIn(f"[{m.group(1)}]", L0_CL.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

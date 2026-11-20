@@ -1,7 +1,7 @@
 ---
 name: learn
 parent: a-agentzero
-version: 1.7.1
+version: 1.8.0
 description: >-
   Slash /learn con tripla modalità: /learn ? illustra gli apprendimenti dalla
   conversazione o sessione corrente; /learn ! consolida nelle skill attive del
@@ -28,10 +28,10 @@ Skill utility di **a-agentzero**. Cattura ciò che emerge dalla chat corrente e 
 
 ## Invocazione
 
-| Comando    | Modalità                                                                |
-| ---------- | ----------------------------------------------------------------------- |
-| `/learn ?` | **Riflessione** — report apprendimenti (nessuna scrittura file)         |
-| `/learn !` | **Consolidamento** — scrive target + changelog + `/version patch` skill |
+| Comando                              | Modalità                                                                                      |
+| ------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `/learn ?`                           | **Riflessione** — report apprendimenti (nessuna scrittura file)                               |
+| `/learn !`                           | **Consolidamento** — scrive target + changelog + `/version patch` skill                       |
 | `/learn! redigi <file> per <target>` | **Redazione** — riscrive il documento per il destinatario; non insegna nulla, non tocca skill |
 
 ---

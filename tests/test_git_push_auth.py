@@ -36,6 +36,7 @@ def bash(code, cwd=None, timeout=60):
         text=True,
         env=GIT_ENV,
         timeout=timeout,
+        check=False,
     )
 
 

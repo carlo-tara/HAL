@@ -44,9 +44,9 @@ _REPO_ROOT = str(Path(__file__).resolve().parent.parent.parent)
 if _REPO_ROOT not in sys.path:
     sys.path.insert(0, _REPO_ROOT)
 
-from laya_gate import _answer_probs, _top_and_margin  # noqa: E402
-from laya_service import LayaSystemOneService, _LayaAbstention  # noqa: E402
-from scripts.gold_set_scoring import load_gold  # noqa: E402
+from laya_gate import _answer_probs, _top_and_margin
+from laya_service import LayaSystemOneService, _LayaAbstention
+from scripts.gold_set_scoring import load_gold
 
 BAND_ALTO_MIN = 0.66
 BAND_MEDIO_MIN = 0.33
@@ -192,7 +192,7 @@ def build_predictions(
 
 
 def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     parser.add_argument("gold", nargs="?", default=str(DEFAULT_GOLD))
     parser.add_argument("pred", nargs="?", default=str(DEFAULT_PRED))
     parser.add_argument(

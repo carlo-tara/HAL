@@ -1,5 +1,11 @@
 # Changelog — a-seozoom
 
+## [1.10.11] - 2026-11-20
+
+### Changed
+
+- Sync selettivo [sync:safe]: re-pin `extends-version` 1.13.11→1.14.0 (chiusura catena STALE post-HT-014 sul canone `a-agentzero`), bump patch.
+
 ## [1.10.10] - 2026-11-19
 
 ### Changed

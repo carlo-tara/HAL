@@ -1,5 +1,12 @@
 # Changelog — a-knowledge
 
+## [1.2.0] - 2026-11-20
+
+### Added
+
+- Delega al side-car **Knowledge & Ontology** (`auto-ontology-mcp`, MCP stdio) in §Deleghe: quando la domanda richiede fatti tipizzati/SQL con provenienza citabile, il destinatario è il side-car secondo il canone `docs/bounded-contexts.md` §«Routing delle domande» — **link, non copia**. Policy additiva: nessun passaggio esistente toccato; capitoli/documenti restano in carico alla pipeline CPU-first di questa skill. Contesto: `HT-013`, slice `docs/slices/AO1-sidecar-boundary.md` (AO-1.1). Laya choice sul bump rispondeva «major» — override System 2 (modifica additiva = minor, precedent commit.md 1.0.1→1.1.0).
+- Pin file `references/auto-ontology-source.md` (AO-2, 2026-11-20): registra il runtime side-car pinnato (`0fb5ecf`/0.6.1), il baseline KPI-1 misurato (13 tool / 15.782 char), il rituale di aggiornamento AO-2.1 e il mapping HAL; il clone vive **fuori** dal bundle (`~/auto-ontology-mcp`), nel bundle resta solo questo riferimento — nessuna distillazione di `guidance.py` (derivato da prompt NVIDIA).
+
 ## [1.1.10] - 2026-11-19
 
 ### Changed

@@ -195,7 +195,6 @@
 - `docs/28_laya_model_card.md`: l'N/A «eval raw con gold set assente» diventa **prima misura** (HT-010, run 2026-11-18 su 123 oro confermati): hit_rate 0.276, decision-family .540, banda direct .523, curva debole non monotona; caveat strumento (score by-pass 30/30 by design; noul {uncertain, refuse} vs vocabolario oro → allineamento nel residuo HT-005). Nessuna soglia mossa; adozione gated su copertura piena → `HT-011` #human. Comandi di riproduzione incorporati nella carta. [sync:review]
 - Esclusi dalla consolidazione: auto-vote commit-type 3/4 incorrect di oggi (veri nella telemetria Laya tramite il loop `request_hash` — un solo posto canonico, anti-grasso); coercizione `timeout_ms`/`start_line` (già registrata in 1.6.25, nessuna nuova occorrenza-regola); warning `Data Validation extension` openpyxl su xlsx ri-salvati da LibreOffice (osservazione singola: load+save openpyxl la elimina, eventualmente alla seconda). [sync:safe]
 
-
 ## 2026-11-18 — AgentFactory fuori dal canone + [sync:safe] completato + dedup chrome UX → HAL (sessione brainbeez)
 
 ### HAL
@@ -203,7 +202,6 @@
 - Decisione d'inventario (utente, 2026-11-18): AgentFactory non tornerà → rimossa la skill L2 `harness-agentfactory` (canone + 5 symlink consumer), `MIGRATION.md`, i 15 symlink rotti in `~/.cursor/agents` (bersaglio `/var/www/AgentFactory/` inesistente); wording di dismissione ritirato da AGENTS/README/docs/routing learn; docstring `seozoom_lib` allineata. I riferimenti nei registri storici (CHANGELOG, session-learnings) restano: sono record, non istruzioni. [sync:safe]
 - Chiusura [sync:safe] 8 L1←a-agentzero 1.13.9: dopo il fix 516146c (decodifica `versenversion:` in 7 skill) `a-harness` era rimasta indietro — riallineata 1.11.2/1.13.9 in questo flusso. Regola già registrata in tool-pitfalls §Sessioni parallele («rieseguire il gate che legge i file bumpati») — qui rispettata in chiusura, non ri-appresa. [sync:review]
 - `uiux` L1 1.2.0 assorbe 3 canoni chrome dalle L2 `wtp-ux-ui`/`b2b-explorer-ui-ux` (puntatori + override restanti): prima promozione L1 con trigger esplicito dell'utente su report `/sync <` (regola ≥2 progetti soddisfatta da due superfici dello stesso DS WTP). [sync:safe]
-
 
 ## 2026-11-18 — pipeline /learn ! + /sync + /version minor + /document → HAL (sessione)
 
@@ -213,8 +211,28 @@
 - Chiuso il debito 2026-11-09 «Promozione L1 uiux delle parti generiche rinviata»: `a-design/uiux` 1.2.0 con i 3 canoni chrome (slot brand/meta, output nel menu File, copy da origine i18n) e L2 ridotte a puntatore+override; registrato in `docs/harness-CHANGELOG.md` §Changed. [sync:safe]
 - Esclusi (anti-grasso): brace-expansion sh (candidato già in ToDo HAL, unica sessione), `versenversion:`/verde preso in prestito (già voce sorella in tool-pitfalls §Sessioni parallele).
 
-
 ### HAL (addenda unificazione copy WTP)
 
 - NEED-N risolto per via 1-bis della regola (richiesta esplicita): unificazione `a-copywriter-wtp`→`wtp-brand-voice` con **inversione del verso dell'alias** (la tana vuota diventa fonte, il corpo diventa guscio) per non rompere i 12 symlink consumer; catena L2 dichiarata solo sul vero sorgente. Ricetta riutilizzabile ogni qualvolta il canone di naming vorrebbe il nome X ma i link vivi puntano Y. [sync:safe]
 - Auto-evidenza CJK: il mio stesso writer ha generato `逆流` dentro il body (classe Frammenti CJK, rimedio sweep pre-commit). Il canone si autoverifica: lo sweep post-scrittura resta il gate di chiusura di ogni `/learn !`. [sync:safe]
+
+---
+
+## 2026-11-18 — fix pyright HT-010 runner + consolidazione /learn ! → HAL (sessione)
+
+### HAL
+
+- **Convenzione pyright per import dinamici in test (2° progetto → pattern cross-progetto consolidato):** `importlib.util.spec_from_file_location` restituisce `ModuleSpec | None`; il guard canonico è `assert _spec is not None and _spec.loader is not None` prima di `spec.loader.exec_module(mod)` (non `cast`). Analogo per l'argomento `spec=` di `ModuleType`: o `ModuleSpec` valido o non passarlo. In questo repo il pattern era già in `tests/compare_tokens.py`; la sessione brainbeez 2026-11-04 (#16) lo aveva applicato su `main.py`. Non serve documentarlo in a-harness: è pratica da codice esistente + questi appunti; se emergono altre due occasioni valutare riferimenti L1 dedicati.
+- **Guard `__doc__` under strict:** `description=__doc__.splitlines()[0]` è `str | None` → `Optional` non ammesso; canone del repo: `(__doc__ or "")`, es. `compare_tokens.py:190`, `benchmark/scripts/gold_set_pred_runner.py:195`.
+- **Acceptance gate statico:** dopo fix typing, rieseguire test di destinazione (`pytest tests/test_gold_set_pred_runner.py -q`, 13/13 PASS) + smoke `--help` dello script toccato; i diagnostics pyright vanno riletti post-edit, non fidarsi dello stato pre-rinfresco.
+- **Punto ricorrenza pitfall tool (già documentato, nessuna nuova voce):** `read_file` con `start_line`/`end_line` respinto 4–5 volte anche passando interi (`invalid type: string, expected u32`) — coerente con §Parametri numerici respinti come stringhe in `learn/references/tool-pitfalls.md`; fallback canone terminal/lettura integrale, già in atto.
+- **Nuovo pitfall consolidato (1ª occorrenza, registrato in `learn/references/tool-pitfalls.md`):** citare path come «evidenza documentata» senza verifica fresca — in sessione ho attestato `agents/a-harness/references/pyright-conventions.md` come fonte della convenzione importlib: file inesistente (verificato con `find`), l'attestazione era un'inferenza da output di comandi troncati.
+
+## 2026-11-20 — Dismissione wrapper locali comandi L0 + /learn ! → HAL (sessione)
+
+### HAL
+
+- **Cosa:** la sede delle skill-comando L0 diventa unica (globale `~/.agents/skills/`): `link-workspace-skills.sh` non genera più i mirror `.agents/skills/<cmd>/` e li pota, `check-editor-links.sh` inverte l'invariante (assenza wrapper), `sync-agents.sh` non pretende più i symlink learn/sync. Chiusa anche la catena STALE preesistente con sync selettivo [sync:safe]: 8 figli L1 re-pinnati 1.13.11→1.14.0 (per a-design/a-knowledge solo pin — bump in transazione parallela), harness-hal 1.0.8 su a-harness 1.11.4, padre a-agentzero 1.14.0.
+- **Evidenza:** 26 test verdi (moduli guard/l0/canonical/rerun + `test_link_workspace_skills` riscritto sul contratto prune — era CI-red per funzione dismessa; due RED preesistenti emersi: pin graph 1.0.4≠mirror 1.0.5, fixture COMMANDS 9/11); `make -C agents pre-commit` + `test-unit` OK; tool `skill` risolve `commit` dal globale (`<source>global</source>`); i CHANGELOG unici nei mirror (graph/cycle/version) trasferiti al canone `agents/a-agentzero/commands/CHANGELOG.md`.
+- **Stato:** consolidato — bullet datato in `learn/references/tool-pitfalls.md` §Path dei comandi L0 (learn 1.7.2), canoni doc allineati (sync/SKILL.md 1.2.3, extended-rules, commands/README), comandi sync 1.0.1 / version 1.3.3 / learn 1.0.1 ripubblicati.
+- **Ambito:** HAL. **Destinazione:** skill (learn deep) + `commands/CHANGELOG.md`.

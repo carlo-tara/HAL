@@ -1,4 +1,4 @@
-# Indice — 28 documenti di dettaglio (perché / cosa / come)
+# Indice — 29 documenti di dettaglio (perché / cosa / come)
 
 Modello di costo: forward Laya ~33ms CPU · op Redis <1ms · LLM in unità relative (piccolo=1, medio=3, frontier=10).
 
@@ -38,6 +38,7 @@ Modello di costo: forward Laya ~33ms CPU · op Redis <1ms · LLM in unità relat
 - [26_spike_session_cache_orcarouter.md](26_spike_session_cache_orcarouter.md) — Spike (N28): session-cache `x-dashscope-session-cache` e marker `cache_control` via OrcaRouter — esito: marker inerti, non adottato
 - [27_spike_conversation_gateway.md](27_spike_conversation_gateway.md) — Spike (N25): astrazione conversation lato gateway come alternativa locale a `previous_response_id`
 - [28_laya_model_card.md](28_laya_model_card.md) — Model card di Laya (System 1): funzione input/uscita, limiti misurati (rv7: decision-family ~37% anche a margin alto, eccezione top1≥0,8 revocata), ciclo di calibrazione, N/A e riesame ROI ancorato a HT-003
+- [29_auto_ontology_semantic_layer.md](29_auto_ontology_semantic_layer.md) — PRD side-car Auto Ontology (Livelli A+C): registrazione MCP parsimoniosa in Zed + confine BC con il retrieval documentale di a-knowledge/hal_mcp_docs; slice `docs/slices/AO1-sidecar-boundary.md` (`HT-013`)
 
 ## Riferimenti — harness & contesto
 

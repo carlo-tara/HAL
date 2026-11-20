@@ -6,7 +6,7 @@ Esporre `/learn` come comando L0: catturare ciò che emerge dalla sessione corre
 
 ## Process
 
-1. **Carica il canone:** `read /var/www/hal_gateway/agents/a-agentzero/learn/SKILL.md` (il deep skill nel bundle; `.agents/skills/learn/` e la skill globale sono ora wrapper generati da questo file).
+1. **Carica il canone:** `read /var/www/hal_gateway/agents/a-agentzero/learn/SKILL.md` (il deep skill nel bundle; la skill globale `~/.agents/skills/learn` è il wrapper generato da questo file — nessun mirror locale in `.agents/skills/`).
 2. **Instrada l'argomento (tabella canone):**
    - `?` → **Riflessione** — report apprendimenti dalla conversazione/sessione, nessuna scrittura su file.
    - `!` → **Consolidamento** — scrive nei target attivi (skill L2, brand, rules) e, se necessario, apre Attività in `./ToDo.md` e/o apprendimenti in `docs/` locali; changelog + `/version patch` sulle skill toccate.

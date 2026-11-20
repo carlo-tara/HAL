@@ -1,7 +1,17 @@
 # Changelog — learn
 
+## [1.8.0] - 2026-11-20
+
+### Changed
+
+- `/learn !` hal_gateway (sessione dismissione wrapper locali comandi L0): nuovo bullet datato in `tool-pitfalls.md` §Path dei comandi L0 — mirror soppresso (sede unica: globale) con le tre regole della transazione: prima di `rm -rf` su superfici generate, ispezionare il git dei dati non rigenerabili (i CHANGELOG unici nei mirror trasferiti al canone `commands/CHANGELOG.md`); estendere lo sweep dei riferimenti alle auto-descrizioni dei canoni (refuso di memoria: `learn.md` e §specchi di `version.md` rimasti indietro dopo la correzione di `sync.md`); baseline dei test prima di ripuntarli (due RED preesistenti emersi: pin graph 1.0.4≠1.0.5, fixture COMMANDS 9/11). Ricorrenza §Parametri numerici (terminal `timeout_ms 300000` rifiutato come `expected u64` — classe già documentata dal 2026-11-04, nessuna regola nuova).
+
 ## [1.7.1] - 2026-11-18
 - Sezione nuova «Push HTTPS interattiva: mai in una land» (evidenza: incidente t107 del 2026-11-18 — helper credenziali scaduto a metà sessione, land in ostaggio sul prompt username con flock acquisito). Canone L0 associato: modulo `agents/scripts/git-push-auth.sh` (GIT_TERMINAL_PROMPT=0 + classificatore auth + fallback helper gh) integrato in land/commit; config repo `credential.helper='!gh auth git-credential'` applicata su hal_gateway e hal_system2. 3 test in `tests/test_git_push_auth.py`.
+
+### Fixed
+
+- `tool-pitfalls.md`: nuovo bullet «percorsi citati come evidenza vanno verificati» (prima occorrenza classe allucinazione-evidenza: `pyright-conventions.md` citato come fonte, file inesistente). Consolidata in `product/session-learnings.md` §HAL la catena pyright HT-010 (assert ModuleSpec, `(__doc__ or "")`, spec-arg) come convenzione cross-progetto (brainbeez 2026-11-04 + HAL 2026-11-18); ricorrenza §Parametri numerici (read_file range, interi, 4×) registrata senza nuovo bullet — già documentata dal 2026-11-04.
 
 ## [1.6.26] - 2026-11-18
 - `/learn !` hal_system2 2026-11-18 (catena T1-03 → strategie anti-frizione → sync): §Batch `edit_file` non atomico — **promossa a canone** la variante «duplicazione da batch a cascata con doppio success» (candidato 2 del 2026-11-17, seconda osservazione raggiunta: `_t103_recon.py`, contatori raddoppiati con entrambi gli edit «Edited successfully»); §Sessioni parallele — file messaggio di `agent-commit.sh -m` risolto dalla ROOT dopo il `cd` interno (rc 128, evidenza 78caae0). Candidati 1 (`write_file` backslash) e 3 (propagazione `ls-remote`) **rinviati con dichiarazione**: le occorrenze odierne appartengono ad altre classi (enumerazione worktree a inizio sessione; dipendenze tra tool call) e non costituiscono seconda osservazione della stessa classe. Nessuna promozione per «blob chirurgico»: già canonico in §Sessioni parallele.

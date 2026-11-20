@@ -5,10 +5,12 @@ Appreso dal chain /version+/commit 2026-10-30 (hal_system2): il bump di
 `/sync !` perche` il canonico `agents/a-agentzero/commands/graph.md` non era
 stato toccato. Le regole consolidate:
 
-1. command L0 `version` 1.3.1: regola di coerenza «bump sul canonico, mai
-   solo sul mirror».
-2. skill `sync` 1.2.1: note «le modifiche al mirror sono annullate da
-   `/sync !`».
+1. command L0 `version`: regola di coerenza «bump sul canonico, mai sugli
+   specchi». Dal 2026-11-20 il mirror locale non esiste più (sede unica
+   skill-comando: globale); il contratto verifica l'assenza.
+2. skill `sync`: note «le modifiche al mirror sono annullate da `/sync !`»;
+   la versione corrente (estratta dal frontmatter) deve risultare nel proprio
+   CHANGELOG, non un numero pinato (stessa tecnica del caso learn, 2026-10-31).
 3. learn >= 1.5.12 (versione corrente estratta dal frontmatter): sezione
    tool-pitfalls «Path dei comandi L0: canonico vs mirror generato» (include
    edit_file su path via symlink `agents/` e write_file fuori progetto ->
@@ -37,22 +39,29 @@ PITFALLS = REPO / "agents" / "a-agentzero" / "learn" / "references" / "tool-pitf
 class TestVersionRegolaCanonico(unittest.TestCase):
     def test_canonico_contiene_regola(self) -> None:
         text = VERSION_CMD.read_text(encoding="utf-8")
-        self.assertIn("mai solo sul mirror", text)
-        self.assertIn("version: 1.3.1", text)
+        self.assertIn("mai sugli specchi", text)
+        self.assertIn("agents/a-agentzero/commands/<cmd>.md", text)
 
-    def test_mirror_rigenerato_allineato(self) -> None:
-        text = VERSION_MIRROR.read_text(encoding="utf-8")
-        self.assertIn("version: 1.3.1", text)
+    def test_mirror_locale_assente(self) -> None:
+        # 2026-11-20: nessun wrapper locale in .agents/skills — rigenerato da
+        # link-workspace-skills.sh solo il globale via publish-global-commands.sh.
+        self.assertFalse(
+            VERSION_MIRROR.exists(),
+            "mirror locale rimosso: la sede unica della skill-comando è globale",
+        )
 
 
 class TestSyncNoteMirror(unittest.TestCase):
     def test_sync_contiene_note_mirror(self) -> None:
         text = SYNC_SKILL.read_text(encoding="utf-8")
         self.assertIn("le modifiche al mirror sono annullate da", text)
-        self.assertIn("version: 1.2.1", text)
 
-    def test_sync_changelog_ha_voce(self) -> None:
-        self.assertIn("[1.2.1]", SYNC_CL.read_text(encoding="utf-8"))
+    def test_sync_bump_e_changelog(self) -> None:
+        skill = SYNC_SKILL.read_text(encoding="utf-8")
+        m = re.search(r"^version: (\d+\.\d+\.\d+)$", skill, re.MULTILINE)
+        self.assertIsNotNone(m, "campo version assente in sync/SKILL.md")
+        assert m is not None  # stringimento pyright (assertIsNotNone non è TypeGuard)
+        self.assertIn(f"[{m.group(1)}]", SYNC_CL.read_text(encoding="utf-8"))
 
 
 class TestLearnPitfallPath(unittest.TestCase):
@@ -62,8 +71,9 @@ class TestLearnPitfallPath(unittest.TestCase):
 
     def test_learn_bump_e_changelog(self) -> None:
         skill = LEARN_SKILL.read_text(encoding="utf-8")
-        m = re.search(r"^version: (\d+\.\d+\.\d+)$", skill, re.M)
+        m = re.search(r"^version: (\d+\.\d+\.\d+)$", skill, re.MULTILINE)
         self.assertIsNotNone(m, "campo version assente in learn/SKILL.md")
+        assert m is not None  # stringimento pyright (assertIsNotNone non è TypeGuard)
         self.assertGreaterEqual(
             tuple(int(x) for x in m.group(1).split(".")), (1, 5, 12)
         )

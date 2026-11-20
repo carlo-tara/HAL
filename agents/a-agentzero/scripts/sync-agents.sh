@@ -47,9 +47,10 @@ report_workspace_links() {
   echo ">>> Skill condivise Zed (.agents/skills)"
   local agent destination expected actual status
   local missing=0 drift=0
-  for agent in "${AGENTS[@]}" learn sync laya enrichment personas jtbd gherkin charts illustrator uiux; do
+  # learn/sync esclusi dal 2026-11-20: sono comandi L0 la cui skill vive SOLO
+  # nei globali (~/.agents/skills); nel workspace restano deep skill di bundle.
+  for agent in "${AGENTS[@]}" laya enrichment personas jtbd gherkin charts illustrator uiux; do
     case "${agent}" in
-      learn|sync) expected="${AGENTZERO_DIR}/${agent}" ;;
       laya) expected="${HAL_AGENTS_ROOT}/project-skills/${agent}" ;;
       enrichment) expected="${HAL_AGENTS_ROOT}/a-b2b/enrichment" ;;
       personas|jtbd|gherkin) expected="${HAL_AGENTS_ROOT}/a-product/${agent}" ;;

@@ -36,6 +36,8 @@ COMMANDS = [
     "slice",
     "cycle",
     "graph",
+    "sync",
+    "learn",
 ]
 
 
@@ -88,12 +90,62 @@ def test_canonical_workspace_links_everything(tmp_path):
     assert (hal / ".agents/skills/a-b2b").is_symlink()
     assert (hal / ".agents/commands/commit.md").is_symlink()
     assert (hal / ".zed/prompts/commit.md").is_file()
-    assert "version: 0.1.0" in (hal / ".agents/skills/commit/SKILL.md").read_text(
-        encoding="utf-8"
-    )
+    # Sede unica delle skill-comando: globale. Nessun wrapper locale generato.
+    assert not (hal / ".agents/skills/commit").exists()
     assert (hal / "product/adapters/agents/a-b2b.md").is_symlink()
     # Il branch laya.md è opzionale: assente nei sorgenti, assente il wrapper.
     assert not (hal / ".agents/skills/laya-cmd").exists()
+
+
+def test_stale_local_wrappers_are_pruned(tmp_path):
+    """Mirror di epoca link_zed_skill (marker nel description) vengono potati;
+    una directory reale che NON è wrapper (override di progetto) resta."""
+    hal = make_canonical(tmp_path / "hal")
+    stale = hal / ".agents/skills/commit"
+    stale.mkdir(parents=True)
+    (stale / "SKILL.md").write_text(
+        "---\nname: commit\nversion: 0.1.0\n"
+        "description: Command commit for HAL workspace.\n---\n\n# stale\n",
+        encoding="utf-8",
+    )
+    kept = hal / ".agents/skills/graph"
+    kept.mkdir()
+    (kept / "SKILL.md").write_text(
+        "---\nname: graph\nversion: 9.9.9\n"
+        "description: Override di progetto, non un wrapper.\n---\n\n# keep\n",
+        encoding="utf-8",
+    )
+
+    result = run_link(hal)
+
+    assert result.returncode == 0, result.stderr
+    assert not stale.exists()
+    assert (kept / "SKILL.md").is_file()
+
+
+def test_symlinked_wrapper_dir_is_never_pruned_through(tmp_path):
+    """Un vecchio wrapper SYMLINKATO non si pota through-link: il bersaglio
+    (fuori workspace) resta intatto."""
+    hal = make_canonical(tmp_path / "hal")
+    outside = tmp_path / "elsewhere"
+    outside.mkdir()
+    target = outside / "commit"
+    target.mkdir()
+    (target / "SKILL.md").write_text(
+        "---\nname: commit\nversion: 0.1.0\n"
+        "description: Command commit for HAL workspace.\n---\n",
+        encoding="utf-8",
+    )
+    consumer = tmp_path / "consumer"
+    (consumer / ".agents/skills").mkdir(parents=True)
+    (consumer / "agents").symlink_to(hal / "agents")
+    (consumer / ".agents/skills/commit").symlink_to(target)
+
+    result = run_link(consumer)
+
+    assert result.returncode == 0, result.stderr
+    assert (consumer / ".agents/skills/commit").is_symlink()
+    assert (target / "SKILL.md").is_file()
 
 
 def test_full_symlink_consumer_refused_before_any_write(tmp_path):
@@ -118,23 +170,25 @@ def test_full_symlink_consumer_refused_before_any_write(tmp_path):
     assert not (hal / "product").exists()
 
 
-def test_escaped_wrapper_skill_refused_per_destination(tmp_path):
+def test_escaped_wrapper_skill_symlink_left_untouched(tmp_path):
     """Topologia brainbeez/WTP: `.agents` reale, ma la skill wrapper è symlink a gateway."""
     hal = make_canonical(tmp_path / "hal")
     assert run_link(hal).returncode == 0
-    wrapper_skill = hal / ".agents/skills/commit"
-    wrapper_before = (wrapper_skill / "SKILL.md").read_text(encoding="utf-8")
+    wrapper_skill = hal / ".agents/skills/graph"
+    wrapper_skill.mkdir(parents=True)
+    wrapper_marker = "# keep-me\n"
+    (wrapper_skill / "SKILL.md").write_text(wrapper_marker, encoding="utf-8")
 
     consumer = tmp_path / "consumer"
     (consumer / ".agents/skills").mkdir(parents=True)
     (consumer / "agents").symlink_to(hal / "agents")
-    (consumer / ".agents/skills/commit").symlink_to(wrapper_skill)
+    (consumer / ".agents/skills/graph").symlink_to(wrapper_skill)
 
     result = run_link(consumer)
 
-    assert result.returncode != 0
-    assert "Guardia HAL" in result.stderr
-    assert (wrapper_skill / "SKILL.md").read_text(encoding="utf-8") == wrapper_before
+    assert result.returncode == 0, result.stderr
+    # Nessuna scrittura/pruning through-symlink: il bersaglio in hal è intatto.
+    assert (wrapper_skill / "SKILL.md").read_text(encoding="utf-8") == wrapper_marker
 
 
 def test_broken_symlink_root_refused(tmp_path):

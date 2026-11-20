@@ -2,12 +2,12 @@
 
 Sorgente canonica dei comandi condivisi: `version`, `document`, `review`, `improve`, `commit`, `todo`, `slice`, `cycle`, `graph`, `sync`, `learn`.
 
-| Livello                                     | Path                                                    | Ruolo                                                                        |
-| ------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| **L0 (canone)**                             | `a-agentzero/commands/*.md`                             | Baseline generica                                                            |
-| **Global (skill Zed per tutti i progetti)** | `~/.agents/skills/<cmd>/SKILL.md`                       | Pubblicati da `agents/scripts/publish-global-commands.sh` (solo hal_gateway) |
-| **Mirror gateway**                          | `.agents/commands/`, `.agents/skills/`, `.zed/prompts/` | Generati da `agents/scripts/link-workspace-skills.sh` (solo hal_gateway)     |
-| **Progetto**                                | `{repo}/.agents/commands/`                              | Override: se presente, vince sul comando standard                            |
+| Livello                                     | Path                                                      | Ruolo                                                                                                                                                                       |
+| ------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **L0 (canone)**                             | `a-agentzero/commands/*.md`                               | Baseline generica                                                                                                                                                           |
+| **Global (skill Zed per tutti i progetti)** | `~/.agents/skills/<cmd>/SKILL.md`                         | Pubblicati da `agents/scripts/publish-global-commands.sh` (solo hal_gateway)                                                                                                |
+| **Workspace (gateway)**                     | `.agents/commands/`, `.zed/prompts/`, `product/adapters/` | Symlink/copie rigenerate da `agents/scripts/link-workspace-skills.sh` (solo hal_gateway); i vecchi mirror skill `.agents/skills/<cmd>` vengono potati (sede unica: globale) |
+| **Progetto**                                | `{repo}/.agents/commands/`                                | Override: se presente, vince sul comando standard                                                                                                                           |
 
 ## Pubblicazione
 

@@ -1,13 +1,13 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-10-30T07:54:41Z",
+  "ts": "2026-11-20T00:00:00Z",
   "flags": {"y": false},
-  "acceptance": "laya_service su POST /systemone con envelope unwrap; score abstain score_not_discriminative; noul intent-choice; test_laya_* verdi",
-  "files": "laya_service.py,tests/test_laya_service.py,router.py",
-  "node_id": "laya-systemone-contract",
-  "next": "ready (gate pre-commit 0); follow-up fuori perimetro: request_hash→POST /outcome, L2 harness-hal nota check-static N/A gia presente",
-  "summary": "Slice completato Red(5)→Green(78 incl. regressione)→ready; P0 flushata in CHANGELOG Fixed; live CLI: routing ok cache-cost-tokeni, choice ok, score by-pass onesto, noul ok; fix collaterale router noul --json",
-  "brief": "",
+  "acceptance": "AO-1 + AO-1.1: check-ontology-bc-boundary.sh GREEN (5 assert: riga BC + §«Routing delle domande» 4 ancoraggi + PRD + ref slice→contratto + delega a-knowledge linkata); a-knowledge 1.1.10→1.2.0 con riga §Deleghe (link, non copia) e CHANGELOG; make -C agents pre-commit 0 (check-registry transazione bump ok, md-links 360)",
+  "files": "docs/bounded-contexts.md,docs/29_auto_ontology_semantic_layer.md,docs/slices/AO1-sidecar-boundary.md,product/contracts/check-ontology-bc-boundary.sh,agents/a-knowledge/SKILL.md,agents/a-knowledge/CHANGELOG.md",
+  "node_id": "ao-1-1-knowledge-delegation",
+  "next": "AO-2 INSTALLATA 2026-11-20 (clone ~/auto-ontology-mcp @ 0fb5ecf — deviazione da /opt: sudo non interattivo, documentata nel pin file; pytest 254 pass; KPI-1 baseline 13 tool/15.782 char in logs/ao-sidecar/; demo + permessi 700/600; entry Zed written enabled:true con backup). #HUMAN: riavvio Zed + smoke (check_readiness su demo + domanda sushi-roll/Pennsylvania 2024-06 ≈316.80). Poi AO-2.1 è il rituale ricorrente ai bump (PRD §6). AO-3 condizionato. Nota catena: a-knowledge STALE vs a-agentzero 1.13.15 = WIP non commesso sessione parallela, NON ri-pinnare da qui",
+  "summary": "AO-1.1 consegnata 2026-11-20: delega side-car promossa in a-knowledge 1.2.0 (§Deleghe: link a §«Routing delle domande», policy additiva zero passaggi toccati; CHANGELOG dedicato; mirror via symlink senza rigenerazione; template placeholder escluso dallo scan). Laya choice sul bump rispondeva «major» — override System 2 (additiva=minor, precedent commit.md 1.0.1→1.1.0; CLI senza request_hash, voto non esprimibile — registrato in progress). Guardia estesa a 5 assert, GREEN; make -C agents pre-commit 0; pre-commit gateway 0. Precede: AO-1 (Act bounded-contexts + guardia GREEN + HT-013 flushata)",
+  "brief": "/slice acceptance=a-knowledge/SKILL.md §Deleghe linka il canone Routing delle domande; guardia assert 5 GREEN; catena figli solo template placeholder (escluso); bump 1.2.0 transazione changelog check-registry OK files=agents/a-knowledge/SKILL.md,agents/a-knowledge/CHANGELOG.md,product/contracts/check-ontology-bc-boundary.sh.",
   "token_budget": 200
 }

@@ -1,8 +1,8 @@
 ---
 name: a-knowledge
 extends: a-agentzero
-version: 1.1.10
-extends-version: 1.13.11
+version: 1.2.0
+extends-version: 1.14.0
 description: >-
   Reason why: senza una pipeline locale e a disclosure progressiva, ogni libro
   tecnico riletto consuma CPU/GPU e token a ogni domanda.
@@ -39,12 +39,13 @@ Separare il lavoro **deterministico locale** (CPU, 0 GPU, 0 token) dal lavoro **
 
 ## Deleghe
 
-| Agente         | Quando                                                    |
-| -------------- | --------------------------------------------------------- |
-| `a-harness`    | Gate Make, RGR, versioning delle skill generate           |
-| `a-copywriter` | Voce/registro dei testi propri dell'utente (non di terzi) |
-| `a-seozoom`    | SEO/GEO di documentazione pubblica                        |
-| `a-design`     | Impaginazione e grafici del cheatsheet                    |
+| Agente                                                             | Quando                                                                                                                                                                                                              |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| side-car **Knowledge & Ontology** (`auto-ontology-mcp`, MCP stdio) | quando la domanda richiede fatti tipizzati/SQL con provenienza citabile (record, somme, join validati): canone in `docs/bounded-contexts.md` §«Routing delle domande» — **link, non copia**; i capitoli restano qui |
+| `a-harness`                                                        | Gate Make, RGR, versioning delle skill generate                                                                                                                                                                     |
+| `a-copywriter`                                                     | Voce/registro dei testi propri dell'utente (non di terzi)                                                                                                                                                           |
+| `a-seozoom`                                                        | SEO/GEO di documentazione pubblica                                                                                                                                                                                  |
+| `a-design`                                                         | Impaginazione e grafici del cheatsheet                                                                                                                                                                              |
 
 ## Riferimenti
 

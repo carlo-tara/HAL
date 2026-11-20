@@ -135,47 +135,22 @@ with open('${target}', 'w', encoding='utf-8') as f:
 "
 }
 
-# Unica sorgente della versione di un wrapper: `version:` nel frontmatter del
-# comando canonico; 1.0.0 se assente. Un bump va fatto sul canonico, mai sul wrapper.
-command_version() {
-  local source="$1" version
-  version="$(awk 'BEGIN{fm=0} /^---$/{if(fm){exit} fm=1; next} fm && $1=="version:"{print $2; exit}' "${source}")"
-  version="${version:-1.0.0}"
-  if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    echo "Invalid version '${version}' in ${source}" >&2
-    return 1
-  fi
-  printf '%s' "${version}"
-}
-
-link_zed_skill() {
-  local source="$1"
-  local name="$2"
+# Sede unica delle skill-comando L0: i globali ~/.agents/skills (generati da
+# publish-global-commands.sh dal canone). Qui si pota solo il vecchio mirror
+# locale generato da `link_zed_skill` (marker nel description): mai potare
+# through-symlink, mai toccare una directory che non sia quel wrapper.
+prune_command_skill_wrapper() {
+  local name="$1"
   local skill_dir="${WORKSPACE_ROOT}/.agents/skills/${name}"
-  local version
-  # Guardia anti-through-write: se la destinazione è un symlink (vecchio
-  # modello utility o collisione di nome), scriverei il wrapper ATTRAVERSO
-  # il link corrompendo il canone. Si rifiuta; il link va rimosso a mano.
   if [[ -L "${skill_dir}" ]]; then
-    echo "Refusing to write through symlink: ${skill_dir}" >&2
-    return 1
+    echo "Skip prune (symlink): ${skill_dir}" >&2
+    return 0
   fi
-  version="$(command_version "${source}")"
-  require_inside_workspace "${skill_dir}/SKILL.md" || return 1
-  mkdir -p "${skill_dir}"
-  python3 -c "
-import re
-with open('${source}', 'r', encoding='utf-8') as f:
-    content = f.read()
-content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, flags=re.DOTALL)
-skill_content = '''---
-name: ${name}
-version: ${version}
-description: Command ${name} for HAL workspace.
----\n\n''' + content
-with open('${skill_dir}/SKILL.md', 'w', encoding='utf-8') as f:
-    f.write(skill_content)
-"
+  [[ -f "${skill_dir}/SKILL.md" ]] || return 0
+  grep -q "^description: Command ${name} for HAL workspace" "${skill_dir}/SKILL.md" || return 0
+  require_inside_workspace "${skill_dir}" || return 1
+  rm -rf "${skill_dir}"
+  echo "pruned: .agents/skills/${name}"
 }
 
 # Permette di fare `source` dello script (test) senza eseguire i collegamenti.
@@ -213,7 +188,7 @@ for command in "${L0_COMMANDS[@]}"; do
     "${WORKSPACE_ROOT}/.agents/commands/${command}.md"
   link_zed_prompt "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" \
     "${WORKSPACE_ROOT}/.zed/prompts/${command}.md"
-  link_zed_skill "${AGENTS_ROOT}/a-agentzero/commands/${command}.md" "${command}"
+  prune_command_skill_wrapper "${command}"
 done
 
 if [[ -f "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" ]]; then
@@ -223,7 +198,10 @@ if [[ -f "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" ]]; then
     "${WORKSPACE_ROOT}/.agents/commands/laya.md"
   link_zed_prompt "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" \
     "${WORKSPACE_ROOT}/.zed/prompts/laya.md"
-  link_zed_skill "${AGENTS_ROOT}/project-skills/laya/commands/laya.md" "laya-cmd"
+fi
+if [[ -d "${WORKSPACE_ROOT}/.agents/skills" ]]; then
+  # Pota il vecchio wrapper laya-cmd anche senza laya.md (invariante uniforme).
+  prune_command_skill_wrapper "laya-cmd"
 fi
 
 printf 'HAL skills linked for Zed and editors: %s\n' "${WORKSPACE_ROOT}/.agents/skills"

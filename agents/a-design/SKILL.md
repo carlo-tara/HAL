@@ -1,8 +1,8 @@
 ---
 name: a-design
 extends: a-agentzero
-version: 1.2.9
-extends-version: 1.13.11
+version: 1.2.10
+extends-version: 1.14.0
 description: >-
   Reason why: senza coerenza tra interfaccia, infografica e identità visiva, l'esperienza utente risulta frammentata. Agente L1 Design & Visual Experience: unifica layout e accessibilità (uiux), grafici e data visualization (charts) e asset illustrativi (illustrator). Eredita da a-agentzero. Usare per UI, layout statici, WCAG, grafici, dashboard e illustrazioni di brand.
 ---
@@ -18,6 +18,7 @@ Integra le seguenti skill:
 - **`uiux`** (`a-design/uiux/SKILL.md`): shell pagina statica, token CSS M3, accessibilità WCAG 2.1 AA, layout editoriale mobile-first.
 - **`charts`** (`a-design/charts/SKILL.md`): data visualization, scelta tipo grafico, encoding percettivo, SVG/D3/canvas, QA leggibilità.
 - **`illustrator`** (`a-design/illustrator/SKILL.md`): illustrazioni AI coerenti col brand, style-brief, prompt engineering, anteprime e QA artefatti.
+- **Delega consumer**: `charts` è canone on-demand anche per progetti consumer senza mount globale — oggi `hal_mcp_docs` lo usa per il tool `docs_report` (report HTML con grafici d3.js v7 sul chunk-store); caricamento via tool MCP del gateway (`skills_list`/`skill_read`) o terminale, ref `hal_mcp_docs/docs/slices/M4-summary-report.md`.
 
 ---
 

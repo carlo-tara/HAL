@@ -1,5 +1,5 @@
 ---
-version: 1.3.2
+version: 1.3.3
 ---
 
 # /version <tipo> — Incremento versione file e documenti modificati (L0)
@@ -54,7 +54,7 @@ Il comando `/version` (es. `/version patch`, `/version minor`, `/version major`)
 
 - **Delta only:** non modificare la versione di file che non hanno subito modifiche effettive nella sessione o nel diff corrente.
 - **Isolamento L0/L1/L2:** non incrementare la versione di `a-agentzero` (L0) per modifiche locali confinate in skill L2 o documentazione di progetto consumer.
-- **L0 command — canonico vs specchi:** lo specchi vivi sono la skill globale `~/.agents/skills/<cmd>/SKILL.md` (pubblicata da `agents/scripts/publish-global-commands.sh`) e i mirror di hal_gateway (`.agents/skills/<cmd>`, `.zed/prompts/<cmd>.md`, `product/adapters/commands/<cmd>.md`): tutto rigenerato dal canonico `agents/a-agentzero/commands/<cmd>.md` via `/sync !`. Il bump va applicato al canonico e rigenerato subito, mai sugli specchi (verrebbero annullati — caso graph 1.0.3, 2026-10-30).
+- **L0 command — canonico vs specchi:** gli specchi vivi sono la skill globale `~/.agents/skills/<cmd>/SKILL.md` (pubblicata da `agents/scripts/publish-global-commands.sh`) e gli specchi del workspace (`.zed/prompts/<cmd>.md`, `product/adapters/commands/<cmd>.md`, `.agents/commands/<cmd>.md`): tutto rigenerato dal canonico `agents/a-agentzero/commands/<cmd>.md` via `/sync !`. Il wrapper-skill locale `.agents/skills/<cmd>` non esiste più dal 2026-11-20: sede unica delle skill-comando è la globale. Il bump va applicato al canonico e rigenerato subito, mai sugli specchi (verrebbero annullati — caso graph 1.0.3, 2026-10-30).
 - **Tracciabilità:** ogni bump deve essere accompagnato da una riga nel changelog pertinente (es. `CHANGELOG.md` del modulo o registro di sessione).
 
 ---

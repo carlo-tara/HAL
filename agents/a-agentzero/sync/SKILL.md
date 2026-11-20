@@ -1,6 +1,6 @@
 ---
 name: sync
-version: 1.2.2
+version: 1.3.0
 description: >-
   Sincronizza agenti HAL L0/L1 (deploy) e comandi Cursor L0 ereditabili; verifica
   allineamento versioni; analizza L2 per generalizzazione (/sync <). Usa quando
@@ -54,5 +54,5 @@ Per dettaglio logica e output, usa `sync-guidelines.md`.
 
 ## Notes
 
-- **Mirror dei comandi L0**: `.agents/skills/<cmd>/SKILL.md` e `.zed/prompts/<cmd>.md` sono generati da `agents/a-agentzero/commands/<cmd>.md` (link-workspace-skills.sh): contenuto e `version` vivono nel canonico, le modifiche al mirror sono annullate da `/sync !` (caso graph 1.0.3, 2026-10-30). Se dopo il deploy un mirror risulta sporco di contenuto vecchio, il canonico è indietro: bumpa il canonico e rilancia il link.
-- `sync` è dal 2026-11-19 un comando L0 a tutti gli effetti: la superficie d'invocazione vive in `a-agentzero/commands/sync.md` (il wrapper generato nel mirror e nei globali); il canone operativo resta questa skill utility (`agents/a-agentzero/sync/`, con `references/` e CHANGELOG proprî — qui l'edit è diretto). `learn` segue lo stesso modello (`commands/learn.md`). La regola del mirror vale per i comandi L0 in `a-agentzero/commands/` (graph, todo, slice, cycle, version, document, commit, review, improve, sync, learn).
+- **Specchi dei comandi L0**: gli specchi vivi sono la skill globale `~/.agents/skills/<cmd>/SKILL.md` (`publish-global-commands.sh`) e i file del workspace rigenerati da `link-workspace-skills.sh` (`.zed/prompts/<cmd>.md`, symlink `.agents/commands/<cmd>.md`, adapters): contenuto e `version` vivono nel canonico `agents/a-agentzero/commands/<cmd>.md`. Dal 2026-11-20 il mirror `.agents/skills/<cmd>/` non è più generato e viene potato: la regola storica per cui le modifiche al mirror sono annullate da `/sync !` (caso graph 1.0.3, 2026-10-30) è esattamente il motivo della dismissione. Se dopo il deploy uno specchio risulta sporco di contenuto vecchio, il canonico è indietro: bumpa il canonico e rilancia link+publish.
+- `sync` è dal 2026-11-19 un comando L0 a tutti gli effetti: la superficie d'invocazione vive in `a-agentzero/commands/sync.md` (il wrapper generato nei globali); il canone operativo resta questa skill utility (`agents/a-agentzero/sync/`, con `references/` e CHANGELOG proprî — qui l'edit è diretto). `learn` segue lo stesso modello (`commands/learn.md`). La regola degli specchi (bump solo sul canonico) vale per i comandi L0 in `a-agentzero/commands/` (graph, todo, slice, cycle, version, document, commit, review, improve, sync, learn).

@@ -25,6 +25,21 @@ per opzione; il gate ricava `margin = top1 − top2` e `recommendation`
 
 ## Limiti misurati (non opinioni)
 
+- **Primo eval raw su oro etichettato (HT-010, run 2026-11-18, n=123 casi confermati**
+  da umano — `benchmark/gold_set/gold_set.jsonl` + `pred.jsonl`, rigenerabili con
+  `python3 benchmark/scripts/gold_set_pred_runner.py` e misurabili con
+  `python3 scripts/gold_set_scoring.py benchmark/gold_set/gold_set.jsonl benchmark/gold_set/pred.jsonl`):
+  hit_rate complessivo **0.276**; decision-family 34/63 ≈ .540 (choice .484,
+  routing .594); by_band **direct .523 (n=44)**, caution .643 (n=14),
+  escalate .031 (n=65 — include le astensioni). Curva margin→accuracy debole e
+  non monotona: .548 a ≥0.8, .667 a ≥0.9, .812 solo a ≥0.95 (n=16) — al draft
+  attuale **nessuna soglia giustifica di toccare `laya_gate`**; l'adozione è
+  gated su copertura piena (`HT-011`). Due caveat sull'instrumento, non sul
+  modello: `score` è by-pass onesto del servizio (30/30 `score_not_discriminative`,
+  by design) e `noul` risponde nel suo vocabolario {uncertain, refuse,…} mentre
+  l'oro usa {routing, choice, score, astensione} → 0/30 sistematico; il
+  allineamento del vocabolario è nel residuo di `HT-005`.
+
 - **`confidence` deprecata come soglia**: è `1 − entropia normalizzata` e dipende da k;
   a k=2 solo il 6–8% dei verdetti supera 0,8 benché il 54% abbia top1>0,8. Il segnale
   corretto è il margine top1-top2.
@@ -58,9 +73,10 @@ voce ToDo `HT-003` (A/B gated vs baseline `20261017_all` con kill criterion).
 - Training data / famiglia architetturale interna: fuori perimetro HAL (repo sorgente
   privato `carlo-tara/laya`); la carta registra ciò che è **misurato in produzione**,
   non ciò che è dichiarato dal paper.
-- Eval raw con gold set etichettato: assente — è la voce ToDo `HT-005` (l'accuracy
-  citata viene da voti outcome di produzione, n=94, non da dati con risposta nota).
-  L'infrastruttura di misura è pronta da HT-008: schema
-  `benchmark/config/gold_set.schema.json` + CLI `scripts/gold_set_scoring.py`
-  (hit-rate e accuracy per fascia di margine, soglie da `laya_gate`); mancano
-  solo le etichette umane.
+- Eval raw con gold set etichettato: prima misura **eseguita il 2026-11-18** su
+  123 casi confermati (vedi §Limiti misurati) — il gold set **completo**
+  (~200/famiglia) e il vocabolario noul allineato restano voce ToDo `HT-005`;
+  l'accuratezza storica citata altrove viene da voti outcome di produzione
+  (n=94), non dall'oro. Infrastruttura di misura da HT-008/HT-010: schema
+  `benchmark/config/gold_set.schema.json` + `scripts/gold_set_scoring.py` +
+  runner `benchmark/scripts/gold_set_pred_runner.py`.

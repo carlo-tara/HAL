@@ -1,5 +1,11 @@
 # Changelog — sync
 
+## [1.3.0] - 2026-11-20
+
+### Changed
+
+- §Notes: i due bullet «Mirror dei comandi L0»/«wrapper generato nel mirror» riscritti sul contratto 2026-11-20 (sede unica delle skill-comando: globale `~/.agents/skills/`; il mirror `.agents/skills/<cmd>` non è più generato e viene potato). La regola storica «le modifiche al mirror sono annullate da `/sync !`» resta citata come origine della dismissione (pin del contratto `tests/test_l0_command_canonical.py`).
+
 ## [1.2.2] - 2026-11-19
 
 ### Changed

@@ -2,6 +2,12 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.0.8] - 2026-11-20
+
+### Changed
+
+- Sync selettivo [sync:safe]: re-pin `extends-version` a-harness 1.11.1→1.11.4 (catena L2←L1 allineata al re-pin dei padri L1), bump patch.
+
 ## [1.0.7] - 2026-11-18
 
 ### Added

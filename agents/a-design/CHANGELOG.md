@@ -1,5 +1,12 @@
 # Changelog — a-design
 
+## [1.2.10] - 2026-11-20
+
+### Added
+
+- Appreso da sessione (/learn ! 2026-11-20, autorizzazione esplicita dell'utente dal consumer `hal_mcp_docs`): riga «Delega consumer» nel blocco skill — `charts` è canone on-demand (catalogo MCP o terminale, niente mount globale) per il tool `docs_report` del consumer: report HTML con grafici d3.js v7 generati dal chunk-store. Bump patch frontmatter già applicato via `agent-version.sh` (1.2.9 → 1.2.10).
+
+
 ## [1.2.9] - 2026-11-19
 
 ### Changed

@@ -33,10 +33,11 @@ from unittest import mock
 _ROOT = Path(__file__).resolve().parent.parent
 _RUNNER_PATH = _ROOT / "benchmark" / "scripts" / "gold_set_pred_runner.py"
 _spec = importlib.util.spec_from_file_location("gold_set_pred_runner", _RUNNER_PATH)
+assert _spec is not None and _spec.loader is not None
 runner = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(runner)
 
-from laya_service import _LayaAbstention  # noqa: E402
+from laya_service import _LayaAbstention
 
 GOLD = [
     {
