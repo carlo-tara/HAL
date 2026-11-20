@@ -6,6 +6,10 @@
 
 - HT-014 (transazione separata): delta «consumers.list canonica» in `references/agentzero-extended-rules.md` (bullet **Contratto consumer**: l'insieme dei repo consumer è canonico in `agents/consumers.list`, letto dai tre script; aggiungere un repo è una riga lì) + refresh dei fence «hal-contract» sui 21 consumer via `hal-contract.py --apply` (il bump patch aggiorna il marcatore BEGIN del fence: versione 1.13.15). [sync:safe]
 
+### Fixed
+
+- `git-push-auth.sh`: l'esecuzione diretta (`bash git-push-auth.sh`) usciva 0 in silenzio SENZA spingere — definiva solo le funzioni (evidenza 2026-11-20, spinta HT-014: push creduta riuscita, `origin/master` fermo). Guardia `BASH_SOURCE`: il modulo resta sourcabile (agent-commit.sh, agent-worktree.sh invariati); se eseguito direttamente effettua la push — argomenti espliciti o `origin HEAD:<branch-corrente>` — con rc propagato, messaggio d'esito esplicito ed exit 2 su detached HEAD. 3 test di regressione in `tests/test_git_push_auth.py` (push diretta su remote bare locale, mai no-op silenzioso senza remote, source senza effetti collaterali) — 6/6 verdi.
+
 ## [1.13.14] - 2026-11-20
 
 ### Added

@@ -34,3 +34,29 @@ push_with_gh_fallback() {
   rm -f "$err"
   return "$rc"
 }
+
+# Guardia esecuzione diretta — evidenza 2026-11-20 (spinta HT-014): `bash
+# git-push-auth.sh` definiva le funzioni e usciva 0 SENZA spingere — falso
+# successo silenzioso, indistinguibile da una push riuscita. Il modulo nasce
+# per essere sourciato (agent-worktree.sh, agent-commit.sh); se eseguito
+# direttamente effettua la push con gli argomenti forniti — o, senza
+# argomenti, origin + branch corrente — propagando il rc e con messaggio
+# esplicito di esito.
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+  if [ "$#" -gt 0 ]; then
+    push_with_gh_fallback "$@"
+    rc=$?
+  else
+    branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" || branch=""
+    if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
+      echo "git-push-auth: branch corrente non determinabile (detached HEAD?) — passa argomenti espliciti alla push" >&2
+      exit 2
+    fi
+    push_with_gh_fallback origin "HEAD:$branch"
+    rc=$?
+  fi
+  if [ "$rc" -eq 0 ]; then
+    echo "git-push-auth: push riuscita" >&2
+  fi
+  exit "$rc"
+fi

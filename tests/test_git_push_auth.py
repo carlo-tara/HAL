@@ -50,12 +50,12 @@ def test_lib_exists_and_land_commit_source_it():
 def test_classifier_auth_vs_structural(tmp_path):
     code = (
         f'source "{LIB}" || exit 9;'
-        f'printf %s "fatal: could not read Username for \'https://github.com\'"'
+        f"printf %s \"fatal: could not read Username for 'https://github.com'\""
         f" > {tmp_path}/a; printf %s '! [rejected] master -> master (non-fast-forward)'"
         f" > {tmp_path}/b;"
         f"git_auth_failure {tmp_path}/a; ok1=$?;"
         f"git_auth_failure {tmp_path}/b; ok2=$?;"
-        'test $ok1 -eq 0 -a $ok2 -ne 0'
+        "test $ok1 -eq 0 -a $ok2 -ne 0"
     )
     r = bash(code)
     assert r.returncode == 0, r.stderr
@@ -76,3 +76,47 @@ def test_push_fails_fast_never_hangs(tmp_path):
     r = bash(code, timeout=60)  # un hang solleva TimeoutExpired → test rosso
     assert r.returncode != 0
     assert "git-push-auth" in (r.stderr + r.stdout), r.stderr[-400:]
+
+
+def test_direct_execution_pushes(tmp_path):
+    """Guardia 2026-11-20 (spinta HT-014): eseguito direttamente, il modulo
+    DEVE spingere — prima definiva le funzioni e usciva 0 senza push
+    (falso successo silenzioso)."""
+    bare = tmp_path / "remote.git"
+    repo = tmp_path / "r"
+    repo.mkdir()
+    bash(f"git init -q --bare -b master {bare}")
+    (repo / "f").write_text("x\n")
+    bash("git init -q -b master . && git add -A && git commit -q -m base", cwd=repo)
+    bash(f"git remote add origin {bare}", cwd=repo)
+    r = bash(f'bash "{LIB}"', cwd=repo, timeout=60)
+    assert r.returncode == 0, r.stderr[-400:]
+    local = bash("git rev-parse HEAD", cwd=repo).stdout.strip()
+    remote = bash(f"git --git-dir={bare} rev-parse master").stdout.strip()
+    assert remote and remote == local, "remote non aggiornato dalla push diretta"
+
+
+def test_direct_execution_never_silent_noop(tmp_path):
+    """Repo senza remote: l'esecuzione diretta deve fallire con messaggio
+    (rc≠0), mai uscire 0 in silenzio."""
+    repo = tmp_path / "r"
+    repo.mkdir()
+    (repo / "f").write_text("x\n")
+    bash("git init -q -b master . && git add -A && git commit -q -m base", cwd=repo)
+    r = bash(f'bash "{LIB}"', cwd=repo, timeout=60)
+    assert r.returncode != 0
+    assert (r.stderr + r.stdout).strip(), "nessun messaggio: no-op silenzioso"
+
+
+def test_sourcing_defines_functions_without_side_effects(tmp_path):
+    repo = tmp_path / "r"
+    repo.mkdir()
+    bash("git init -q -b master .", cwd=repo)
+    code = (
+        f'source "{LIB}" || exit 9;'
+        "declare -F push_with_gh_fallback >/dev/null &&"
+        " declare -F git_auth_failure >/dev/null && echo SOURCED-OK"
+    )
+    r = bash(code, cwd=repo)
+    assert r.returncode == 0, r.stderr[-400:]
+    assert "SOURCED-OK" in r.stdout
