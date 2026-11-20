@@ -6,18 +6,11 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 APPLY=0
-PROJECTS=(
-  /var/www/piratesstraps
-  /var/www/WTP_App
-  /var/www/GiocoStrategico
-  /var/www/liberating.it
-  /var/www/the-verde.it
-  /var/www/stiliattaccamento
-  /var/www/InnerCircle
-  /var/www/carlogandolfo
-  /var/www/pierrehouben
-  /var/www/cambiapasso
-)
+CONSUMERS_LIST="$ROOT/consumers.list"
+[[ -f "$CONSUMERS_LIST" ]] || { echo "ERRORE: lista canonica assente: $CONSUMERS_LIST" >&2; exit 1; }
+# Single source of truth: agents/consumers.list (niente path hardcoded duplicati).
+mapfile -t PROJECTS < <(sed -e 's/#.*//' -e 's/[[:space:]]//g' "$CONSUMERS_LIST" | grep -v '^$')
+[[ ${#PROJECTS[@]} -gt 0 ]] || { echo "ERRORE: consumers.list vuota" >&2; exit 1; }
 
 for arg in "$@"; do
   case "$arg" in

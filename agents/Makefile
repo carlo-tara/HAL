@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .PHONY: test-unit test-int test-e2e pre-commit check-standards ready-for-review \
 	db-up seed-data check-parity sync-assets shell-syntax version-chains \
 	frontmatter-all shellcheck-ok md-links ready-proof tools-shellcheck install-git-hooks \
-	sync-consumer-stale check-versions check-lines check-registry
+	sync-consumer-stale check-versions check-lines check-registry consumers-list
 
 ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 VERSION_SH := $(ROOT)/a-agentzero/scripts/agent-version.sh
@@ -131,6 +131,10 @@ install-git-hooks:
 
 sync-consumer-stale:
 	@bash "$(ROOT)/scripts/sync-consumer-stale.sh" --dry-run
+
+# Report della lista canonica consumer (agents/consumers.list). STRICT=1 → exit 1 su path mancante.
+consumers-list:
+	@python3 "$(ROOT)/scripts/consumers_list.py" $(if $(STRICT),--strict,)
 
 check-standards: pre-commit
 

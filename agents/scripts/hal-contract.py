@@ -26,21 +26,14 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import consumers_list  # single source of truth: agents/consumers.list
+
 HAL = Path("/var/www/hal_gateway").resolve()
 AGENTS = HAL / "agents"
-CONSUMERS = [
-    "/var/www/hal_system1",
-    "/var/www/hal_system2",
-    "/var/www/hal_mcp_tools",
-    "/var/www/hal_mcp_docs",
-    "/var/www/hal_seo",
-    "/var/www/hal_translate",
-    "/var/www/hal_tts",
-    "/var/www/semidifocusing",
-    "/var/www/brainbeez",
-    "/var/www/WTP_App",
-    "/var/www/InnerCircle",
-]
+CONSUMERS = (
+    consumers_list.load_consumers()
+)  # single source of truth: agents/consumers.list
 SCAN_DIRS = ["agents", ".agents", ".zed", "product"]
 BEGIN = "<!-- BEGIN hal-contract: generato da a-agentzero {ver} · tpl 2 — NON EDITARE TRA I FENCE -->"
 END = "<!-- END hal-contract -->"
@@ -95,7 +88,7 @@ def fm_field(path: Path, field: str) -> str:
         text = path.read_text(encoding="utf-8")
     except OSError:
         return ""
-    m = re.match(r"^---\n(.*?)\n---", text, re.S)
+    m = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
     if not m:
         return ""
     fm = m.group(1)
@@ -249,14 +242,14 @@ def install_fence(md: Path, ver: str, apply: bool) -> str:
             + re.escape(END),
             fence,
             text,
-            flags=re.S,
+            flags=re.DOTALL,
         )
         if new == text:
             new = re.sub(
                 r"<!-- BEGIN hal-contract:.*?-->.*?<!-- END hal-contract -->",
                 fence.replace("\\", "\\\\"),
                 text,
-                flags=re.S,
+                flags=re.DOTALL,
             )
         md.write_text(new, encoding="utf-8")
     return state
@@ -272,6 +265,9 @@ def main() -> int:
     print(f"hal-contract [{mode}] — canonico {HAL} (a-agentzero {ver})")
     for r in args.repos:
         repo = Path(r)
+        if repo.resolve() == HAL:
+            print("--- hal_gateway: canone, mai toccato")
+            continue
         if not repo.is_dir():
             print(f"--- {repo}: NON DIR, saltato")
             continue

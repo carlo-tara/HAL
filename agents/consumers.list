@@ -1,0 +1,45 @@
+# consumers.list — lista canonica dei repo consumer HAL (single source of truth).
+#
+# Formato: un path assoluto per riga; '#' inizia un commento; righe vuote ignorate;
+# niente spazi nei path. Ordine preservato, duplicati scartati.
+#
+# Ogni tool HAL che ha bisogno dell'insieme dei consumer DEVE leggere questo file
+# invece di hardcodare i path:
+#   loader Python  : agents/scripts/consumers_list.py  (load_consumers())
+#   report/validaz.: make -C agents consumers-list  (STRICT=1 → exit 1 se un path non esiste)
+#   bash           : mapfile -t dal file (vedi sync-consumer-stale.sh)
+# Aggiungere/rimuovere un consumer è una modifica di UNA riga qui, non di tre script.
+#
+# Sono consumer: i repo che montano agents//.agents/skills/.zed/prompts da hal_gateway
+# (audit mount + fence via hal-contract.py, dedup comandi locali via
+# prune-local-commands.py) e/o che hanno skill L2 proprie le cui catene extends-version
+# devono restare allineate al canonico (report via sync-consumer-stale.sh).
+# hal_gateway (canonico) NON va mai listato qui: hal-contract.py e
+# prune-local-commands.py lo saltano per guardia («canone, mai toccato»).
+
+# --- servizi runtime HAL ---
+/var/www/hal_system1
+/var/www/hal_system2
+/var/www/hal_mcp_tools
+/var/www/hal_mcp_docs
+/var/www/hal_seo
+/var/www/hal_translate
+/var/www/hal_tts
+
+# --- progetti brand/web con mount HAL e/o skill L2 proprie ---
+/var/www/semidifocusing
+/var/www/brainbeez
+/var/www/WTP_App
+/var/www/InnerCircle
+/var/www/pickwaise
+/var/www/liberating.it
+/var/www/gDrive_ops
+
+# --- progetti brand/web nel perimetro del contratto (ancora senza L2/mount) ---
+/var/www/the-verde.it
+/var/www/stiliattaccamento
+/var/www/cambiapasso
+/var/www/carlogandolfo
+/var/www/pierrehouben
+/var/www/GiocoStrategico
+/var/www/piratesstraps

@@ -10,13 +10,14 @@ Documentazione di lavoro per sviluppo, deploy e versionamento degli agenti L0/L1
 
 Lista L1 unica in `Makefile` / `a-agentzero/scripts/sync-agents.sh` — non duplicare `for d in a-…` in docs/comandi.
 
-| Target | Uso |
-|--------|-----|
-| `make pre-commit` | `bash -n` + `frontmatter-all` + shellcheck + md-links |
-| `make test-unit` | `version-chains` + `sync-agents.sh --dry-run` |
-| `make ready-for-review` | standards + test + `ready-proof` |
-| `make install-git-hooks` | hook locale → `make pre-commit` |
-| `make sync-consumer-stale` | report STALE L2 consumer (lista in script) |
+| Target                     | Uso                                                                      |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `make pre-commit`          | `bash -n` + `frontmatter-all` + shellcheck + md-links                    |
+| `make test-unit`           | `version-chains` + `sync-agents.sh --dry-run`                            |
+| `make ready-for-review`    | standards + test + `ready-proof`                                         |
+| `make install-git-hooks`   | hook locale → `make pre-commit`                                          |
+| `make sync-consumer-stale` | report STALE L2 consumer (lista canonica: `agents/consumers.list`)       |
+| `make consumers-list`      | report/validazione lista consumer (`STRICT=1` → exit 1 su path mancante) |
 
 Changelog fabbrica: [`harness-CHANGELOG.md`](harness-CHANGELOG.md). Playbook DUP L2: [`playbook-l2-dup-cut.md`](playbook-l2-dup-cut.md).
 
@@ -35,12 +36,12 @@ bash a-agentzero/scripts/sync-agents.sh
 
 Effetto:
 
-| Origine | Destinazione |
-|---------|--------------|
-| `a-agentzero/` | `~/.agents/skills/a-agentzero` + `~/.cursor/agents/a-agentzero.md` |
-| `a-agentzero/learn/` | `~/.agents/skills/learn` |
-| `a-agentzero/sync/` | `~/.agents/skills/sync` |
-| `a-{dominio}/` | `~/.agents/skills/a-{dominio}` + `~/.cursor/agents/a-{dominio}.md` |
+| Origine              | Destinazione                                                       |
+| -------------------- | ------------------------------------------------------------------ |
+| `a-agentzero/`       | `~/.agents/skills/a-agentzero` + `~/.cursor/agents/a-agentzero.md` |
+| `a-agentzero/learn/` | `~/.agents/skills/learn`                                           |
+| `a-agentzero/sync/`  | `~/.agents/skills/sync`                                            |
+| `a-{dominio}/`       | `~/.agents/skills/a-{dominio}` + `~/.cursor/agents/a-{dominio}.md` |
 
 Ogni `a-*/deploy.sh` crea symlink (`ln -sfn`); non copia file.
 
@@ -99,30 +100,30 @@ bash a-agentzero/scripts/agent-version.sh show a-seozoom/
 
 Oltre a `extends:` (un solo padre), gli agenti possono dichiarare moduli in `competencies/{id}/` risolti **L0 → L1 → L2** se esistono. Specifica: [`AGENT-PROTOCOL.md`](../a-agentzero/AGENT-PROTOCOL.md) § Competenze modulari.
 
-| Regola | Dettaglio |
-|--------|-----------|
-| Baseline L0 | **Opzionale** — copy ha L0 (`tono-di-voce`, `humanizer`, `italiano-locale`); discovery ha L0 `po-interviewer`; SEO e illustrazioni sono **solo L1** |
-| Asset operativi | `scripts/` e JSON/runtime restano sotto l'agente (es. `a-seozoom/references/export-manifest.json`), non obbligatoriamente in `competencies/` |
-| File dati | `brands/`, `.cursor/illustration-styles/`, brief SEO, `product/` (discovery), … restano **dati progetto**, non moduli competenza |
-| Adozione | Opt-in per dominio; al sync L1←L0 non copiare moduli non pertinenti |
-| Cross-dominio | Carico on-demand (es. SEO → `tono-di-voce` in scrittura title/meta); altrimenti delega all'agente L1 |
+| Regola          | Dettaglio                                                                                                                                           |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Baseline L0     | **Opzionale** — copy ha L0 (`tono-di-voce`, `humanizer`, `italiano-locale`); discovery ha L0 `po-interviewer`; SEO e illustrazioni sono **solo L1** |
+| Asset operativi | `scripts/` e JSON/runtime restano sotto l'agente (es. `a-seozoom/references/export-manifest.json`), non obbligatoriamente in `competencies/`        |
+| File dati       | `brands/`, `.cursor/illustration-styles/`, brief SEO, `product/` (discovery), … restano **dati progetto**, non moduli competenza                    |
+| Adozione        | Opt-in per dominio; al sync L1←L0 non copiare moduli non pertinenti                                                                                 |
+| Cross-dominio   | Carico on-demand (es. SEO → `tono-di-voce` in scrittura title/meta); altrimenti delega all'agente L1                                                |
 
-| Dominio | Id competenze L1 | Baseline L0 |
-|---------|------------------|-------------|
-| a-copywriter | `tono-di-voce`, `humanizer`, `italiano-locale` | sì |
-| a-seozoom | `seo-import`, `metriche-analisi`, `onpage-seo`, `geo-citabilita`, `seo-audit`, `schema-markup`, `programmatic-seo`, `site-architecture`, `hreflang-i18n`, `topic-cluster` | no |
-| a-illustrator | `stile-visivo`, `prompt-composizione`, `preview-render`, `qa-artefatti` | no |
-| a-wordpress | — (non ancora modularizzato) | — |
-| a-personas | `po-interviewer` | sì (L0) |
-| a-jtbd | `po-interviewer`, `switch-interview` | sì (`po-interviewer`); `switch-interview` L1-only |
-| a-gherkin | `po-interviewer`, `bdd-security-performance` | sì (`po-interviewer`); `bdd-*` L1-only |
-| a-charts | `scelta-tipo`, `leggibilita`, `implementazione`, `qa-grafici` | no |
-| a-b2b | — (facade → a-product § Profilo B2B; deleghe a-po / a-enrichment / discovery / copy) | — |
-| a-product | — (orchestra multi-step + § Profilo B2B; thin; no authoring PRD) | — |
-| a-po | `po-interviewer`, `triage-request`, `problem-framing`, `lean-canvas`, `prd-authoring`, `positioning-offer`, `evidence-probe`, `slice-prioritization`, `growth-loops`, `market-public-data` | sì (`po-interviewer`); resto L1-only |
-| a-enrichment | — (pattern + references; handoff a-copywriter) | — |
-| a-harness | TDD/DDD/Steward competencies (vedi `a-harness/competencies/`) | no |
-| uiux | `static-stack`, `accessibility`, `editorial-layout` | no |
+| Dominio       | Id competenze L1                                                                                                                                                                           | Baseline L0                                       |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| a-copywriter  | `tono-di-voce`, `humanizer`, `italiano-locale`                                                                                                                                             | sì                                                |
+| a-seozoom     | `seo-import`, `metriche-analisi`, `onpage-seo`, `geo-citabilita`, `seo-audit`, `schema-markup`, `programmatic-seo`, `site-architecture`, `hreflang-i18n`, `topic-cluster`                  | no                                                |
+| a-illustrator | `stile-visivo`, `prompt-composizione`, `preview-render`, `qa-artefatti`                                                                                                                    | no                                                |
+| a-wordpress   | — (non ancora modularizzato)                                                                                                                                                               | —                                                 |
+| a-personas    | `po-interviewer`                                                                                                                                                                           | sì (L0)                                           |
+| a-jtbd        | `po-interviewer`, `switch-interview`                                                                                                                                                       | sì (`po-interviewer`); `switch-interview` L1-only |
+| a-gherkin     | `po-interviewer`, `bdd-security-performance`                                                                                                                                               | sì (`po-interviewer`); `bdd-*` L1-only            |
+| a-charts      | `scelta-tipo`, `leggibilita`, `implementazione`, `qa-grafici`                                                                                                                              | no                                                |
+| a-b2b         | — (facade → a-product § Profilo B2B; deleghe a-po / a-enrichment / discovery / copy)                                                                                                       | —                                                 |
+| a-product     | — (orchestra multi-step + § Profilo B2B; thin; no authoring PRD)                                                                                                                           | —                                                 |
+| a-po          | `po-interviewer`, `triage-request`, `problem-framing`, `lean-canvas`, `prd-authoring`, `positioning-offer`, `evidence-probe`, `slice-prioritization`, `growth-loops`, `market-public-data` | sì (`po-interviewer`); resto L1-only              |
+| a-enrichment  | — (pattern + references; handoff a-copywriter)                                                                                                                                             | —                                                 |
+| a-harness     | TDD/DDD/Steward competencies (vedi `a-harness/competencies/`)                                                                                                                              | no                                                |
+| uiux          | `static-stack`, `accessibility`, `editorial-layout`                                                                                                                                        | no                                                |
 
 Override L2: `{progetto}/.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta). Check: `agent-version.sh competency-chain <path>`.
 
@@ -169,20 +170,20 @@ Le skill figlie **non** stanno in HAL. Si creano nel repo del sito/blog/WP.
 4. Aggiungi delta: path contenuti, brand, regole locali
 5. Crea file dati se mancanti:
 
-| Dominio | File dati |
-|---------|-----------|
-| copywriter | `brands/{slug}.md` |
-| illustrator | `.cursor/illustration-styles/{slug}.md` |
-| seozoom | `seo/export-manifest.json`, brief in skill L2; se ricerca interna → playbook L2 (`pagefind-*.md`) + canone L1 `competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md` |
-| wordpress | `.cursor/wordpress/{slug}.md` |
-| personas / jtbd / gherkin | `product/` (fallback `.claude/product/`, `product/`) — `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/` |
-| charts | `.cursor/chart-styles/{slug}.md` |
-| b2b | L2 `b2b-*` + path enrichment / ICP in skill (vedi `a-b2b/extension-template.md`; canone = `a-product` § Profilo B2B) |
-| product | L2 `product-*` + path product (vedi `a-product/extension-template.md`) |
-| po | L2 `po-*` + `product/` (vedi `a-po/extension-template.md`) |
-| enrichment | L2 `enrichment-*` o path da `b2b-*` (vedi `a-enrichment/extension-template.md`) |
-| harness | L2 `harness-{progetto}` (vedi `a-harness/extension-template.md`) |
-| uiux | L2 `uiux-*` / legacy `uiux-designer` → preferire `extends: uiux` (vedi `uiux/extension-template.md`); playbook DUP [`playbook-l2-dup-cut.md`](playbook-l2-dup-cut.md) |
+| Dominio                   | File dati                                                                                                                                                                         |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| copywriter                | `brands/{slug}.md`                                                                                                                                                                |
+| illustrator               | `.cursor/illustration-styles/{slug}.md`                                                                                                                                           |
+| seozoom                   | `seo/export-manifest.json`, brief in skill L2; se ricerca interna → playbook L2 (`pagefind-*.md`) + canone L1 `competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md` |
+| wordpress                 | `.cursor/wordpress/{slug}.md`                                                                                                                                                     |
+| personas / jtbd / gherkin | `product/` (fallback `.claude/product/`, `product/`) — `prd.md`, `mockup/`, `personas.md`, `jtbd.md`, `features/`                                                                 |
+| charts                    | `.cursor/chart-styles/{slug}.md`                                                                                                                                                  |
+| b2b                       | L2 `b2b-*` + path enrichment / ICP in skill (vedi `a-b2b/extension-template.md`; canone = `a-product` § Profilo B2B)                                                              |
+| product                   | L2 `product-*` + path product (vedi `a-product/extension-template.md`)                                                                                                            |
+| po                        | L2 `po-*` + `product/` (vedi `a-po/extension-template.md`)                                                                                                                        |
+| enrichment                | L2 `enrichment-*` o path da `b2b-*` (vedi `a-enrichment/extension-template.md`)                                                                                                   |
+| harness                   | L2 `harness-{progetto}` (vedi `a-harness/extension-template.md`)                                                                                                                  |
+| uiux                      | L2 `uiux-*` / legacy `uiux-designer` → preferire `extends: uiux` (vedi `uiux/extension-template.md`); playbook DUP [`playbook-l2-dup-cut.md`](playbook-l2-dup-cut.md)             |
 
 6. Opzionale: override competenze in `.agents/skills/{figlio}/competencies/{id}/SKILL.md` (solo delta; vedi `extension-template.md` del dominio)
 7. `CHANGELOG.md` figlio da template L0
@@ -221,11 +222,11 @@ HAL non ha una suite unittest centralizzata. I test dei siti consumer restano ne
 
 ### `.cursor/` in questo repo
 
-| Path | Contenuto |
-|------|-----------|
-| `brands/hal.md` | Tono e lessico per copy su HAL |
+| Path                | Contenuto                                                           |
+| ------------------- | ------------------------------------------------------------------- |
+| `brands/hal.md`     | Tono e lessico per copy su HAL                                      |
 | `.cursor/commands/` | Override slash HAL (`/commit`, `/document`, `/sync`, `/version`, …) |
-| `.cursor/plans/` | Piani storici (es. protocollo versionamento) |
+| `.cursor/plans/`    | Piani storici (es. protocollo versionamento)                        |
 
 Baseline L0 condivisa: [`a-agentzero/commands/`](../a-agentzero/commands/) → `~/.cursor/commands/` via `/sync !`. In conflitto vince l'override in `.cursor/commands/`.
 
@@ -239,10 +240,10 @@ File locale per test (credenziali image API, SeoZoom, ecc.). **Non** tracciato i
 
 ## Apprendimento da sessione (`/learn`)
 
-| Invocazione | Effetto |
-|-------------|---------|
-| `/learn ?` | Report apprendimenti chat corrente; zero scrittura |
-| `/learn !` | Consolida in L2 / brand / rules; **se necessario** Attività in `./ToDo.md` e/o docs locali |
+| Invocazione | Effetto                                                                                    |
+| ----------- | ------------------------------------------------------------------------------------------ |
+| `/learn ?`  | Report apprendimenti chat corrente; zero scrittura                                         |
+| `/learn !`  | Consolida in L2 / brand / rules; **se necessario** Attività in `./ToDo.md` e/o docs locali |
 
 Skill: [`a-agentzero/learn/SKILL.md`](../a-agentzero/learn/SKILL.md)  
 Target consolidamento: [`a-agentzero/learn/references/consolidation-targets.md`](../a-agentzero/learn/references/consolidation-targets.md)
@@ -251,11 +252,11 @@ Target consolidamento: [`a-agentzero/learn/references/consolidation-targets.md`]
 
 ## Sync agenti (`/sync`)
 
-| Invocazione | Effetto |
-|-------------|---------|
-| `/sync ?` | Report catene L1←L0 (e L2 se path progetto) + stato comandi L0; nessun deploy |
-| `/sync !` | `deploy-all.sh` (skill, agents, `~/.cursor/commands/`) + report; sync selettivo guidato |
-| `/sync <` | Analisi L2→L1/L0 (DUP / promozione); **solo report**. Su cwd HAL: L2 in-repo + consumer noti `/var/www/*/./.agents/skills/` — vedi sync skill § `/sync <` e [`l2-generalization.md`](../a-agentzero/sync/references/l2-generalization.md) |
+| Invocazione | Effetto                                                                                                                                                                                                                                   |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/sync ?`   | Report catene L1←L0 (e L2 se path progetto) + stato comandi L0; nessun deploy                                                                                                                                                             |
+| `/sync !`   | `deploy-all.sh` (skill, agents, `~/.cursor/commands/`) + report; sync selettivo guidato                                                                                                                                                   |
+| `/sync <`   | Analisi L2→L1/L0 (DUP / promozione); **solo report**. Su cwd HAL: L2 in-repo + consumer noti `/var/www/*/./.agents/skills/` — vedi sync skill § `/sync <` e [`l2-generalization.md`](../a-agentzero/sync/references/l2-generalization.md) |
 
 ```bash
 bash a-agentzero/scripts/sync-agents.sh
@@ -284,75 +285,75 @@ Vedi anche slash command `/snapshot` in `.cursor/commands/snapshot.md`.
 
 ## Riferimenti rapidi agenti L1
 
-| Agente | Skill | Subagent | Template L2 |
-|--------|-------|----------|-------------|
-| Copy | `a-copywriter/SKILL.md` | `agents/a-copywriter.md` | `extension-template.md` |
-| Illustrazioni | `a-illustrator/SKILL.md` | `agents/a-illustrator.md` | `extension-template.md` |
-| SEO/GEO | `a-seozoom/SKILL.md` | `agents/a-seozoom.md` | `extension-template.md` |
-| WordPress | `a-wordpress/SKILL.md` | `agents/a-wordpress.md` | `extension-template.md` |
-| Personas | `a-personas/SKILL.md` | `agents/a-personas.md` | `extension-template.md` |
-| JTBD | `a-jtbd/SKILL.md` | `agents/a-jtbd.md` | `extension-template.md` |
-| Gherkin | `a-gherkin/SKILL.md` | `agents/a-gherkin.md` | `extension-template.md` |
-| Charts | `a-charts/SKILL.md` | `agents/a-charts.md` | `extension-template.md` |
-| B2B (facade) | `a-b2b/SKILL.md` | `agents/a-b2b.md` | `extension-template.md` |
-| Product (orchestra) | `a-product/SKILL.md` | `agents/a-product.md` | `extension-template.md` |
-| PO / Product shape | `a-po/SKILL.md` | `agents/a-po.md` | `extension-template.md` |
-| Enrichment | `a-enrichment/SKILL.md` | `agents/a-enrichment.md` | `extension-template.md` |
-| Harness | `a-harness/SKILL.md` | `agents/a-harness.md` | `extension-template.md` |
-| UI/UX | `uiux/SKILL.md` | `agents/uiux.md` | `extension-template.md` |
+| Agente              | Skill                    | Subagent                  | Template L2             |
+| ------------------- | ------------------------ | ------------------------- | ----------------------- |
+| Copy                | `a-copywriter/SKILL.md`  | `agents/a-copywriter.md`  | `extension-template.md` |
+| Illustrazioni       | `a-illustrator/SKILL.md` | `agents/a-illustrator.md` | `extension-template.md` |
+| SEO/GEO             | `a-seozoom/SKILL.md`     | `agents/a-seozoom.md`     | `extension-template.md` |
+| WordPress           | `a-wordpress/SKILL.md`   | `agents/a-wordpress.md`   | `extension-template.md` |
+| Personas            | `a-personas/SKILL.md`    | `agents/a-personas.md`    | `extension-template.md` |
+| JTBD                | `a-jtbd/SKILL.md`        | `agents/a-jtbd.md`        | `extension-template.md` |
+| Gherkin             | `a-gherkin/SKILL.md`     | `agents/a-gherkin.md`     | `extension-template.md` |
+| Charts              | `a-charts/SKILL.md`      | `agents/a-charts.md`      | `extension-template.md` |
+| B2B (facade)        | `a-b2b/SKILL.md`         | `agents/a-b2b.md`         | `extension-template.md` |
+| Product (orchestra) | `a-product/SKILL.md`     | `agents/a-product.md`     | `extension-template.md` |
+| PO / Product shape  | `a-po/SKILL.md`          | `agents/a-po.md`          | `extension-template.md` |
+| Enrichment          | `a-enrichment/SKILL.md`  | `agents/a-enrichment.md`  | `extension-template.md` |
+| Harness             | `a-harness/SKILL.md`     | `agents/a-harness.md`     | `extension-template.md` |
+| UI/UX               | `uiux/SKILL.md`          | `agents/uiux.md`          | `extension-template.md` |
 
 ### Discovery (a-personas / a-jtbd / a-gherkin)
 
-| Path | Contenuto |
-|------|-----------|
-| Guida pipeline | [`docs/discovery-pipeline.md`](discovery-pipeline.md) |
-| L0 `po-interviewer` | [`a-agentzero/competencies/po-interviewer/`](../a-agentzero/competencies/po-interviewer/) |
-| L1 `bdd-security-performance` | `a-gherkin/competencies/bdd-security-performance/` (`/secure`, `/perf`) |
-| Product path | `.claude/product/` → `product/` |
-| Export Claude pack | `scripts/export-discovery-claude.sh` → `dist/claude-discovery-agents-*.zip` |
-| Authorship da proto | [`a-agentzero/references/l1-from-proto.md`](../a-agentzero/references/l1-from-proto.md) |
+| Path                          | Contenuto                                                                                 |
+| ----------------------------- | ----------------------------------------------------------------------------------------- |
+| Guida pipeline                | [`docs/discovery-pipeline.md`](discovery-pipeline.md)                                     |
+| L0 `po-interviewer`           | [`a-agentzero/competencies/po-interviewer/`](../a-agentzero/competencies/po-interviewer/) |
+| L1 `bdd-security-performance` | `a-gherkin/competencies/bdd-security-performance/` (`/secure`, `/perf`)                   |
+| Product path                  | `.claude/product/` → `product/`                                                           |
+| Export Claude pack            | `scripts/export-discovery-claude.sh` → `dist/claude-discovery-agents-*.zip`               |
+| Authorship da proto           | [`a-agentzero/references/l1-from-proto.md`](../a-agentzero/references/l1-from-proto.md)   |
 
 ### Copy (a-copywriter)
 
-| Path | Contenuto |
-|------|-----------|
-| `competencies/tono-di-voce/` | Voce brand, inclusività, voice-as-brand |
-| `competencies/humanizer/` | Anti-AI, loop, editing |
-| `competencies/italiano-locale/` | Purismo, italiano vivo, forbici strutturali |
-| `publication-types.md` | Template tipi pubblicazione + workflow JSON-first |
+| Path                            | Contenuto                                         |
+| ------------------------------- | ------------------------------------------------- |
+| `competencies/tono-di-voce/`    | Voce brand, inclusività, voice-as-brand           |
+| `competencies/humanizer/`       | Anti-AI, loop, editing                            |
+| `competencies/italiano-locale/` | Purismo, italiano vivo, forbici strutturali       |
+| `publication-types.md`          | Template tipi pubblicazione + workflow JSON-first |
 
 Baseline L0 in `a-agentzero/competencies/` per le stesse id.
 
 ### Illustrazioni (a-illustrator)
 
-| Path | Contenuto |
-|------|-----------|
-| `competencies/stile-visivo/` | Onboarding, style file, coerenza |
+| Path                                | Contenuto                                       |
+| ----------------------------------- | ----------------------------------------------- |
+| `competencies/stile-visivo/`        | Onboarding, style file, coerenza                |
 | `competencies/prompt-composizione/` | Formula prompt (+ `references/prompt-style.md`) |
-| `competencies/preview-render/` | Anteprime → render |
-| `competencies/qa-artefatti/` | Checklist artefatti AI, no-fill firme |
-| `references/api-providers.md` | `.env` / Qwen (asset orchestratore) |
-| `scripts/generate-image.py` | Generazione API |
+| `competencies/preview-render/`      | Anteprime → render                              |
+| `competencies/qa-artefatti/`        | Checklist artefatti AI, no-fill firme           |
+| `references/api-providers.md`       | `.env` / Qwen (asset orchestratore)             |
+| `scripts/generate-image.py`         | Generazione API                                 |
 
 Style file progetto: `.cursor/illustration-styles/` (dati, non competenze).
 
 ### Charts (a-charts) / B2B / Product / PO / Enrichment
 
-| Agente | Path utili |
-|--------|------------|
-| a-charts | `competencies/{scelta-tipo,leggibilita,implementazione,qa-grafici}/` · style `.cursor/chart-styles/` |
-| a-product | orchestra multi-step + § **Profilo B2B** · anti–**Build Trap** (Outcome vs Output) + Product Kata light · L2 `product-*` |
-| a-b2b | facade B2B → a-product § Profilo B2B · stesso gate Outcome · `references/delegation-playbook.md` · L2 `b2b-*` |
-| a-po | `competencies/{triage-request,problem-framing,lean-canvas,prd-authoring,positioning-offer,evidence-probe,slice-prioritization,growth-loops,market-public-data}/` · `po-interviewer` · `scripts/fetch-istat-sdmx.sh` · L2 `po-*` · data `product/data/` · lean-canvas datati · `prd.md` |
-| a-enrichment | `references/{enrichment-gates,domain-enrichment-workflow,lead-research-output}.md` · L2 `enrichment-*` |
+| Agente       | Path utili                                                                                                                                                                                                                                                                             |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| a-charts     | `competencies/{scelta-tipo,leggibilita,implementazione,qa-grafici}/` · style `.cursor/chart-styles/`                                                                                                                                                                                   |
+| a-product    | orchestra multi-step + § **Profilo B2B** · anti–**Build Trap** (Outcome vs Output) + Product Kata light · L2 `product-*`                                                                                                                                                               |
+| a-b2b        | facade B2B → a-product § Profilo B2B · stesso gate Outcome · `references/delegation-playbook.md` · L2 `b2b-*`                                                                                                                                                                          |
+| a-po         | `competencies/{triage-request,problem-framing,lean-canvas,prd-authoring,positioning-offer,evidence-probe,slice-prioritization,growth-loops,market-public-data}/` · `po-interviewer` · `scripts/fetch-istat-sdmx.sh` · L2 `po-*` · data `product/data/` · lean-canvas datati · `prd.md` |
+| a-enrichment | `references/{enrichment-gates,domain-enrichment-workflow,lead-research-output}.md` · L2 `enrichment-*`                                                                                                                                                                                 |
 
 ### Reference SEO/GEO (a-seozoom)
 
-| File | Contenuto |
-|------|-----------|
-| [`competencies/metriche-analisi/references/metriche-seozoom.md`](../a-seozoom/competencies/metriche-analisi/references/metriche-seozoom.md) | ZO, ZS, ZT, ZA, KO, KD — glossario; fonte `dashboard/{domain}_metriche.json` |
-| [`references/dashboard-widgets.json`](../a-seozoom/references/dashboard-widgets.json) | Mapping widget panoramica → API AJAX / JS globals |
-| [`competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md`](../a-seozoom/competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md) | Ricerca interna allineata a SEO/GEO (canone L1; playbook in L2) |
-| [`competencies/seo-import/references/ui-navigation.md`](../a-seozoom/competencies/seo-import/references/ui-navigation.md) | Endpoint API SeoZoom + panoramica progetto |
+| File                                                                                                                                                  | Contenuto                                                                    |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [`competencies/metriche-analisi/references/metriche-seozoom.md`](../a-seozoom/competencies/metriche-analisi/references/metriche-seozoom.md)           | ZO, ZS, ZT, ZA, KO, KD — glossario; fonte `dashboard/{domain}_metriche.json` |
+| [`references/dashboard-widgets.json`](../a-seozoom/references/dashboard-widgets.json)                                                                 | Mapping widget panoramica → API AJAX / JS globals                            |
+| [`competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md`](../a-seozoom/competencies/geo-citabilita/references/ricerca-on-site-seo-geo.md) | Ricerca interna allineata a SEO/GEO (canone L1; playbook in L2)              |
+| [`competencies/seo-import/references/ui-navigation.md`](../a-seozoom/competencies/seo-import/references/ui-navigation.md)                             | Endpoint API SeoZoom + panoramica progetto                                   |
 
 Competenze L1: `seo-import`, `metriche-analisi`, `onpage-seo`, `geo-citabilita`, `seo-audit`, `schema-markup`, `programmatic-seo`, `site-architecture`, `hreflang-i18n`, `topic-cluster`. Export dashboard: `seo/YYMMDD/seozoom/dashboard/` (default in `seozoom_export.py`; `--skip-dashboard` per saltarlo). Playwright-only: no `SEOZOOM_API_KEY` / apiv2 come percorso primario.

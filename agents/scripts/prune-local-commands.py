@@ -34,20 +34,13 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import consumers_list  # single source of truth: agents/consumers.list
+
 HAL = Path(os.environ.get("HAL_ROOT", "/var/www/hal_gateway")).resolve()
-CONSUMERS = [
-    "/var/www/hal_system1",
-    "/var/www/hal_system2",
-    "/var/www/hal_mcp_tools",
-    "/var/www/hal_mcp_docs",
-    "/var/www/hal_seo",
-    "/var/www/hal_translate",
-    "/var/www/hal_tts",
-    "/var/www/semidifocusing",
-    "/var/www/brainbeez",
-    "/var/www/WTP_App",
-    "/var/www/InnerCircle",
-]
+CONSUMERS = (
+    consumers_list.load_consumers()
+)  # single source of truth: agents/consumers.list
 
 # comando → canone (relativo a HAL). laya-cmd è l'alias-skill di laya.
 CANON = {
@@ -75,7 +68,7 @@ def strip_frontmatter(text: str) -> str:
 
 
 def fm_description(text: str) -> str:
-    m = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.S)
+    m = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.DOTALL)
     if not m:
         return ""
     mm = re.search(r"(?m)^description:\s*(.*)$", m.group(1))
@@ -85,7 +78,7 @@ def fm_description(text: str) -> str:
 def candidates(repo: Path) -> list[tuple[str, Path]]:
     """(comando, percorso) delle possibili copie locali, senza symlink."""
     out: list[tuple[str, Path]] = []
-    for cmd, rel in CANON.items():
+    for cmd in CANON:
         skill_name = SKILL_ALIAS.get(cmd, cmd)
         for p in (
             repo / ".agents/commands" / f"{cmd}.md",

@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.14] - 2026-11-20
+
+### Added
+
+- Fonte unica consumer: `consumers.list` (21 repo) + loader `scripts/consumers_list.py` (`load_consumers()`, CLI `--strict`/`--paths`); `hal-contract.py`, `prune-local-commands.py`, `sync-consumer-stale.sh` de-hardcodati (le tre liste divergenti 11/11/10 → 19 unici lasciavano fuori pickwaise 41 mount, liberating.it 18, gDrive_ops 2 — misurati in dry-run). Gate `make -C agents consumers-list` (`STRICT=1`); guardia «canone, mai toccato» aggiunta a hal-contract.py. AGENTS.md/operativo.md allineati. [sync:safe]
+
 ## [1.13.13] - 2026-11-20
 
 ### Added
@@ -17,6 +23,7 @@
 ### Added
 
 - De-racing step 3: `scripts/hal-contract.py` — contratto consumer idempotente (dry-run di default, `--apply` per eseguire): rimuove i symlink HAL residui nelle dir note dei consumer (`.agents`, `agents`, `.zed`, `product`) riconoscendoli dal target che risolve dentro l'albero fisico di hal_gateway (os.walk senza followlinks, niente rimozione di directory reali) e installa/aggiorna il fence «hal-contract» nell'AGENTS.md di ciascun consumer: regole d'ingaggio (canonico non scrivibile da qui, script L0 con path assoluto, L2 = contenuto locale) + catalogo L1/comandi generato dai frontmatter del canonico (righe corte: il fence è iniettivo). Adozione applicata: 11 consumer (hal_system1 9a081a6*, hal_system2 9d3472a, hal_mcp_tools c64e2a8, hal_mcp_docs 51d449d, hal_seo 2f76932, hal_translate 909ec51, hal_tts de4186a, semidifocusing 43fc1bf, brainbeez 01ee283, WTP_App 1d1855e, InnerCircle f9c55ab*); * commit non pushati (commit altrui non pushati sulla branch: mai pubblicare lavoro di altri). Re-scan: 0 mount residui, fence `current` ovunque. AGENTS.md documenta lo strumento. [sync:safe]
+
 ## [1.13.11] - 2026-11-19
 
 ### Changed
