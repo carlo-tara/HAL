@@ -1,10 +1,9 @@
-
-| Priorità | Fonte | Cosa governa |
-|----------|-------|--------------|
-| 1 | Skill figlia L2 | Override progetto, path, workflow locali |
-| 2 | File dati progetto | Identità, path, stack |
-| 3 | Skill L1 | Competenza di dominio |
-| 4 | **a-agentzero** (questo skill) | Protocollo, sicurezza, checklist comuni |
+| Priorità | Fonte                          | Cosa governa                             |
+| -------- | ------------------------------ | ---------------------------------------- |
+| 1        | Skill figlia L2                | Override progetto, path, workflow locali |
+| 2        | File dati progetto             | Identità, path, stack                    |
+| 3        | Skill L1                       | Competenza di dominio                    |
+| 4        | **a-agentzero** (questo skill) | Protocollo, sicurezza, checklist comuni  |
 
 ### Comunicazione all'utente
 
@@ -44,18 +43,28 @@ Non sovrascrive sicurezza L0. Non consolidare credenziali. Task one-off chiusi �
 
 ## Sync agenti (deploy + versioni + comandi)
 
-Vedi [sync/SKILL.md](../sync/SKILL.md). Sintesi:
+Vedi [sync/SKILL.md](../sync/SKILL.md) e [learn/SKILL.md](../learn/SKILL.md) — entrambi promossi a comandi L0 sottili (entry-point che rimanda alla skill canonica, modello `laya`).
+
+Sintesi:
 
 - **`/sync ?`** — report catene L1←L0 (e L2 se indichi progetti) + stato comandi L0; zero deploy
-- **`/sync !`** — `deploy-all.sh` (skill, agents, `commands/`) + report; sync selettivo `extends-version` resta guidato
+- **`/sync !`** — `deploy-all.sh` (skill, agents, comandi globali via `publish-global-commands.sh`) + report; sync selettivo `extends-version` resta guidato
 - **`/sync <`** — analizza skill L2; propone DUP / promozione L1 o L0; zero scrittura ([l2-generalization.md](../sync/references/l2-generalization.md))
 
-Comandi L0: [commands/](../commands) → `commands/`. Override progetto: `{repo}/commands/` vince.
+Regole de-racing (sessione 2026-11-19/20):
+
+- **Guardia HAL** — `link-workspace-skills.sh` rifiuta (realpath) rigenerazioni avviate da workspace consumer che scriverebbero fuori dal proprio albero fisico: nei consumer la rigenerazione NON va eseguita; il canonico si legge da `$HAL_ROOT`.
+- **Contratto consumer** — `bash agents/scripts/hal-contract.py [--apply] [repo...]` (dry-run default, idempotente): toglie i mount/symlink HAL residui da ogni consumer e installa/refresha il fence «hal-contract» in `AGENTS.md` con il catalogo generato dai frontmatter del canonico. L2 di progetto: spostarle nei repo proprietari, mai nel mirror.
+- **Comandi L0 globali** — `publish-global-commands.sh` (chiamato da `deploy-all.sh`) pubblica in `~/.agents/skills/<cmd>/SKILL.md`: copia reale per i comandi canonici, symlink per sync/learn/… che sono già skill-mirror; prune di wrapper orfani; frontmatter YAML validato prima di scrivere. I progetti senza mount vedono i L0 da qui.
+- **Dedup locale** — `prune-local-commands.py [--apply]` (dry-run default): nei consumer con `.agents/commands/` locali, rimuove SOLO le copie esatte del canonico (hash su corpo senza frontmatter), mai file con commit proprietari (KEEP). Le rigenerazioni symlink-based possono «invasare» i mirror: dopo un apply, rilinkare.
+- **Fence L1/embedded** — il template v2 del fence delega a MCP `hal_mcp_docs`: `skills_list` (catalogo, ~100 token, cache 300s) → `skill_read(name)` on-demand; la scelta voce per voce se portare un L1/embedded in un consumer resta umana.
 
 ```bash
-bash a-agentzero/scripts/sync-agents.sh              # deploy + report L1 + comandi
-bash a-agentzero/scripts/sync-agents.sh --dry-run     # solo report
-bash a-agentzero/scripts/sync-agents.sh --projects /path/to/project
+bash agents/a-agentzero/scripts/sync-agents.sh            # deploy + report L1 + comandi (solo da gateway)
+bash agents/a-agentzero/scripts/sync-agents.sh --dry-run  # solo report
+bash agents/a-agentzero/scripts/sync-agents.sh --projects /path/to/project
+bash agents/scripts/hal-contract.py --apply              # contratto consumers
+python3 agents/scripts/prune-local-commands.py --apply   # via le copie locali duplicate
 ```
 
 ---
@@ -105,15 +114,15 @@ Dettaglio operativo harness → L1 `a-harness` / competenza `session-progress`.
 
 ## Deleghe tra agenti L1
 
-| Agente | Quando invocare |
-|--------|-----------------|
-| **a-b2b** | GTM e piloti B2B, account research ed enrichment contatti (skill `enrichment`) |
-| **a-copywriter** | Copy web, landing page, meta, FAQ, humanize, microcopy, editing |
-| **a-design** | Design visivo, shell UI/UX, accessibilità WCAG (`uiux`), data visualization (`charts`), illustrazioni AI (`illustrator`) |
-| **a-harness** | TDD RGR, Makefile gates, steward, DDD, implementazione del codice |
-| **a-product** | Discovery, PO (PRD, Lean Canvas, priorità), ricerca (`personas`), bisogni (`jtbd`), specifiche BDD (`gherkin`) |
-| **a-seozoom** | SEO/GEO, keyword, structured data, Google Ads; misurazione CWV solo via L2 |
-| **a-wordpress** | Plugin WordPress, migrazioni, WP-CLI, analisi installazione |
+| Agente           | Quando invocare                                                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **a-b2b**        | GTM e piloti B2B, account research ed enrichment contatti (skill `enrichment`)                                           |
+| **a-copywriter** | Copy web, landing page, meta, FAQ, humanize, microcopy, editing                                                          |
+| **a-design**     | Design visivo, shell UI/UX, accessibilità WCAG (`uiux`), data visualization (`charts`), illustrazioni AI (`illustrator`) |
+| **a-harness**    | TDD RGR, Makefile gates, steward, DDD, implementazione del codice                                                        |
+| **a-product**    | Discovery, PO (PRD, Lean Canvas, priorità), ricerca (`personas`), bisogni (`jtbd`), specifiche BDD (`gherkin`)           |
+| **a-seozoom**    | SEO/GEO, keyword, structured data, Google Ads; misurazione CWV solo via L2                                               |
+| **a-wordpress**  | Plugin WordPress, migrazioni, WP-CLI, analisi installazione                                                              |
 
 La skill figlia L2 può ridefinire deleghe per il progetto.
 
@@ -149,17 +158,17 @@ Le istruzioni comuni vanno in `AGENTS.md`.
 
 ## Riferimenti
 
-| File | Contenuto |
-|------|-----------|
-| [AGENT-PROTOCOL.md](../AGENT-PROTOCOL.md) | Specifica extends, discovery, merge, versionamento |
-| [references/agent-versioning.md](agent-versioning.md) | Semver, CHANGELOG, sync selettivo |
-| [CHANGELOG.md](../CHANGELOG.md) | Storico versioni L0 |
-| [references/extension-scaffold.md](extension-scaffold.md) | Workflow creazione figlio L2 |
-| [extension-template.md](../extension-template.md) | Template universale skill figlia |
-| [learn/SKILL.md](../learn/SKILL.md) | `/learn ?` riflessione, `/learn !` consolidamento in skill |
-| [sync/SKILL.md](../sync/SKILL.md) | `/sync ?` report, `/sync !` deploy, `/sync <` generalizzazione L2 |
-| [sync/references/l2-generalization.md](../sync/references/l2-generalization.md) | Criteri promozione L2→L1/L0 |
-| [scripts/sync-agents.sh](../scripts/sync-agents.sh) | Deploy-all + chain/pending su L1 (e L2 con `--projects`) |
-| [scripts/agent-version.sh](../scripts/agent-version.sh) | Report catena versioni, competency-chain, pending sync |
-| [competencies/](../competencies) | Baseline competenze L0 (`tono-di-voce`, `humanizer`, `italiano-locale`) |
-| [agents/a-agentzero.md](../agents/a-agentzero.md) | Subagent meta / debug ereditarietà |
+| File                                                                            | Contenuto                                                               |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [AGENT-PROTOCOL.md](../AGENT-PROTOCOL.md)                                       | Specifica extends, discovery, merge, versionamento                      |
+| [references/agent-versioning.md](agent-versioning.md)                           | Semver, CHANGELOG, sync selettivo                                       |
+| [CHANGELOG.md](../CHANGELOG.md)                                                 | Storico versioni L0                                                     |
+| [references/extension-scaffold.md](extension-scaffold.md)                       | Workflow creazione figlio L2                                            |
+| [extension-template.md](../extension-template.md)                               | Template universale skill figlia                                        |
+| [learn/SKILL.md](../learn/SKILL.md)                                             | `/learn ?` riflessione, `/learn !` consolidamento in skill              |
+| [sync/SKILL.md](../sync/SKILL.md)                                               | `/sync ?` report, `/sync !` deploy, `/sync <` generalizzazione L2       |
+| [sync/references/l2-generalization.md](../sync/references/l2-generalization.md) | Criteri promozione L2→L1/L0                                             |
+| [scripts/sync-agents.sh](../scripts/sync-agents.sh)                             | Deploy-all + chain/pending su L1 (e L2 con `--projects`)                |
+| [scripts/agent-version.sh](../scripts/agent-version.sh)                         | Report catena versioni, competency-chain, pending sync                  |
+| [competencies/](../competencies)                                                | Baseline competenze L0 (`tono-di-voce`, `humanizer`, `italiano-locale`) |
+| [agents/a-agentzero.md](../agents/a-agentzero.md)                               | Subagent meta / debug ereditarietà                                      |
