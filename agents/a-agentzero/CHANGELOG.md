@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.13.15] - 2026-11-20
+
+### Added
+
+- HT-014 (transazione separata): delta «consumers.list canonica» in `references/agentzero-extended-rules.md` (bullet **Contratto consumer**: l'insieme dei repo consumer è canonico in `agents/consumers.list`, letto dai tre script; aggiungere un repo è una riga lì) + refresh dei fence «hal-contract» sui 21 consumer via `hal-contract.py --apply` (il bump patch aggiorna il marcatore BEGIN del fence: versione 1.13.15). [sync:safe]
+
 ## [1.13.14] - 2026-11-20
 
 ### Added

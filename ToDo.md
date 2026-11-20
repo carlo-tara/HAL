@@ -37,11 +37,6 @@ Delta 2026-11-18 (sessione HT-005): consegnati strumento e draft oro — `benchm
   - Perché utile: `/learn !` del 2026-11-20 ha trovato i tre target canonici sporchi di WIP di sessione parallela (learn/CHANGELOG, tool-pitfalls, session-learnings): committarli oggi avrebbe assorbito lavoro altrui riaprendo — mentre la si chiude — la gara cross-sessione che il de-racing sta smontando. I canoni sono già scritti e verificati nella nota: serve solo il riversamento.
   - Acceptance: i 5 blocchi presenti nei target canonici, voce brace chiusa con Esito, learn 1.7.2 con la sua sezione changelog, `check-version-changelog` e `check-md-links` verdi.
 
-- [ ] `HT-014` — Applicare il contratto consumer ai 21 repo canonici: `hal-contract.py --apply` rimuove i mount residui misurati (pickwaise 41, liberating.it 18, gDrive_ops 2) e rigenera i fence `#human` · P2 · #infra
-  - Ref: `agents/consumers.list` (fonte unica), `make -C agents consumers-list`, nota §6.
-  - Perché utile: la fonte unica ha unificato le liste, ma i tre repo con più mount non erano coperti da nessuna delle tre: finché restano montati il fence non è iniettato e il consumer può eseguire L0 stale.
-  - Acceptance: dry-run `hal-contract.py` → 0 mount su tutti i 21; `--apply` eseguito per repo con commit nel consumer (push a carico dei proprietari); `make consumers-list STRICT=1` verde. Transazione separata: delta «consumers.list canonica» in `references/agentzero-extended-rules.md` + refresh fence (bump patch a-agentzero già landed: 1.13.14 in 14d9d8a; delta e refresh oggi non fatti per non invalidare 21 fence con sessione parallela in corso; `make -C agents version-chains` è già rosso — 8 L1 STALE pre-esistenti — e non è il gate di questa voce).
-
 ## Già fatto
 
 _(Buffer pre-flush in formato Keep a Changelog: sotto `### Added`, `### Changed`, `### Fixed` o `### Removed`; `/todo` lo svuota nel CHANGELOG.)_
