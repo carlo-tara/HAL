@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.8.1] - 2026-11-21
+
+### Changed
+
+- HT-012 (`/graph -y`): riversati nei target canonici i canoni 1-5 + §7-§9 della nota de-racing 2026-11-19/20 (`docs/apprendimenti-de-racing-2026-11-20.md`): §1 → nuova sezione «Strumenti: risultati replay/stale del canale tool» in `references/tool-pitfalls.md`; §2 → §Path dei comandi L0; §3+§5 → §Sessioni parallele sullo stesso repo; §4+§8 → §Shell di lavoro `sh`/dash; §7 → §Assenze da verificare (Percorsi citati come evidenza, 2ª occorrenza) + estensione regola 9 di `references/learn-guidelines.md`; §9 → §Tool call paralleli. §6 non riversato (già consolidato in `AGENTS.md`/`operativo.md`, da acceptance HT-012). Voce `### HAL` 2026-11-21 in `product/session-learnings.md`; voce brace di `ToDo.md` chiusa; convenzione ID (`HT-nnn` zero-padded) uniformata.
+
 ## [1.8.0] - 2026-11-20
 
 ### Changed

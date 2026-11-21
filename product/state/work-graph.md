@@ -1,13 +1,13 @@
 # Work Graph — Mappa residui 2026-10-28 (Kimi dynamic tools + QwenCloud multi-turn / cache / pooling / async / streaming)
 
-- source: file (ToDo.md — 36 voci: 1 P0, 13 P1, 22 P2; post-flush 2026-10-28: 8 aperte; re-run /graph -y 2026-10-29: 7 aperte = residuo N23-N28 + marker cache_control come N29; re-run /graph -y 2026-10-30 su ToDo.md: 0 voci aperte in P0/P1/P2, prose dei delta obsolete, buffer «Già fatto» vuoto, flush già in CHANGELOG; re-run /graph -y 2026-11-01: 0 voci aperte, backlog ancora esaurito; re-run /graph -y 2026-11-09 su ToDo.md: 5 voci aperte HT-003…HT-007 (delta /impersonate karpathy 2026-11-09), nuovi nodi N30-N34; re-run /graph -y 2026-11-16 su ToDo.md: 2 voci aperte (HT-005→N32, HT-007→N34, entrambe #human), P0/P1 vuoti, buffer «Già fatto» vuoto; HT-003/N31 chiusa 2026-11-10 con esito negativo al kill criterion, HT-009 defluita 2026-11-11
+- source: file (ToDo.md — 36 voci: 1 P0, 13 P1, 22 P2; post-flush 2026-10-28: 8 aperte; re-run /graph -y 2026-10-29: 7 aperte = residuo N23-N28 + marker cache_control come N29; re-run /graph -y 2026-10-30 su ToDo.md: 0 voci aperte in P0/P1/P2, prose dei delta obsolete, buffer «Già fatto» vuoto, flush già in CHANGELOG; re-run /graph -y 2026-11-01: 0 voci aperte, backlog ancora esaurito; re-run /graph -y 2026-11-09 su ToDo.md: 5 voci aperte HT-003…HT-007 (delta /impersonate karpathy 2026-11-09), nuovi nodi N30-N34; re-run /graph -y 2026-11-16 su ToDo.md: 2 voci aperte (HT-005→N32, HT-007→N34, entrambe #human), P0/P1 vuoti, buffer «Già fatto» vuoto; HT-003/N31 chiusa 2026-11-10 con esito negativo al kill criterion, HT-009 defluita 2026-11-11; re-run /graph -y 2026-11-21 su ToDo.md: 3 voci aperte (HT-005→N32, HT-007→N34, HT-011→N35, tutte #human), P0/P1/P2 vuoti; HT-012 eseguita e chiusa in sessione (pour §1–§5+§7–§9 nei target canonici, learn 1.8.1)
 - auto_accept: true (-y)
 - multi_cycle: true
 - mode: graph
 - why_mode: rv 2026-11-09 — non è Loop: 3 BC con owner e write-set distinti (Benchmark, Observability & Retention, System 1 Laya), dipendenza interna (N30 prerequisito di N31) e fan-out indipendente con gate umani multi-ora da rendicontare; grafo = orchestrazione deterministica, non runtime (pin graph-loop-source: reference non risolta nel bundle 2026-11-09, segnalare a /sync). Storicizzato rv 2026-10-28/29: 5 BC, motivazione originaria nelle tabelle.
-- goal: rv 2026-11-16 — residuo: HT-005 (gold set etichettato ~200 casi/famiglia + ricalibrazione soglie `laya_gate` + regressione su make target) e HT-007 (delta token/tempi/qualità assemblaggio locale vs modello nel `history/`, bracci appaiati); HT-003/004/006/008/009 chiusi rv 2026-11-09/11; un nodo = uno slice (≤4 file o WAIVER), gate make test-unit a 0, voce ToDo marcata [x] a nodo concluso. Storicizzato rv 2026-11-09: chiudere HT-003…HT-007 misurando se il gate System 1 vale la baseline (kill criterion dichiarato)
+- goal: rv 2026-11-21 — residuo: HT-005 (gold set etichettato ~200 casi/famiglia + ricalibrazione soglie `laya_gate` + regressione su make target), HT-007 (delta token/tempi/qualità assemblaggio locale vs modello in `history/`, bracci appaiati) e HT-011 (decisione adozione soglie System 1, dati A/B già acquisiti); HT-012 chiusa in-sessione 2026-11-21; HT-003/004/006/008/009 chiusi rv 2026-11-09/11; un nodo = uno slice (≤4 file o WAIVER), gate make test-unit a 0, voce ToDo marcata [x] a nodo concluso. Storicizzato rv 2026-11-16: residuo HT-005 e HT-007 (entrambi human)
 - bc: Benchmark, Observability & Retention, System 1 (Laya)
-- next: — rv 2026-11-16 — multi-cycle `-y` interrotto su hard stop «blocco umano richiesto» (non bypassabile): N31 chiuso 2026-11-10 (esito negativo ex kill criterion, riga esito nella tabella Esecuzione rv 2026-11-09), follow-up HT-009 defluito 2026-11-11 (laya 1.11.0 2026-11-15); restano solo N32 (HT-005, etichettatura oro) e N34 (HT-007, bracci h07A/h07B), entrambi human; storicizzato rv 2026-11-09: next N31, N30/N33 chiusi; rv 2026-10-28/29: DONE 7/7
+- next: — — rv 2026-11-21 — multi-cycle `-y` interrotto su blocco umano (non bypassabile): tutte e 3 le voci aperte sono #human (N32, N34, N35); HT-012, unica agent-executable, eseguita e chiusa in sessione (pour §1–§5+§7–§9 nei target canonici, learn 1.8.0→1.8.1, 4 gate verdi); storicizzato rv 2026-11-16: N31 chiuso, residuo N32/N34; rv 2026-11-09: next N31, N30/N33 chiusi; rv 2026-10-28/29: DONE 7/7
 
 Catene di esecuzione (vincolo = condivisione file oltre che dipendenza funzionale; si corre in ordine N0→N28):
 
@@ -167,4 +167,27 @@ flowchart TD
   N31v[N31 done 2026-11-10: esito negativo ex kill criterion] --> DONEV2([gate System 1 dismesso nel benchmark via HT-009 a])
   N32[N32 open human: HT-005 oro etichettato] --> DONEV2
   N34[N34 open human: HT-007 bracci h07A h07B] --> DONEV2
+```
+
+## rv 2026-11-21 — HT-012 eseguita in-sessione; N35 (HT-011, human) aggiunto; residuo tutto umano
+
+- next: — — hard stop multi-cycle su blocco umano (`-y` non bypassa): unica voce agent-executable (HT-012) eseguita e chiusa in sessione; residuo = N32, N34, N35 tutti #human (nessuna catena `/cycle` avviabile, nessun nodo agent-eseguibile in ToDo.md).
+
+**Delta ToDo.md** (vs rv 2026-11-16): 2→3 voci aperte — HT-005 e HT-007 invariate (#human); nuova HT-011 (adozione soglie System 1, #human, dati A/B 20261109b già acquisiti, gold ancora mancante → dipende da N32); HT-012 (riversamento canoni de-racing) era l'unica agent-executable: eseguita in-sessione, voce marcata [x] con Exit; marcato [x] anche l'item brace L17 (criteri di promozione maturati 2026-11-20, §4 della nota canonizzato in tool-pitfalls).
+
+**Esecuzione HT-012** (pour deterministico nota §1–§5 + §7–§9 → target canonici):
+- `agents/a-agentzero/learn/references/tool-pitfalls.md` (+35 righe): §1→nuova classe "Strumenti: risultati replay/stale del canale tool"; §2→estensione "Path dei comandi L0" (through-write dei symlink verso il canone); §3→variante "Push respinto dal gate pre-push su WIP altrui"; §4→estensione brace su "Shell di lavoro sh/dash" (2º incontro, promozione matura); §5→nuova classe "Chiavi di idempotenza: devono coprire tutto ciò che è generato"; §7→estensione "Assenze da verificare" + regola 9 in learn-guidelines.md (evidenza numerica — verbatim o rimisurata); §8→canone quoting `--include` su "Shell di lavoro sh/dash"; §9→variante stato condiviso /tmp su "Tool call paralleli" + "Sessioni parallele".
+- `product/session-learnings.md`: +3 voci Changelog HAL (de-racing 2026-11-19/20, consumers.list fonte unica, hal-contract fence su 9 consumer).
+- learn: SKILL.md 1.8.0→1.8.1 + voce CHANGELOG (patch: consolidamento references, nessuna modifica di interfaccia). Acceptance rispettata: "learn 1.7.2 con voce CHANGELOG" soddisfatta da 1.8.1 ≥ 1.7.2.
+- Gate: check-md-links, check-version-changelog, check-line-length, check-frontmatter-all — tutti exit 0.
+
+**Nodi**: N32 (HT-005, etichettatura oro ~200 casi/famiglia) e N34 (HT-007, bracci h07A/h07B) restano open-human. Nuovo **N35** (HT-011) open-human: decisione adozione soglie System 1 — A/B chiuso con esito negativo ex kill criterion, follow-up HT-009 deflato; adozione rinviata al gold set (dipendenza funzionale da N32). Nessun nodo agent-executable residuo: hard stop `-y` legittimo, non bypassato.
+
+**Handoff**: `product/state/handoff-graph.json` aggiornato (ts 2026-11-21, node_id N35, next —).
+
+```mermaid
+graph TD
+  N32[N32 open human: HT-005 oro etichettato] --> DONEV2
+  N34[N34 open human: HT-007 bracci h07A/h07B] --> DONEV2
+  N35[N35 open human: HT-011 adozione soglie] --> DONEV2
 ```

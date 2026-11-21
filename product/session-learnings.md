@@ -236,3 +236,12 @@
 - **Evidenza:** 26 test verdi (moduli guard/l0/canonical/rerun + `test_link_workspace_skills` riscritto sul contratto prune — era CI-red per funzione dismessa; due RED preesistenti emersi: pin graph 1.0.4≠mirror 1.0.5, fixture COMMANDS 9/11); `make -C agents pre-commit` + `test-unit` OK; tool `skill` risolve `commit` dal globale (`<source>global</source>`); i CHANGELOG unici nei mirror (graph/cycle/version) trasferiti al canone `agents/a-agentzero/commands/CHANGELOG.md`.
 - **Stato:** consolidato — bullet datato in `learn/references/tool-pitfalls.md` §Path dei comandi L0 (learn 1.7.2), canoni doc allineati (sync/SKILL.md 1.2.3, extended-rules, commands/README), comandi sync 1.0.1 / version 1.3.3 / learn 1.0.1 ripubblicati.
 - **Ambito:** HAL. **Destinazione:** skill (learn deep) + `commands/CHANGELOG.md`.
+
+---
+
+## 2026-11-21 — HT-012: riversamento canoni de-racing nei target canonici (sessione `/graph -y`)
+
+### HAL
+
+- 2026-11-19/20 — de-racing completo hal_gateway↔consumer: guardia realpath su rigenerazione (1.13.10), L2 nei repo proprietari (1.13.11), contratto - catalogo fence `hal-contract.py` (1.13.12), comandi L0 globali `~/.agents/skills` + sync/learn promossi a comandi (67f365f), delega MCP `skills_list`/`skill_read` per L1/embedded (hal_mcp_tools 1.10.0). Appresi i canoni 1–5 di questa nota. - 2026-11-20 (step B) — fonte unica consumer: `agents/consumers.list` + loader `consumers_list.py`; hal-contract/prune/sync-consumer-stale de-hardcodati (21 consumer, includeva pickwaise e gDrive_ops invisibili alle tre liste); gate `make -C agents consumers-list` (`STRICT=1`); guardia canone aggiunta a hal-contract.py. Consolidati: §6 (AGENTS.md + `agents/docs/operativo.md`), nati §7-§9 (riversamento §7-§9 → tool-pitfalls vincolato a HT-012); residue applicativo → HT-014.
+- **Dove:** `agents/a-agentzero/learn/references/tool-pitfalls.md` (§1 nuova sezione; estensioni §2/§3/§4/§5/§7/§8/§9), `agents/a-agentzero/learn/references/learn-guidelines.md` (regola 9), learn 1.8.0→1.8.1 (`SKILL.md` + `CHANGELOG.md`), `ToDo.md` (voce brace + `HT-012` chiuse con Esito; convenzione ID uniformata in L5), `product/work-graph.md` (rv 2026-11-21, nodi N35/N36).

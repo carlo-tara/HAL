@@ -1,13 +1,15 @@
 {
   "kind": "graph",
   "cmd": "/graph",
-  "ts": "2026-11-16T14:48:57Z",
-  "flags": {"y": true},
-  "acceptance": "rv 2026-11-16: registrare chiusura N31 (esito negativo ex kill criterion, HT-009 defluita) e stato residuo; nessuna voce agent-eseguibile in ToDo.md",
+  "ts": "2026-11-21T00:39:40Z",
+  "flags": {
+    "y": true
+  },
+  "acceptance": "rv 2026-11-21: eseguire HT-012 (pour §1–§5+§7–§9 nei target canonici, learn patch, gate verdi) e registrare il residuo come nodi human (N32, N34, N35); nessuna altra voce agent-executable in ToDo.md",
   "files": "product/state/work-graph.md",
-  "node_id": "N31",
+  "node_id": "N35",
   "next": "—",
-  "summary": "/graph -y ToDo.md rv 2026-11-16: N31 marcata done (A/B 20261109b run 2026-11-10, esito negativo ex kill criterion; follow-up HT-009 decisione (a) defluita 2026-11-11, laya 1.11.0 2026-11-15); header source/goal/next aggiornati, aggiunta sezione rv 2026-11-16 con mermaid; integrità celle tubi verificata su tutto il file; residuo = solo nodi umani N32 (HT-005) e N34 (HT-007), hard stop -y non bypassa",
-  "brief": "rv 2026-11-16: multi-cycle -y in hard stop blocco umano; restano N32 (oro ~200 casi, infra HT-008 consegnata, dati assenti) e N34 (bracci 20261109_h07A / h07B non lanciati in hal_system2); gate passivi riverificati con misura diretta, non sbloccati",
+  "summary": "/graph -y ToDo.md rv 2026-11-21: HT-012 eseguita in-sessione (tool-pitfalls.md +35: §1 replay/stale, §2 through-write, §3 gate pre-push, §4 brace 2º incontro, §5 idempotenza, §7 evidenza numerica + regola 9 learn-guidelines, §8 grep --include, §9 stato condiviso; session-learnings.md +3 voci HAL; learn 1.8.0→1.8.1; 4 gate exit 0), voce ToDo [x]; HT-011 → nuovo nodo N35 open-human; residuo = N32 (HT-005 gold ~200 casi), N34 (HT-007 bracci appaiati), N35 (HT-011 soglie), tutti #human: hard stop -y non bypassabile",
+  "brief": "rv 2026-11-21: unica voce agent-executable (HT-012) chiusa in sessione con gate verdi; 3 voci aperte tutte human: N32 oro etichettato, N34 bracci appaiati, N35 decisione adozione soglie System 1 (dipende da N32)",
   "token_budget": 200
 }
