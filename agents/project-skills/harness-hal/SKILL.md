@@ -1,7 +1,7 @@
 ---
 name: harness-hal
 extends: a-harness
-version: 1.0.8
+version: 1.1.0
 extends-version: 1.11.4
 description: >-
   Delta harness per HAL Gateway: Platform API root (Makefile specchio CI), path
@@ -114,6 +114,21 @@ version-chains/sync). `/steward` root non tocca `agents/Makefile` e viceversa.
 | Agent Platform (bundle)   | `agents/`                                                                                                           | Platform API separata (`agents/Makefile`)             |
 
 Dettagli e regole di import: `docs/bounded-contexts.md`.
+
+## Bootstrap — Ontology sidecar (auto-ontology-mcp)
+
+Il profilo `standard` (passo 3 della procedura L0 `/bootstrap`: «Makefile→glossary→BC→harness delta→…», `a-agentzero/SKILL.md`) legge questo delta: il side-car **si installa da `/bootstrap`**, non a mano. Nessuno script: la procedura è questa sezione, idempotente, dry-run by default, zero sudo silente:
+
+1. **Pin (fonte unica)**: `agents/a-knowledge/references/auto-ontology-source.md` → SHA, `version`, baseline KPI-1. Mai hardcodare altrove.
+2. **Prerequisiti**: `python3` ≥3.12, `uv` (`~/.local/bin/uv`).
+3. **Clone**: `/opt/auto-ontology-mcp` se `sudo` interattivo; altrimenti `~/auto-ontology-mcp` (deviazione registrata nel pin file con procedura di ripristino). `git checkout <sha-del-pin>`.
+4. **Gate** (tutti verdi prima di iscrivere): `uv sync` (lock a monte) → `uv run pytest` → misura KPI-1 `tools/list` con `AUTO_ONTOLOGY_TOOLSETS=answer` (pattern `build_server`+Client di `tests/test_context.py`) → `logs/ao-sidecar/kpi1-<sha>.txt`, **insieme nomi tool prima, char dopo** vs baseline del pin. `demo` opzionale al primo insediamento; rehearsal migrazione su copia (`AUTO_ONTOLOGY_HOME`) obbligatoria ai bump.
+5. **Permessi store**: `chmod 700 ~/.auto-ontology-mcp`, `600` su `ontology.db`/`knowledge.sqlite`/`*.sqlite`; datasource solo da CLI (`AUTO_ONTOLOGY_ALLOW_DATASOURCE_TOOLS=0`).
+6. **Zed**: voce `context_servers.auto-ontology` con env `TOOLSETS=answer`, `ALLOW_DATASOURCE_TOOLS=0`, `MAX_ROWS=100` (ceiling), `VAULT` unset (default interno), `enabled: true`, `timeout: 60`; backup `settings.json.bak-<slug>-<data>` prima della scrittura, validazione JSON dopo, re-read **sequenziale** (mai nella stessa finestra di un batch parallelo — classe tool-pitfalls §Tool call paralleli).
+7. **Cadenza mining (query ricorrenti → ottimizzazione)**: a soglia (`query_log` ≥10 righe) o a ogni bump → `suggest_sql_attributes` (mina da `query_log`+`example_query`; il server collauda prima di salvare), consolidare le Q verificate con `save_example_query`. La **certificazione** di Terms/misure resta umana (l'agente non certifica). Nota governance: `check_answerable` non indicizza i nomi degli SQL attribute — la frase metrica si rende coverata con colonna/sinonimo ratificati da una persona.
+8. **Aggiornamenti**: rituale AO-2.1 del PRD `docs/29` (release-anchor = commit di bump `version`, niente tag a monte; snapshot export; re-misura; riga pin; revert-to-pin su regressione).
+
+Il runtime **non** entra nel bundle `agents/` (FastMCP/SQLAlchemy/sqlglot restano confinati nel clone); confine di routing: `docs/bounded-contexts.md` §«Routing delle domande».
 
 ## Override workflow
 

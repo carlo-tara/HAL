@@ -2,6 +2,12 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.1.0] - 2026-11-22
+
+### Added
+
+- § «Bootstrap — Ontology sidecar (auto-ontology-mcp)»: il profilo `standard` di `/bootstrap` installa il side-car da ricetta codificata (pin file come fonte unica, gate sync→pytest→KPI-1, permessi 700/600, iscrizione Zed con backup e re-read sequenziale, cadenza mining `suggest_sql_attributes`/`save_example_query` con certificazione umana, rituale bump AO-2.1). Nasce dalla correzione dell'owner 2026-11-22: l'installazione era avvenuta a mano in chat; la procedura ora vive qui. Nessuno script: `/bootstrap` è una procedura L0 e il runtime resta fuori dal bundle.
+
 ## [1.0.8] - 2026-11-20
 
 ### Changed
