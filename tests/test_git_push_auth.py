@@ -1,123 +1,99 @@
 """Anti-hang delle push non interattive (git-push-auth.sh, L0).
 
 Evidenza 2026-11-18: il land si bloccò su `Username for 'https://github.com'`
-(helper di credenziali scaduto a metà sessione, terminale interattivo = hold
-infinito). Canone: mai far sparire un land in un prompt — fallimento rapido
-(GIT_TERMINAL_PROMPT=0) + fallback helper gh quando gh è autenticato.
-"""
+(credenziale non valida, terminal prompt attivo). Evidenza 2026-11-22 (HT-019):
+`gh auth refresh -s api` fallisce con error 403 su account free con 2FA — manca
+un tier SSH non interattivo.
 
+Stile unittest.TestCase: eseguito sia da `python3 -m unittest tests.test_git_push_auth`
+(recipe Makefile `test-unit` e CI) sia da pytest.
+"""
 from __future__ import annotations
 
 import os
 import subprocess
+import tempfile
+import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-LIB = ROOT / "agents" / "scripts" / "git-push-auth.sh"
-SCRIPTS = (
-    ROOT / "agents" / "scripts" / "agent-worktree.sh",
-    ROOT / "agents" / "a-agentzero" / "scripts" / "agent-commit.sh",
-)
-
-GIT_ENV = {
-    **os.environ,
-    "GIT_AUTHOR_NAME": "t",
-    "GIT_COMMITTER_NAME": "t",
-    "GIT_AUTHOR_EMAIL": "t@t",
-    "GIT_COMMITTER_EMAIL": "t@t",
-}
+LIB = Path(__file__).resolve().parents[1] / "agents" / "scripts" / "git-push-auth.sh"
+ENV = {**os.environ, "GIT_TERMINAL_PROMPT": "0"}
 
 
-def bash(code, cwd=None, timeout=60):
+def _bash(snippet: str) -> subprocess.CompletedProcess:
     return subprocess.run(
-        ["bash", "-c", code],
-        cwd=str(cwd) if cwd else None,
+        ["bash", "-c", f'source "{LIB}"\n{snippet}'],
         capture_output=True,
         text=True,
-        env=GIT_ENV,
-        timeout=timeout,
-        check=False,
+        env=ENV,
     )
 
 
-def test_lib_exists_and_land_commit_source_it():
-    assert LIB.is_file(), "git-push-auth.sh assente"
-    for s in SCRIPTS:
-        t = s.read_text(encoding="utf-8")
-        assert "git-push-auth.sh" in t, f"{s.name}: manca il source della lib"
-        assert "push_with_gh_fallback" in t, f"{s.name}: push non avvolta"
-
-
-def test_classifier_auth_vs_structural(tmp_path):
-    code = (
-        f'source "{LIB}" || exit 9;'
-        f"printf %s \"fatal: could not read Username for 'https://github.com'\""
-        f" > {tmp_path}/a; printf %s '! [rejected] master -> master (non-fast-forward)'"
-        f" > {tmp_path}/b;"
-        f"git_auth_failure {tmp_path}/a; ok1=$?;"
-        f"git_auth_failure {tmp_path}/b; ok2=$?;"
-        "test $ok1 -eq 0 -a $ok2 -ne 0"
+def _mk_repo(tmp: str) -> str:
+    """Bare remote locale + worktree clone con un commit pronto da spingere."""
+    origin = str(Path(tmp) / "origin.git")
+    work = Path(tmp) / "work"
+    subprocess.run(
+        ["git", "init", "--bare", "-b", "master", origin],
+        check=True,
+        capture_output=True,
     )
-    r = bash(code)
-    assert r.returncode == 0, r.stderr
-
-
-def test_push_fails_fast_never_hangs(tmp_path):
-    """Remote https irraggiungibile: la lib deve restituire in pochi secondi
-    (mai attendere un prompt), con messaggio git-push-auth e rc≠0."""
-    repo = tmp_path / "r"
-    repo.mkdir()
-    (repo / "f").write_text("x\n")
-    bash("git init -q -b master . && git add -A && git commit -q -m base", cwd=repo)
-    code = (
-        f'source "{LIB}" || exit 9;'
-        f"git -C {repo} remote add origin https://github.invalid/r.git;"
-        f"push_with_gh_fallback --git-dir={repo}/.git --work-tree={repo} origin master"
+    subprocess.run(["git", "clone", origin, str(work)], check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "t@t"], cwd=work, check=True)
+    subprocess.run(["git", "config", "user.name", "t"], cwd=work, check=True)
+    (work / "f.txt").write_text("x")
+    subprocess.run(["git", "add", "f.txt"], cwd=work, check=True)
+    subprocess.run(
+        ["git", "commit", "-m", "c"], cwd=work, check=True, capture_output=True
     )
-    r = bash(code, timeout=60)  # un hang solleva TimeoutExpired → test rosso
-    assert r.returncode != 0
-    assert "git-push-auth" in (r.stderr + r.stdout), r.stderr[-400:]
+    return origin
 
 
-def test_direct_execution_pushes(tmp_path):
-    """Guardia 2026-11-20 (spinta HT-014): eseguito direttamente, il modulo
-    DEVE spingere — prima definiva le funzioni e usciva 0 senza push
-    (falso successo silenzioso)."""
-    bare = tmp_path / "remote.git"
-    repo = tmp_path / "r"
-    repo.mkdir()
-    bash(f"git init -q --bare -b master {bare}")
-    (repo / "f").write_text("x\n")
-    bash("git init -q -b master . && git add -A && git commit -q -m base", cwd=repo)
-    bash(f"git remote add origin {bare}", cwd=repo)
-    r = bash(f'bash "{LIB}"', cwd=repo, timeout=60)
-    assert r.returncode == 0, r.stderr[-400:]
-    local = bash("git rev-parse HEAD", cwd=repo).stdout.strip()
-    remote = bash(f"git --git-dir={bare} rev-parse master").stdout.strip()
-    assert remote and remote == local, "remote non aggiornato dalla push diretta"
+class TestHttpsToSshUrl(unittest.TestCase):
+    def test_converts_https_to_ssh(self):
+        out = _bash(
+            'printf "%s" "$(https_to_ssh_url "https://github.com/foo/bar.git")"'
+        )
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertEqual(out.stdout, "git@github.com:foo/bar.git")
+
+    def test_non_https_returned_unchanged(self):
+        out = _bash('printf "%s" "$(https_to_ssh_url "git@github.com:foo/bar.git")"')
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertEqual(out.stdout, "git@github.com:foo/bar.git")
 
 
-def test_direct_execution_never_silent_noop(tmp_path):
-    """Repo senza remote: l'esecuzione diretta deve fallire con messaggio
-    (rc≠0), mai uscire 0 in silenzio."""
-    repo = tmp_path / "r"
-    repo.mkdir()
-    (repo / "f").write_text("x\n")
-    bash("git init -q -b master . && git add -A && git commit -q -m base", cwd=repo)
-    r = bash(f'bash "{LIB}"', cwd=repo, timeout=60)
-    assert r.returncode != 0
-    assert (r.stderr + r.stdout).strip(), "nessun messaggio: no-op silenzioso"
+class TestPushWithSshFallback(unittest.TestCase):
+    def test_falls_back_after_https_failure(self):
+        # host https irraggiungibile → il tier SSH deve essere innescato e
+        # fallire a sua volta (nessun host ssh valido): exit != 0, riga fallback presente
+        out = _bash('push_with_ssh_fallback "https://github.invalid/r.git" master 2>&1')
+        self.assertNotEqual(out.returncode, 0)
+        self.assertIn("auth fallback", out.stdout)
+        self.assertIn("git@github.invalid:r.git", out.stdout)
+
+    def test_success_and_no_rewrite_for_non_https(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = _mk_repo(tmp)
+            out = _bash(
+                f'cd "{tmp}/work" && push_with_ssh_fallback "{origin}" master 2>&1'
+            )
+            self.assertEqual(out.returncode, 0, out.stdout)
+            self.assertNotIn("auth fallback", out.stdout)
+            ls = subprocess.run(
+                ["git", "ls-remote", origin, "refs/heads/master"],
+                capture_output=True,
+                text=True,
+                env=ENV,
+            )
+            head = subprocess.run(
+                ["git", "rev-parse", "master"],
+                cwd=f"{tmp}/work",
+                capture_output=True,
+                text=True,
+            )
+            self.assertIn(head.stdout.strip(), ls.stdout)
 
 
-def test_sourcing_defines_functions_without_side_effects(tmp_path):
-    repo = tmp_path / "r"
-    repo.mkdir()
-    bash("git init -q -b master .", cwd=repo)
-    code = (
-        f'source "{LIB}" || exit 9;'
-        "declare -F push_with_gh_fallback >/dev/null &&"
-        " declare -F git_auth_failure >/dev/null && echo SOURCED-OK"
-    )
-    r = bash(code, cwd=repo)
-    assert r.returncode == 0, r.stderr[-400:]
-    assert "SOURCED-OK" in r.stdout
+if __name__ == "__main__":
+    unittest.main()

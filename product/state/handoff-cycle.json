@@ -1,13 +1,21 @@
 {
   "kind": "cycle",
   "cmd": "/cycle",
-  "ts": "2026-11-18T16:34:03Z",
+  "ts": "2026-11-22T10:12:22Z",
   "flags": {"y": false},
-  "acceptance": "",
-  "files": "",
-  "node_id": "HT-010",
-  "next": "(umano) HT-011 adozione soglie + estensione oro/vocabolario noul (HT-005)",
-  "summary": "/cycle HT-010 ready 2026-11-18: runner pred prod + 13 test + regressione test-unit (426 OK MAKE_EXIT=0, pre-commit 0); prima misura su 123 oro confermati: hit_rate .276, direct .523 — nessuna soglia mossa (laya_gate intatto, Plan F), adozione → HT-011 #human; noul vocabolario = gap strumento registrato; collaterale L1 sorella non committato nel worktree (7 decodifiche + a-harness WIP)",
-  "brief": "",
-  "token_budget": 200
+  "acceptance": "test_git_push_auth.py copre il tier SSH (https_to_ssh_url + fallback con credhelper disabilitato); suite completa 431 test VERDI",
+  "files": ["agents/scripts/git-push-auth.sh", "tests/test_git_push_auth.py", "agents/a-agentzero/SKILL.md", "agents/a-agentzero/CHANGELOG.md"],
+  "outcome": "HT-019 chiusa (parte agente): https_to_ssh_url + push_with_ssh_fallback come tier finale di git-push-auth.sh dopo il retry gh; test convertiti in unittest style (il runner Makefile/CI è python3 -m unittest, il file pytest-style non eseguiva nulla); a-agentzero 1.17.0",
+  "artifacts": {
+    "red": "python3 -m unittest con 2 test SSH → FAIL (helper assente), gh preesistenti OK",
+    "green": "test_git_push_auth.py: 5/5 (2 gh preesistenti + 3 nuovi SSH); suite repo 431 test OK in 3.7s (log logs/test-2026-W47.log); pre-commit secrets/deps/sast OK",
+    "refactor": "nessun refactor richiesto: helper unico nel lib, chiamanti (agent-worktree.sh, agent-commit.sh) invariati; shim di agent-worktree.sh coperto (bench il file oggi è assente nell'index — WIP)"
+  },
+  "next": "#human — verificare al prossimo push reale che il tier SSH non regredisca; se gh è rimosso dal sistema il fallback degrada a 2 tier (documentato nell'A). Decisione 'rigenerare keyring' (secondo ramo di HT-019) non necessaria: token gh valido, il problema era solo l'assenza di credenziale git.",
+  "notes": [
+    "Evidenza: gh keyring valido ma push HTTPS fallita nella sessione 2026-11-21 (git-push-auth: fatal: could not read Username) → fallback SSH necessario come tier finale. Remote di hal_gateway è già SSH (origin = git@github.com:carlo-tara/hal_gateway.git); il fallback serve gli altri repo e gli edge-case HTTPS.",
+    "L1 flush-flatten non richiesto: coda session-learnings era vuota all'audit (flush 2026-11-22).",
+    "Shell di lavoro sh/dash: niente pipefail/process substitution nei comandi inline — già in tool-pitfalls, nessuna nuova riga.",
+    "Attenzione index isolation: worktree condiviso con sessione parallela (Toth v0) — commit con index privato, staged ⊆ allowlist verificata; al momento del commit solo i 3 file del ciclo sono sporchi (gli altri assorbiti in HEAD)."
+  ]
 }

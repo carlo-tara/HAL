@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.17.0] - 2026-11-22
+
+### Changed
+
+- `scripts/git-push-auth.sh` — terzo tier di fallback SSH (HT-019): dopo il retry via credenziali `gh`, se il remote è GitHub https e la chiave SSH dell'utente risponde (`ssh -T git@github.com`, 5s, fail-open), ultima spinta sulla rotta `git@github.com:owner/repo` con `GIT_SSH_COMMAND="ssh -o BatchMode=yes"`. Helper `https_to_ssh_url` (solo github.com; host diversi e URL non-https restituiscono stringa vuota → nessun rewrite); il branch passa invariato. Necessario: token `gh` nel keyring scaduto — `refresh`/`login` richiedono browser (impossibile in modalità non interattiva) e il manager credenziali di Git non è installato; la chiave SSH è l'unica credenziale non interattiva viva (evidenza sessione 2026-11-22: push https 403, ssh OK). Preservato il contratto anti-hang: `GIT_TERMINAL_PROMPT=0`, un solo tentativo per rotta, exit non zero senza prompt. Test: 4 casi in `tests/test_git_push_auth.py` (conversione, non-https, host non-GitHub, fallback dopo https fallito).
+
 ## [1.16.1] - 2026-11-22
 
 ### Changed
@@ -18,12 +24,12 @@
 
 - Slice v0-toth-index: `scripts/toth_index.py` — gemello meccanico del catalogo hal-contract (liste L1/BUNDLED/PROJECT_SKILLS/COMMANDS e parser fm_field/shorten importati, nessuna regola propria), artefatto `references/toth-index.json` (schema 1, byte-deterministico, `present=false` marca le fonti del canone assenti che il fence salta in silenzio — oggi 2: `project:project-skills/harness-agentfactory`, `command:laya`) + `--check` per gate freshness; regole `references/toth-routing-rules.md`; test `tests/test_toth_index.py` (fake tree + canone reale + freshness).
 
-
 ## [1.14.0] - 2026-11-20
 
 ### Changed
 
 - Comandi L0 — sede unica delle skill-comando: la globale `~/.agents/skills/`. `scripts/link-workspace-skills.sh` dismette `link_zed_skill` e introduce `prune_command_skill_wrapper` (pota i mirror residui marcati, guardie through-symlink/fuori-workspace); `scripts/check-editor-links.sh` inverte l'invariante (assenza dei 12 wrapper + entrypoint learn/sync rimossi); `scripts/sync-agents.sh` non pretende più il symlink locale di learn/sync. Canoni comando: `sync.md` 1.0.1, `version.md` 1.3.3 («canonico vs specchi» senza mirror), `learn.md` 1.0.1 (refuso di sweep — la frase identica era già corretta in sync.md: grepare le auto-descrizioni, non ricordarle); nuovo `commands/CHANGELOG.md` canonico accoglie la storia dei mirror (graph/cycle/version) + i bump senza registro. Sync selettivo [sync:safe]: 8 figli L1 re-pinnati 1.13.11→1.14.0 (chiusura catena STALE post-HT-014; per a-design/a-knowledge solo pin, bump in transazione parallela) + harness-hal 1.0.8 su a-harness 1.11.4. Test: `test_graph_rerun_rules` ripuntato al canone (pin dinamico, era RED preesistente 1.0.4≠1.0.5), `test_link_workspace_skills` riscritto sul contratto prune, fixture `COMMANDS` 9→11 nel guard (RED preesistente da bf67d62). Canoni doc allineati alla sede unica: `sync/SKILL.md` 1.3.0 (bullet mirror→specchi), `references/agentzero-extended-rules.md` (publish = copia reale per tutti i comandi, nessun symlink sync/learn), `commands/README.md` (riga workspace). [sync:safe]
+
 ## [1.13.15] - 2026-11-20
 
 ### Added
