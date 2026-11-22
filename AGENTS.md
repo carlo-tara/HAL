@@ -40,8 +40,7 @@ La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzato Z
 
 Sessioni concorrenti NON lavorano sul main checkout: `bash agents/scripts/agent-worktree.sh new <nome>` crea worktree+branch da `origin/master`; il lavoro si chiude con `agent-worktree.sh land <nome>` (preview `merge-tree`, rebase con rerere, guardie `check-registry`, push ff-only verificato, cleanup). Il main resta verde per costruzione; i consumer (symlink `agents/`, mirror `.agents/skills`) vedono solo il landed. Protocollo completo: `agents/a-agentzero/references/worktree-land.md`.
 
-<!-- BEGIN hal-contract: generato da a-agentzero 1.13.15 · tpl 2 — NON EDITARE TRA I FENCE -->
-
+<!-- BEGIN hal-contract: generato da a-agentzero 1.17.1 · tpl 2 — NON EDITARE TRA I FENCE -->
 ## HAL — contratto consumer
 
 - HAL canonico: `/var/www/hal_gateway` (repo `hal_gateway`). **Da questo progetto**: mai modificare
@@ -83,5 +82,4 @@ Sessioni concorrenti NON lavorano sul main checkout: `bash agents/scripts/agent-
 - **gdrive-sync-safe** — Guide to safely manage local Google Drive mirrors and prevent IDE freezes or recursive index locking. `read /var/www/hal_gateway/agents/gdrive-sync-safe/SKILL.md`
 - **laya** — Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, no…. `read /var/www/hal_gateway/agents/project-skills/laya/SKILL.md`
 - **harness-hal** (solo gateway) — Delta harness per HAL Gateway: Platform API root (Makefile specchio CI), path artefatti, profile bootstrap standard, N/A documentati (int/e2e/parity)…. `read /var/www/hal_gateway/agents/project-skills/harness-hal/SKILL.md`
-
 <!-- END hal-contract -->
