@@ -503,3 +503,12 @@
 | 2026-11-22 | green | gate-wired       | `agents/Makefile`: regola `check-toth-index` dopo `check-registry` nel `pre-commit` + rigenerato `toth-index.json` (33 voci, drift 0) | 0 |
 | 2026-11-22 | green | ao-2-2-env-smoke | `AUTO_ONTOLOGY_ALLOW_DATASOURCE_TOOLS=0` registrato nel rituale AO-2.1 (docs/29 + sidecar reference) | 0 |
 | 2026-11-22 | green | ht015-pour       | §1+§2+§7 → `learn/references/tool-pitfalls.md` (learn 1.8.6); §6 → `references/l1-from-proto.md` (a0 1.17.1); §3/§5 esclusi dalla acceptance | 0 |
+
+## Session 2026-11-22-cycle-ht022
+
+| Data       | Fase  | Nodo            | Cosa | Esc |
+|------------|-------|-----------------|------|-----|
+| 2026-11-22 | plan  | s1-placement    | Laya choice sulla sede del forwarder (root vs gateway_core vs scripts/): **script-scripts** (margin 0,979, `system1_direct`) — confermato dalla convenzione `from scripts.gold_set_scoring import` nei test; voto outcome registrato | 0 |
+| 2026-11-22 | red   | test-first      | `tests/test_outcome_forwarder.py`: 10 test sul contratto M1.5 (fixture route+proxy, dedup esplicito>proxy, re-run 0 voti, malformed/senza hash, inbox assente, retry-safety, exit CLI) → RED (ImportError, modulo assente) | 1 |
+| 2026-11-22 | green | forwarder-wired | `scripts/outcome_forwarder.py` + `inbox/laya-outcomes/.imported/` nel canonico: scansione `.ndjson` (mai `.tmp`), dedup request_hash esplicito>proxy, `POST {LAYA_BASE_URL}/outcome` (transport da `laya_service`), archivio solo a replay completo, codici precondizione senza scrivere; 10/10 GREEN, suite 443 OK, pre-commit 0 | 0 |
+| 2026-11-22 | ready | close-out       | ToDo HT-022 [x]+Esito, CHANGELOG [Unreleased], handoff-cycle.json; riparato `tool-pitfalls.md` a HEAD (l'edit pre-esistente del ciclo HT-021 cancellava 2 bullet canoniche) | 0 |

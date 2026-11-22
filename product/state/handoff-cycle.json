@@ -1,41 +1,13 @@
 {
   "kind": "cycle",
   "cmd": "/cycle",
-  "ts": "2026-11-22T11:05:00Z",
-  "flags": {
-    "y": false
-  },
-  "acceptance": "HT-021: `make -C agents pre-commit` include check-toth-index dopo check-registry (test in test_toth_index.py). HT-015: §1+§2+§7 in learn/references/tool-pitfalls.md, §6 in references/l1-from-proto.md; §3/§5 esclusi (già appresi a caldo). HT-016/HT-018 #human non in questo ciclo.",
-  "files": [
-    "agents/Makefile",
-    "agents/a-agentzero/scripts/toth_index.py",
-    "agents/a-agentzero/references/toth-index.json",
-    "agents/a-agentzero/references/l1-from-proto.md",
-    "agents/a-agentzero/learn/references/tool-pitfalls.md",
-    "agents/a-agentzero/SKILL.md",
-    "agents/a-agentzero/CHANGELOG.md",
-    "agents/a-agentzero/learn/SKILL.md",
-    "agents/a-agentzero/learn/CHANGELOG.md",
-    "tests/test_toth_index.py",
-    "docs/29_auto_ontology_semantic_layer.md",
-    "ToDo.md",
-    "product/state/agent-progress.md",
-    "product/state/handoff-cycle.json"
-  ],
-  "outcome": "HT-019 chiusa (parte agente): https_to_ssh_url + push_with_ssh_fallback come tier finale di git-push-auth.sh dopo il retry gh; test convertiti in unittest style (il runner Makefile/CI è python3 -m unittest, il file pytest-style non eseguiva nulla); a-agentzero 1.17.0",
-  "artifacts": {
-    "red": "python3 -m unittest con 2 test SSH → FAIL (helper assente), gh preesistenti OK",
-    "green": "test_git_push_auth.py: 5/5 (2 gh preesistenti + 3 nuovi SSH); suite repo 431 test OK in 3.7s (log logs/test-2026-W47.log); pre-commit secrets/deps/sast OK",
-    "refactor": "nessun refactor richiesto: helper unico nel lib, chiamanti (agent-worktree.sh, agent-commit.sh) invariati; shim di agent-worktree.sh coperto (bench il file oggi è assente nell'index — WIP)"
-  },
-  "next": "#human — verificare al prossimo push reale che il tier SSH non regredisca; se gh è rimosso dal sistema il fallback degrada a 2 tier (documentato nell'A). Decisione 'rigenerare keyring' (secondo ramo di HT-019) non necessaria: token gh valido, il problema era solo l'assenza di credenziale git.",
-  "notes": [
-    "Evidenza: gh keyring valido ma push HTTPS fallita nella sessione 2026-11-21 (git-push-auth: fatal: could not read Username) → fallback SSH necessario come tier finale. Remote di hal_gateway è già SSH (origin = git@github.com:carlo-tara/hal_gateway.git); il fallback serve gli altri repo e gli edge-case HTTPS.",
-    "L1 flush-flatten non richiesto: coda session-learnings era vuota all'audit (flush 2026-11-22).",
-    "Shell di lavoro sh/dash: niente pipefail/process substitution nei comandi inline — già in tool-pitfalls, nessuna nuova riga.",
-    "Attenzione index isolation: worktree condiviso con sessione parallela (Toth v0) — commit con index privato, staged ⊆ allowlist verificata; al momento del commit solo i 3 file del ciclo sono sporchi (gli altri assorbiti in HEAD)."
-  ],
-  "next_action": "immediato: gate (make -C agents pre-commit + make pre-commit), commit isolato con agent-commit.sh --push. Differito (#human): HT-016 push fence gDrive_ops, HT-018 hal-contract --apply ×21 consumer.",
-  "summary": "Ciclo HT-021+HT-015: gate check-toth-index cablato nel pre-commit agents (RED→GREEN, 33 voci drift 0), apprendimenti AO riversati nei canoni (learn 1.8.6, a0 1.17.1), AO-2.1-3 env flag documentato, HT-015/HT-021 chiuse.",
-  "node_id": "ht021-gate-ht015-pour"
+  "ts": "2026-11-22T16:14:02Z",
+  "flags": {"y": false},
+  "acceptance": "HT-022: forwarder outcome gateway-side per contratto M1.5 hal_mcp_docs - scansione inbox/laya-outcomes/*.ndjson (mai .tmp/.imported), replay POST /outcome con dedup request_hash esplicito>proxy, archivio .imported/ solo a replay completo, righe malformate/senza hash saltate con contatori (mai raise), codici gateway_root_unset/missing e inbox_absent/not_writable senza scrivere; inbox creato nel canonico; fixture 10 test + suite + gate verdi.",
+  "files": "scripts/outcome_forwarder.py,tests/test_outcome_forwarder.py,inbox/laya-outcomes/.gitkeep,inbox/laya-outcomes/.imported/.gitkeep,ToDo.md,CHANGELOG.md,product/state/agent-progress.md,agents/a-agentzero/learn/references/tool-pitfalls.md,product/state/handoff-cycle.json",
+  "node_id": "ht022-forwarder-outcome",
+  "next": "reale: primo import di un file esportato da hal_mcp_docs (POST /outcome verso laya.local) da verificare #human con servizio acceso; opzionale: job schedulato (manutentore). Riposo: tool-pitfalls §replay/stale aggiornata con ricorrenza 2026-11-22.",
+  "summary": "Ciclo HT-022: forwarder outcome (import inbox ndjson → POST /outcome, dedup esplicito>proxy, .imported/ retry-safe, codici senza scrivere) + inbox nel canonico; 10 test RED→GREEN, suite 443, pre-commit 0.",
+  "brief": "",
+  "token_budget": 200
 }
