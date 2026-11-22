@@ -32,6 +32,10 @@ Delta 2026-11-18 (sessione HT-005): consegnati strumento e draft oro — `benchm
   - Acceptance: run dedicata con `estrazione_json_semplificato` a bracci appaiati (gate-forzato locale vs gate-forzato modello) su ≥2 modelli; riga delta nel `history/` + `compare_tokens.py`; se il delta è ≈0, documentare N/A e chiudere con esito negativo dichiarato.
 
 
+- [ ] `HT-016` — Push dei 4 fence consumer HT-014 pendenti e remote gDrive_ops da correggere `#human` · P2 · #infra
+  - Perché utile: il fence a-agentzero 1.13.15 è committato in tutti i 16 consumer git, ma 4 push restano pendenti: brainbeez (commit parallelo 44069e7 sopra il fence 23b286c), InnerCircle (6 commit altrui in coda a 52cf926), liberating.it (1 commit altrui in coda a 3dced2a) — usciranno con le push dei rispettivi proprietari, mai pubblicarli al posto loro; gDrive_ops: remote `carlo/gDrive_ops` non trovato su GitHub (il fence 483d869 è pushabile solo dopo `git remote set-url origin <url-corretto>`). Finché le push non avvengono i fence non sono visibili dagli origin.
+  - Acceptance: ramo remoto dei 4 repo contenente il commit fence (verifica `ls-remote` == HEAD locale, non `@{u}`); gDrive_ops con remote corretto e pushato. Ref: CHANGELOG root `[Unreleased]` ESITO HT-014 (702aeb6).
+
 ## Già fatto
 
 _(Buffer pre-flush in formato Keep a Changelog: sotto `### Added`, `### Changed`, `### Fixed` o `### Removed`; `/todo` lo svuota nel CHANGELOG.)_

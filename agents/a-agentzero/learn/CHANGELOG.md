@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.8.3] - 2026-11-22
+
+### Changed
+
+- `/learn !` hal_gateway (chiusura sessione HT-014/consumer-push, post 702aeb6): tre blocchi datati in `tool-pitfalls.md` — §Push HTTPS interattiva estensione (no-op silenzioso del modulo eseguito direttamente → guardia `BASH_SOURCE` in 4af90d3 + 3 test; fallback SSH BatchMode a URL esplicito con helper gh scaduto; push a URL esplicito non aggiorna i remote-tracking ref → verità = `ls-remote`), §Parametri numerici ricorrenza (`read_file` range respinto 2× `expected u32` → `sed -n`; nessuna regola nuova), §Replay/stale ricorrenza (collasso a singola riga su tutti i canali 2026-11-20/22; sanificazione keyword + probe negative → non filtro di contenuto; workaround marker nuovi + chunk con esclusione riga sopravvissuta). Aperto `HT-016` in ToDo (push 4 consumer rimasti + remote gDrive_ops). Voce `### HAL` in `product/session-learnings.md`.
+
 ## [1.8.2] - 2026-11-21
 
 ### Changed

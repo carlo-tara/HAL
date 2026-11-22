@@ -255,6 +255,15 @@
 - **Evidenza:** auto_vote_commit rc=0 «registrato (correct)» (hash 83298bbf…, commit 37215df); `make -C agents pre-commit` OK, check-registry/check-lines OK, 26 test verdi (moduli l0/canonical/rerun/guard).
 - **Ambito:** HAL. **Destinazione:** skill (learn deep, `tool-pitfalls.md`) + questo registro. Nessuna voce ToDo (niente actionable residuo).
 
+## 2026-11-22 — /learn ! chiusura HT-014: contratto consumer applicato, push SSH, fix git-push-auth → HAL (sessione)
+
+### HAL
+
+- **Cosa:** HT-014 chiuso e deployato: `hal-contract.py --apply` sui 21 repo di `agents/consumers.list` (61 mount residui rimossi — pickwaise 41, liberating.it 18, gDrive_ops 2; fence a a-agentzero 1.13.15: refresh ×11, append ×2, create ×8; dry-run post-apply 0 mount + current ×21; `consumers-list STRICT=1` verde); commit nei 16 repo git con allow-list stretta (AGENTS.md + mount tracciati, zero WIP altrui assorbito) e **12/16 pushati via SSH** con verifica `ls-remote` (guardie: HEAD==sha-fence, ahead==1 — mai pubblicare commit altrui). Bugfix `git-push-auth.sh`: esecuzione diretta usciva 0 in silenzio senza spingere (falso successo) → guardia `BASH_SOURCE`, push effettiva con rc propagato, exit 2 su detached HEAD, 3 test di regressione (4af90d3). Consolidati in `tool-pitfalls.md`: §Push HTTPS estensione (no-op silenzioso + lezione «modulo sourcato = guardia di esecuzione»; fallback SSH BatchMode a URL esplicito; push a URL esplicito non aggiorna i tracking ref → verità = ls-remote), §Parametri numerici ricorrenza (read_file range 2× `expected u32`), §Replay/stale ricorrenza (collasso a singola riga su tutti i canali, sanificazione+probe negative → non filtro di contenuto; workaround: marker nuovi + chunk con esclusione della riga sopravvissuta). Aperto `HT-016` (push dei 4 consumer rimasti + remote gDrive_ops da correggere). learn 1.8.2→1.8.3.
+- **Esclusi (anti-grasso):** ricetta blob surgery per registri misti (già in commit skill §Isolamento index p.6 — riusata 3× senza delta); guardie push su commit altrui (già in §Sessioni parallele); voti Laya feat/fix/docs (calibrazione nel loop `laya_outcome`, non regola da file); fonte unica consumers.list (già canone 1.13.14/1.13.15 + AGENTS.md); esito push consumer (già ESITO HT-014 nel CHANGELOG root, 702aeb6).
+- **Evidenza:** HAL `174c5e0`→`4af90d3`→`702aeb6` (remoto verificato via MCP GitHub); 12 push `ls-remote`==HEAD locale; gDrive_ops `Repository not found` (remote `carlo/gDrive_ops` inesistente); brainbeez HEAD mosso (44069e7≠23b286c), InnerCircle ahead=7, liberating.it ahead=2 → skip corretti; probe `printf` negativa; test push-auth 6/6.
+- **Dove:** `agents/a-agentzero/learn/references/tool-pitfalls.md` (§Push HTTPS, §Parametri numerici, §Replay/stale), `ToDo.md` (HT-016), learn 1.8.2→1.8.3 (`SKILL.md` + `CHANGELOG.md`).
+
 ## 2026-11-20 — /learn ! catena side-car Auto Ontology (HT-013 · AO-1/1.1/2) → HAL
 
 ### HAL
