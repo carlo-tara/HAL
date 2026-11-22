@@ -35,6 +35,14 @@ deve essere riproducibile, misurato e aggiornabile solo col rituale controllato 
 
 ## Rituale di aggiornamento (ricorrente — PRD §6 AO-2.1, 7 passi)
 
+0. **Gate di drift (deterministico):** `bash product/contracts/ao-pin-drift.sh` — legge lo SHA
+   dal blocco PIN qui sotto, fa `git fetch` e confronta `version` a PIN e a `origin/main`.
+   Verdict: `IN-SYNC` (nulla da fare), `DRIFT-NO-RELEASE` (commit a monte non rilasciati:
+   il pin **resta valido**, nessun bump), `RELEASE-AVAILABLE` (`version` cambiata → i passi
+   1-7 sotto sono dovuti). Con `--strict` esce 2 su release, quindi è agganciabile a un gate.
+   Perché esiste: upstream non pubblica tag né release, quindi il solo `git log PIN..origin/main`
+   fa credere che ogni commit sia una release (2026-11-22: 3 fix oltre il pin, `version` ferma
+   a 0.6.1 → bumpare sarebbe stato un errore di rituale).
 1. `git fetch --tags --prune` + `git log PIN..origin/main -- pyproject.toml` → release = commit di
    bump `version` (upstream non pubblica tag né release; CONTRIBUTING reg. 5).
 2. `git diff --stat PIN..NEW` + grep dei 3 invarianti CONTRIBUTING.

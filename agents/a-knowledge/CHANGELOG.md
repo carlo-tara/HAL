@@ -1,5 +1,11 @@
 # Changelog — a-knowledge
 
+## [1.2.1] - 2026-11-22
+
+### Changed
+
+- Rituali AO-2.1 (passo 0, `references/auto-ontology-source.md`): il rilevamento del drift del pin è codificato in `product/contracts/ao-pin-drift.sh` invece di essere affidato alla memoria. Lo script confronta `version` al pin e a `origin/main` e distingue `IN-SYNC` / `DRIFT-NO-RELEASE` / `RELEASE-AVAILABLE` (`--strict` → exit 2 su release). Motivo: upstream non pubblica tag né release (le release sono i commit che bump-ano `version`, CONTRIBUTING reg. 5), quindi i 3 commit oltre il pin `0fb5ecf` del 2026-11-22 non erano una release e il pin restava valido. Policy additiva: nessun altro passo del rituale, nessuna delega e nessun mapping HAL modificati.
+
 ## [1.2.0] - 2026-11-20
 
 ### Added

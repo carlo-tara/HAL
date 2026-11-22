@@ -58,7 +58,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-knowledge/SKILL.md",
       "present": true,
-      "version": "1.2.0"
+      "version": "1.2.1"
     },
     {
       "description": "Agente L1 Product Management: discovery, PO (PRD, Lean Canvas, priorità, validazione), JTBD, Personas e BDD Spec",

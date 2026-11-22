@@ -1,7 +1,7 @@
 ---
 name: a-knowledge
 extends: a-agentzero
-version: 1.2.0
+version: 1.2.1
 extends-version: 1.14.0
 description: >-
   Reason why: senza una pipeline locale e a disclosure progressiva, ogni libro
