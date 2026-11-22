@@ -41,6 +41,10 @@ Delta 2026-11-18 (sessione HT-005): consegnati strumento e draft oro — `benchm
 
 
 
+- [ ] `HT-022` — Forwarder outcome: import di `inbox/laya-outcomes/*.ndjson` e replay dei voti verso Laya (`POST /outcome`) con dedup per `request_hash` (una inferenza = un voto) `#cycle` · P2 · System 1 (Laya)
+  - Perché utile: `hal_mcp_docs` M1.5 rv1 (2026-11-21) esporta la telemetria locale in batch offline verso `<HAL_GATEWAY_ROOT>/inbox/laya-outcomes/` (content-addressed, zero corpi query); al 2026-11-22 l'`inbox/` non esiste nel canonico e nessun consumer legge i file (`grep laya-outcomes` vuoto): il loop di calibrazione si apre sull'ultimo miglio. Task trasferita dal ToDo di `hal_mcp_docs` (voce M1.5) il 2026-11-22; contratto, formato file e acceptance in `docs/slices/M1.5-gateway-import-spec.md` di `/var/www/hal_mcp_docs`.
+  - Acceptance: `inbox/laya-outcomes/` creato nel canonico (l'exporter non lo crea mai, da cui `inbox_absent` documentato); forwarder (CLI o job schedulato) che legge solo file `.ndjson` completi (mai `.tmp`), inoltra i voti a Laya con dedup per `request_hash` (il voto esplicito `chapter_outcome` ha precedenza sul proxy `access_after_route`) e archivia gli importati in `.imported/` (audit, mai cancellare); fixture ndjson → voti registrati e re-run a 0 duplicati; righe senza `request_hash` saltate con contatore, mai raise.
+
 ## Già fatto
 
 _(Buffer pre-flush in formato Keep a Changelog: sotto `### Added`, `### Changed`, `### Fixed` o `### Removed`; `/todo` lo svuota nel CHANGELOG.)_
