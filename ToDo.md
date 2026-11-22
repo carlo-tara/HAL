@@ -48,6 +48,10 @@ Delta 2026-11-18 (sessione HT-005): consegnati strumento e draft oro — `benchm
   - Perché utile: i sei apprendimenti del 2026-11-20 (catena HT-013/AO-1/AO-1.1/AO-2) sono verificati ed evidenziati, ma i tre target canonici sono gli stessi sporchi di WIP parallelo che hanno motivato HT-012; scriverci oggi riaprirebbe la gara cross-sessione che il de-racing smonta. La nota docs è il registro interino.
   - Acceptance: i 4 blocchi presenti nei target canonici (1-2 in `tool-pitfalls.md` nuova sezione «Registri condivisi: flush e guardie»; 4 come estensione del bullet `auto_vote_routing` di learn 1.6.19 — il pitfall vive nella stessa sede di quel bullet, non un § nuovo; 6 in `l1-from-proto.md`), `/version patch` su `learn` + voce `### HAL` in `product/session-learnings.md` per il riversamento, `check-version-changelog` e `check-md-links` verdi.
 
+- [ ] `HT-021` — Agganciare `toth_index.py --check` al gate `make -C agents pre-commit` (dopo `check-registry`) · P2 · #governance
+  - Perché utile: l'artefatto derivato marcisce in ore se la rigenerazione non è coatta — dimostrato: `737d776` (bump learn senza rigenerare) ha reso il json stale su master prima di HT-017; da `a11571c` il drift è a zero e il gate non dà falsi positivi. Due righe in `check-registry.sh` (o target Make separato con stesso buget di errore).
+  - Acceptance: commit che tocca liste/fonti senza rigenerare `toth-index.json` fallisce il gate con la riga DRIFT del check; suite verde; transazione a-agentzero.
+
 ## Già fatto
 
 _(Buffer pre-flush in formato Keep a Changelog: sotto `### Added`, `### Changed`, `### Fixed` o `### Removed`; `/todo` lo svuota nel CHANGELOG.)_

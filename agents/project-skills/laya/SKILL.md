@@ -1,6 +1,6 @@
 ---
 name: laya
-version: 2.0.0
+version: 2.0.1
 description: >-
   Reason why: senza un modello System 1 veloce e a basso costo per routing, scelte discrete, scoring euristico, stima di confidenza e chiarezza del contesto, l'agente spreca ragionamento su decisioni preliminari. Interfaccia per Laya System 1: routing di categorie, choice tra opzioni, score euristico di rischio o aderenza, confidence 0-100%, context 0-100%, noul. Invocabile via CLI python3 router.py, modulo Python router o come tool MCP in Zed (mcp_laya.py).
 ---
@@ -66,6 +66,10 @@ Derivata dalla telemetria 2026-10-11→30 (`laya_calls`, esiti calibrati, benchm
 - `score`/rischio: non discriminativo (bypass documentato `NON_DISCRIMINATIVE_TASKS`).
 - Matematica e ragionamento numerico: preflight conf 0,062.
 - Per contratto: codice, file, test, decisioni architetturali vincolanti.
+- Scelte di merito marcate `#human` (ToDo/slice/plan): il tag vince su
+  `system1_direct` a qualsiasi margine — Laya ordina, l'umano decide; vota
+  sempre l'esito via `/outcome` (evidenza 2026-11-22: choice `732433c1…`
+  A@0.868 direct → umano scelse C, outcome `incorrect` registrato in `a11571c`).
 
 ## Interfaccia CLI
 

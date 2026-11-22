@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.16.1] - 2026-11-22
+
+### Changed
+
+- /learn ! sessione Toth v0/HT-017: §«Manutenzione» in `references/toth-routing-rules.md` — lezioni collaudate in produzione: rigenerazione dell'artefatto derivato nella STESSA transazione che tocca liste/versioni (`737d776` dimostrazione di marcescenza in ore), invarianti cross-file come test che legge il file gemello (`test_override_tied_to_publisher`), e il drift può essere difetto della guardia (laya = falso negativo, l'indice guardava la directory sbagliata).
+
 ## [1.16.0] - 2026-11-22
 
 ### Changed

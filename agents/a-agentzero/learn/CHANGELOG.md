@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.8.5] - 2026-11-22
+
+### Changed
+
+- tool-pitfalls, due estensioni di evidenza da sessione Toth v0/HT-017 (2026-11-22): §comandi L0/worktree (il `cd` del terminale rifiuta il worktree fuori root come `write_file` — su HAL regime normale: patch via heredoc python); §Writer canonico (flag sconosciuto consumato come KIND → file `handoff---help.json`; `files` stringa comma-separated; post-write sanity con `handoff-read` + `ls`). Classi «parametri numerici» e «`<(...)` sh» risultate GIÀ in skill senza informazione nuova: nessuna riga (anti-grasso).
+
 ## [1.8.4] - 2026-11-22
 
 ### Changed

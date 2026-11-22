@@ -39,3 +39,18 @@ resta quella della tabella di delega Laya (verde = esecuzione diretta solo
 se margin alto e k≤3; giallo/rosso = sempre System 2). Prima di scrivere
 regole di dispatch servono dati: l'indice è il prerequisito, non la
 promessa.
+
+## Manutenzione (imparato alla prima settimana di vita)
+
+- Ogni transazione che tocca liste-fonte o versioni delle skill rigenera
+  l'artefatto nello stesso commit: un derivato committato marcisce in ore
+  (evidenza: `737d776` bump learn senza rigenerazione → `--check` rosso su
+  master, assorbito in `a11571c`). Il binding `--check` al gate è il passo
+  successivo (`HT-018`).
+- Le invarianti cross-file (es. `COMMAND_SOURCE_OVERRIDES` ↔ `LAYASRC` del
+  publisher) vivono come test che legge l'altro file, non come commento
+  (`test_override_tied_to_publisher`, `a11571c`).
+- Un drift segnalato può essere difetto della guardia, non del canone:
+  prima di cancellare/ripristinare una fonte, verificare cosa controlla
+  l'indice (caso laya: falso negativo, l'indice guardava la directory
+  sbagliata).

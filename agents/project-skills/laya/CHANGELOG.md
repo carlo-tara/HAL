@@ -1,5 +1,11 @@
 # Changelog — laya (System 1 Service)
 
+## [2.0.1] - 2026-11-22
+
+### Added
+
+- Tabella di delega, ❌: priorità delle scelte marcate `#human` su `system1_direct` a qualsiasi margine (l'indice umano vince; voto `/outcome` obbligatorio per la calibrazione). Evidenza: sessione Toth v0/HT-017 — choice hash `732433c1` A@0.868 direct, decisione umana C registrata `incorrect`.
+
 ## [2.0.0] - 2026-11-17
 
 ### Added
