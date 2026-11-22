@@ -34,10 +34,8 @@ Delta 2026-11-18 (sessione HT-005): consegnati strumento e draft oro — `benchm
 - [ ] `HT-016` — Push dei 4 fence consumer HT-014 pendenti e remote gDrive_ops da correggere `#human` · P2 · #infra
   - Perché utile: il fence a-agentzero 1.13.15 è committato in tutti i 16 consumer git, ma 4 push restano pendenti: brainbeez (commit parallelo 44069e7 sopra il fence 23b286c), InnerCircle (6 commit altrui in coda a 52cf926), liberating.it (1 commit altrui in coda a 3dced2a) — usciranno con le push dei rispettivi proprietari, mai pubblicarli al posto loro; gDrive_ops: remote `carlo/gDrive_ops` non trovato su GitHub (il fence 483d869 è pushabile solo dopo `git remote set-url origin <url-corretto>`). Finché le push non avvengono i fence non sono visibili dagli origin.
   - Acceptance: ramo remoto dei 4 repo contenente il commit fence (verifica `ls-remote` == HEAD locale, non `@{u}`); gDrive_ops con remote corretto e pushato. Ref: CHANGELOG root `[Unreleased]` ESITO HT-014 (702aeb6).
+  - Aggiornamento 2026-11-22 (da HT-018): 3 dei 4 push sono atterrati e verificati via `ls-remote` — brainbeez `fcb5d59`, InnerCircle `973ab45`, liberating.it `3733686` (fence `a-agentzero 1.17.1`, `ahead=0`/`behind=0`). Resta solo il remote gDrive_ops: `master` senza upstream e AGENTS.md symlink a `/var/www/hal_gateway/AGENTS.md`, quindi il blob in HEAD è il path testuale e non c'è fence consumer da pushare.
 
-- [ ] `HT-018` — Refresh dei fence ×21 consumer post a-agentzero 1.16.0 + commit/push nei consumer git · P1 · #infra
-  - Perché utile: `a236779` (toth v0) e `a11571c` (HT-017) hanno ribumpato il canone (1.13.15 → 1.15.0 → 1.16.0) DOPO l'apply HT-014: il dry-run `hal-contract.py` riporta `fence refresh` su tutti i 21 consumer e il catalogo sugli origin è stale. Il canone chiavi di idempotenza (template+sorgente) richiede il refresh a ogni bump — transazione a carico della sessione che ha bumpato (toth) o del prossimo `/sync !`.
-  - Acceptance: `python3 agents/scripts/hal-contract.py` → `fence current` ×21 (0 refresh); commit + push nei 16 consumer git (guardie di sempre: HEAD==sha, ahead==1, verifica `ls-remote`); dry-run pre/post allegato all'esito.
 
 
 
