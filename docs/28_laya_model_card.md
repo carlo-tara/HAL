@@ -54,6 +54,7 @@ per opzione; il gate ricava `margin = top1 − top2` e `recommendation`
   contesa GPU (eccezione, non media).
 - **Input lunghi**: il server collassa righe identiche consecutive e poi testa+coda;
   segnalato in `usage.input_collapsed` / `input_compacted`.
+- **Prefissi conventional-commit (decision-family `choice`, sessioni hal_gateway 2026-11-20/22)**: **1/5** correct nei voti `laya_outcome` (hash `09868699…`, `91c419b0…`, `ee11e6f2…`, `130db61c…`, `01c15afe…`): `feat` scelto 3 volte su 5 e corretto solo sulla transazione infra reale (HT-014 apply); gli errori sono tutti su diff di soli registri/docs (scritti `docs`/`fix` contro scelte feat/fix/refactor; margin 0,041–0,522 → `escalate_system2` a k≥4 come da T-73140). Corrobora la confusion matrix nota (feat↔docs/refactor) sui diff non-codice. Regola operativa: su commit di soli registri/markdown l'escalation S2 è la norma e la risposta quasi a priori è `docs`; la consultazione S1 resta obbligatoria da protocollo, la delibera è di S2.
 
 ## Ciclo di calibrazione
 

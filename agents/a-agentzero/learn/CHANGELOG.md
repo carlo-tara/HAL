@@ -1,5 +1,11 @@
 # Changelog — learn
 
+## [1.8.4] - 2026-11-22
+
+### Changed
+
+- `/learn !` hal_gateway (#2, residui sessione HT-014, post a11571c): due blocchi datati in `tool-pitfalls.md` — §Sessioni parallele estensione writer canonico (autostash-pop conflittato su file altrui con writer canonico → `restore --source=HEAD`, variante WIP nello stash per il proprietario; mai lasciare path unmerged nell'index condiviso; variante controllata per log append-only: stash single-file → ff → pop, auto-merge) e §Replay/stale canone item 4 (letture di contenuto ri-emesse con marker nuovi finché torna il conteggio righe atteso; chunk con esclusione della riga ostile). Fuori bundle: bullet calibrazione prefissi commit in `docs/28_laya_model_card.md` §Limiti misurati (1/5 correct, feat↔docs sistematico su diff non-codice). Aperte `HT-018` (refresh fence ×21 post a-agentzero 1.16.0) e `HT-019` (gh auth refresh + fallback SSH in git-push-auth.sh) in ToDo via blob surgery. Voce `### HAL` in `product/session-learnings.md`.
+
 ## [1.8.3] - 2026-11-22
 
 ### Changed
