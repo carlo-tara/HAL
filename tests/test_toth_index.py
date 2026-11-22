@@ -12,6 +12,8 @@ Pattern sys.path: tests/test_agent_todo.py.
 from __future__ import annotations
 
 import importlib.util
+import re
+import unittest
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -28,8 +30,12 @@ def _load_toth():
 
 
 def _fm(name, *, version="1.0.0", desc="Test.", extends=None):
-    lines = ["---", f"name: {name}", f"version: {version}",
-             f"description: >-\n  {desc}"]
+    lines = [
+        "---",
+        f"name: {name}",
+        f"version: {version}",
+        f"description: >-\n  {desc}",
+    ]
     if extends:
         lines.append(f"extends: {extends}")
     lines += ["---", "", f"# {name}", ""]
@@ -42,31 +48,40 @@ def _fake_root(tmp):
     (ag / "a-one").mkdir(parents=True)
     (ag / "a-one" / "SKILL.md").write_text(
         _fm("a-one", extends="a-agentzero", desc="Reason why: test. Agente uno."),
-        encoding="utf-8")
+        encoding="utf-8",
+    )
     (ag / "a-one" / "sub").mkdir(parents=True)
     (ag / "a-one" / "sub" / "SKILL.md").write_text(
-        _fm("sub", desc="Skill embedded in a-one."), encoding="utf-8")
+        _fm("sub", desc="Skill embedded in a-one."), encoding="utf-8"
+    )
     (ag / "ps" / "proj").mkdir(parents=True)
     (ag / "ps" / "proj" / "SKILL.md").write_text(
-        _fm("proj", desc="Skill di progetto."), encoding="utf-8")
+        _fm("proj", desc="Skill di progetto."), encoding="utf-8"
+    )
     cmds = ag / "a-agentzero" / "commands"
     cmds.mkdir(parents=True)
-    (cmds / "one.md").write_text("---\nversion: 0.9.0\n---\n# /one\n",
-                                 encoding="utf-8")
+    (cmds / "one.md").write_text("---\nversion: 0.9.0\n---\n# /one\n", encoding="utf-8")
     return root
 
 
 def _lists():
-    return dict(l1=["a-one"], bundled={"sub": "a-one"},
-                project_skills=["ps/proj", "ps/absent"],
-                commands=["one", "missing"])
+    return dict(
+        l1=["a-one"],
+        bundled={"sub": "a-one"},
+        project_skills=["ps/proj", "ps/absent"],
+        commands=["one", "missing"],
+    )
 
 
 def test_entries_complete_and_schema(tmp_path):
     toth = _load_toth()
     index = toth.build_index(_fake_root(tmp_path), **_lists())
     assert {e["kind"] for e in index["entries"]} == {
-        "agent", "bundled", "project", "command"}
+        "agent",
+        "bundled",
+        "project",
+        "command",
+    }
     by = {(e["kind"], e["name"]): e for e in index["entries"]}
     a1 = by[("agent", "a-one")]
     assert a1["present"] is True and a1["host"] is None
@@ -81,8 +96,12 @@ def test_entries_complete_and_schema(tmp_path):
     assert by[("command", "one")]["version"] == "0.9.0"
     assert by[("command", "missing")]["present"] is False
     assert index["metadata"]["drift"] == ["project:ps/absent", "command:missing"]
-    assert index["metadata"]["counts"] == {"agent": 1, "bundled": 1,
-                                           "project": 2, "command": 2}
+    assert index["metadata"]["counts"] == {
+        "agent": 1,
+        "bundled": 1,
+        "project": 2,
+        "command": 2,
+    }
 
 
 def test_deterministic_bytes(tmp_path):
@@ -110,8 +129,9 @@ def test_real_canon_counts():
     toth = _load_toth()
     hc = toth.HC
     index = toth.build_index(toth.REPO_ROOT)
-    assert len(index["entries"]) == (len(hc.L1) + len(hc.BUNDLED)
-                                     + len(hc.PROJECT_SKILLS) + len(hc.COMMANDS))
+    assert len(index["entries"]) == (
+        len(hc.L1) + len(hc.BUNDLED) + len(hc.PROJECT_SKILLS) + len(hc.COMMANDS)
+    )
     agents = [e for e in index["entries"] if e["kind"] == "agent"]
     assert len(agents) == len(hc.L1) and all(e["present"] for e in agents)
     assert all("a-" in e["name"] for e in agents)
@@ -119,15 +139,16 @@ def test_real_canon_counts():
 
 def test_override_command_source(tmp_path, monkeypatch):
     toth = _load_toth()
-    monkeypatch.setattr(toth, "COMMAND_SOURCE_OVERRIDES",
-                        {"laya": "agents/alt/commands/laya.md"})
+    monkeypatch.setattr(
+        toth, "COMMAND_SOURCE_OVERRIDES", {"laya": "agents/alt/commands/laya.md"}
+    )
     root = _fake_root(tmp_path)
     alt = root / "agents/alt/commands"
     alt.mkdir(parents=True)
-    (alt / "laya.md").write_text("---\nversion: 1.0.1\n---\n# /laya\n",
-                                 encoding="utf-8")
-    index = toth.build_index(root, **{**_lists(),
-                                      "commands": ["one", "laya"]})
+    (alt / "laya.md").write_text(
+        "---\nversion: 1.0.1\n---\n# /laya\n", encoding="utf-8"
+    )
+    index = toth.build_index(root, **{**_lists(), "commands": ["one", "laya"]})
     by = {(e["kind"], e["name"]): e for e in index["entries"]}
     laya = by[("command", "laya")]
     assert laya["present"] is True
@@ -145,9 +166,11 @@ def test_real_canon_no_drift():
 def test_override_tied_to_publisher():
     toth = _load_toth()
     assert toth.COMMAND_SOURCE_OVERRIDES.get("laya") == (
-        "agents/project-skills/laya/commands/laya.md")
-    src = (toth.REPO_ROOT / "agents/scripts/publish-global-commands.sh"
-           ).read_text(encoding="utf-8")
+        "agents/project-skills/laya/commands/laya.md"
+    )
+    src = (toth.REPO_ROOT / "agents/scripts/publish-global-commands.sh").read_text(
+        encoding="utf-8"
+    )
     assert 'project-skills/laya/commands/laya.md"' in src  # stessa fonte
 
 
@@ -155,4 +178,34 @@ def test_real_artifact_up_to_date():
     toth = _load_toth()
     fresh = toth.render(toth.build_index(toth.REPO_ROOT))
     on_disk = toth.ARTIFACT_PATH.read_text(encoding="utf-8")
-    assert fresh == on_disk, "rigenerare: python3 agents/a-agentzero/scripts/toth_index.py"
+    assert (
+        fresh == on_disk
+    ), "rigenerare: python3 agents/a-agentzero/scripts/toth_index.py"
+
+
+class TestGateWiring(unittest.TestCase):
+    """HT-021: `toth_index.py --check` agganciata al gate `make -C agents pre-commit`."""
+
+    MAKEFILE = _load_toth().REPO_ROOT / "agents" / "Makefile"
+
+    def _text(self):
+        return self.MAKEFILE.read_text(encoding="utf-8")
+
+    def test_pre_commit_wires_check_after_registry(self):
+        m = re.search(r"^pre-commit: (.+)$", self._text(), re.M)
+        self.assertIsNotNone(m, "target pre-commit mancante")
+        deps = m.group(1).split()
+        self.assertIn("check-registry", deps, "check-registry deve restare nel gate")
+        self.assertIn("check-toth-index", deps)
+        self.assertEqual(
+            deps.index("check-toth-index"),
+            deps.index("check-registry") + 1,
+            "check-toth-index deve seguire subito check-registry",
+        )
+
+    def test_check_target_runs_index_check(self):
+        m = re.search(r"^check-toth-index:\n((?:\t.+\n?)+)", self._text(), re.M)
+        self.assertIsNotNone(m, "target check-toth-index mancante nel Makefile")
+        recipe = m.group(1)
+        self.assertIn("toth_index.py", recipe)
+        self.assertIn("--check", recipe)

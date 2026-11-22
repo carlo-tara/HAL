@@ -1,5 +1,12 @@
 # Changelog — learn
 
+## [1.8.6] - 2026-11-22
+
+### Added
+
+- tool-pitfalls, sezione «Registri condivisi: flush e guardie (shared ledgers: flush and guards)» (HT-015 §1+§2 da catena Auto Ontology): `todo_flush` appiattisce il corpo delle voci multi-bullet (contare righe, non presenza titolo + body in CHANGELOG) e le guardie che assertano sul backlog devono accettare titolo in `Già fatto` come prova di chiusura (stato flipato con motivo documentato, non elaso). Con evidenza RED 2026-11-22: assert che cercava corpo in ToDo → guardia rossa dopo il flush.
+- tool-pitfalls, sezione «Stato replay/fantasma del canale tool (tool result replay/stale)» (HT-015 §7): output che contraddice l'ultimo stato noto (`Revoking access`, HEAD incoerente, exit 0 con stdout vuoto, «Successfully」 senza diff) va trattato come non avvenuto e riverificato con lettura indipendente (grep/ls/rev-parse freschi, o subagente con contesto pulito). Il canale tool è un reporter guasto, non un bug del codice.
+
 ## [1.8.5] - 2026-11-22
 
 ### Changed

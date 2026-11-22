@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .PHONY: test-unit test-int test-e2e pre-commit check-standards ready-for-review \
 	db-up seed-data check-parity sync-assets shell-syntax version-chains \
 	frontmatter-all shellcheck-ok md-links ready-proof tools-shellcheck install-git-hooks \
-	sync-consumer-stale check-versions check-lines check-registry consumers-list
+	sync-consumer-stale check-versions check-lines check-registry check-toth-index consumers-list
 
 ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 VERSION_SH := $(ROOT)/a-agentzero/scripts/agent-version.sh
@@ -93,7 +93,11 @@ check-lines:
 check-registry: check-versions check-lines
 	@echo "check-registry OK (transazione bump-changelog + cap righe)"
 
-pre-commit: check-parity shell-syntax frontmatter-all shellcheck-ok md-links check-registry
+# Indice toth del canone fresco (HT-021): rigenerato da toth_index.py, drift = stop
+check-toth-index:
+	@python3 "$(ROOT)/a-agentzero/scripts/toth_index.py" --check
+
+pre-commit: check-parity shell-syntax frontmatter-all shellcheck-ok md-links check-registry check-toth-index
 	@echo "pre-commit OK"
 
 shell-syntax:

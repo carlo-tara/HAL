@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.17.1] - 2026-11-22
+
+### Added
+
+- `references/l1-from-proto.md` — sotto-sezione «Corpus esterni senza tag né release: pin SHA + script di aggiornamento (external corpora: SHA pin + update script)» (HT-015 §6, da catena Auto Ontology): regola di authorship per skill che consumano repo upstream — clone gitignored in `vendor/<nome>/`, pin SHA (mai `latest`/branch mobile), script L0 `update-<nome>-repo.sh` con fetch/pull ff-only + diff changed-paths + riga pin, guardie (niente `git add -A`, niente rebase automatico), refresh contestuale del pin nei reference al momento dello script. Precedente: `a-knowledge/references/marketingskills-source.md`; pattern validato sul side-car `auto-ontology-mcp` (nessun tag/release a monte → pin `0fb5ecf`).
+
 ## [1.17.0] - 2026-11-22
 
 ### Changed

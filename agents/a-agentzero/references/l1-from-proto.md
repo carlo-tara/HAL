@@ -15,15 +15,17 @@ Quando l'utente fornisce un **proto-prompt** per un nuovo agente L1 (o un'estens
 
 Se il corpus va tenuto aggiornabile nel tempo:
 
-| Pezzo | Dove |
-|-------|------|
-| Clone locale | `vendor/{nome}/` (**gitignored** — non committare il tree) |
-| Pin SHA + mapping distillazione | `a-{dominio}/references/{nome}-source.md` (committato) |
-| Update | script `a-{dominio}/scripts/update-*.sh` + comando progetto `.cursor/commands/…` |
-| Post-update | confronta delta skills ↔ mapping; **non** riscrivere auto le competenze AF |
+| Pezzo                           | Dove                                                                             |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| Clone locale                    | `vendor/{nome}/` (**gitignored** — non committare il tree)                       |
+| Pin SHA + mapping distillazione | `a-{dominio}/references/{nome}-source.md` (committato)                           |
+| Update                          | script `a-{dominio}/scripts/update-*.sh` + comando progetto `.cursor/commands/…` |
+| Post-update                     | confronta delta skills ↔ mapping; **non** riscrivere auto le competenze AF       |
 
-Adozione **opt-in per dominio**: importa solo le skill pertinenti all’L1 ospite; il resto resta nel vendor.  
+Adozione **opt-in per dominio**: importa solo le skill pertinenti all’L1 ospite; il resto resta nel vendor.
 Esempi canone: `a-seozoom/references/marketingskills-source.md` · `claude-seo-source.md` · `labat-seo-geo-aeo-source.md`.
+
+**Runtime pin ≠ corpus vendor (HT-015 §6, catena Auto Ontology 2026-11-22)**: se il repo esterno è un **runtime da eseguire** (side-car MCP, servizio) e non un corpus da distillare, il clone **non** va in `vendor/` (che è gitignored e pensato per la lettura): vive fuori dal canone (es. `~/auto-ontology-mcp`) con checkout pinnato a SHA e `uv sync`; il file di pin sta in `references/{nome}-source.md` della **skill L1 che lo consuma** (non dell'agente radice), con blocco `<!-- PIN:START -->`/`PIN:END` riscrivibile deterministicamente da script di aggiornamento. Il pin documenta SHA, invarianti upstream lette (es. CONTRIBUTING: non toccare versione) e comando di update.
 
 ### Licenza e multi-corpus
 

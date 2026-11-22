@@ -493,3 +493,13 @@
 | 2026-11-22 | plan  | s1-consult         | Routing del fallback per HT-019 (gh token refreshed e HTTPS funzionante; SSH testato OK). Laya choice «estendere git-push-auth con fallback SSH vs lasciare human vs remote-ssh»: selezionato **ssh-fallback** (margin 0.918, prob 0.946) | —    |
 | 2026-11-22 | red   | test-first         | RED verificato: nuovi test in `tests/test_git_push_auth.py` fail (funzione `https_to_ssh_url`/`push_with_ssh_fallback` assente); 5 test preesistenti GREEN                                                                                                                                                | —    |
 | 2026-11-22 | green | tier3-ssh          | `git-push-auth.sh`: `https_to_ssh_url` (https→ssh form `git@github.com:owner/repo.git`), `push_with_ssh_fallback` con `GIT_SSH_COMMAND` BatchMode/ConnectTimeout + `GIT_TERMINAL_PROMPT=0`, catena HTTPS→gh→SSH; shim `agent-worktree.sh` allineato; test file migrato a unittest-style (scoperta: `make test-unit` usa unittest, i test pytest-style non venivano raccolti); suite 431 GREEN, pre-commit 0, guardie bundle OK | 0    |
+
+## Session 2026-11-22-cycle-ht021-ht015
+
+| Data       | Fase  | Nodo             | Cosa | Esc |
+|------------|-------|------------------|------|-----|
+| 2026-11-22 | plan  | s1-order         | Laya choice su ordine ciclo (gate-first-021, conf 0.717) → HT-021+HT-015 in-scope, HT-016/018 `#human` rimandati | 0 |
+| 2026-11-22 | red   | gate-test-first  | `tests/test_toth_index.py`: 2 test sul wiring del gate RED (target assente) | 1 |
+| 2026-11-22 | green | gate-wired       | `agents/Makefile`: regola `check-toth-index` dopo `check-registry` nel `pre-commit` + rigenerato `toth-index.json` (33 voci, drift 0) | 0 |
+| 2026-11-22 | green | ao-2-2-env-smoke | `AUTO_ONTOLOGY_ALLOW_DATASOURCE_TOOLS=0` registrato nel rituale AO-2.1 (docs/29 + sidecar reference) | 0 |
+| 2026-11-22 | green | ht015-pour       | §1+§2+§7 → `learn/references/tool-pitfalls.md` (learn 1.8.6); §6 → `references/l1-from-proto.md` (a0 1.17.1); §3/§5 esclusi dalla acceptance | 0 |
