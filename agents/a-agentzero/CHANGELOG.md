@@ -1,5 +1,12 @@
 # Changelog — a-agentzero
 
+## [1.15.0] - 2026-11-22
+
+### Added
+
+- Slice v0-toth-index: `scripts/toth_index.py` — gemello meccanico del catalogo hal-contract (liste L1/BUNDLED/PROJECT_SKILLS/COMMANDS e parser fm_field/shorten importati, nessuna regola propria), artefatto `references/toth-index.json` (schema 1, byte-deterministico, `present=false` marca le fonti del canone assenti che il fence salta in silenzio — oggi 2: `project:project-skills/harness-agentfactory`, `command:laya`) + `--check` per gate freshness; regole `references/toth-routing-rules.md`; test `tests/test_toth_index.py` (fake tree + canone reale + freshness).
+
+
 ## [1.14.0] - 2026-11-20
 
 ### Changed

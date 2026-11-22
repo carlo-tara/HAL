@@ -1,13 +1,13 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-11-20T00:00:00Z",
+  "ts": "2026-11-22T00:41:42Z",
   "flags": {"y": false},
-  "acceptance": "AO-1 + AO-1.1: check-ontology-bc-boundary.sh GREEN (5 assert: riga BC + §«Routing delle domande» 4 ancoraggi + PRD + ref slice→contratto + delega a-knowledge linkata); a-knowledge 1.1.10→1.2.0 con riga §Deleghe (link, non copia) e CHANGELOG; make -C agents pre-commit 0 (check-registry transazione bump ok, md-links 360)",
-  "files": "docs/bounded-contexts.md,docs/29_auto_ontology_semantic_layer.md,docs/slices/AO1-sidecar-boundary.md,product/contracts/check-ontology-bc-boundary.sh,agents/a-knowledge/SKILL.md,agents/a-knowledge/CHANGELOG.md",
-  "node_id": "ao-1-1-knowledge-delegation",
-  "next": "AO-2 INSTALLATA 2026-11-20 (clone ~/auto-ontology-mcp @ 0fb5ecf — deviazione da /opt: sudo non interattivo, documentata nel pin file; pytest 254 pass; KPI-1 baseline 13 tool/15.782 char in logs/ao-sidecar/; demo + permessi 700/600; entry Zed written enabled:true con backup). #HUMAN: riavvio Zed + smoke (check_readiness su demo + domanda sushi-roll/Pennsylvania 2024-06 ≈316.80). Poi AO-2.1 è il rituale ricorrente ai bump (PRD §6). AO-3 condizionato. Nota catena: a-knowledge STALE vs a-agentzero 1.13.15 = WIP non commesso sessione parallela, NON ri-pinnare da qui",
-  "summary": "AO-1.1 consegnata 2026-11-20: delega side-car promossa in a-knowledge 1.2.0 (§Deleghe: link a §«Routing delle domande», policy additiva zero passaggi toccati; CHANGELOG dedicato; mirror via symlink senza rigenerazione; template placeholder escluso dallo scan). Laya choice sul bump rispondeva «major» — override System 2 (additiva=minor, precedent commit.md 1.0.1→1.1.0; CLI senza request_hash, voto non esprimibile — registrato in progress). Guardia estesa a 5 assert, GREEN; make -C agents pre-commit 0; pre-commit gateway 0. Precede: AO-1 (Act bounded-contexts + guardia GREEN + HT-013 flushata)",
-  "brief": "/slice acceptance=a-knowledge/SKILL.md §Deleghe linka il canone Routing delle domande; guardia assert 5 GREEN; catena figli solo template placeholder (escluso); bump 1.2.0 transazione changelog check-registry OK files=agents/a-knowledge/SKILL.md,agents/a-knowledge/CHANGELOG.md,product/contracts/check-ontology-bc-boundary.sh.",
+  "acceptance": "",
+  "files": "",
+  "node_id": "",
+  "next": "ATTESA umano: /commit (agent-commit.sh, index isolato) + agent-worktree.sh land v0-toth-index (preview merge-tree, rerere, guardie, push ff-only, cleanup). Slice separato per i 2 drift del canone (rimuovere dalla lista o ripristinare bundle/command). v1 dispatcher: solo dopo dati di telemetria, mai prima.",
+  "summary": "v0 toth_index CONSEGNA PRONTA nel worktree slice/v0-toth-index (non commessa): toth_index.py gemello del catalogo (34 voci, schema 1, deterministico, --check), toth-index.json (2 drift scoperti: harness-agentfactory, command laya), toth-routing-rules.md, tests red-first 5/5, suite 456 verdi, transazione 1.14.0->1.15.0.",
+  "brief": "",
   "token_budget": 200
 }
