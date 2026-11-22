@@ -2,6 +2,11 @@
 
 Formato Keep a Changelog + Semantic Versioning. Tag figli: `[sync:safe]`, `[sync:review]`, `[sync:breaking]`.
 
+## [1.1.1] - 2026-11-22
+
+### Changed
+
+- Sync selettivo `[sync:safe]` con a-harness 1.11.4→1.11.5 (a sua volta allineato ad a-agentzero 1.17.1): il delta del padre è interamente infrastrutturale L0, quindi il delta L2 di questo profilo harness (Platform API root, path artefatti, profilo bootstrap, N/A documentati) resta valido senza modifiche — solo `extends-version` + bump patch (regola 4 di `agent-versioning.md`).
 ## [1.1.0] - 2026-11-22
 
 ### Added

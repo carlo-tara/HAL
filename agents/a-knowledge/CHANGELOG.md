@@ -1,5 +1,10 @@
 # Changelog — a-knowledge
 
+## [1.2.2] - 2026-11-22
+
+### Changed
+
+- Sync selettivo `[sync:safe]` con a-agentzero 1.14.0→1.17.1: delta interamente infrastrutturale L0 nel range 1.14.0→1.17.1: slice v0-toth-index (`scripts/toth_index.py` + artefatto `references/toth-index.json`), gate `check-toth-index` nel Makefile, `COMMAND_SOURCE_OVERRIDES` (HT-017), §Manutenzione di `references/toth-routing-rules.md`, terzo tier SSH di `scripts/git-push-auth.sh` (HT-019), sotto-sezione pin SHA per corpus esterni in `references/l1-from-proto.md` (HT-015). `git diff --name-only 37215df..HEAD` su `commands/` e `competencies/` è vuoto → nessuna modifica al body (regola 4 di `agent-versioning.md`): solo `extends-version` + bump patch. Policy additiva, zero collisioni. Nota di merito: 1.17.1 introduce la regola di authorship per corpus esterni senza tag né release (pin SHA + script di aggiornamento), nata dalla catena Auto Ontology; questa skill la soddisfa già con il pin file `references/auto-ontology-source.md` e il passo 0 `product/contracts/ao-pin-drift.sh` (1.2.1, 2026-11-22) — nessun adattamento richiesto.
 ## [1.2.1] - 2026-11-22
 
 ### Changed
