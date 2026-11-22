@@ -65,12 +65,12 @@ def _fake_root(tmp):
 
 
 def _lists():
-    return dict(
-        l1=["a-one"],
-        bundled={"sub": "a-one"},
-        project_skills=["ps/proj", "ps/absent"],
-        commands=["one", "missing"],
-    )
+    return {
+        "l1": ["a-one"],
+        "bundled": {"sub": "a-one"},
+        "project_skills": ["ps/proj", "ps/absent"],
+        "commands": ["one", "missing"],
+    }
 
 
 def test_entries_complete_and_schema(tmp_path):
@@ -192,8 +192,9 @@ class TestGateWiring(unittest.TestCase):
         return self.MAKEFILE.read_text(encoding="utf-8")
 
     def test_pre_commit_wires_check_after_registry(self):
-        m = re.search(r"^pre-commit: (.+)$", self._text(), re.M)
-        self.assertIsNotNone(m, "target pre-commit mancante")
+        m = re.search(r"^pre-commit: (.+)$", self._text(), re.MULTILINE)
+        if m is None:
+            self.fail("target pre-commit mancante")
         deps = m.group(1).split()
         self.assertIn("check-registry", deps, "check-registry deve restare nel gate")
         self.assertIn("check-toth-index", deps)
@@ -204,8 +205,9 @@ class TestGateWiring(unittest.TestCase):
         )
 
     def test_check_target_runs_index_check(self):
-        m = re.search(r"^check-toth-index:\n((?:\t.+\n?)+)", self._text(), re.M)
-        self.assertIsNotNone(m, "target check-toth-index mancante nel Makefile")
+        m = re.search(r"^check-toth-index:\n((?:\t.+\n?)+)", self._text(), re.MULTILINE)
+        if m is None:
+            self.fail("target check-toth-index mancante nel Makefile")
         recipe = m.group(1)
         self.assertIn("toth_index.py", recipe)
         self.assertIn("--check", recipe)

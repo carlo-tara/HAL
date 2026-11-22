@@ -25,6 +25,7 @@ def _bash(snippet: str) -> subprocess.CompletedProcess:
         ["bash", "-c", f'source "{LIB}"\n{snippet}'],
         capture_output=True,
         text=True,
+        check=False,
         env=ENV,
     )
 
@@ -84,6 +85,7 @@ class TestPushWithSshFallback(unittest.TestCase):
                 ["git", "ls-remote", origin, "refs/heads/master"],
                 capture_output=True,
                 text=True,
+                check=False,
                 env=ENV,
             )
             head = subprocess.run(
@@ -91,6 +93,7 @@ class TestPushWithSshFallback(unittest.TestCase):
                 cwd=f"{tmp}/work",
                 capture_output=True,
                 text=True,
+                check=False,
             )
             self.assertIn(head.stdout.strip(), ls.stdout)
 
