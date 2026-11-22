@@ -6,7 +6,9 @@ PROJECT_SKILLS, COMMANDS lette da agents/scripts/hal-contract.py) e stesso
 parser (fm_field/shorten). Non aggiunge regole proprie; dove il fence tace
 sulle fonti mancanti (skipped di build_fence), l'indice le marca
 present=false: il drift del canone e il deliverable di v0, non un effetto
-collaterale.
+collaterale. Unica eccezione dichiarata: COMMAND_SOURCE_OVERRIDES, che
+vincola l'esistenza dei comandi alla stessa fonte del publisher globale
+(HT-017; test_override_tied_to_publisher impedisce la divergenza).
 
 Uso:
   python3 agents/a-agentzero/scripts/toth_index.py            # rigenera
@@ -37,6 +39,12 @@ ARTIFACT_RELPATH = "agents/a-agentzero/references/toth-index.json"
 ARTIFACT_PATH = REPO_ROOT / ARTIFACT_RELPATH
 
 KINDS = ("agent", "bundled", "project", "command")
+
+# Comandi la cui fonte canonica NON e' in a-agentzero/commands: mirror della
+# LAYASRC dichiarata da publish-global-commands.sh (guardia: test_toth_index).
+COMMAND_SOURCE_OVERRIDES = {
+    "laya": "agents/project-skills/laya/commands/laya.md",
+}
 
 
 def default_lists() -> dict:
@@ -78,8 +86,9 @@ def build_index(root: Path, *, l1=None, bundled=None, project_skills=None,
         entries.append(_entry(root, ps.split("/")[-1], "project",
                               f"agents/{ps}/SKILL.md"))
     for c in commands:
-        entries.append(_entry(root, c, "command",
-                              f"agents/a-agentzero/commands/{c}.md"))
+        rel = COMMAND_SOURCE_OVERRIDES.get(
+            c, f"agents/a-agentzero/commands/{c}.md")
+        entries.append(_entry(root, c, "command", rel))
 
     # token della lista-fonte: per project skills e' il path nel canone (ps),
     # non il basename — rende il driftActionabile senza indovinare l'owner.

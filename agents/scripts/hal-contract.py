@@ -63,7 +63,6 @@ BUNDLED = {  # skill → owner
 PROJECT_SKILLS = [
     "gdrive-sync-safe",
     "project-skills/laya",
-    "project-skills/harness-agentfactory",
     "project-skills/harness-hal",
 ]
 COMMANDS = [

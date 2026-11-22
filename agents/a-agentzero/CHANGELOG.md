@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.16.0] - 2026-11-22
+
+### Changed
+
+- HT-017 — smaltiti i 2 drift del canone marcati dalla guardia Toth (`a236779` li aveva scoperti, `#human` il merito su laya): `scripts/toth_index.py` gains `COMMAND_SOURCE_OVERRIDES` (laya → `agents/project-skills/laya/commands/laya.md`, mirror della `LAYASRC` di `publish-global-commands.sh`; guardia `test_override_tied_to_publisher` impedisce divergenza) → `command:laya` risolto senza cancellare `/laya` dal catalogo L0; rimossa la riga stale `project-skills/harness-agentfactory` da `PROJECT_SKILLS` in `agents/scripts/hal-contract.py` (bundle L2 eliminato deliberatamente in `20cd6d9`, il fence non cambia contenuto perché già skipped su file mancante). Artefatto rigenerato: 33 voci, `drift: []` (assorbito anche lo staleness introdotto da `737d776`, che aveva bumpato learn 1.8.3 senza rigenerare l'indice — prima prova che `--check` funziona su master mosso). Test 8/8: + override su fake tree, drift reale vuoto, binding col publisher, freshness.
+
 ## [1.15.0] - 2026-11-22
 
 ### Added

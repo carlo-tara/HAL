@@ -1,13 +1,13 @@
 {
   "kind": "slice",
   "cmd": "/slice",
-  "ts": "2026-11-22T00:41:42Z",
+  "ts": "2026-11-22T01:14:35Z",
   "flags": {"y": false},
-  "acceptance": "",
-  "files": "",
+  "acceptance": "AO-1 --check exit 0 con drift==[] su canone reale; AO-2 entry command:laya present=true con path = fonte publisher; AO-3 8 test verdi (fake override, binding publisher, drift reale vuoto, freshness); AO-4 transazione SKILL 1.16.0 + CHANGELOG, guardie verdi; AO-5 write-set ⊆ 4 perimetro + coppia rituale + stato.",
+  "files": "agents/scripts/hal-contract.py,agents/a-agentzero/scripts/toth_index.py,agents/a-agentzero/references/toth-index.json,tests/test_toth_index.py,agents/a-agentzero/SKILL.md,agents/a-agentzero/CHANGELOG.md",
   "node_id": "",
-  "next": "ATTESA umano: /commit (agent-commit.sh, index isolato) + agent-worktree.sh land v0-toth-index (preview merge-tree, rerere, guardie, push ff-only, cleanup). Slice separato per i 2 drift del canone (rimuovere dalla lista o ripristinare bundle/command). v1 dispatcher: solo dopo dati di telemetria, mai prima.",
-  "summary": "v0 toth_index CONSEGNA PRONTA nel worktree slice/v0-toth-index (non commessa): toth_index.py gemello del catalogo (34 voci, schema 1, deterministico, --check), toth-index.json (2 drift scoperti: harness-agentfactory, command laya), toth-routing-rules.md, tests red-first 5/5, suite 456 verdi, transazione 1.14.0->1.15.0.",
-  "brief": "",
+  "next": "Land in corso; follow-up fuori perimetro: (1) spuntare HT-017 nel main quando il ToDo committato lo conterrà; (2) rigenerazione fence hal-contract --apply allineerà header 1.13.15→1.16.0 su tutti i consumer (decisione /sync); (3) --check candidato gate CI.",
+  "summary": "HT-017 CONSEGNA nel worktree slice/ht-017: guardia Toth a drift=[] — override COMMAND_SOURCE_OVERRIDES (laya, legato alla LAYASRC del publisher da test) + riga stale harness-agentfactory rimossa da PROJECT_SKILLS; artefatto 33 voci rigenerato (include staleness 737d776 assorbito); test 8/8, suite 459; transazione 1.16.0.",
+  "brief": "BC governance a-agentzero. Decisione umana C su (b): indice alla fonte reale pubblicata, /laya resta nel catalogo L0. Voto Laya A → outcome incorrect con correzione registrata (calibrazione).",
   "token_budget": 200
 }

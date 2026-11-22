@@ -8,7 +8,7 @@
       "parent": null,
       "path": "agents/a-agentzero/SKILL.md",
       "present": true,
-      "version": "1.15.0"
+      "version": "1.16.0"
     },
     {
       "description": "Agente L1 per piloti B2B e contact/account research: orchestra il profilo B2B e include la skill enrichment per ricerca ICP, CRM cascade e lead valid…",
@@ -148,7 +148,7 @@
       "parent": null,
       "path": "agents/a-agentzero/learn/SKILL.md",
       "present": true,
-      "version": "1.8.1"
+      "version": "1.8.3"
     },
     {
       "description": "User Researcher integrato in a-product: definisce personas da PRD/mockup con intervista PO, verifica journey coherence vs mockup/PRD, aggiunge person…",
@@ -199,16 +199,6 @@
       "path": "agents/project-skills/laya/SKILL.md",
       "present": true,
       "version": "2.0.0"
-    },
-    {
-      "description": null,
-      "host": null,
-      "kind": "project",
-      "name": "harness-agentfactory",
-      "parent": null,
-      "path": "agents/project-skills/harness-agentfactory/SKILL.md",
-      "present": false,
-      "version": null
     },
     {
       "description": "Delta harness per HAL Gateway: Platform API root (Makefile specchio CI), path artefatti, profile bootstrap standard, N/A documentati (int/e2e/parity)…",
@@ -331,28 +321,25 @@
       "version": "1.0.1"
     },
     {
-      "description": null,
+      "description": "",
       "host": null,
       "kind": "command",
       "name": "laya",
       "parent": null,
-      "path": "agents/a-agentzero/commands/laya.md",
-      "present": false,
-      "version": null
+      "path": "agents/project-skills/laya/commands/laya.md",
+      "present": true,
+      "version": "1.0.1"
     }
   ],
   "metadata": {
-    "agentzero_version": "1.15.0",
+    "agentzero_version": "1.16.0",
     "counts": {
       "agent": 9,
       "bundled": 9,
       "command": 12,
-      "project": 4
+      "project": 3
     },
-    "drift": [
-      "project:project-skills/harness-agentfactory",
-      "command:laya"
-    ],
+    "drift": [],
     "note": "present=false = drift del canone: voce listata ma sorgente assente; correggere la lista o aggiungere il bundle, poi rigenerare",
     "source": "agents/scripts/hal-contract.py (liste L1/BUNDLED/PROJECT_SKILLS/COMMANDS)"
   },

@@ -117,6 +117,40 @@ def test_real_canon_counts():
     assert all("a-" in e["name"] for e in agents)
 
 
+def test_override_command_source(tmp_path, monkeypatch):
+    toth = _load_toth()
+    monkeypatch.setattr(toth, "COMMAND_SOURCE_OVERRIDES",
+                        {"laya": "agents/alt/commands/laya.md"})
+    root = _fake_root(tmp_path)
+    alt = root / "agents/alt/commands"
+    alt.mkdir(parents=True)
+    (alt / "laya.md").write_text("---\nversion: 1.0.1\n---\n# /laya\n",
+                                 encoding="utf-8")
+    index = toth.build_index(root, **{**_lists(),
+                                      "commands": ["one", "laya"]})
+    by = {(e["kind"], e["name"]): e for e in index["entries"]}
+    laya = by[("command", "laya")]
+    assert laya["present"] is True
+    assert laya["path"] == "agents/alt/commands/laya.md"
+    assert laya["version"] == "1.0.1"
+    assert "command:laya" not in index["metadata"]["drift"]
+
+
+def test_real_canon_no_drift():
+    toth = _load_toth()
+    index = toth.build_index(toth.REPO_ROOT)
+    assert index["metadata"]["drift"] == [], index["metadata"]["drift"]
+
+
+def test_override_tied_to_publisher():
+    toth = _load_toth()
+    assert toth.COMMAND_SOURCE_OVERRIDES.get("laya") == (
+        "agents/project-skills/laya/commands/laya.md")
+    src = (toth.REPO_ROOT / "agents/scripts/publish-global-commands.sh"
+           ).read_text(encoding="utf-8")
+    assert 'project-skills/laya/commands/laya.md"' in src  # stessa fonte
+
+
 def test_real_artifact_up_to_date():
     toth = _load_toth()
     fresh = toth.render(toth.build_index(toth.REPO_ROOT))
