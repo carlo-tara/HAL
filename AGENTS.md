@@ -40,7 +40,7 @@ La fonte canonica di comandi e skill è `agents/`. Per mantenere sincronizzato Z
 
 Sessioni concorrenti NON lavorano sul main checkout: `bash agents/scripts/agent-worktree.sh new <nome>` crea worktree+branch da `origin/master`; il lavoro si chiude con `agent-worktree.sh land <nome>` (preview `merge-tree`, rebase con rerere, guardie `check-registry`, push ff-only verificato, cleanup). Il main resta verde per costruzione; i consumer (symlink `agents/`, mirror `.agents/skills`) vedono solo il landed. Protocollo completo: `agents/a-agentzero/references/worktree-land.md`.
 
-<!-- BEGIN hal-contract: generato da a-agentzero 1.17.1 · tpl 2 — NON EDITARE TRA I FENCE -->
+<!-- BEGIN hal-contract: generato da a-agentzero 1.17.2 · tpl 2 — NON EDITARE TRA I FENCE -->
 ## HAL — contratto consumer
 
 - HAL canonico: `/var/www/hal_gateway` (repo `hal_gateway`). **Da questo progetto**: mai modificare

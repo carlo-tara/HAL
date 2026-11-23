@@ -1,8 +1,8 @@
 ---
 name: a-copywriter
 extends: a-agentzero
-version: 1.7.10
-extends-version: 1.17.1
+version: 1.7.11
+extends-version: 1.17.2
 competencies:
   - tono-di-voce
   - humanizer

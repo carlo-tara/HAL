@@ -1,5 +1,11 @@
 # Changelog — a-b2b
 
+## [2.3.11] - 2026-11-22
+
+### Changed
+
+- Sync selettivo `[sync:safe]` con a-agentzero 1.17.1→1.17.2 (HT-025 batch: tag `[sync:*]` retro-apposti sulle voci 1.15.0–1.17.1, mitigazione della race sul work-tree in `commands/commit.md` §Isolamento index 1.4.0, `L2_HARNESS` del Makefile riallineato a `harness-hal`): delta interamente infrastruttura e annotazioni L0, `commands/` e `competencies/` del bundle L1 non toccati → body invariato, solo `extends-version` + bump patch (regola 4 di `agent-versioning.md`).
+
 ## [2.3.10] - 2026-11-22
 
 ### Changed

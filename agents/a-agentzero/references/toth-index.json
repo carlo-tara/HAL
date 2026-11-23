@@ -8,7 +8,7 @@
       "parent": null,
       "path": "agents/a-agentzero/SKILL.md",
       "present": true,
-      "version": "1.17.1"
+      "version": "1.17.2"
     },
     {
       "description": "Agente L1 per piloti B2B e contact/account research: orchestra il profilo B2B e include la skill enrichment per ricerca ICP, CRM cascade e lead valid…",
@@ -18,7 +18,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-b2b/SKILL.md",
       "present": true,
-      "version": "2.3.10"
+      "version": "2.3.11"
     },
     {
       "description": "Scrive e revisiona copy web generico (prodotti, categorie, blog, landing, meta, FAQ)",
@@ -28,7 +28,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-copywriter/SKILL.md",
       "present": true,
-      "version": "1.7.10"
+      "version": "1.7.11"
     },
     {
       "description": "Agente L1 Design & Visual Experience: unifica layout e accessibilità (uiux), grafici e data visualization (charts) e asset illustrativi (illustrator)",
@@ -38,7 +38,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-design/SKILL.md",
       "present": true,
-      "version": "1.2.11"
+      "version": "1.2.12"
     },
     {
       "description": "Meta-Harness: TDD XP, Steward, DDD, Makefile gates, session progress, when-stuck, Plan→Act, L3",
@@ -48,7 +48,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-harness/SKILL.md",
       "present": true,
-      "version": "1.11.5"
+      "version": "1.11.6"
     },
     {
       "description": "Agente L1 Knowledge / Context Engineering: trasforma libri e documentazione tecnica (PDF, EPUB, DOCX, HTML, Markdown) in skill interrogabili on-demand",
@@ -58,7 +58,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-knowledge/SKILL.md",
       "present": true,
-      "version": "1.2.2"
+      "version": "1.2.3"
     },
     {
       "description": "Agente L1 Product Management: discovery, PO (PRD, Lean Canvas, priorità, validazione), JTBD, Personas e BDD Spec",
@@ -68,7 +68,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-product/SKILL.md",
       "present": true,
-      "version": "2.2.10"
+      "version": "2.2.11"
     },
     {
       "description": "Agente SEO/GEO multi-progetto: orchestra import dati, analisi metriche, on-page, GEO/AEO, audit, schema, pSEO, IA, hreflang, topic-cluster e Google A…",
@@ -78,7 +78,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-seozoom/SKILL.md",
       "present": true,
-      "version": "1.10.12"
+      "version": "1.10.13"
     },
     {
       "description": "Analizza installazioni WordPress specifiche e sviluppa, mantiene e revisiona plugin (stabili e migrate)",
@@ -88,7 +88,7 @@
       "parent": "a-agentzero",
       "path": "agents/a-wordpress/SKILL.md",
       "present": true,
-      "version": "1.4.10"
+      "version": "1.4.11"
     },
     {
       "description": "Data Visualization integrata in a-design: scelta del tipo, encoding visuale, implementazione (SVG/D3/canvas/HTML) e QA",
@@ -208,7 +208,7 @@
       "parent": null,
       "path": "agents/project-skills/harness-hal/SKILL.md",
       "present": true,
-      "version": "1.1.1"
+      "version": "1.1.2"
     },
     {
       "description": "",
@@ -258,7 +258,7 @@
       "parent": null,
       "path": "agents/a-agentzero/commands/commit.md",
       "present": true,
-      "version": "1.3.1"
+      "version": "1.4.0"
     },
     {
       "description": "",
@@ -332,7 +332,7 @@
     }
   ],
   "metadata": {
-    "agentzero_version": "1.17.1",
+    "agentzero_version": "1.17.2",
     "counts": {
       "agent": 9,
       "bundled": 9,

@@ -35,7 +35,7 @@ SHELL_SCRIPTS := \
 SHELL_SCRIPTS += $(ROOT)/scripts/agent-worktree.sh $(ROOT)/scripts/check-version-changelog.sh \
 	$(ROOT)/scripts/check-line-length.sh $(ROOT)/scripts/git-push-auth.sh
 
-L2_HARNESS := $(ROOT)/project-skills/harness-agentfactory/SKILL.md
+L2_HARNESS := $(ROOT)/project-skills/harness-hal/SKILL.md
 
 # --- Real gates for this meta-repo ---
 
@@ -59,7 +59,7 @@ version-chains:
 	done; \
 	if [[ -f "$(L2_HARNESS)" ]]; then \
 		out="$$(bash "$(VERSION_SH)" chain "$(L2_HARNESS)" 2>&1)"; \
-		echo; echo "--- L2 harness-agentfactory ---"; echo "$$out"; \
+		echo; echo "--- L2 harness-hal ---"; echo "$$out"; \
 		if echo "$$out" | grep -q "STALE"; then stale=1; fi; \
 	fi; \
 	if [[ "$$stale" -ne 0 ]]; then \

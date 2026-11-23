@@ -1,5 +1,11 @@
 # Changelog — a-agentzero
 
+## [1.17.2] - 2026-11-22
+
+### Changed
+
+- HT-025 (batch a tre perché i residui condividono lo stesso driver di costo: un solo bump L0 = una sola cascata di refresh sui 21 fence invece di tre). (a) Tag `[sync:safe]` retro-apposti sulle 5 voci 1.15.0–1.17.1, che `agent-versioning.md` riga 77 richiede e mancavano: la classificazione del delta era stata ricostruita a mano da `git diff --name-only 37215df..HEAD` durante il `[sync:safe]` delle 8 catene L1 (`3ce3c3a`). (b) `commands/commit.md` §Isolamento index punto 5 — mitigazione operativa della race sul work-tree: ricontrollo `git status --porcelain -- <file>` immediatamente prima del commit (non al censimento), `agent-worktree.sh` quando più sessioni insistono sullo stesso file, audit post-commit delle righe realmente entrate, dichiarazione dell'assorbimento e divieto di revert su ref già pushato; evidenza `hal_mcp_docs` `5d04050`. Il comando passa 1.3.1 → **1.4.0** (modifica additiva: nessun passaggio esistente riscritto, precedente `commit.md` 1.0.1→1.1.0). (c) `agents/Makefile:38` — `L2_HARNESS` riallineato da `project-skills/harness-agentfactory/SKILL.md` (skill eliminata dalla purga; il guard `[[ -f ]]` la rendeva silenziosamente inattiva, quindi `version-chains` non validava più alcuna L2 harness del gateway) a `project-skills/harness-hal/SKILL.md`, con etichetta di report coerente. [sync:safe]
+- Sync selettivo `[sync:safe]` nella stessa transazione: 8 figli L1 re-pinnati 1.17.1→1.17.2 e `harness-hal` sul nuovo `a-harness` — delta interamente infrastruttura L0, body dei figli invariati (regola 4 di `agent-versioning.md`), `references/toth-index.json` rigenerato insieme ai bump. [sync:safe]
 ## [1.17.1] - 2026-11-22
 
 ### Added
