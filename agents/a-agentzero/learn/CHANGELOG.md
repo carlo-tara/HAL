@@ -1,5 +1,17 @@
 # Changelog — learn
 
+## [1.8.8] - 2026-11-28
+
+### Added
+
+- tool-pitfalls §grep, 2ª occorrenza classe (AGG-18, brainbeez /todo rv24 2026-11-25): estrazione di campi da record strutturati con regex non ancorata — `P[0-9]` a substring cattura prosa («voce P1 gemella» → falso P1), lookahead di split fonde item consecutivi (21≠23); canone: àncora di fine riga + conteggio crociato su disco (`grep -c '^- \[ \]'`) prima di scrivere. Soglia ≥2 raggiunta: `/sync <` eseguito su indicazione owner (2026-11-28).
+
+## [1.8.7] - 2026-11-28
+
+### Added
+
+- tool-pitfalls §Sessioni parallele, bullet «Rewrite-history esterna a metà turno»: su tree conteso, prima di dichiarare perdita di lavoro, diff degli orphan commit vs HEAD (albero vuoto = amend di solo messaggio); il `git status` a cache non distingue rewrite da rollback. Da brainbeez /cycle rv23 (2026-11-25; sub-classe, evidenza singola — soglia ≥2 forzata su indicazione owner, AGG-17).
+
 ## [1.8.6] - 2026-11-22
 
 ### Added

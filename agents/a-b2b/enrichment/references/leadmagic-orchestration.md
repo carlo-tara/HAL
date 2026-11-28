@@ -53,6 +53,11 @@ Se phase2 non partita: dichiararlo (budget 0 / skip / no queue).
 
 ---
 
+## Fatti vendor misurati (brainbeez newleads 2026-10→11; AGG-09 — soglia ≥2 forzata su indicazione owner 2026-11-28)
+
+- `employee-finder`: l'array di risposta arriva sotto la chiave **`data`** (la doc dice `employees`: obsoleta). Costo restituito 0.05 crediti/dipendente; risposta vuota = gratis; **nessuna email** nel payload (email-finder ≈1 credito/item, off di default).
+- 429 transitori con ≥8 worker paralleli, ~95% recuperabili ritentando (`--retry-errors`): progettare la coda con retry, non con worker sincroni.
+
 ## L2 delta
 
 Path script (`*-orchestration.js`, `*-phase2-queues.js`, …), default numerici, segment rules e comandi Cursor restano nel figlio `extends: a-enrichment`.

@@ -20,6 +20,12 @@ Entrypoint **B** parallelo alla cascade cohort/CRM (entrypoint **A** in `a-enric
 4. **Merge opzionale** — scrivere nel master SQLite solo se in scope; altrimenti handoff CSV/report.
 5. **Credits report** — conteggio lookup per provider usati.
 
+## Fatti vendor Apollo (brainbeez newleads 2026-10→11; AGG-09 — soglia ≥2 forzata su indicazione owner 2026-11-28)
+
+- MCP e headcount-baseline richiedono **master key**: chiave scoped → 403 `API_INACCESSIBLE`; la chiave REST può morire a metà sessione → OAuth-MCP è il canale affidabile (il registro tool di Zed si aggiorna solo a reload e lo `enabled` in settings è autoritativo).
+- Il filtro **buying-intent non è esposto via API**: le liste intent sono indistinguibili dai dati ⇒ deduplicarle per headcount growth + nome file.
+- `Apollo Account Id` negli export **non è chiave di join** (org name ≠ account name, 6/16 orfani misurati) → join per dominio.
+
 ## Output a sezioni
 
 1. ICP check (+ fit score se applicabile)

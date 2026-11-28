@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.11.7] - 2026-11-28
+
+### Added
+
+- `references/harness-extended.md` §Quiet test execution, punto 5 — anti hollow-green nei mount-test jsdom: le eccezioni delle custom element reaction non si propagano (falso GREEN se l'handler window `error` non è intercettato) e `hashchange` va atteso reale, non a timer. Da brainbeez rv16 (N98a–N98c, mutazioni RED→GREEN), regola già in L2 `harness-brainbeez` §Test web; **evidenza singola — soglia ≥2 forzata su indicazione owner (AGG-06)**. Body SKILL invariato, delta solo in reference additiva [sync:safe].
+
 ## [1.11.6] - 2026-11-22
 
 ### Changed

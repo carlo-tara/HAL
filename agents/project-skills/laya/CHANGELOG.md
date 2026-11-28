@@ -1,5 +1,11 @@
 # Changelog — laya (System 1 Service)
 
+## [2.0.2] - 2026-11-28
+
+### Added
+
+- §Calibrazione: voto commit quando il prefisso arriva dal tool MCP `laya_choice` (request_hash proprio) — `auto_vote_commit.py --hash` è CLI-only e risponde no-vote; rimedio `laya_outcome(request_hash, expected=…)`. Evidenza: brainbeez release 0.13.2 (/learn ! #33, 2026-11-16; soglia ≥2 forzata su indicazione owner, AGG-11).
+
 ## [2.0.1] - 2026-11-22
 
 ### Added

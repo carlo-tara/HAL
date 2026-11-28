@@ -1,5 +1,11 @@
 # Changelog — a-b2b
 
+## [2.3.12] - 2026-11-28
+
+### Added
+
+- `enrichment` 1.1.7→1.1.8, due sezioni «Fatti vendor misurati» dalle pipeline brainbeez (AGG-09 — evidenza singola per fatto, soglia ≥2 forzata su indicazione owner 2026-11-28): `leadmagic-orchestration.md` (employee-finder sotto chiave `data` — doc obsoleta; 0.05 crediti/dipendente, vuoto gratis, niente email nel payload; 429 con ≥8 worker ~95% recuperabili con retry) e `domain-enrichment-workflow.md` (Apollo: master key per MCP/headcount, OAuth-MCP canale affidabile; filtro buying-intent non esposto via API; `Apollo Account Id` non è chiave di join — join per dominio). Delta solo in references additive, body L1 invariato [sync:safe].
+
 ## [2.3.11] - 2026-11-22
 
 ### Changed

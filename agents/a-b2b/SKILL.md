@@ -1,7 +1,7 @@
 ---
 name: a-b2b
 extends: a-agentzero
-version: 2.3.11
+version: 2.3.12
 extends-version: 1.17.2
 description: >-
   Reason why: senza un ingresso B2B stabile, discovery e go-to-market si disallineano.

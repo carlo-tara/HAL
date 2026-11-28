@@ -1,7 +1,7 @@
 ---
 name: uiux
 parent: a-design
-version: 1.2.0
+version: 1.2.1
 competencies:
   - static-stack
   - accessibility
@@ -35,3 +35,4 @@ Pattern tema-indipendenti della shell pagina, validati su due consumer (WTP App:
 - **Slot brand vs meta di pagina:** lo slot brand dell'AppBar porta identità del prodotto e versione; i metadati di pagina (contatori, "generato…") stanno sotto l'header, mai dentro il titolo brand.
 - **Azioni di output nel menu File della suite:** stampa/export sono voci del menu File e operano sulla vista corrente filtrata; niente pulsanti di export inventati per singola pagina.
 - **Copy UI da origine i18n:** le stringhe a schermo derivano da un'unica origine i18n (msgid SoT) con fallback per chiave mancante; nessun msgid grezzo a schermo.
+- **State layer M3 solo in `opacity:` (classe IACVT):** i token di stato di opacità (`--bb-state-*` ed equivalenti) si usano **solo** in `opacity:`, mai in `background:`/`outline:`/`color:`; hover canonico = state layer condiviso, non cambio di superficie. Insidia IACVT (invalid at computed-value time): il fallback `var(--token, fallback)` **non scatta** se il token è definito ma il suo valore è invalido per la proprietà — la dichiarazione viene scartata in silenzio, senza console error. Evidenza: brainbeez /improve ui/ux M3 (2026-11-07, /learn ! #23; **soglia ≥2 forzata su indicazione owner**, AGG-07).

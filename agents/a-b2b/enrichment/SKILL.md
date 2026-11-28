@@ -1,7 +1,7 @@
 ---
 name: enrichment
 parent: a-b2b
-version: 1.1.7
+version: 1.1.8
 description: >-
   Reason why: senza arricchire e filtrare i contatti con criteri di aderenza, le liste restano nomi grezzi poco utili per vendere o collaborare. Contact/account enrichment B2B: dual entry (CRM cohort + domain-first), ICP/fit gates, HubSpot → Apollo → LeadMagic → SQLite master, lead-research output. Read-oriented CRM by default; strategy angles not outreach drafts. Invocabile con /enrich, /gate, /domain, /research-batch.
 ---
